@@ -5,6 +5,7 @@ public class UserControl : MonoBehaviour
     public Camera GameCamera;
     private Unit m_Selected = null;
     public GameObject DistanceIndicator;
+    public GameManager gameManager;
     float scale = 3.5f;
 
     // Start is called before the first frame update
@@ -17,17 +18,13 @@ public class UserControl : MonoBehaviour
     {
         var ray = GameCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+
         if (Physics.Raycast(ray, out hit))
         {
             var unit = hit.collider.GetComponent<Unit>();
-            m_Selected = unit;
-            Debug.Log(m_Selected.name);
 
-            DistanceIndicator.transform.SetParent(m_Selected.gameObject.transform);
-            DistanceIndicator.transform.position = m_Selected.transform.position;
-            DistanceIndicator.transform.localScale = new Vector3(m_Selected.restDistance * scale, 1, m_Selected.restDistance * scale);
-
-
+            if (unit != null && gameManager.player[0].tag == unit.tag)
+                m_Selected = unit;         
         }
 
     }
@@ -38,10 +35,29 @@ public class UserControl : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
+            m_Selected.AddMovedDistance();
             m_Selected.GoTo(hit.point);
             m_Selected.GetDistance(hit.point);
 
         }
+    }
+
+    public void ConnectDistanceIndicator()
+    {
+        if (m_Selected != null && gameManager.player[0].tag == m_Selected.tag)
+        {
+            DistanceIndicator.transform.SetParent(m_Selected.gameObject.transform);
+            DistanceIndicator.transform.position = m_Selected.transform.position;
+            SetActionRadius();
+        }
+    }
+
+    public void SetActionRadius()
+    {
+        float actionRadiusXZ = m_Selected.restDistance * scale;
+        Vector3 actionArea = new Vector3(actionRadiusXZ, 1, actionRadiusXZ);
+
+        DistanceIndicator.transform.localScale = actionArea;
     }
 
     // Update is called once per frame
@@ -50,6 +66,7 @@ public class UserControl : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             HandleSelection();
+            ConnectDistanceIndicator();
         }
         else if (m_Selected != null && Input.GetMouseButtonDown(1))
         {
@@ -57,8 +74,8 @@ public class UserControl : MonoBehaviour
         }
         if (m_Selected != null)
         {
-            DistanceIndicator.transform.localScale = new Vector3(m_Selected.restDistance * scale, 1, m_Selected.restDistance * scale);
-
+            SetActionRadius();
         }
     }
+
 }
