@@ -13,6 +13,7 @@ public class Unit : MonoBehaviour
     public float movedDistance = 0;
     public float distanceToMove;
     public float restDistance = 1;
+
     //public  GameObject distanceIndicator;
 
     protected void Awake()
@@ -61,6 +62,12 @@ public class Unit : MonoBehaviour
 
     }
 
+    public virtual void AddMovedDistance()
+    {
+        
+        movedDistance += (distanceToMove - m_Agent.remainingDistance);
+    }
+
     public virtual void GoTo(Vector3 position)
     {
 
@@ -95,5 +102,11 @@ public class Unit : MonoBehaviour
         }
 
         return lng;
+    }
+
+    public virtual void ResetData()
+    {
+        canMove = true;
+        movedDistance = 0;
     }
 }

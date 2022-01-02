@@ -1,8 +1,10 @@
-public class NecronWarrior : Unit
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TacticalSquad : SpaceMarines
 {
-
-    //new float moveDistance = 6;
-
+    // public new float moveDistance = 6;
     //// Start is called before the first frame update
     //void Start()
     //{
@@ -14,5 +16,4 @@ public class NecronWarrior : Unit
     //{
 
     //}
-
 }
