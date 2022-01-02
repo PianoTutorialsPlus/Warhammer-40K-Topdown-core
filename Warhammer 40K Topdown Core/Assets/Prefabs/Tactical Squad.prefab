@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 4266572808521110739}
   - component: {fileID: 4266572808521110738}
   - component: {fileID: 4266572808521110748}
-  - component: {fileID: 2725442419637580037}
+  - component: {fileID: 4399383224918124258}
   m_Layer: 0
-  m_Name: Space Marine
-  m_TagString: Untagged
+  m_Name: Tactical Squad
+  m_TagString: Space Marines
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,7 +120,7 @@ NavMeshAgent:
   m_BaseOffset: 1.0000002
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2725442419637580037
+--- !u!114 &4399383224918124258
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,13 +129,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4266572808521110751}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 532231d56fb73ae4eac20b0289639339, type: 3}
+  m_Script: {fileID: 11500000, guid: 00b534d1f8c04544d8207423fa031952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 3
   canMove: 1
   singleton: 0
   moveDistance: 6
   movedDistance: 0
   distanceToMove: 0
-  restDistance: 0
+  restDistance: 1
