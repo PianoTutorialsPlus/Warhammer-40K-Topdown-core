@@ -24,7 +24,11 @@ public class UserControl : MonoBehaviour
             var unit = hit.collider.GetComponent<Unit>();
 
             if (unit != null && gameManager.player[0].tag == unit.tag)
-                m_Selected = unit;         
+            {
+                m_Selected = unit;
+                Debug.Log(m_Selected.stats["Movement"]);
+            }
+            
         }
 
     }

@@ -16,4 +16,16 @@ public class TacticalSquad : SpaceMarines
     //{
 
     //}
+    public override void SetStats()
+    {
+        base.stats["Movement"] = 6;
+        base.stats["Weapon Skill"] = 3;
+        base.stats["Ballistic Skill"] = 3;
+        base.stats["Strength"] = 4;
+        base.stats["Toughness"] = 4;
+        base.stats["Wounds"] = 2;
+        base.stats["Attacks"] = 1;
+        base.stats["Leadership"] = 7;
+        base.stats["Armour Save"] = 3;
+    }
 }

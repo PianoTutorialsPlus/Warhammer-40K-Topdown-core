@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 public class Unit : MonoBehaviour
 {
@@ -9,10 +10,29 @@ public class Unit : MonoBehaviour
 
     protected NavMeshAgent m_Agent;     // Moving behaviour
     private NavMeshPath path;
-    public float moveDistance;
+    [SerializeField] float moveDistance;
     public float movedDistance = 0;
     public float distanceToMove;
     public float restDistance = 1;
+
+
+    [Header("List")]
+    [SerializeField]
+    List<string> test2 = new List<string> { "Hallo" };
+
+    public Dictionary<string, int> stats = new Dictionary<string, int>()
+    {
+        {"Movement", 0},
+        {"Weapon Skill", 0},
+        {"Ballistic Skill", 0},
+        {"Strength", 0},
+        {"Toughness", 0},
+        {"Wounds", 0},
+        {"Attacks", 0},
+        {"Leadership", 0},
+        {"Armour Save", 0},
+    };
+
 
     //public  GameObject distanceIndicator;
 
@@ -22,8 +42,11 @@ public class Unit : MonoBehaviour
         m_Agent.speed = speed;
         m_Agent.acceleration = 999;
         m_Agent.angularSpeed = 999;
-
+        SetStats();
+        moveDistance = stats["Movement"];
+        
     }
+
 
     // Start is called before the first frame update
     void Start()
@@ -108,5 +131,10 @@ public class Unit : MonoBehaviour
     {
         canMove = true;
         movedDistance = 0;
+    }
+
+    public virtual void SetStats()
+    {
+
     }
 }
