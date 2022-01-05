@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TacticalSquad : SpaceMarines
+public class TacticalSquad : SpaceMarines // INHARITANCE
 {
     // public new float moveDistance = 6;
     //// Start is called before the first frame update
@@ -16,8 +16,8 @@ public class TacticalSquad : SpaceMarines
     //{
 
     //}
-    public override void SetStats()
-    {
+    public override void SetStats() // POLYMORPHISM
+    { 
         base.stats["Movement"] = 6;
         base.stats["Weapon Skill"] = 3;
         base.stats["Ballistic Skill"] = 3;
@@ -29,7 +29,7 @@ public class TacticalSquad : SpaceMarines
         base.stats["Armour Save"] = 3;
     }
 
-    public override void SetWeaponStats()
+    public override void SetWeaponStats() // POLYMORPHISM
     {
         base.weaponStats["Range"] = 12;
         base.weaponStats["Type"] = 1;

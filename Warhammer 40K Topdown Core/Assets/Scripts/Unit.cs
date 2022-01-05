@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
 
-public class Unit : MonoBehaviour
+public class Unit : MonoBehaviour // INHARITANCE
 {
     public float speed = 3;
     public bool canMove = true;
@@ -164,12 +164,12 @@ public class Unit : MonoBehaviour
         restDistance = 0;
     }
 
-    public virtual void SetStats()
+    public virtual void SetStats() // POLYMORPHISM
     {
 
     }
 
-    public virtual void SetWeaponStats()
+    public virtual void SetWeaponStats() // POLYMORPHISM
     {
 
     }

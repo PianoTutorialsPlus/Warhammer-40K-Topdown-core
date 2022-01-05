@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class NecronWarrior : Necrons
+public class NecronWarrior : Necrons // INHARITANCE
 {
     
     
@@ -12,7 +12,7 @@ public class NecronWarrior : Necrons
     //    {"Strength", 4},
     //};
     
-    public override void SetStats()
+    public override void SetStats() // POLYMORPHISM
     {
         base.stats["Movement"] = 5;
         base.stats["Weapon Skill"] = 3;
@@ -25,7 +25,7 @@ public class NecronWarrior : Necrons
         base.stats["Armour Save"] = 4;
     }
 
-    public override void SetWeaponStats()
+    public override void SetWeaponStats() // POLYMORPHISM
     {
         base.weaponStats["Range"] = 12;
         base.weaponStats["Type"] = 1;

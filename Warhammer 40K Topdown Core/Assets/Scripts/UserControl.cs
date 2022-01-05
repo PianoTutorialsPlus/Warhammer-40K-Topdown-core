@@ -116,7 +116,7 @@ public class UserControl : MonoBehaviour
         m_EnemySelected = null;
     }
 
-    public void HandleDamage(int damage, int notSaved)
+    public void HandleDamage(int damage, int notSaved) // ABSTRACTION
     {
         m_EnemySelected.stats["Wounds"] -= damage * notSaved;
 
@@ -124,7 +124,7 @@ public class UserControl : MonoBehaviour
         if(m_EnemySelected.stats["Wounds"] <=0)
             m_EnemySelected.Destroy();
     }
-    public int HandleSaveRoles(int saves, int modifier,int wounds)
+    public int HandleSaveRoles(int saves, int modifier,int wounds) // ABSTRACTION
     {
         int notSaved = 0;
         for (int i = 0; i < wounds; i++)
@@ -156,7 +156,7 @@ public class UserControl : MonoBehaviour
         return wounds;
     }
 
-    public int CalculateToWound(int strength, int toughness)
+    public int CalculateToWound(int strength, int toughness) // ABSTRACTION
     {
         int toWound = 0;
         if (strength >= 2 * toughness)
