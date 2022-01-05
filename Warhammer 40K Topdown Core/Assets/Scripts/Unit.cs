@@ -6,14 +6,18 @@ public class Unit : MonoBehaviour
 {
     public float speed = 3;
     public bool canMove = true;
+    public bool canShoot = true;
     public bool singleton;
 
     protected NavMeshAgent m_Agent;     // Moving behaviour
     private NavMeshPath path;
     [SerializeField] float moveDistance;
     public float movedDistance = 0;
+    public int weaponRange;
     public float distanceToMove;
     public float restDistance = 1;
+    public string phase;
+    
 
 
     [Header("List")]
@@ -33,6 +37,15 @@ public class Unit : MonoBehaviour
         {"Armour Save", 0},
     };
 
+    public Dictionary<string, int> weaponStats = new Dictionary<string, int>()
+    {
+        {"Range", 0},
+        {"Type", 0},
+        {"Strength",0},
+        {"Armor Pen",0},
+        {"Damage",0 },
+    };
+
 
     //public  GameObject distanceIndicator;
 
@@ -43,7 +56,9 @@ public class Unit : MonoBehaviour
         m_Agent.acceleration = 999;
         m_Agent.angularSpeed = 999;
         SetStats();
+        SetWeaponStats();
         moveDistance = stats["Movement"];
+        weaponRange = weaponStats["Range"];
         
     }
 
@@ -52,36 +67,44 @@ public class Unit : MonoBehaviour
     void Start()
     {
         path = new NavMeshPath();
+        phase = "Movement Phase";
     }
 
 
     // Update is called once per frame
     void Update()
     {
-
-        if (canMove)
+        switch (phase)
         {
-            restDistance = moveDistance - movedDistance - (distanceToMove - m_Agent.remainingDistance);
+            case "Movement Phase":
+                if (canMove)
+                {
+                    restDistance = moveDistance - movedDistance - (distanceToMove - m_Agent.remainingDistance);
+                }
+
+                if (restDistance <= 0)
+                {
+                    Freeze();
+                }
+
+                if (canMove && m_Agent.remainingDistance <= 0 && singleton)
+                {
+                    movedDistance += distanceToMove;
+                    distanceToMove = 0;
+                    singleton = false;
+                }
+
+                if (m_Agent.remainingDistance > 0 && m_Agent.hasPath)
+                {
+                    singleton = true;
+                }
+                break;
+            case "Shooting Phase":
+                restDistance = weaponRange;
+
+                break;
         }
 
-        if (restDistance <= 0)
-        {
-            canMove = false;
-            m_Agent.isStopped = true;
-            restDistance = 0;
-        }
-
-        if (canMove && m_Agent.remainingDistance <= 0 && singleton)
-        {
-            movedDistance += distanceToMove;
-            distanceToMove = 0;
-            singleton = false;
-        }
-
-        if (m_Agent.remainingDistance > 0 && m_Agent.hasPath)
-        {
-            singleton = true;
-        }
 
     }
 
@@ -130,11 +153,29 @@ public class Unit : MonoBehaviour
     public virtual void ResetData()
     {
         canMove = true;
+        canShoot = true;
         movedDistance = 0;
+    }
+
+    public virtual void Freeze()
+    {
+        canMove = false;
+        m_Agent.isStopped = true;
+        restDistance = 0;
     }
 
     public virtual void SetStats()
     {
 
+    }
+
+    public virtual void SetWeaponStats()
+    {
+
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

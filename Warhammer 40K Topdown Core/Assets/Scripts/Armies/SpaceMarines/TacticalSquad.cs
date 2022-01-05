@@ -28,4 +28,13 @@ public class TacticalSquad : SpaceMarines
         base.stats["Leadership"] = 7;
         base.stats["Armour Save"] = 3;
     }
+
+    public override void SetWeaponStats()
+    {
+        base.weaponStats["Range"] = 12;
+        base.weaponStats["Type"] = 1;
+        base.weaponStats["Strength"] = 4;
+        base.weaponStats["Armour Pen"] = -1;
+        base.weaponStats["Damage"] = 1;
+    }
 }

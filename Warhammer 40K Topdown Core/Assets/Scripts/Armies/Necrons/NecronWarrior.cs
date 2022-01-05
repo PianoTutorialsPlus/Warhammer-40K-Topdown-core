@@ -25,6 +25,15 @@ public class NecronWarrior : Necrons
         base.stats["Armour Save"] = 4;
     }
 
+    public override void SetWeaponStats()
+    {
+        base.weaponStats["Range"] = 12;
+        base.weaponStats["Type"] = 1;
+        base.weaponStats["Strength"] = 8;
+        base.weaponStats["Armour Pen"] = -1;
+        base.weaponStats["Damage"] = 1;
+    }
+
     //new float moveDistance = 6;
 
     //// Start is called before the first frame update
