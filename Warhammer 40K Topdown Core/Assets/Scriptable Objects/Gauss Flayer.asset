@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5878a878efb4604f9fa72f529a773fc, type: 3}
+  m_Name: Gauss Flayer
+  m_EditorClassIdentifier: 
+  _name: 'Gauss Flayer '
+  _range: 24
+  _type: 0
+  _shots: 1
+  _strength: 4
+  _armourPen: -1
+  _damage: 1

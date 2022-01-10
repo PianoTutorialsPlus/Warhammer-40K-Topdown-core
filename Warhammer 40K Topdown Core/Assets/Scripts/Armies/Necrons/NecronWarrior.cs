@@ -1,17 +1,5 @@
-using System.Collections.Generic;
-
-public class NecronWarrior : Necrons // INHARITANCE
+public class NecronWarrior : Necrons// INHARITANCE
 {
-    
-    
-    //public new Dictionary<string, int> stats = new Dictionary<string, int>
-    //{
-    //    {"Movement", 5},
-    //    {"Weapon Skill", 3},
-    //    {"Ballistic Skill", 3},
-    //    {"Strength", 4},
-    //};
-    
     public override void SetStats() // POLYMORPHISM
     {
         base.stats["Movement"] = 5;
@@ -33,19 +21,5 @@ public class NecronWarrior : Necrons // INHARITANCE
         base.weaponStats["Armour Pen"] = -1;
         base.weaponStats["Damage"] = 1;
     }
-
-    //new float moveDistance = 6;
-
-    //// Start is called before the first frame update
-    //void Start()
-    //{
-
-    //}
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-
-    //}
 
 }

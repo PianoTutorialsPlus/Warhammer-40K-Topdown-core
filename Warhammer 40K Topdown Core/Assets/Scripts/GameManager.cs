@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] player;
     public GameObject userControl;
     public string phase;
-   
+
     int turn = 1;
     // Start is called before the first frame update
     void Start()
@@ -58,7 +56,7 @@ public class GameManager : MonoBehaviour
                     player = player1;
                     turn++;
                 }
-                
+
                 foreach (GameObject unit in player)
                 {
                     if (unit != null)
@@ -67,7 +65,7 @@ public class GameManager : MonoBehaviour
                         unit.GetComponent<Unit>().phase = phase;
                     }
                 }
-                
+
                 break;
         }
 
@@ -77,7 +75,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateTurnText()
     {
-        foreach(GameObject unit in player)
+        foreach (GameObject unit in player)
         {
             if (unit != null)
             {
@@ -85,8 +83,8 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
-        
-        
+
+
     }
 
     public void UpdateInfoPanel()

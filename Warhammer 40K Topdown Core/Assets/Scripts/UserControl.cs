@@ -12,8 +12,10 @@ public class UserControl : MonoBehaviour
     float baseSize = 0.5f;
     public float range;
 
+    public ShootingSO _shooting;
 
-    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,23 +35,28 @@ public class UserControl : MonoBehaviour
             {
                 m_Selected = unit;
 
-                gameManager.infoPanel[0].text = $"Player Stats: {m_Selected.name}\n"; 
-
-                foreach(var stat in m_Selected.stats)
-                {
-                    gameManager.infoPanel[0].text += $"{stat.Key.Substring(0,1)}: {stat.Value} ";
-                }
-                gameManager.infoPanel[0].text += $"\nWeapon Stats: ";
-                foreach (var stat in m_Selected.weaponStats)
-                {
-                    gameManager.infoPanel[0].text += $"{stat.Key.Substring(0, 1)}: {stat.Value} ";
-                }
-
-
+                DisplayStats();
             }
-            
+
         }
 
+    }
+
+    public void DisplayStats()
+    {
+        gameManager.infoPanel[0].text = $"Player Stats: {m_Selected.name}\n";
+
+        //foreach (var stat in m_Selected.stats)
+        //{
+        //    gameManager.infoPanel[0].text += $"{stat.Key.Substring(0, 1)}: {stat.Value} ";
+        //}
+        //gameManager.infoPanel[0].text += $"\nWeapon Stats: ";
+        ////foreach (var stat in m_Selected.weaponStats)
+        ////{
+        ////    gameManager.infoPanel[0].text += $"{stat.Key.Substring(0, 1)}: {stat.Value} ";
+        ////}
+
+        //gameManager.infoPanel[0].text += $"{m_Selected._weaponSO.Type}";
     }
 
     public void HandleEnemySelection()
@@ -81,7 +88,7 @@ public class UserControl : MonoBehaviour
         int shots;
         int rapidFire;
         int hits;
-        int wounds =0;
+        int wounds = 0;
         int notSaved = 0;
 
         gameManager.infoPanel[2].text = "Hits:\n";
@@ -91,7 +98,7 @@ public class UserControl : MonoBehaviour
 
         if (range < m_Selected.weaponRange / 2)
         {
-            rapidFire = m_Selected.weaponStats["Type"]*2;
+            rapidFire = m_Selected.weaponStats["Type"] * 2;
         }
         else
         {
@@ -101,16 +108,16 @@ public class UserControl : MonoBehaviour
         shots = m_Selected.stats["Attacks"] * rapidFire;
 
         hits = HandleToHit(m_Selected.stats["Ballistic Skill"], shots);
-        
-        if(hits>0)
-            wounds = HandleToWound(m_Selected.weaponStats["Strength"],m_EnemySelected.stats["Toughness"],hits);
-        
-        if (wounds > 0)
-            notSaved = HandleSaveRoles(m_EnemySelected.stats["Armour Save"],m_Selected.weaponStats["Armour Pen"],wounds);
 
-       
+        if (hits > 0)
+            wounds = HandleToWound(m_Selected.weaponStats["Strength"], m_EnemySelected.stats["Toughness"], hits);
+
+        if (wounds > 0)
+            notSaved = HandleSaveRoles(m_EnemySelected.stats["Armour Save"], m_Selected.weaponStats["Armour Pen"], wounds);
+
+
         if (notSaved > 0)
-            HandleDamage(m_Selected.weaponStats["Damage"] ,notSaved);
+            HandleDamage(m_Selected.weaponStats["Damage"], notSaved);
 
         m_Selected.canShoot = false;
         m_EnemySelected = null;
@@ -121,17 +128,17 @@ public class UserControl : MonoBehaviour
         m_EnemySelected.stats["Wounds"] -= damage * notSaved;
 
 
-        if(m_EnemySelected.stats["Wounds"] <=0)
+        if (m_EnemySelected.stats["Wounds"] <= 0)
             m_EnemySelected.Destroy();
     }
-    public int HandleSaveRoles(int saves, int modifier,int wounds) // ABSTRACTION
+    public int HandleSaveRoles(int saves, int modifier, int wounds) // ABSTRACTION
     {
         int notSaved = 0;
         for (int i = 0; i < wounds; i++)
         {
-            
+
             int saveResult = Random.Range(1, 7);
-            gameManager.infoPanel[4].text += $"S{i+1}: {saveResult} ";
+            gameManager.infoPanel[4].text += $"S{i + 1}: {saveResult} ";
             if (saveResult < (saves - modifier))
                 notSaved++;
         }
@@ -142,17 +149,17 @@ public class UserControl : MonoBehaviour
     {
         int wounds = 0;
         int toWound = 0;
-        
-        for(int i = 0; i < hits; i++)
+
+        for (int i = 0; i < hits; i++)
         {
             toWound = CalculateToWound(strength, toughness);
             int woundResult = Random.Range(1, 7);
-            gameManager.infoPanel[3].text += $"W{i+1}: {woundResult}; ToW: {toWound} ";
+            gameManager.infoPanel[3].text += $"W{i + 1}: {woundResult}; ToW: {toWound} ";
 
             if (woundResult >= toWound)
                 wounds++;
         }
-        
+
         return wounds;
     }
 
@@ -162,19 +169,20 @@ public class UserControl : MonoBehaviour
         if (strength >= 2 * toughness)
         {
             toWound = 2;
-        }else if(strength > toughness)
+        }
+        else if (strength > toughness)
         {
             toWound = 3;
         }
-        else if(strength == toughness)
+        else if (strength == toughness)
         {
             toWound = 4;
         }
-        else if(2*strength < toughness)
+        else if (2 * strength < toughness)
         {
             toWound = 6;
         }
-        else if(strength < toughness)
+        else if (strength < toughness)
         {
             toWound = 5;
         }
@@ -212,11 +220,13 @@ public class UserControl : MonoBehaviour
         {
             int hitResult = Random.Range(1, 7);
             gameManager.infoPanel[2].text += $"H{i + 1}: {hitResult} ";
-           
+
+            hits = m_Selected._weaponSO.HitModifier(hits);
+
             if (hitResult >= toHit)
-                hits++;     
+                hits++;
         }
-        return hits;      
+        return hits;
 
     }
     public void HandleAction()
@@ -268,9 +278,9 @@ public class UserControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameManager.phase == "Movement Phase")
+        if (gameManager.phase == "Movement Phase")
         {
-        
+
             if (Input.GetMouseButtonDown(0))
             {
                 HandleSelection();
@@ -285,7 +295,7 @@ public class UserControl : MonoBehaviour
                 SetActionRadius();
             }
         }
-        else if(gameManager.phase == "Shooting Phase")
+        else if (gameManager.phase == "Shooting Phase")
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -296,7 +306,7 @@ public class UserControl : MonoBehaviour
             {
                 HandleEnemySelection();
 
-                if (m_EnemySelected != null && InRange()) 
+                if (m_EnemySelected != null && InRange())
                 {
                     HandleShooting();
                 }

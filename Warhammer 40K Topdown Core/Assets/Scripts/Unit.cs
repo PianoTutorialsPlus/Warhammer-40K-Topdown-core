@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections.Generic;
 
 public class Unit : MonoBehaviour // INHARITANCE
 {
@@ -17,12 +17,7 @@ public class Unit : MonoBehaviour // INHARITANCE
     public float distanceToMove;
     public float restDistance = 1;
     public string phase;
-    
-
-
-    [Header("List")]
-    [SerializeField]
-    List<string> test2 = new List<string> { "Hallo" };
+    public WeaponSO _weaponSO;
 
     public Dictionary<string, int> stats = new Dictionary<string, int>()
     {
@@ -59,7 +54,8 @@ public class Unit : MonoBehaviour // INHARITANCE
         SetWeaponStats();
         moveDistance = stats["Movement"];
         weaponRange = weaponStats["Range"];
-        
+       
+
     }
 
 
@@ -110,7 +106,7 @@ public class Unit : MonoBehaviour // INHARITANCE
 
     public virtual void AddMovedDistance()
     {
-        
+
         movedDistance += (distanceToMove - m_Agent.remainingDistance);
     }
 

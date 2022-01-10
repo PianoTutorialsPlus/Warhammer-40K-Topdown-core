@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class TacticalSquad : SpaceMarines // INHARITANCE
 {
     // public new float moveDistance = 6;
@@ -17,7 +13,7 @@ public class TacticalSquad : SpaceMarines // INHARITANCE
 
     //}
     public override void SetStats() // POLYMORPHISM
-    { 
+    {
         base.stats["Movement"] = 6;
         base.stats["Weapon Skill"] = 3;
         base.stats["Ballistic Skill"] = 3;

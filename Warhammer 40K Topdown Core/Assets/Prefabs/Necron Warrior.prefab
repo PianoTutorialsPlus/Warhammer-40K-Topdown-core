@@ -134,8 +134,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   canMove: 0
+  canShoot: 1
   singleton: 0
   moveDistance: 5
   movedDistance: 0
+  weaponRange: 0
   distanceToMove: 0
   restDistance: 0
+  phase: 
+  _weaponSO: {fileID: 11400000, guid: 8f6d2e801aef2e642b692633b1aa6774, type: 2}

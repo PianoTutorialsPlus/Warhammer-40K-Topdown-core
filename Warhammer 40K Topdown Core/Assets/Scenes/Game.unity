@@ -1481,6 +1481,7 @@ MonoBehaviour:
   DistanceIndicator: {fileID: 1403660709}
   gameManager: {fileID: 729138428}
   range: 0
+  _shooting: {fileID: 11400000, guid: 3bbe86d0a050e024f93f49ced9fbf9af, type: 2}
 --- !u!4 &1102178275
 Transform:
   m_ObjectHideFlags: 0
