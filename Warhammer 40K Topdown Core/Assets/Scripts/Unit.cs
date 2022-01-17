@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
-public class Unit : MonoBehaviour // INHARITANCE
+public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler // INHARITANCE
 {
     public float speed = 3;
     public bool canMove = true;
@@ -18,6 +20,13 @@ public class Unit : MonoBehaviour // INHARITANCE
     public float restDistance = 1;
     public string phase;
     public WeaponSO _weaponSO;
+    public UnityAction onTapDownAction;
+    public UnityAction onPointerEnter;
+    public UnityAction<Unit> onPointerEnterInfo;
+    public UnityAction<Unit> onPointerExit;
+    public ActiveUnitSO activeUnit;
+
+    
 
     public Dictionary<string, int> stats = new Dictionary<string, int>()
     {
@@ -54,7 +63,7 @@ public class Unit : MonoBehaviour // INHARITANCE
         SetWeaponStats();
         moveDistance = stats["Movement"];
         weaponRange = weaponStats["Range"];
-       
+
 
     }
 
@@ -102,6 +111,33 @@ public class Unit : MonoBehaviour // INHARITANCE
         }
 
 
+    }
+    public void OnPointerEnter(PointerEventData pointerEvent)
+    {
+        if (onPointerEnter != null)
+        {
+            //activeUnit.activeUnit = gameObject.GetComponent<Unit>();
+            onPointerEnter();
+            onPointerEnterInfo(gameObject.GetComponent<Unit>());
+        }
+
+
+    }
+
+    public void OnPointerExit(PointerEventData pointerEvent)
+    {
+        if (onPointerExit != null)
+        {
+            onPointerExit(gameObject.GetComponent<Unit>());
+            //onPointerEnterInfo(false, gameObject);
+        }
+    }
+
+    public void OnPointerClick(PointerEventData pointerEvent)
+    {
+        if (onTapDownAction != null)
+            onTapDownAction();
+        //Debug.Log(gameObject.name);
     }
 
     public virtual void AddMovedDistance()

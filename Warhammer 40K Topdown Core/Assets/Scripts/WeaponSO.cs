@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "WeaponVariant", menuName = "Weapon/WeaponVariant")]
 public abstract class WeaponSO : ScriptableObject

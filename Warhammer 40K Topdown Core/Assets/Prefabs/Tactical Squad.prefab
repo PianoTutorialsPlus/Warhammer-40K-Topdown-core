@@ -142,4 +142,5 @@ MonoBehaviour:
   distanceToMove: 0
   restDistance: 1
   phase: 
-  _weaponSO: {fileID: 11400000, guid: 6e76e0eced0b8ca4b9931ad102ab076d, type: 2}
+  _weaponSO: {fileID: 11400000, guid: 4a5aec3aa3d661c4b8fc25a0ab48c5df, type: 2}
+  activeUnit: {fileID: 0}

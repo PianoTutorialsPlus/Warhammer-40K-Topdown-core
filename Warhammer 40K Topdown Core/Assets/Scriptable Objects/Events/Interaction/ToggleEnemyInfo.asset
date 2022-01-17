@@ -9,13 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca244f3287e37e849b438605a7f0b224, type: 3}
-  m_Name: Tesla Carabine
+  m_Script: {fileID: 11500000, guid: d5675f786d1b59b4082a6e991288c657, type: 3}
+  m_Name: ToggleEnemyInfo
   m_EditorClassIdentifier: 
-  _name: Tesla Carabine
-  _range: 24
-  _type: 1
-  _shots: 2
-  _strength: 5
-  _armourPen: 0
-  _damage: 1

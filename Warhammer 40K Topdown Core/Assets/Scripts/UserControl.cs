@@ -1,4 +1,5 @@
 using UnityEngine;
+using WH40K;
 
 
 public class UserControl : MonoBehaviour
@@ -46,17 +47,17 @@ public class UserControl : MonoBehaviour
     {
         gameManager.infoPanel[0].text = $"Player Stats: {m_Selected.name}\n";
 
-        //foreach (var stat in m_Selected.stats)
+        foreach (var stat in m_Selected.stats)
+        {
+            gameManager.infoPanel[0].text += $"{stat.Key.Substring(0, 1)}: {stat.Value} ";
+        }
+        gameManager.infoPanel[0].text += $"\nWeapon Stats: ";
+        //foreach (var stat in m_Selected.weaponStats)
         //{
         //    gameManager.infoPanel[0].text += $"{stat.Key.Substring(0, 1)}: {stat.Value} ";
         //}
-        //gameManager.infoPanel[0].text += $"\nWeapon Stats: ";
-        ////foreach (var stat in m_Selected.weaponStats)
-        ////{
-        ////    gameManager.infoPanel[0].text += $"{stat.Key.Substring(0, 1)}: {stat.Value} ";
-        ////}
 
-        //gameManager.infoPanel[0].text += $"{m_Selected._weaponSO.Type}";
+        gameManager.infoPanel[0].text += $"{m_Selected._weaponSO.Type}";
     }
 
     public void HandleEnemySelection()

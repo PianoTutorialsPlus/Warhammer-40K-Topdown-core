@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName ="Tesla Carabine",menuName = "Weapons/Tesla Carabine")]
+[CreateAssetMenu(fileName = "Tesla Carabine", menuName = "Weapons/Tesla Carabine")]
 public class TeslaCarabineSO : WeaponSO // INHARITANCE
-{ 
+{
     public override int HitModifier(int hits) // POLYMORPHISM
     {
         hits += 2;
