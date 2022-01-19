@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Player/Player")]
 public class PlayerSO : ScriptableObject
 {
-    public List<GameObject> _playerUnits;
+    public List<Unit> _playerUnits;
 }

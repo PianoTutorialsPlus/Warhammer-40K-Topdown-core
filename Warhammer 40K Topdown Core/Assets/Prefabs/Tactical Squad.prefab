@@ -143,4 +143,6 @@ MonoBehaviour:
   restDistance: 1
   phase: 
   _weaponSO: {fileID: 11400000, guid: 4a5aec3aa3d661c4b8fc25a0ab48c5df, type: 2}
-  activeUnit: {fileID: 0}
+  _unitSO: {fileID: 11400000, guid: fa1d5cbd72c003643a43243307e9c2af, type: 2}
+  _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
+  activeUnit: {fileID: 11400000, guid: d13b2056c8061204f8a603b72b287e26, type: 2}

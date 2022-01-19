@@ -10,9 +10,9 @@ using UnityEngine.Events;
 public class InfoUIEventChannelSO : ScriptableObject
 {
     public UnityAction<bool, Unit> OnEventRaised;
-    public void RaiseEvent(bool state, Unit interactionType)
+    public void RaiseEvent(bool state, Unit unit)
     {
         if (OnEventRaised != null)
-            OnEventRaised.Invoke(state, interactionType);
+            OnEventRaised.Invoke(state, unit);
     }
 }

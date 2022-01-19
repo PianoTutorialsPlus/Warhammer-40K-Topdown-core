@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4740640696147648}
   - component: {fileID: 33296801442119484}
   - component: {fileID: 23697181008175936}
+  - component: {fileID: 3165835895074231180}
   m_Layer: 0
   m_Name: DistanceIndicator
   m_TagString: Untagged
@@ -81,3 +82,15 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3165835895074231180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887969965315444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d7d6c527c40d34d802d4d1aef7a367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

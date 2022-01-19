@@ -1,5 +1,59 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &307684651944122558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4578230722919460039}
+  - component: {fileID: 7843775761246225959}
+  m_Layer: 0
+  m_Name: MovementPhase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4578230722919460039
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307684651944122558}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2800503590118200941}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7843775761246225959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307684651944122558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e331178428f274040861a4abf6b593aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _activePlayer: {fileID: 0}
+  _enemyPlayer: {fileID: 0}
+  _player1: {fileID: 0}
+  _player2: {fileID: 0}
+  _inputReader: {fileID: 0}
+  currentInteraction: 0
+  _toggleInteractionUI: {fileID: 0}
+  _toggleInfoUI: {fileID: 0}
+  _toggleEnemyInfoUI: {fileID: 0}
+  _toggleIndicatorConnectionUI: {fileID: 0}
+  _onInteractionEnded: {fileID: 0}
 --- !u!1 &2367222600306197390
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,7 +81,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4578230722919460039}
+  - {fileID: 2098829990955132398}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -47,10 +103,52 @@ MonoBehaviour:
   _enemyPlayer: {fileID: 11400000, guid: e0f0a8fe54f414b419ee63ccfecb16c0, type: 2}
   _player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
   _player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
-  currentInteraction: 0
-  _toggleInteractionUI: {fileID: 11400000, guid: e5da9e2f3b87fb743a963127ed2a21ce,
-    type: 2}
-  _toggleInfoUI: {fileID: 11400000, guid: 837cc3995138cc8408cc46a8c282b3c9, type: 2}
-  _toggleEnemyInfoUI: {fileID: 11400000, guid: 13cb68d56be8305479f9eeb418a3ffc7, type: 2}
-  _onInteractionEnded: {fileID: 11400000, guid: b9c81f7788957b5478e9bb9dd4cbe889,
-    type: 2}
+  _phase: {fileID: 11400000, guid: b8df2874291a63346adb22afab4681b4, type: 2}
+  _turn: {fileID: 11400000, guid: 8ebe249e6f8a9e849a8f560fa55961d3, type: 2}
+  SetPhaseEvent: {fileID: 0}
+  _toggleGameinfoUI: {fileID: 0}
+  movementPhase: {fileID: 0}
+  shootingPhase: {fileID: 0}
+--- !u!1 &4111181832899210392
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2098829990955132398}
+  - component: {fileID: 1103791074731393327}
+  m_Layer: 0
+  m_Name: ShootingPhase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2098829990955132398
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4111181832899210392}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2800503590118200941}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1103791074731393327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4111181832899210392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300cd540d20a7dc449216d15065ae58f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

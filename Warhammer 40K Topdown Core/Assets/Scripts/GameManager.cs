@@ -5,14 +5,14 @@ namespace WH40K
 {
     public class GameManager : MonoBehaviour
     {
-        public GameObject[] player1;
-        public GameObject[] player2;
+        public Unit[] player1;
+        public Unit[] player2;
         public Text turnText;
         public Text[] infoPanel;
         public PlayerSO _player1;
         public PlayerSO _player2;
 
-        public GameObject[] player;
+        public Unit[] player;
         public GameObject userControl;
         public string phase;
         //private UnitManager unitManager;
@@ -28,12 +28,13 @@ namespace WH40K
             _player1._playerUnits.Clear();
             _player2._playerUnits.Clear();
             
-            foreach(GameObject unit in player1)
+            foreach(Unit unit in player1)
             {
                 //Debug.Log("Test");
                 _player1._playerUnits.Add(unit);
             }
-            foreach (GameObject unit in player2)
+            Debug.Log(_player1._playerUnits.Count);
+            foreach (Unit unit in player2)
             {
                 //Debug.Log("Test");
                 _player2._playerUnits.Add(unit);
@@ -56,7 +57,7 @@ namespace WH40K
                 case "Movement Phase":
                     phase = "Shooting Phase";
 
-                    foreach (GameObject unit in player)
+                    foreach (Unit unit in player)
                     {
                         if (unit != null)
                         {
@@ -79,7 +80,7 @@ namespace WH40K
                         turn++;
                     }
 
-                    foreach (GameObject unit in player)
+                    foreach (Unit unit in player)
                     {
                         if (unit != null)
                         {
@@ -97,7 +98,7 @@ namespace WH40K
 
         public void UpdateTurnText()
         {
-            foreach (GameObject unit in player)
+            foreach (Unit unit in player)
             {
                 if (unit != null)
                 {

@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler // INHARITANCE
 {
@@ -17,10 +18,13 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
     public float movedDistance = 0;
     public int weaponRange;
     public float distanceToMove;
-    public float restDistance = 1;
+    public float restDistance = 3;
     public string phase;
     public WeaponSO _weaponSO;
-    public UnityAction onTapDownAction;
+    public UnitSO _unitSO;
+    public InputReader _inputReader;
+
+    public UnityAction<Unit> onTapDownAction;
     public UnityAction onPointerEnter;
     public UnityAction<Unit> onPointerEnterInfo;
     public UnityAction<Unit> onPointerExit;
@@ -61,8 +65,8 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
         m_Agent.angularSpeed = 999;
         SetStats();
         SetWeaponStats();
-        moveDistance = stats["Movement"];
-        weaponRange = weaponStats["Range"];
+        moveDistance = _unitSO.Movement; //stats["Movement"];
+        weaponRange = _weaponSO.Range; //weaponStats["Range"];
 
 
     }
@@ -112,16 +116,22 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
 
 
     }
+
+    //public void OnEnable()
+    //{
+    //    _inputReader.activateEvent += onTapDownAction;
+    //}
+
+    //public void OnDisable()
+    //{
+    //    _inputReader.activateEvent -= onTapDownAction;
+    //}
+
     public void OnPointerEnter(PointerEventData pointerEvent)
     {
-        if (onPointerEnter != null)
-        {
-            //activeUnit.activeUnit = gameObject.GetComponent<Unit>();
-            onPointerEnter();
-            onPointerEnterInfo(gameObject.GetComponent<Unit>());
-        }
-
-
+        if (onPointerEnter != null) onPointerEnter();
+        if (onPointerEnterInfo != null) onPointerEnterInfo(gameObject.GetComponent<Unit>());
+        
     }
 
     public void OnPointerExit(PointerEventData pointerEvent)
@@ -129,16 +139,30 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
         if (onPointerExit != null)
         {
             onPointerExit(gameObject.GetComponent<Unit>());
-            //onPointerEnterInfo(false, gameObject);
         }
     }
 
+    //public void OnButtonPressed()
+    //{
+    //    if (onTapDownAction != null) onTapDownAction(gameObject.GetComponent<Unit>());
+    //}
+
     public void OnPointerClick(PointerEventData pointerEvent)
     {
+        
         if (onTapDownAction != null)
-            onTapDownAction();
-        //Debug.Log(gameObject.name);
+        {
+            Debug.Log("Pointer Click");
+            //if (pointerEvent.button == PointerEventData.InputButton.Left)
+            //onTapDownAction(gameObject.GetComponent<Unit>());
+            onTapDownAction(gameObject.GetComponent<Unit>());
+            //_inputReader.activateEvent += onTapDownAction;
+            activeUnit.activeUnit = gameObject.GetComponent<Unit>();
+        }
+
+
     }
+
 
     public virtual void AddMovedDistance()
     {

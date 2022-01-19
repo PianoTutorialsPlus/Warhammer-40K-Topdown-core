@@ -4,6 +4,8 @@ using UnityEngine;
 
 
 public enum InteractionType { None = 0, Activate,ShowStats}
+public enum GamePhase { None = 0, MovementPhase,ShootingPhase}
+
 public class InteractionManager : MonoBehaviour
 {
     public PlayerSO _activePlayer;
@@ -11,39 +13,32 @@ public class InteractionManager : MonoBehaviour
     public PlayerSO _player1;
     public PlayerSO _player2;
 
-    [HideInInspector] public InteractionType currentInteraction;
-    //To store the object we are currently interacting with
-    private LinkedList<Interaction> _ongoingInteractions = new LinkedList<Interaction>();
-    //UI event
-    [SerializeField] private InteractionUIEventChannelSO _toggleInteractionUI = default;
-    [SerializeField] private InfoUIEventChannelSO _toggleInfoUI = default;
-    [SerializeField] private InfoUIEventChannelSO _toggleEnemyInfoUI = default;
-    [Header("Listening to")]
-    //Check if the interaction ended 
-    [SerializeField] private VoidEventChannelSO _onInteractionEnded = default;
+    public PhaseSO _phase; //Initialization
+    public TurnSO _turn; //Initialization
+
+    [SerializeField] PhaseEventChannelSO SetPhaseEvent = default;
+    [SerializeField] TurnEventChannelSO SetTurnEvent = default;
+    [SerializeField] private GameinfoUIEventChannelSO _toggleGameinfoUI = default;
+
+    [SerializeField] MovementPhaseManager movementPhase;
+    [SerializeField] ShootingPhaseManager shootingPhase;
 
     private void OnEnable()
     {
+        //Initialization
+        _phase.phase = GamePhase.MovementPhase;
+        _turn.turn = 1;
+
         // StartCoroutine(Sets());
-        _activePlayer = _player1;
-        _enemyPlayer = _player2;
+        _activePlayer._playerUnits = _player1._playerUnits;
+        _enemyPlayer._playerUnits = _player2._playerUnits;
 
-        foreach (GameObject child in _player1._playerUnits)
-        {
-            //_ongoingInteractions.AddFirst(new Interaction(ongoingInteractionType, child));
-            child.GetComponent<Unit>().onPointerEnter += DisplayInteractionUI;
-            child.GetComponent<Unit>().onPointerExit += ResetInteraction;
+        movementPhase.enabled = true;
+        shootingPhase.enabled = false;
 
-            child.GetComponent<Unit>().onPointerEnterInfo += DisplayInfoUI;
-        }
-        foreach (GameObject child in _player2._playerUnits)
-        {
-            //_ongoingInteractions.AddFirst(new Interaction(ongoingInteractionType, child));
-            child.GetComponent<Unit>().onPointerEnter += DisplayInteractionUI;
-            child.GetComponent<Unit>().onPointerExit += ResetInteraction;
-
-            child.GetComponent<Unit>().onPointerEnterInfo += DisplayInfoUI;
-        }
+        if (SetPhaseEvent != null) SetPhaseEvent.OnEventRaised += SetPhase;
+        
+        _toggleGameinfoUI.RaiseEvent(true, _activePlayer._playerUnits[0],_phase,_turn);
     }
 
 
@@ -51,7 +46,7 @@ public class InteractionManager : MonoBehaviour
     //{
     //    yield return new WaitForEndOfFrame();
     //    //InteractionType ongoingInteractionType = InteractionType.Activate;
-        
+
     //    foreach (GameObject child in _player1._player1Units)
     //    {
     //        //_ongoingInteractions.AddFirst(new Interaction(ongoingInteractionType, child));
@@ -60,51 +55,46 @@ public class InteractionManager : MonoBehaviour
     //    }
     //}
 
-
-    private void DisplayInfoUI(Unit unit)
+    public void SetPhase(PhaseSO phase)
     {
-        if(_activePlayer._playerUnits[0].tag == unit.tag)
-            _toggleInfoUI.RaiseEvent(true, unit);
-        if (_enemyPlayer._playerUnits[0].tag == unit.tag)
-            _toggleEnemyInfoUI.RaiseEvent(true, unit);
-    }
-    private void DisplayInteractionUI()
-    {
-        //Raise event to display UI
-        //Interaction ongoingInteraction = _ongoingInteractions.First.Value;
-        //_toggleInteractionUI.RaiseEvent(true, ongoingInteraction.Type);
-        _toggleInteractionUI.RaiseEvent(true, InteractionType.Activate);
+      
+        if (phase.phase == GamePhase.MovementPhase)
+        {
+            movementPhase.enabled = false;
+            shootingPhase.enabled = true;
+            phase.phase = GamePhase.ShootingPhase;
+            if (SetTurnEvent != null) SetTurnEvent.OnEventRaised -= SetTurn;
+        }
+        else if (phase.phase == GamePhase.ShootingPhase)
+        {
+            TogglePlayers();
+            movementPhase.enabled = true;       
+            shootingPhase.enabled = false;
+            phase.phase = GamePhase.MovementPhase;
+            if (SetTurnEvent != null && _activePlayer._playerUnits == _player1._playerUnits) SetTurnEvent.OnEventRaised += SetTurn;
+        }
+        _toggleGameinfoUI.RaiseEvent(true,_activePlayer._playerUnits[0],phase, _turn);
     }
 
-    private void ResetInteraction(Unit unit)
+    public void SetTurn(TurnSO turn)
     {
-        _toggleInteractionUI.RaiseEvent(false, InteractionType.None);
-        
-        //if (_activePlayer._playerUnits[0].tag == unit.tag)
-            _toggleInfoUI.RaiseEvent(false, unit);
-        //if (_enemyPlayer._playerUnits[0].tag == unit.tag)
-            _toggleEnemyInfoUI.RaiseEvent(false, unit);
-
-        //LinkedListNode<Interaction> currentNode = _ongoingInteractions.First;
-        //Debug.Log(_ongoingInteractions.Count);
-        //while (currentNode != null)
-        //{
-        //    if (currentNode.Value.InteractableObject == obj)
-        //    {
-        //        Debug.Log(obj.name);
-        //        _ongoingInteractions.Remove(currentNode);
-        //        break;
-        //    }
-        //    currentNode = currentNode.Next;
-        //}
-        //Debug.Log(_ongoingInteractions.Count);
-        //if (_ongoingInteractions.Count > 0)
-        //{
-        //    _toggleInteractionUI.RaiseEvent(true, _ongoingInteractions.First.Value.Type);
-        //}
-        //else
-        //{
-        //    _toggleInteractionUI.RaiseEvent(false, InteractionType.None);
-        //}
+        turn.turn += 1;
+        _toggleGameinfoUI.RaiseEvent(true, _activePlayer._playerUnits[0], _phase, turn);
     }
+
+    public void TogglePlayers()
+    {
+        if(_activePlayer._playerUnits == _player1._playerUnits)
+        {
+            _activePlayer._playerUnits = _player2._playerUnits;
+            _enemyPlayer._playerUnits = _player1._playerUnits;
+        }
+        else
+        {
+            _activePlayer._playerUnits = _player1._playerUnits;
+            _enemyPlayer._playerUnits = _player2._playerUnits;
+        }
+    }
+
+    
 }

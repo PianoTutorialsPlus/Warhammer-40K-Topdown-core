@@ -251,6 +251,7 @@ public class UserControl : MonoBehaviour
             DistanceIndicator.transform.position = m_Selected.transform.position;
             SetActionRadius();
         }
+
     }
 
     public void SetActionRadius()

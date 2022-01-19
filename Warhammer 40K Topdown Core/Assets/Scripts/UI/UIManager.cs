@@ -10,17 +10,22 @@ public class UIManager : MonoBehaviour
     public InteractionUIEventChannelSO SetInteractionEvent;
     public InfoUIEventChannelSO SetInfoEvent;
     public InfoUIEventChannelSO SetEnemyInfoEvent;
+    public IndicatorUIEventChannelSO ConnectIndicatorEvent;
+    public GameinfoUIEventChannelSO SetGameinfoEvent;
+
+    //public PhaseEventChannelSO SetPhaseEvent;
     private Unit unit = default;
 
-
-
+  
     private void OnEnable()
     {
         //Check if the event exists to avoid errors
         if (SetInteractionEvent != null) SetInteractionEvent.OnEventRaised += SetInteractionPanel;
         if (SetInfoEvent != null) SetInfoEvent.OnEventRaised += SetInfoPanel;
         if (SetEnemyInfoEvent != null) SetEnemyInfoEvent.OnEventRaised += SetEnemyInfoPanel;
-
+        if (ConnectIndicatorEvent != null) ConnectIndicatorEvent.OnEventRaised += SetIndicatorConnection;
+        if (SetGameinfoEvent != null) SetGameinfoEvent.OnEventRaised += SetGameinfoPanel;
+ 
     }
     // Start is called before the first frame update
     private void Start()
@@ -31,6 +36,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] UIInteractionManager interactionPanel;
     [SerializeField] UIInfoManager infoPanel;
     [SerializeField] UIInfoManager enemyInfoPanel;
+    [SerializeField] UIDistanceIndicator distanceIndicator;
+    [SerializeField] UIGameInfoManager gameinfoPanel;
 
 
 
@@ -41,25 +48,44 @@ public class UIManager : MonoBehaviour
         interactionPanel.gameObject.SetActive(isOpenEvent);
     }
     
-    public void SetInfoPanel(bool isOpenEvent, Unit interactionType)
+    public void SetInfoPanel(bool isOpenEvent, Unit unit)
     {
         if (isOpenEvent) {
-            infoPanel.FillInfoPanel(interactionType);
+            infoPanel.FillInfoPanel(unit);
             }
 
         infoPanel.gameObject.SetActive(isOpenEvent);
 
     }
 
-    public void SetEnemyInfoPanel(bool isOpenEvent, Unit interactionType)
+    public void SetEnemyInfoPanel(bool isOpenEvent, Unit unit)
     {
         if (isOpenEvent)
         {
-            enemyInfoPanel.FillInfoPanel(interactionType);
+            enemyInfoPanel.FillInfoPanel(unit);
         }
 
         enemyInfoPanel.gameObject.SetActive(isOpenEvent);
 
     }
+
+    public void SetIndicatorConnection(bool isOpenEvent, Unit unit)
+    {
+        if (isOpenEvent)
+        {
+            distanceIndicator.ConnectIndicator(unit);
+        }
+        distanceIndicator.gameObject.SetActive(isOpenEvent);
+    }
+    public void SetGameinfoPanel(bool isOpenEvent, Unit unit, PhaseSO phase, TurnSO turn)
+    {
+        if (isOpenEvent)
+        {
+            gameinfoPanel.FillInfoPanel(unit,phase,turn);
+        }
+
+        gameinfoPanel.gameObject.SetActive(isOpenEvent);
+    }
+
 
 }

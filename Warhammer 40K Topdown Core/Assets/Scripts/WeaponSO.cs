@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "WeaponVariant", menuName = "Weapon/WeaponVariant")]
+[CreateAssetMenu(fileName = "WeaponVariant", menuName = "Weapons/WeaponVariant")]
 public abstract class WeaponSO : ScriptableObject
 {
     [Tooltip("Name of the Weapon")]

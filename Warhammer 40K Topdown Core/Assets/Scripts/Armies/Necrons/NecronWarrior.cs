@@ -1,5 +1,5 @@
 using UnityEngine.EventSystems;
-public class NecronWarrior : Necrons, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler// INHARITANCE
+public class NecronWarrior : Necrons//, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler// INHARITANCE
 {
     public override void SetStats() // POLYMORPHISM
     {
@@ -22,14 +22,14 @@ public class NecronWarrior : Necrons, IPointerClickHandler, IPointerDownHandler,
         base.weaponStats["Armour Pen"] = -1;
         base.weaponStats["Damage"] = 1;
     }
-    public void OnPointerDown(PointerEventData pointerEventData)
-    {
+    //public void OnPointerDown(PointerEventData pointerEventData)
+    //{
 
-    }
-    public void OnPointerUp(PointerEventData pointerEventData)
-    {
+    //}
+    //public void OnPointerUp(PointerEventData pointerEventData)
+    //{
 
-    }
+    //}
     //public void OnPointerClick(PointerEventData pointerEventData)
     //{
     //    Debug.Log(gameObject.name);
