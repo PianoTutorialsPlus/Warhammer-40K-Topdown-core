@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName ="Interaction", menuName ="UI/Interaction")]
+[CreateAssetMenu(fileName = "Interaction", menuName = "UI/Interaction")]
 public class InteractionSO : ScriptableObject
 {
     [Tooltip("The interaction name")]

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +6,7 @@ using UnityEngine.Events;
 /// Example: Switch from turn 1 to turn 2
 /// </summary>
 
-[CreateAssetMenu(menuName ="Events/Switch gameturn")]
+//[CreateAssetMenu(menuName ="Events/Switch gameturn")]
 public class TurnEventChannelSO : ScriptableObject
 {
     public UnityAction<TurnSO> OnEventRaised;

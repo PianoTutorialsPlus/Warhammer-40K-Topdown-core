@@ -137,6 +137,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
         type: 3}
+      propertyPath: _gameStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33,
+        type: 2}
+    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
+        type: 3}
       propertyPath: SetTurnEvent
       value: 
       objectReference: {fileID: 11400000, guid: 21765cca7eb651f4e979e4b11efcf497,
@@ -151,7 +157,7 @@ PrefabInstance:
         type: 3}
       propertyPath: SetPhaseEvent
       value: 
-      objectReference: {fileID: 11400000, guid: 674c6ab8b80f50a409463a10c816462a,
+      objectReference: {fileID: 11400000, guid: 3605cfadf21537e438e036494d5c3289,
         type: 2}
     - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
         type: 3}
@@ -180,6 +186,12 @@ PrefabInstance:
       propertyPath: _toggleEnemyInfoUI
       value: 
       objectReference: {fileID: 11400000, guid: 13cb68d56be8305479f9eeb418a3ffc7,
+        type: 2}
+    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
+        type: 3}
+      propertyPath: _toggleBattleRounds
+      value: 
+      objectReference: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
         type: 2}
     - target: {fileID: 2367222600306197390, guid: f236ff4f5317d8341865b231e238112a,
         type: 3}
@@ -255,6 +267,12 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
         type: 3}
+      propertyPath: _gameStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33,
+        type: 2}
+    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
+        type: 3}
       propertyPath: inputReader
       value: 
       objectReference: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a,
@@ -294,6 +312,12 @@ PrefabInstance:
       propertyPath: _toggleInteractionUI
       value: 
       objectReference: {fileID: 11400000, guid: e5da9e2f3b87fb743a963127ed2a21ce,
+        type: 2}
+    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
+        type: 3}
+      propertyPath: SetMovementPhaseEvent
+      value: 
+      objectReference: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
         type: 2}
     - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
         type: 3}
@@ -614,7 +638,8 @@ MonoBehaviour:
   m_LeftClickAction: {fileID: -3219079110695518598, guid: 60355c7f99b6dd34f8d31d3c7aa9e5ca,
     type: 3}
   m_MiddleClickAction: {fileID: 0}
-  m_RightClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: -1920340032224921737, guid: 60355c7f99b6dd34f8d31d3c7aa9e5ca,
+    type: 3}
   m_ScrollWheelAction: {fileID: 0}
   m_TrackedDevicePositionAction: {fileID: 0}
   m_TrackedDeviceOrientationAction: {fileID: 0}
@@ -676,7 +701,7 @@ PrefabInstance:
     - target: {fileID: 2430091736876100063, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2430091736876100063, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}
@@ -692,7 +717,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 11400000, guid: 674c6ab8b80f50a409463a10c816462a,
+      objectReference: {fileID: 11400000, guid: 3605cfadf21537e438e036494d5c3289,
         type: 2}
     - target: {fileID: 2430091736876100063, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}
@@ -718,7 +743,7 @@ PrefabInstance:
     - target: {fileID: 2430091736876100063, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: PhaseEventChannelSO, Assembly-CSharp
+      value: GameStatsEventChannelSO, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2430091736876100063, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}
@@ -729,7 +754,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 11400000, guid: b8df2874291a63346adb22afab4681b4,
+      objectReference: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33,
         type: 2}
     - target: {fileID: 2430091736876100063, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}
@@ -740,7 +765,7 @@ PrefabInstance:
     - target: {fileID: 2430091736876100063, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: PhaseSO, Assembly-CSharp
+      value: GameStatsSO, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2430091736876100063, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}

@@ -24,7 +24,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
     ""name"": ""GameInput"",
     ""maps"": [
         {
-            ""name"": ""Gameplay"",
+            ""name"": ""UI"",
             ""id"": ""e3287498-5805-45f1-b83b-4b8f065301e9"",
             ""actions"": [
                 {
@@ -37,7 +37,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Activate"",
+                    ""name"": ""Click"",
                     ""type"": ""PassThrough"",
                     ""id"": ""85935ffb-c7e3-402b-9ae2-dd10ac925d44"",
                     ""expectedControlType"": ""Button"",
@@ -46,8 +46,8 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Execute"",
-                    ""type"": ""Button"",
+                    ""name"": ""Rightclick"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""a82b4a77-dcbc-4c5f-88aa-a47bb88e43ef"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
@@ -74,13 +74,61 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Activate"",
+                    ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""c3dc5dfb-d6d1-4e61-85eb-f238bf44c2f6"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rightclick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Gameplay"",
+            ""id"": ""cf8f6a04-c54d-4a38-8723-afe249f59438"",
+            ""actions"": [
+                {
+                    ""name"": ""Activate"",
+                    ""type"": ""Button"",
+                    ""id"": ""470bc24d-c0dc-40f4-b041-81979f8c467b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Execute"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b28c306-3010-4033-b6d5-4e647e1b0cea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""474dab00-319c-48a9-be18-be5403c95625"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Activate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9fe64f40-16ef-42f6-ac43-80ddedaa2afe"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -94,9 +142,13 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_CurserControl = m_UI.FindAction("CurserControl", throwIfNotFound: true);
+        m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
+        m_UI_Rightclick = m_UI.FindAction("Rightclick", throwIfNotFound: true);
         // Gameplay
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_CurserControl = m_Gameplay.FindAction("CurserControl", throwIfNotFound: true);
         m_Gameplay_Activate = m_Gameplay.FindAction("Activate", throwIfNotFound: true);
         m_Gameplay_Execute = m_Gameplay.FindAction("Execute", throwIfNotFound: true);
     }
@@ -155,17 +207,64 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_CurserControl;
+    private readonly InputAction m_UI_Click;
+    private readonly InputAction m_UI_Rightclick;
+    public struct UIActions
+    {
+        private @GameInput m_Wrapper;
+        public UIActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CurserControl => m_Wrapper.m_UI_CurserControl;
+        public InputAction @Click => m_Wrapper.m_UI_Click;
+        public InputAction @Rightclick => m_Wrapper.m_UI_Rightclick;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @CurserControl.started -= m_Wrapper.m_UIActionsCallbackInterface.OnCurserControl;
+                @CurserControl.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnCurserControl;
+                @CurserControl.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnCurserControl;
+                @Click.started -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
+                @Rightclick.started -= m_Wrapper.m_UIActionsCallbackInterface.OnRightclick;
+                @Rightclick.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnRightclick;
+                @Rightclick.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnRightclick;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @CurserControl.started += instance.OnCurserControl;
+                @CurserControl.performed += instance.OnCurserControl;
+                @CurserControl.canceled += instance.OnCurserControl;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
+                @Rightclick.started += instance.OnRightclick;
+                @Rightclick.performed += instance.OnRightclick;
+                @Rightclick.canceled += instance.OnRightclick;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
+
     // Gameplay
     private readonly InputActionMap m_Gameplay;
     private IGameplayActions m_GameplayActionsCallbackInterface;
-    private readonly InputAction m_Gameplay_CurserControl;
     private readonly InputAction m_Gameplay_Activate;
     private readonly InputAction m_Gameplay_Execute;
     public struct GameplayActions
     {
         private @GameInput m_Wrapper;
         public GameplayActions(@GameInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @CurserControl => m_Wrapper.m_Gameplay_CurserControl;
         public InputAction @Activate => m_Wrapper.m_Gameplay_Activate;
         public InputAction @Execute => m_Wrapper.m_Gameplay_Execute;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
@@ -177,9 +276,6 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
             {
-                @CurserControl.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCurserControl;
-                @CurserControl.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCurserControl;
-                @CurserControl.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnCurserControl;
                 @Activate.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnActivate;
                 @Activate.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnActivate;
                 @Activate.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnActivate;
@@ -190,9 +286,6 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @CurserControl.started += instance.OnCurserControl;
-                @CurserControl.performed += instance.OnCurserControl;
-                @CurserControl.canceled += instance.OnCurserControl;
                 @Activate.started += instance.OnActivate;
                 @Activate.performed += instance.OnActivate;
                 @Activate.canceled += instance.OnActivate;
@@ -203,9 +296,14 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
-    public interface IGameplayActions
+    public interface IUIActions
     {
         void OnCurserControl(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
+        void OnRightclick(InputAction.CallbackContext context);
+    }
+    public interface IGameplayActions
+    {
         void OnActivate(InputAction.CallbackContext context);
         void OnExecute(InputAction.CallbackContext context);
     }

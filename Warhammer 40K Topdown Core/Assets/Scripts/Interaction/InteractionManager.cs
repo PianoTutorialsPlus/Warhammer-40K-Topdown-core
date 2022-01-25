@@ -1,46 +1,109 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum InteractionType { None = 0, Activate,ShowStats}
-public enum GamePhase { None = 0, MovementPhase,ShootingPhase}
+public enum InteractionType { None = 0, Activate, ShowStats }
+public enum GamePhase { None = 0, MovementPhase, ShootingPhase }
+public enum MovementPhase { None = 0, Selection, Move, Next }
 
 public class InteractionManager : MonoBehaviour
 {
-    public PlayerSO _activePlayer;
-    public PlayerSO _enemyPlayer;
+    // public PlayerSO _activePlayer;
+    // public PlayerSO _enemyPlayer;
     public PlayerSO _player1;
     public PlayerSO _player2;
 
-    public PhaseSO _phase; //Initialization
-    public TurnSO _turn; //Initialization
+    //public PhaseSO _phase; //Initialization
+    //public TurnSO _turn; //Initialization
+    public GameStatsSO _gameStats; //Initialization
 
-    [SerializeField] PhaseEventChannelSO SetPhaseEvent = default;
+    //[SerializeField] PhaseEventChannelSO SetPhaseEvent = default;
+    [SerializeField] GameStatsEventChannelSO SetPhaseEvent = default;
     [SerializeField] TurnEventChannelSO SetTurnEvent = default;
     [SerializeField] private GameinfoUIEventChannelSO _toggleGameinfoUI = default;
+    [SerializeField] BattleroundEventChannelSO _toggleBattleRounds = default;
 
     [SerializeField] MovementPhaseManager movementPhase;
     [SerializeField] ShootingPhaseManager shootingPhase;
 
+    private void Start()
+    {
+        _toggleBattleRounds.RaiseEvent(_gameStats); //Initialization     
+    }
+
     private void OnEnable()
     {
         //Initialization
-        _phase.phase = GamePhase.MovementPhase;
-        _turn.turn = 1;
+        _gameStats.phase = GamePhase.MovementPhase;
+        _gameStats.movementSubPhase = MovementPhase.Selection;
+        _gameStats.turn = 1;
+        _gameStats.activeUnit = null;
 
         // StartCoroutine(Sets());
-        _activePlayer._playerUnits = _player1._playerUnits;
-        _enemyPlayer._playerUnits = _player2._playerUnits;
+        _gameStats.activePlayer = _player1;
+        _gameStats.enemyPlayer = _player2;
 
-        movementPhase.enabled = true;
-        shootingPhase.enabled = false;
+        //_gameStats.activePlayer._playerUnits = _player1._playerUnits;
+        //_gameStats.enemyPlayer._playerUnits = _player2._playerUnits;
+
+
 
         if (SetPhaseEvent != null) SetPhaseEvent.OnEventRaised += SetPhase;
-        
-        _toggleGameinfoUI.RaiseEvent(true, _activePlayer._playerUnits[0],_phase,_turn);
+
+        //_toggleBattleRounds.RaiseEvent(_gameStats); //Initialization
+        //_toggleGameinfoUI.RaiseEvent(true, _activePlayer._playerUnits[0],_phase,_turn);
+        _toggleGameinfoUI.RaiseEvent(true, _gameStats);
     }
 
+
+
+
+    public void SetPhase(GameStatsSO gameStats)
+    {
+
+        if (gameStats.phase == GamePhase.MovementPhase)
+        {
+            EnableShootingPhase();
+            gameStats.phase = GamePhase.ShootingPhase;
+        }
+        else if (gameStats.phase == GamePhase.ShootingPhase)
+        {
+            TogglePlayers();
+            EnableMovementPhase();
+            gameStats.phase = GamePhase.MovementPhase;
+            gameStats.movementSubPhase = MovementPhase.Selection;
+            if (_gameStats.activePlayer == _player1) gameStats.turn += 1;
+        }
+        _toggleGameinfoUI.RaiseEvent(true, gameStats);
+        _toggleBattleRounds.RaiseEvent(gameStats);
+    }
+
+
+
+    public void TogglePlayers()
+    {
+        if (_gameStats.activePlayer == _player1)
+        {
+            _gameStats.activePlayer = _player2;
+            _gameStats.enemyPlayer = _player1;
+        }
+        else
+        {
+            _gameStats.activePlayer = _player1;
+            _gameStats.enemyPlayer = _player2;
+        }
+    }
+
+    private void EnableMovementPhase()
+    {
+        movementPhase.enabled = true;
+        shootingPhase.enabled = false;
+    }
+
+    private void EnableShootingPhase()
+    {
+        movementPhase.enabled = false;
+        shootingPhase.enabled = true;
+    }
 
     //public IEnumerator Sets()
     //{
@@ -55,46 +118,41 @@ public class InteractionManager : MonoBehaviour
     //    }
     //}
 
-    public void SetPhase(PhaseSO phase)
-    {
-      
-        if (phase.phase == GamePhase.MovementPhase)
-        {
-            movementPhase.enabled = false;
-            shootingPhase.enabled = true;
-            phase.phase = GamePhase.ShootingPhase;
-            if (SetTurnEvent != null) SetTurnEvent.OnEventRaised -= SetTurn;
-        }
-        else if (phase.phase == GamePhase.ShootingPhase)
-        {
-            TogglePlayers();
-            movementPhase.enabled = true;       
-            shootingPhase.enabled = false;
-            phase.phase = GamePhase.MovementPhase;
-            if (SetTurnEvent != null && _activePlayer._playerUnits == _player1._playerUnits) SetTurnEvent.OnEventRaised += SetTurn;
-        }
-        _toggleGameinfoUI.RaiseEvent(true,_activePlayer._playerUnits[0],phase, _turn);
-    }
+    //public void SetPhase(PhaseSO phase)
+    //{
 
-    public void SetTurn(TurnSO turn)
-    {
-        turn.turn += 1;
-        _toggleGameinfoUI.RaiseEvent(true, _activePlayer._playerUnits[0], _phase, turn);
-    }
+    //    if (phase.phase == GamePhase.MovementPhase)
+    //    {
+    //        EnableShootingPhase();
+    //        phase.phase = GamePhase.ShootingPhase;
+    //        if (SetTurnEvent != null && _activePlayer._playerUnits == _player2._playerUnits) SetTurnEvent.OnEventRaised += SetTurn;
+    //    }
+    //    else if (phase.phase == GamePhase.ShootingPhase)
+    //    {
+    //        TogglePlayers();
+    //        EnableMovementPhase();
+    //        phase.phase = GamePhase.MovementPhase;
+    //        if (SetTurnEvent != null) SetTurnEvent.OnEventRaised -= SetTurn;
+    //    }
+    //    _toggleGameinfoUI.RaiseEvent(true,_activePlayer._playerUnits[0],phase, _turn);
+    //}
 
-    public void TogglePlayers()
-    {
-        if(_activePlayer._playerUnits == _player1._playerUnits)
-        {
-            _activePlayer._playerUnits = _player2._playerUnits;
-            _enemyPlayer._playerUnits = _player1._playerUnits;
-        }
-        else
-        {
-            _activePlayer._playerUnits = _player1._playerUnits;
-            _enemyPlayer._playerUnits = _player2._playerUnits;
-        }
-    }
+    //public void SetTurn(TurnSO turn)
+    //{
+    //    turn.turn += 1;
+    //}
 
-    
+    //public void TogglePlayers()
+    //{
+    //    if(_gameStats.activePlayer._playerUnits == _player1._playerUnits)
+    //    {
+    //        _gameStats.activePlayer._playerUnits = _player2._playerUnits;
+    //        _gameStats.enemyPlayer._playerUnits = _player1._playerUnits;
+    //    }
+    //    else
+    //    {
+    //        _gameStats.activePlayer._playerUnits = _player1._playerUnits;
+    //        _gameStats.enemyPlayer._playerUnits = _player2._playerUnits;
+    //    }
+    //}
 }

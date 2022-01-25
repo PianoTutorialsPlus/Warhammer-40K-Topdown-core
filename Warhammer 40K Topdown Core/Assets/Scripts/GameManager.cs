@@ -11,10 +11,12 @@ namespace WH40K
         public Text[] infoPanel;
         public PlayerSO _player1;
         public PlayerSO _player2;
+        public GameTableSO _table;
 
         public Unit[] player;
         public GameObject userControl;
         public string phase;
+        public GameTable gameTable;
         //private UnitManager unitManager;
 
         int turn = 1;
@@ -23,20 +25,18 @@ namespace WH40K
         {
             //unitManager = GetComponent<UnitManager>();
             //unitManager.Load();
-            
-            
+
+            _table.gameTable = gameTable;
             _player1._playerUnits.Clear();
             _player2._playerUnits.Clear();
-            
-            foreach(Unit unit in player1)
+
+            foreach (Unit unit in player1)
             {
-                //Debug.Log("Test");
                 _player1._playerUnits.Add(unit);
             }
-            Debug.Log(_player1._playerUnits.Count);
+
             foreach (Unit unit in player2)
             {
-                //Debug.Log("Test");
                 _player2._playerUnits.Add(unit);
             }
             player = player1;

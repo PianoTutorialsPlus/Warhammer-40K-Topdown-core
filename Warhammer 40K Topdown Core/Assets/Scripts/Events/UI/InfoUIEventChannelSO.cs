@@ -6,7 +6,7 @@ using UnityEngine.Events;
 /// Example: Dispaly or hide the interaction UI via a bool and the interaction type from the enum via int
 /// </summary>
 
-[CreateAssetMenu(menuName ="Events/Toggle Info UI Events Channel")]
+[CreateAssetMenu(menuName = "Events/Toggle Info UI Events Channel")]
 public class InfoUIEventChannelSO : ScriptableObject
 {
     public UnityAction<bool, Unit> OnEventRaised;

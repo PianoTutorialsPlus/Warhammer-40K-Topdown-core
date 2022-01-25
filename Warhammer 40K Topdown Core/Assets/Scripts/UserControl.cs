@@ -236,9 +236,9 @@ public class UserControl : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            m_Selected.AddMovedDistance();
-            m_Selected.GoTo(hit.point);
-            m_Selected.GetDistance(hit.point);
+            //m_Selected.AddMovedDistance();
+            //m_Selected.GoTo(hit.point);
+            //m_Selected.GetDistance(hit.point);
 
         }
     }

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,23 +6,19 @@ using UnityEngine.Events;
 /// Example: Dispaly or hide the gameinfo UI via a bool.
 /// </summary>
 
-[CreateAssetMenu(menuName ="Events/Toggle Gameinfo UI Events Channel")]
+[CreateAssetMenu(menuName = "Events/Toggle Gameinfo UI Events Channel")]
 public class GameinfoUIEventChannelSO : ScriptableObject
 {
-    public UnityAction<bool, Unit,PhaseSO,TurnSO> OnEventRaised;
-    public void RaiseEvent(bool state, Unit unit, PhaseSO phase, TurnSO turn)
+    public UnityAction<bool, GameStatsSO> OnEventRaised;   //public UnityAction<bool, Unit,PhaseSO,TurnSO> OnEventRaised;
+    //public void RaiseEvent(bool state, Unit unit, PhaseSO phase, TurnSO turn)
+    //{
+    //    if (OnEventRaised != null)
+    //        OnEventRaised.Invoke(state, unit,phase,turn);
+    //}
+
+    public void RaiseEvent(bool state, GameStatsSO gameStats)
     {
         if (OnEventRaised != null)
-            OnEventRaised.Invoke(state, unit,phase,turn);
-    }
-
-    internal void RaiseEvent(bool v, Unit unit, PhaseSO phase)
-    {
-        throw new NotImplementedException();
-    }
-
-    internal void RaiseEvent(bool v, Unit unit, TurnSO turn)
-    {
-        throw new NotImplementedException();
+            OnEventRaised.Invoke(state, gameStats);
     }
 }

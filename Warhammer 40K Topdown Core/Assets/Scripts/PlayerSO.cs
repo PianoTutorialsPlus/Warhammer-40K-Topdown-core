@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Player/Player")]
+[CreateAssetMenu(menuName = "Game/Player")]
 public class PlayerSO : ScriptableObject
 {
     public List<Unit> _playerUnits;

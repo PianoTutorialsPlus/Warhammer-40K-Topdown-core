@@ -135,14 +135,19 @@ MonoBehaviour:
   speed: 3
   canMove: 1
   canShoot: 1
+  activated: 0
   singleton: 0
+  isMoving: 0
   moveDistance: 6
   movedDistance: 0
   weaponRange: 0
   distanceToMove: 0
   restDistance: 1
   phase: 
+  SetMovementPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
+    type: 2}
   _weaponSO: {fileID: 11400000, guid: 4a5aec3aa3d661c4b8fc25a0ab48c5df, type: 2}
   _unitSO: {fileID: 11400000, guid: fa1d5cbd72c003643a43243307e9c2af, type: 2}
+  _gameStats: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33, type: 2}
   _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
-  activeUnit: {fileID: 11400000, guid: d13b2056c8061204f8a603b72b287e26, type: 2}
+  test: 0

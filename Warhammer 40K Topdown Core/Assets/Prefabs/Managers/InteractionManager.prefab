@@ -47,6 +47,7 @@ MonoBehaviour:
   _enemyPlayer: {fileID: 0}
   _player1: {fileID: 0}
   _player2: {fileID: 0}
+  _gameStats: {fileID: 0}
   _inputReader: {fileID: 0}
   currentInteraction: 0
   _toggleInteractionUI: {fileID: 0}
@@ -103,9 +104,9 @@ MonoBehaviour:
   _enemyPlayer: {fileID: 11400000, guid: e0f0a8fe54f414b419ee63ccfecb16c0, type: 2}
   _player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
   _player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
-  _phase: {fileID: 11400000, guid: b8df2874291a63346adb22afab4681b4, type: 2}
-  _turn: {fileID: 11400000, guid: 8ebe249e6f8a9e849a8f560fa55961d3, type: 2}
+  _gameStats: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33, type: 2}
   SetPhaseEvent: {fileID: 0}
+  SetTurnEvent: {fileID: 0}
   _toggleGameinfoUI: {fileID: 0}
   movementPhase: {fileID: 0}
   shootingPhase: {fileID: 0}

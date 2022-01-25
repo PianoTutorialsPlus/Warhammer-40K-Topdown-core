@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -16,7 +14,7 @@ public class UIManager : MonoBehaviour
     //public PhaseEventChannelSO SetPhaseEvent;
     private Unit unit = default;
 
-  
+
     private void OnEnable()
     {
         //Check if the event exists to avoid errors
@@ -25,12 +23,12 @@ public class UIManager : MonoBehaviour
         if (SetEnemyInfoEvent != null) SetEnemyInfoEvent.OnEventRaised += SetEnemyInfoPanel;
         if (ConnectIndicatorEvent != null) ConnectIndicatorEvent.OnEventRaised += SetIndicatorConnection;
         if (SetGameinfoEvent != null) SetGameinfoEvent.OnEventRaised += SetGameinfoPanel;
- 
+
     }
     // Start is called before the first frame update
     private void Start()
     {
-        
+
     }
 
     [SerializeField] UIInteractionManager interactionPanel;
@@ -43,16 +41,17 @@ public class UIManager : MonoBehaviour
 
     public void SetInteractionPanel(bool isOpenEvent, InteractionType interactionType)
     {
-        if (isOpenEvent) 
+        if (isOpenEvent)
             interactionPanel.FillInteractionPanel(interactionType);
         interactionPanel.gameObject.SetActive(isOpenEvent);
     }
-    
+
     public void SetInfoPanel(bool isOpenEvent, Unit unit)
     {
-        if (isOpenEvent) {
+        if (isOpenEvent)
+        {
             infoPanel.FillInfoPanel(unit);
-            }
+        }
 
         infoPanel.gameObject.SetActive(isOpenEvent);
 
@@ -77,11 +76,21 @@ public class UIManager : MonoBehaviour
         }
         distanceIndicator.gameObject.SetActive(isOpenEvent);
     }
-    public void SetGameinfoPanel(bool isOpenEvent, Unit unit, PhaseSO phase, TurnSO turn)
+    //public void SetGameinfoPanel(bool isOpenEvent, Unit unit, PhaseSO phase, TurnSO turn)
+    //{
+    //    if (isOpenEvent)
+    //    {
+    //        gameinfoPanel.FillInfoPanel(unit,phase,turn);
+    //    }
+
+    //    gameinfoPanel.gameObject.SetActive(isOpenEvent);
+    //}
+
+    public void SetGameinfoPanel(bool isOpenEvent, GameStatsSO gameStats)
     {
         if (isOpenEvent)
         {
-            gameinfoPanel.FillInfoPanel(unit,phase,turn);
+            gameinfoPanel.FillInfoPanel(gameStats);
         }
 
         gameinfoPanel.gameObject.SetActive(isOpenEvent);

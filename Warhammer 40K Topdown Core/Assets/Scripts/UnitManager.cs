@@ -27,8 +27,8 @@ namespace WH40K
             yield return new WaitForEndOfFrame();
             //foreach(Transform child in unit.transform)
             //    child.GetComponent<Unit>().onPointerEnter += UnitTapped;
-                //unit.onPointerEnter += UnitTapped;
-                //UnitTapped();
+            //unit.onPointerEnter += UnitTapped;
+            //UnitTapped();
 
         }
 

@@ -1,16 +1,20 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
-public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler,IPointerExitHandler // INHARITANCE
+public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler // INHARITANCE
 {
     public float speed = 3;
     public bool canMove = true;
     public bool canShoot = true;
-    public bool singleton;
+    public bool activated = false;
+    public bool singleton = false;
+    public bool isMoving = false;
+    public bool selected = false;
+    public bool done = false;
 
     protected NavMeshAgent m_Agent;     // Moving behaviour
     private NavMeshPath path;
@@ -18,19 +22,26 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
     public float movedDistance = 0;
     public int weaponRange;
     public float distanceToMove;
-    public float restDistance = 3;
+    public float restDistance = 1;
     public string phase;
+    float movedInstance = 0;
+
+    public BattleroundEventChannelSO SetMovementPhaseEvent;
+
     public WeaponSO _weaponSO;
     public UnitSO _unitSO;
+    public GameStatsSO _gameStats;
+
     public InputReader _inputReader;
 
     public UnityAction<Unit> onTapDownAction;
     public UnityAction onPointerEnter;
     public UnityAction<Unit> onPointerEnterInfo;
     public UnityAction<Unit> onPointerExit;
-    public ActiveUnitSO activeUnit;
 
-    
+    //public ActiveUnitSO activeUnit;
+
+    public int test = 0;
 
     public Dictionary<string, int> stats = new Dictionary<string, int>()
     {
@@ -63,14 +74,17 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
         m_Agent.speed = speed;
         m_Agent.acceleration = 999;
         m_Agent.angularSpeed = 999;
-        SetStats();
-        SetWeaponStats();
+        m_Agent.isStopped = false;
+        canMove = true;
+        isMoving = false;
+        singleton = false;
+        
+
         moveDistance = _unitSO.Movement; //stats["Movement"];
+        restDistance = moveDistance;
         weaponRange = _weaponSO.Range; //weaponStats["Range"];
 
-
     }
-
 
     // Start is called before the first frame update
     void Start()
@@ -79,59 +93,61 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
         phase = "Movement Phase";
     }
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        switch (phase)
-        {
-            case "Movement Phase":
-                if (canMove)
-                {
-                    restDistance = moveDistance - movedDistance - (distanceToMove - m_Agent.remainingDistance);
-                }
-
-                if (restDistance <= 0)
-                {
-                    Freeze();
-                }
-
-                if (canMove && m_Agent.remainingDistance <= 0 && singleton)
-                {
-                    movedDistance += distanceToMove;
-                    distanceToMove = 0;
-                    singleton = false;
-                }
-
-                if (m_Agent.remainingDistance > 0 && m_Agent.hasPath)
-                {
-                    singleton = true;
-                }
-                break;
-            case "Shooting Phase":
-                restDistance = weaponRange;
-
-                break;
-        }
-
-
-    }
-
     //public void OnEnable()
     //{
-    //    _inputReader.activateEvent += onTapDownAction;
+    //    Debug.Log("Enable");
     //}
 
     //public void OnDisable()
     //{
-    //    _inputReader.activateEvent -= onTapDownAction;
+    //    Debug.Log("Disable");
     //}
+
+    //// Update is called once per frame
+    //void Update()
+    //{
+
+    //    //switch (phase)
+    //    //{
+    //    //    case "Movement Phase":
+    //    //        if (canMove)
+    //    //        {
+    //    //            restDistance = moveDistance - movedDistance - (distanceToMove - m_Agent.remainingDistance);
+    //    //        }
+
+    //    //        if (restDistance <= 0)
+    //    //        {
+    //    //            Freeze();
+    //    //        }
+
+    //    //        if (canMove && m_Agent.remainingDistance <= 0 && singleton)
+    //    //        {
+    //    //            movedDistance += distanceToMove;
+    //    //            distanceToMove = 0;
+    //    //            singleton = false;
+    //    //        }
+
+    //    //        if (m_Agent.remainingDistance > 0 && m_Agent.hasPath)
+    //    //        {
+    //    //            singleton = true;
+    //    //        }
+    //    //        break;
+    //    //    case "Shooting Phase":
+    //    //        restDistance = weaponRange;
+
+    //    //        break;
+    //    //}
+
+
+    //}
+
 
     public void OnPointerEnter(PointerEventData pointerEvent)
     {
+
         if (onPointerEnter != null) onPointerEnter();
         if (onPointerEnterInfo != null) onPointerEnterInfo(gameObject.GetComponent<Unit>());
-        
+
     }
 
     public void OnPointerExit(PointerEventData pointerEvent)
@@ -142,52 +158,82 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
         }
     }
 
-    //public void OnButtonPressed()
-    //{
-    //    if (onTapDownAction != null) onTapDownAction(gameObject.GetComponent<Unit>());
-    //}
 
     public void OnPointerClick(PointerEventData pointerEvent)
     {
-        
+
         if (onTapDownAction != null)
         {
-            Debug.Log("Pointer Click");
-            //if (pointerEvent.button == PointerEventData.InputButton.Left)
-            //onTapDownAction(gameObject.GetComponent<Unit>());
-            onTapDownAction(gameObject.GetComponent<Unit>());
-            //_inputReader.activateEvent += onTapDownAction;
-            activeUnit.activeUnit = gameObject.GetComponent<Unit>();
+            if (pointerEvent.button == PointerEventData.InputButton.Left)
+            {
+                Debug.Log(gameObject.name);
+                _gameStats.activeUnit = gameObject.GetComponent<Unit>();
+                onTapDownAction(gameObject.GetComponent<Unit>());
+                selected = true;
+            } 
         }
-
-
+        if (onPointerEnter != null) onPointerEnter();
     }
-
 
     public virtual void AddMovedDistance()
     {
 
-        movedDistance += (distanceToMove - m_Agent.remainingDistance);
+        movedDistance += movedInstance;// (distanceToMove - m_Agent.remainingDistance);
     }
 
-    public virtual void GoTo(Vector3 position)
+    public virtual void SetDestination(Vector3 position)
     {
-
-        m_Agent.SetDestination(position);
-        if (canMove)
+        if (canShoot)
         {
-            m_Agent.isStopped = false;
+            //m_Agent.isStopped = false;
+            StartCoroutine(GoTo(position));
+            //canShoot = false;
+        }
+    }
+
+    public IEnumerator GoTo(Vector3 position)
+    {
+        if (!m_Agent.isStopped)
+        {
+            GetDistance(position);
+            AddMovedDistance();
+            m_Agent.SetDestination(position);
         }
 
+        while (!m_Agent.isStopped)
+        {
+            yield return new WaitForEndOfFrame();
+            
 
+            if (m_Agent.hasPath)
+            {
+                isMoving = true;
+
+                restDistance = moveDistance - movedDistance - (distanceToMove - m_Agent.remainingDistance);
+
+                movedInstance = (distanceToMove - m_Agent.remainingDistance);
+
+                if (restDistance <= 0)
+                {
+                    Debug.Log("restDistance");
+                    Freeze();
+                    break;
+                }
+            }
+            if (m_Agent.remainingDistance <= 0 && isMoving == true)
+            {       
+                movedDistance += distanceToMove;
+                movedInstance = 0;
+                isMoving = false;
+                break;
+            }
+        }
     }
 
     public virtual void GetDistance(Vector3 position)
     {
-
         m_Agent.CalculatePath(position, path);
         distanceToMove = GetPathLength(path);
-
     }
 
 
@@ -208,27 +254,25 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
 
     public virtual void ResetData()
     {
-        canMove = true;
+        m_Agent.isStopped = false;
+        //canMove = true;
         canShoot = true;
         movedDistance = 0;
     }
 
     public virtual void Freeze()
     {
-        canMove = false;
+        //canMove = false;
         m_Agent.isStopped = true;
         restDistance = 0;
+        distanceToMove = 0;
+        activated = false;
+        selected = false;
+        done = true;
+        _gameStats.movementSubPhase = MovementPhase.Selection;
+        SetMovementPhaseEvent.RaiseEvent(_gameStats);
     }
 
-    public virtual void SetStats() // POLYMORPHISM
-    {
-
-    }
-
-    public virtual void SetWeaponStats() // POLYMORPHISM
-    {
-
-    }
 
     public void Destroy()
     {

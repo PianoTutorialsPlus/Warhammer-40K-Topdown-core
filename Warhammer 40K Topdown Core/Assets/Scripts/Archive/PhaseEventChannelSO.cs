@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +6,7 @@ using UnityEngine.Events;
 /// Example: Switch from movement phase to shooting phase
 /// </summary>
 
-[CreateAssetMenu(menuName ="Events/Switch gamephase")]
+//[CreateAssetMenu(menuName ="Events/Switch gamephase")]
 public class PhaseEventChannelSO : ScriptableObject
 {
     public UnityAction<PhaseSO> OnEventRaised;
@@ -16,7 +14,8 @@ public class PhaseEventChannelSO : ScriptableObject
     public void RaiseEvent(PhaseSO phase)
     {
         if (OnEventRaised != null)
-        OnEventRaised.Invoke(phase);
+            OnEventRaised.Invoke(phase);
+
     }
 }
 

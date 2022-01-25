@@ -8,10 +8,10 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     // Assign delegate{} to events to initialise them with an empty delegate
     // so we can skip the null check when we use them
 
-    public ActiveUnitSO _unit;
+    // public ActiveUnitSO _unit;
 
-	// Gameplay
-	public event UnityAction<Unit> activateEvent = delegate { };
+    // Gameplay
+    public event UnityAction activateEvent = delegate { };
     public event UnityAction executeEvent = delegate { };
 
     private GameInput gameInput;
@@ -37,13 +37,16 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     {
 
     }
-   
+
     public void OnActivate(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)  
-            if(_unit.activeUnit != null && activateEvent != null) 
-                activateEvent.Invoke(_unit.activeUnit);
-        
+
+        if (context.phase == InputActionPhase.Performed)
+        {
+            Debug.Log("Button pressed");
+            activateEvent.Invoke();
+        }
+
     }
 
     public void OnExecute(InputAction.CallbackContext context)

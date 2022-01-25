@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class UIInfoUnitStatsFiller : MonoBehaviour
 {
@@ -7,7 +7,7 @@ public class UIInfoUnitStatsFiller : MonoBehaviour
     [SerializeField] TextMeshProUGUI infoUnitStats;
     [SerializeField] TextMeshProUGUI infoWeaponName;
     [SerializeField] TextMeshProUGUI infoWeaponStats;
-    
+
     public void FillInfoPanel(Unit unit)
     {
         infoUnitName.text = unit.name;

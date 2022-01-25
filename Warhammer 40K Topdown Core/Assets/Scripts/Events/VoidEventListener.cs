@@ -12,7 +12,7 @@ public class VoidEventListener : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_channel != null) 
+        if (_channel != null)
             _channel.OnEventRaised += Respond;
     }
 

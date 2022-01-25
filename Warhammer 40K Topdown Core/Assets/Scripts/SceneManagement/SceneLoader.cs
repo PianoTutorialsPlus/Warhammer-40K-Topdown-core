@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,7 +18,7 @@ public class SceneLoader : MonoBehaviour
     private List<Scene> _scenesToUnload = new List<Scene>();
     private GameSceneSO _activeScene; // The scene we want to set as active (for lighting/skybox)
     private List<GameSceneSO> _persistentScenes = new List<GameSceneSO>(); //Scenes to keep loaded when a load event is raised
-    
+
     [Header("Load Events")]
     //The location load event we are listening to
     [SerializeField] private LoadEventChannelSO _loadLocation = default;
@@ -28,7 +27,7 @@ public class SceneLoader : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_loadLocation != null) 
+        if (_loadLocation != null)
             _loadLocation.OnLoadingRequested += LoadLocation;
 
         if (_loadMenu != null) _loadMenu.OnLoadingRequested += LoadMenu;
@@ -93,7 +92,7 @@ public class SceneLoader : MonoBehaviour
                 if (scenePath != persistentScene[j].scenePath)
                 {
                     //Check if we reached the last persistent scenes check
-                    if(j==persistentScene.Count - 1)
+                    if (j == persistentScene.Count - 1)
                     {
                         //If the scene is not one of the persistent scenes, we add it to the scenes to unload
                         _scenesToUnload.Add(scene);
