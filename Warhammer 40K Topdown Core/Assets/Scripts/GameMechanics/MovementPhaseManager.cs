@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -13,9 +12,9 @@ public class MovementPhaseManager : MonoBehaviour
 
     public InputReader _inputReader;
 
-    [HideInInspector] public InteractionType currentInteraction;
-    //To store the object we are currently interacting with
-    private LinkedList<Interaction> _ongoingInteractions = new LinkedList<Interaction>();
+    //[HideInInspector] public InteractionType currentInteraction;
+    ////To store the object we are currently interacting with
+    //private LinkedList<Interaction> _ongoingInteractions = new LinkedList<Interaction>();
 
     [SerializeField] private BattleroundEventChannelSO SetMovementPhaseEvent;
 
@@ -31,22 +30,27 @@ public class MovementPhaseManager : MonoBehaviour
 
     public void OnEnable()
     {
-        //Debug.Log("Enable");
-        if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += SetMovementPhase;
-        if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised -= ClearMovementPhase;
+        if (_gameStats.phase == GamePhase.MovementPhase)
+        {
+            //Debug.Log("Enable");
+            if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += SetMovementPhase;
+            if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised -= ResetUnits;
+            if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised -= ClearMovementPhase;
+        }
     }
 
     public void OnDisable()
     {
         //Debug.Log("Disable");
         if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += ClearMovementPhase;
+        if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += ResetUnits;
         if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised -= SetMovementPhase;
     }
 
     public void SetMovementPhase(GameStatsSO gameStats)
     {
         ClearMovementPhase(gameStats);
-        _inputReader.activateEvent -= NextPhase;
+        
         switch (gameStats.movementSubPhase)
         {
             case MovementPhase.Selection:
@@ -96,6 +100,12 @@ public class MovementPhaseManager : MonoBehaviour
         foreach (Unit child in gameStats.activePlayer._playerUnits) FillMethods(child, false, false, false, false);
         foreach (Unit child in gameStats.enemyPlayer._playerUnits) FillMethods(child, false, false, false, false);
         gameStats.gameTable.gameTable.onTapDownAction -= Move;
+        _inputReader.activateEvent -= NextPhase;
+    }
+
+    public void ResetUnits(GameStatsSO gameStats)
+    {
+        foreach (Unit child in gameStats.activePlayer._playerUnits) child.ResetData();
     }
 
     public void FillMethods(Unit child, bool displayInteraction, bool resetInteraction, bool displayInfo, bool connectIndicator)
@@ -128,9 +138,9 @@ public class MovementPhaseManager : MonoBehaviour
 
     private void ResetInteraction(Unit unit)
     {
-        if(!unit.selected)_toggleInteractionUI.RaiseEvent(false, InteractionType.None);
+        if (!unit.selected) _toggleInteractionUI.RaiseEvent(false, InteractionType.None);
         if (!unit.activated) _toggleInfoUI.RaiseEvent(false, unit);
-          _toggleEnemyInfoUI.RaiseEvent(false, unit);
+        _toggleEnemyInfoUI.RaiseEvent(false, unit);
     }
     private void ConnectIndicator(Unit unit)
     {
@@ -149,8 +159,8 @@ public class MovementPhaseManager : MonoBehaviour
 
     private void ActivateUnit()
     {
-            _gameStats.activeUnit.activated = true;
-            SetMovementPhase(_gameStats);
+        _gameStats.activeUnit.activated = true;
+        SetMovementPhase(_gameStats);
 
     }
 

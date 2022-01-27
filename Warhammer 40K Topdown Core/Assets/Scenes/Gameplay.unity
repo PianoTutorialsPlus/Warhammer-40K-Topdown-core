@@ -130,68 +130,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
+    - target: {fileID: 1103791074731393327, guid: f236ff4f5317d8341865b231e238112a,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _gameStats
+      propertyPath: dataTables
       value: 
-      objectReference: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33,
-        type: 2}
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: SetTurnEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: 21765cca7eb651f4e979e4b11efcf497,
-        type: 2}
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _switchphase
-      value: 
-      objectReference: {fileID: 11400000, guid: 674c6ab8b80f50a409463a10c816462a,
-        type: 2}
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: SetPhaseEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: 3605cfadf21537e438e036494d5c3289,
-        type: 2}
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _toggleInfoUI
-      value: 
-      objectReference: {fileID: 11400000, guid: 837cc3995138cc8408cc46a8c282b3c9,
-        type: 2}
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: movementPhase
-      value: 
-      objectReference: {fileID: 624657560}
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: shootingPhase
-      value: 
-      objectReference: {fileID: 624657559}
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _toggleGameinfoUI
-      value: 
-      objectReference: {fileID: 11400000, guid: 69382d493e2d5214c91e859c03bbb401,
-        type: 2}
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _toggleEnemyInfoUI
-      value: 
-      objectReference: {fileID: 11400000, guid: 13cb68d56be8305479f9eeb418a3ffc7,
-        type: 2}
-    - target: {fileID: 1109785575390643985, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _toggleBattleRounds
-      value: 
-      objectReference: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
+      objectReference: {fileID: 11400000, guid: 70c677795bd44554d9c2e3fa60f57ceb,
         type: 2}
     - target: {fileID: 2367222600306197390, guid: f236ff4f5317d8341865b231e238112a,
         type: 3}
@@ -253,78 +196,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _player1
-      value: 
-      objectReference: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _player2
-      value: 
-      objectReference: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _gameStats
-      value: 
-      objectReference: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: inputReader
-      value: 
-      objectReference: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _enemyPlayer
-      value: 
-      objectReference: {fileID: 11400000, guid: e0f0a8fe54f414b419ee63ccfecb16c0,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _inputReader
-      value: 
-      objectReference: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _activePlayer
-      value: 
-      objectReference: {fileID: 11400000, guid: 3402708d9637c7748b611fbafc50e409,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _toggleInfoUI
-      value: 
-      objectReference: {fileID: 11400000, guid: 837cc3995138cc8408cc46a8c282b3c9,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _toggleEnemyInfoUI
-      value: 
-      objectReference: {fileID: 11400000, guid: 13cb68d56be8305479f9eeb418a3ffc7,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _toggleInteractionUI
-      value: 
-      objectReference: {fileID: 11400000, guid: e5da9e2f3b87fb743a963127ed2a21ce,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: SetMovementPhaseEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
-        type: 2}
-    - target: {fileID: 7843775761246225959, guid: f236ff4f5317d8341865b231e238112a,
-        type: 3}
-      propertyPath: _toggleIndicatorConnectionUI
-      value: 
-      objectReference: {fileID: 11400000, guid: fcbe9388afa2a184a9990bb0b499981a,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f236ff4f5317d8341865b231e238112a, type: 3}
 --- !u!114 &624657559 stripped

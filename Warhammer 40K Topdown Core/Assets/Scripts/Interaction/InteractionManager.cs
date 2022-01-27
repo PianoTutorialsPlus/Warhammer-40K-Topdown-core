@@ -4,6 +4,8 @@ using UnityEngine;
 public enum InteractionType { None = 0, Activate, ShowStats }
 public enum GamePhase { None = 0, MovementPhase, ShootingPhase }
 public enum MovementPhase { None = 0, Selection, Move, Next }
+public enum ShootingPhase { None = 0, Selection, Shoot, Next }
+//public enum ShootingSubEvents { none = 0, SelectEnemy, Shoot, Hit, Wound, Save, Damage }
 
 public class InteractionManager : MonoBehaviour
 {
@@ -27,14 +29,16 @@ public class InteractionManager : MonoBehaviour
 
     private void Start()
     {
+
         _toggleBattleRounds.RaiseEvent(_gameStats); //Initialization     
     }
 
     private void OnEnable()
     {
         //Initialization
-        _gameStats.phase = GamePhase.MovementPhase;
+        _gameStats.phase = GamePhase.ShootingPhase;
         _gameStats.movementSubPhase = MovementPhase.Selection;
+        _gameStats.shootingSubPhase = ShootingPhase.Selection;
         _gameStats.turn = 1;
         _gameStats.activeUnit = null;
 
@@ -62,15 +66,15 @@ public class InteractionManager : MonoBehaviour
 
         if (gameStats.phase == GamePhase.MovementPhase)
         {
-            EnableShootingPhase();
             gameStats.phase = GamePhase.ShootingPhase;
+            EnableShootingPhase();
         }
         else if (gameStats.phase == GamePhase.ShootingPhase)
         {
-            TogglePlayers();
-            EnableMovementPhase();
             gameStats.phase = GamePhase.MovementPhase;
             gameStats.movementSubPhase = MovementPhase.Selection;
+            EnableMovementPhase();
+            TogglePlayers();
             if (_gameStats.activePlayer == _player1) gameStats.turn += 1;
         }
         _toggleGameinfoUI.RaiseEvent(true, gameStats);

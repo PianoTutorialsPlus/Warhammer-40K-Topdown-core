@@ -37,6 +37,20 @@ public abstract class UnitSO : ScriptableObject
 
     public int Movement { get => _movement; }
 
+    public int WeaponSkill { get => _weaponSkill; }
+    public int Wounds { get => _wounds - takenWounds; set => takenWounds += value; }
+    public int Attacks { get => _attack; }
+
+    public int BallisticSkill { get => _ballisticSkill; }
+
+    public int Strength { get => _strength; }
+
+    public int Toughness { get => _toughness; }
+
+    public int Leadership { get => _leadership; }
+    public int ArmourSave { get => _armourSave; }
+
+    [HideInInspector] public int takenWounds;
 }
 
 

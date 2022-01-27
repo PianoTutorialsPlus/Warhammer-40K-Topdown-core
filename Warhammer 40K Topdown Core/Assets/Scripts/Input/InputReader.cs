@@ -12,7 +12,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
 
     // Gameplay
     public event UnityAction activateEvent = delegate { };
-    public event UnityAction executeEvent = delegate { };
+    public event UnityAction ExecuteEvent = delegate { };
 
     private GameInput gameInput;
 
@@ -52,7 +52,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     public void OnExecute(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
-            executeEvent.Invoke();
+            ExecuteEvent.Invoke();
     }
 
     public void EnableGameplayInput()

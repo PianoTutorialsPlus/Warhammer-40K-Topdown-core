@@ -9,17 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77ae2167a7979644f8b313b3071830b2, type: 3}
-  m_Name: Tactical Squad
+  m_Script: {fileID: 11500000, guid: cb4e194bf37046a41adc94d599f7636c, type: 3}
+  m_Name: Calculate Saveroles
   m_EditorClassIdentifier: 
-  _name: Tactical Squad
-  _movement: 6
-  _weaponSkill: 3
-  _ballisticSkill: 3
-  _strength: 4
-  _toughness: 4
-  _wounds: 2
-  _attack: 1
-  _leadership: 7
-  _armourSave: 3
-  takenWounds: 0
+  rollDices: {fileID: 11400000, guid: 813266957258e7b44886c3ec5242cd3e, type: 2}

@@ -7,15 +7,15 @@ namespace WH40K
     {
         public Unit[] player1;
         public Unit[] player2;
-        public Text turnText;
-        public Text[] infoPanel;
+        //public Text turnText;
+        //public Text[] infoPanel;
         public PlayerSO _player1;
         public PlayerSO _player2;
         public GameTableSO _table;
 
         public Unit[] player;
         public GameObject userControl;
-        public string phase;
+        //public string phase;
         public GameTable gameTable;
         //private UnitManager unitManager;
 
@@ -40,8 +40,8 @@ namespace WH40K
                 _player2._playerUnits.Add(unit);
             }
             player = player1;
-            phase = "Movement Phase";
-            UpdateTurnText();
+            //phase = "Movement Phase";
+            //UpdateTurnText();
         }
 
         //// Update is called once per frame
@@ -50,69 +50,69 @@ namespace WH40K
 
         //}
 
-        public void EndTurn()
-        {
-            switch (phase)
-            {
-                case "Movement Phase":
-                    phase = "Shooting Phase";
+        //public void EndTurn()
+        //{
+        //    switch (phase)
+        //    {
+        //        case "Movement Phase":
+        //            phase = "Shooting Phase";
 
-                    foreach (Unit unit in player)
-                    {
-                        if (unit != null)
-                        {
-                            unit.GetComponent<Unit>().Freeze();
-                            unit.GetComponent<Unit>().phase = phase;
-                        }
-                    }
+        //            foreach (Unit unit in player)
+        //            {
+        //                if (unit != null)
+        //                {
+        //                    unit.GetComponent<Unit>().Freeze();
+        //                    unit.GetComponent<Unit>().phase = phase;
+        //                }
+        //            }
 
-                    break;
-                case "Shooting Phase":
-                    phase = "Movement Phase";
+        //            break;
+        //        case "Shooting Phase":
+        //            phase = "Movement Phase";
 
-                    if (player == player1)
-                    {
-                        player = player2;
-                    }
-                    else
-                    {
-                        player = player1;
-                        turn++;
-                    }
+        //            if (player == player1)
+        //            {
+        //                player = player2;
+        //            }
+        //            else
+        //            {
+        //                player = player1;
+        //                turn++;
+        //            }
 
-                    foreach (Unit unit in player)
-                    {
-                        if (unit != null)
-                        {
-                            unit.GetComponent<Unit>().ResetData();
-                            unit.GetComponent<Unit>().phase = phase;
-                        }
-                    }
+        //            foreach (Unit unit in player)
+        //            {
+        //                if (unit != null)
+        //                {
+        //                    unit.GetComponent<Unit>().ResetData();
+        //                    unit.GetComponent<Unit>().phase = phase;
+        //                }
+        //            }
 
-                    break;
-            }
+        //            break;
+        //    }
 
-            UpdateTurnText();
+        //    UpdateTurnText();
 
-        }
+        //}
 
-        public void UpdateTurnText()
-        {
-            foreach (Unit unit in player)
-            {
-                if (unit != null)
-                {
-                    turnText.text = $"{unit.tag} \n{phase}\nTurn: {turn}";
-                    break;
-                }
-            }
+        //public void UpdateTurnText()
+        //{
+        //    foreach (Unit unit in player)
+        //    {
+        //        if (unit != null)
+        //        {
+        //            turnText.text = $"{unit.tag} \n{phase}\nTurn: {turn}";
+        //            break;
+        //        }
+        //    }
 
 
-        }
+        //}
 
-        public void UpdateInfoPanel()
-        {
+        //public void UpdateInfoPanel()
+        //{
 
-        }
+        //}
     }
 }

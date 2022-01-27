@@ -78,7 +78,7 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         canMove = true;
         isMoving = false;
         singleton = false;
-        
+
 
         moveDistance = _unitSO.Movement; //stats["Movement"];
         restDistance = moveDistance;
@@ -89,6 +89,7 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     // Start is called before the first frame update
     void Start()
     {
+        _unitSO.takenWounds = 0;
         path = new NavMeshPath();
         phase = "Movement Phase";
     }
@@ -170,7 +171,11 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 _gameStats.activeUnit = gameObject.GetComponent<Unit>();
                 onTapDownAction(gameObject.GetComponent<Unit>());
                 selected = true;
-            } 
+            }
+            else if (pointerEvent.button == PointerEventData.InputButton.Right && _gameStats.activePlayer._playerUnits[0].tag == gameObject.tag)
+            {
+                _gameStats.enemyUnit = gameObject.GetComponent<Unit>();
+            }
         }
         if (onPointerEnter != null) onPointerEnter();
     }
@@ -179,6 +184,7 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
 
         movedDistance += movedInstance;// (distanceToMove - m_Agent.remainingDistance);
+        movedInstance = 0;
     }
 
     public virtual void SetDestination(Vector3 position)
@@ -195,37 +201,37 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         if (!m_Agent.isStopped)
         {
-            GetDistance(position);
             AddMovedDistance();
+            GetDistance(position);
             m_Agent.SetDestination(position);
-        }
 
-        while (!m_Agent.isStopped)
-        {
-            yield return new WaitForEndOfFrame();
-            
 
-            if (m_Agent.hasPath)
+            while (true)
             {
-                isMoving = true;
+                yield return new WaitForEndOfFrame();
 
-                restDistance = moveDistance - movedDistance - (distanceToMove - m_Agent.remainingDistance);
 
-                movedInstance = (distanceToMove - m_Agent.remainingDistance);
-
-                if (restDistance <= 0)
+                if (m_Agent.hasPath && !m_Agent.pathPending)
                 {
-                    Debug.Log("restDistance");
-                    Freeze();
+                    Debug.Log(m_Agent.pathPending);
+                    isMoving = true;
+                    restDistance = moveDistance - movedDistance - (distanceToMove - m_Agent.remainingDistance);
+                    movedInstance = (distanceToMove - m_Agent.remainingDistance);
+
+                    if (restDistance <= 0)
+                    {
+                        Debug.Log("restDistance");
+                        Freeze();
+                        break;
+                    }
+                }
+                if (m_Agent.remainingDistance <= 0 && isMoving == true)
+                {
+                    movedDistance += distanceToMove;
+                    movedInstance = 0;
+                    isMoving = false;
                     break;
                 }
-            }
-            if (m_Agent.remainingDistance <= 0 && isMoving == true)
-            {       
-                movedDistance += distanceToMove;
-                movedInstance = 0;
-                isMoving = false;
-                break;
             }
         }
     }
@@ -254,10 +260,25 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public virtual void ResetData()
     {
-        m_Agent.isStopped = false;
+        Debug.Log(_gameStats.phase);
+        if (_gameStats.phase == GamePhase.MovementPhase)
+        {
+            m_Agent.isStopped = false;
+            restDistance = moveDistance;
+        }
+        else
+        {
+            m_Agent.isStopped = true;
+            restDistance = weaponRange;
+        }
+
         //canMove = true;
         canShoot = true;
         movedDistance = 0;
+        activated = false;
+        selected = false;
+        done = false;
+
     }
 
     public virtual void Freeze()
