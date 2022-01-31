@@ -12,5 +12,4 @@ public class GameStatsSO : ScriptableObject
     public PlayerSO activePlayer;
     public PlayerSO enemyPlayer;
     public GameTableSO gameTable;
-
 }

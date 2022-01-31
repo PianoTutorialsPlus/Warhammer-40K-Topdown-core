@@ -29,14 +29,14 @@ public class InteractionManager : MonoBehaviour
 
     private void Start()
     {
-
-        _toggleBattleRounds.RaiseEvent(_gameStats); //Initialization     
+        //EnableMovementPhase();
+        _toggleBattleRounds.RaiseEvent(_gameStats); //Initialization    
     }
 
     private void OnEnable()
     {
         //Initialization
-        _gameStats.phase = GamePhase.ShootingPhase;
+        _gameStats.phase = GamePhase.MovementPhase;
         _gameStats.movementSubPhase = MovementPhase.Selection;
         _gameStats.shootingSubPhase = ShootingPhase.Selection;
         _gameStats.turn = 1;
@@ -68,12 +68,18 @@ public class InteractionManager : MonoBehaviour
         {
             gameStats.phase = GamePhase.ShootingPhase;
             EnableShootingPhase();
+            movementPhase.ClearMovementPhase(gameStats);
+            movementPhase.ResetUnits(gameStats);
+
         }
         else if (gameStats.phase == GamePhase.ShootingPhase)
         {
             gameStats.phase = GamePhase.MovementPhase;
-            gameStats.movementSubPhase = MovementPhase.Selection;
+            //gameStats.movementSubPhase = MovementPhase.Selection;
             EnableMovementPhase();
+            shootingPhase.ClearShootingPhase(gameStats);
+            shootingPhase.ResetUnits(gameStats);
+
             TogglePlayers();
             if (_gameStats.activePlayer == _player1) gameStats.turn += 1;
         }
@@ -99,8 +105,8 @@ public class InteractionManager : MonoBehaviour
 
     private void EnableMovementPhase()
     {
-        movementPhase.enabled = true;
         shootingPhase.enabled = false;
+        movementPhase.enabled = true; 
     }
 
     private void EnableShootingPhase()

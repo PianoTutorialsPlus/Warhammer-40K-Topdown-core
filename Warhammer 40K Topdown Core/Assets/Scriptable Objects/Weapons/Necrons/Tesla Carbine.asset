@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tesla Carbine
   m_EditorClassIdentifier: 
   _name: Tesla Carbine
-  _range: 24
+  _range: 12
   _type: 1
   _shots: 2
   _strength: 5

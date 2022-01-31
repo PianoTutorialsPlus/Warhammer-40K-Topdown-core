@@ -16,9 +16,6 @@ public class BattleRoundsSO : ScriptableObject
     [SerializeField] private InfoUIEventChannelSO _toggleEnemyInfoUI = default;
     [SerializeField] private IndicatorUIEventChannelSO _toggleIndicatorConnectionUI = default;
 
-
-
-
     public void FillMethods(Unit child, bool displayInteraction, bool resetInteraction, bool displayInfo, bool connectIndicator)
     {
         if (displayInteraction) child.onPointerEnter += DisplayInteractionUI;

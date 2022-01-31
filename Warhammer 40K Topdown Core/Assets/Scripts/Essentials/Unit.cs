@@ -43,27 +43,27 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public int test = 0;
 
-    public Dictionary<string, int> stats = new Dictionary<string, int>()
-    {
-        {"Movement", 0},
-        {"Weapon Skill", 0},
-        {"Ballistic Skill", 0},
-        {"Strength", 0},
-        {"Toughness", 0},
-        {"Wounds", 0},
-        {"Attacks", 0},
-        {"Leadership", 0},
-        {"Armour Save", 0},
-    };
+    //public Dictionary<string, int> stats = new Dictionary<string, int>()
+    //{
+    //    {"Movement", 0},
+    //    {"Weapon Skill", 0},
+    //    {"Ballistic Skill", 0},
+    //    {"Strength", 0},
+    //    {"Toughness", 0},
+    //    {"Wounds", 0},
+    //    {"Attacks", 0},
+    //    {"Leadership", 0},
+    //    {"Armour Save", 0},
+    //};
 
-    public Dictionary<string, int> weaponStats = new Dictionary<string, int>()
-    {
-        {"Range", 0},
-        {"Type", 0},
-        {"Strength",0},
-        {"Armor Pen",0},
-        {"Damage",0 },
-    };
+    //public Dictionary<string, int> weaponStats = new Dictionary<string, int>()
+    //{
+    //    {"Range", 0},
+    //    {"Type", 0},
+    //    {"Strength",0},
+    //    {"Armor Pen",0},
+    //    {"Damage",0 },
+    //};
 
 
     //public  GameObject distanceIndicator;
@@ -182,18 +182,15 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public virtual void AddMovedDistance()
     {
-
         movedDistance += movedInstance;// (distanceToMove - m_Agent.remainingDistance);
         movedInstance = 0;
     }
 
     public virtual void SetDestination(Vector3 position)
     {
-        if (canShoot)
+        if (!m_Agent.isStopped)
         {
-            //m_Agent.isStopped = false;
             StartCoroutine(GoTo(position));
-            //canShoot = false;
         }
     }
 
@@ -205,23 +202,23 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             GetDistance(position);
             m_Agent.SetDestination(position);
 
-
             while (true)
             {
                 yield return new WaitForEndOfFrame();
 
-
                 if (m_Agent.hasPath && !m_Agent.pathPending)
                 {
-                    Debug.Log(m_Agent.pathPending);
+                    //Debug.Log(m_Agent.pathPending);
                     isMoving = true;
                     restDistance = moveDistance - movedDistance - (distanceToMove - m_Agent.remainingDistance);
                     movedInstance = (distanceToMove - m_Agent.remainingDistance);
 
                     if (restDistance <= 0)
                     {
-                        Debug.Log("restDistance");
+
                         Freeze();
+                        Debug.Log("restDistance");
+                        m_Agent.ResetPath();
                         break;
                     }
                 }
@@ -234,6 +231,7 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 }
             }
         }
+        
     }
 
     public virtual void GetDistance(Vector3 position)
@@ -241,7 +239,6 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         m_Agent.CalculatePath(position, path);
         distanceToMove = GetPathLength(path);
     }
-
 
     public static float GetPathLength(NavMeshPath path)
     {
@@ -260,7 +257,7 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     public virtual void ResetData()
     {
-        Debug.Log(_gameStats.phase);
+        Debug.Log("Reset");
         if (_gameStats.phase == GamePhase.MovementPhase)
         {
             m_Agent.isStopped = false;
@@ -271,7 +268,7 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
             m_Agent.isStopped = true;
             restDistance = weaponRange;
         }
-
+        //Debug.Log(name);
         //canMove = true;
         canShoot = true;
         movedDistance = 0;
@@ -287,6 +284,7 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         m_Agent.isStopped = true;
         restDistance = 0;
         distanceToMove = 0;
+        //movedDistance = moveDistance;
         activated = false;
         selected = false;
         done = true;

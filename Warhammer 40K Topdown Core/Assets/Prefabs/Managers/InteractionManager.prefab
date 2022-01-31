@@ -43,17 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e331178428f274040861a4abf6b593aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
-  _player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
   _gameStats: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33, type: 2}
   _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
+  _battleroundEvents: {fileID: 11400000, guid: 7248952e7b75bf64d909eb4792c09df2, type: 2}
   SetMovementPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
-    type: 2}
-  _toggleInteractionUI: {fileID: 11400000, guid: e5da9e2f3b87fb743a963127ed2a21ce,
-    type: 2}
-  _toggleInfoUI: {fileID: 11400000, guid: 837cc3995138cc8408cc46a8c282b3c9, type: 2}
-  _toggleEnemyInfoUI: {fileID: 11400000, guid: 13cb68d56be8305479f9eeb418a3ffc7, type: 2}
-  _toggleIndicatorConnectionUI: {fileID: 11400000, guid: fcbe9388afa2a184a9990bb0b499981a,
     type: 2}
 --- !u!1 &2367222600306197390
 GameObject:
@@ -153,19 +146,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300cd540d20a7dc449216d15065ae58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
-  _player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
   _gameStats: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33, type: 2}
-  dataTables: {fileID: 0}
+  _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
+  _battleroundEvents: {fileID: 11400000, guid: 7248952e7b75bf64d909eb4792c09df2, type: 2}
   calculateHits: {fileID: 11400000, guid: fa9088cb3a40bac44930d80aa01f0e3b, type: 2}
   calculateWounds: {fileID: 11400000, guid: 4843e13f20c4c3d4d91a3e45fea6bddd, type: 2}
   calculateSaves: {fileID: 11400000, guid: fdffb57c74ffec94daef2695db5db436, type: 2}
   dealDamage: {fileID: 11400000, guid: 8e732e8cb796a644a8ad9c8a1c1de147, type: 2}
-  _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
   hits: 
   wounds: 
   saves: 
-  toWound: 0
   SetShootingPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
     type: 2}
   _toggleInteractionUI: {fileID: 11400000, guid: e5da9e2f3b87fb743a963127ed2a21ce,

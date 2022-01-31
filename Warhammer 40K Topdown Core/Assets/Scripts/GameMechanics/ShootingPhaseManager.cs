@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class ShootingPhaseManager : MonoBehaviour
 {
-    public PlayerSO _player1;
-    public PlayerSO _player2;
     public GameStatsSO _gameStats;
-    //public DataTablesSO dataTables;
     public InputReader _inputReader;
+    public BattleRoundsSO _battleroundEvents;
 
     [SerializeField] private CalculateHitsSO calculateHits;
     [SerializeField] private CalculateWoundsSO calculateWounds;
@@ -23,33 +21,37 @@ public class ShootingPhaseManager : MonoBehaviour
 
     [SerializeField] private BattleroundEventChannelSO SetShootingPhaseEvent;
 
-    //UI event
-    [SerializeField] private InteractionUIEventChannelSO _toggleInteractionUI = default;
-    [SerializeField] private InfoUIEventChannelSO _toggleInfoUI = default;
-    [SerializeField] private InfoUIEventChannelSO _toggleEnemyInfoUI = default;
-    [SerializeField] private IndicatorUIEventChannelSO _toggleIndicatorConnectionUI = default;
-
     public void OnEnable()
     {
-        if (_gameStats.phase == GamePhase.ShootingPhase)
-        {
-            //Debug.Log("Enable");
+        Debug.Log(_gameStats.phase);
+        //if (_gameStats.phase == GamePhase.ShootingPhase)
+        //{
+            Debug.Log("Enable Shooting");
             if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += SetShootingPhase;
-            if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised -= ClearShootingPhase;
-        }
+            //if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += ResetUnits;
+            //if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised -= ClearShootingPhase;
+        //}
     }
 
     public void OnDisable()
     {
-        //Debug.Log("Disable");
-        if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised -= SetShootingPhase;
-        if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += ClearShootingPhase;
+        //if (_gameStats.phase == GamePhase.MovementPhase)
+        //{
+            Debug.Log("Disable Shooting");
+            if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised -= SetShootingPhase;
+            //if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += ResetUnits;
+            //if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += ClearShootingPhase;
+        //}
     }
 
     public void SetShootingPhase(GameStatsSO gameStats)
     {
-        // Reset
+        
+        if (_gameStats.phase != GamePhase.ShootingPhase) return;
+            Debug.Log("Shooting Setup");
+       // Debug.Log(gameStats.activePlayer.name);
         ClearShootingPhase(gameStats);
+
 
         switch (_gameStats.shootingSubPhase)
         {
@@ -59,21 +61,22 @@ public class ShootingPhaseManager : MonoBehaviour
                     {
                         if (child.done)
                         {
-                            FillMethods(child, false, true, false, false);
+                            _battleroundEvents.FillMethods(child, false, true, false, false);
                             continue;
                         }
                         if (child == gameStats.activeUnit)
                         {
-                            FillMethods(child, true, true, true, true);
+                            _battleroundEvents.FillMethods(child, true, true, true, true);
                             _inputReader.activateEvent += NextPhase;
-                            //Debug.Log("Element");
+                            
                         }
                         else
                         {
-                            FillMethods(child, false, true, true, true);
+                                Debug.Log("Element");
+                            _battleroundEvents.FillMethods(child, false, true, true, true);
                         }
                     }
-                    foreach (Unit child in gameStats.enemyPlayer._playerUnits) FillMethods(child, false, true, true, false);
+                    foreach (Unit child in gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, true, true, false);
                     break;
                 }
             case (ShootingPhase.Shoot):
@@ -88,55 +91,13 @@ public class ShootingPhaseManager : MonoBehaviour
 
     public void ClearShootingPhase(GameStatsSO gameStats)
     {
-        Debug.Log("Reset");
-        foreach (Unit child in gameStats.activePlayer._playerUnits) FillMethods(child, false, false, false, false);
-        foreach (Unit child in gameStats.enemyPlayer._playerUnits) FillMethods(child, false, false, false, false);
+        Debug.Log("Clear Shooting");
+        foreach (Unit child in gameStats.activePlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
+        foreach (Unit child in gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
         _inputReader.activateEvent -= NextPhase;
         _inputReader.activateEvent -= HandleShooting;
         _inputReader.ExecuteEvent -= Wait;
         shootingSubPhase = ShootingSubEvents.SelectEnemy;
-    }
-
-    public void FillMethods(Unit child, bool displayInteraction, bool resetInteraction, bool displayInfo, bool connectIndicator)
-    {
-        if (displayInteraction) child.onPointerEnter += DisplayInteractionUI;
-        else child.onPointerEnter -= DisplayInteractionUI;
-
-        if (resetInteraction) child.onPointerExit += ResetInteraction;
-        else child.onPointerExit -= ResetInteraction;
-
-        if (displayInfo) child.onPointerEnterInfo += DisplayInfoUI;
-        else child.onPointerEnterInfo -= DisplayInfoUI;
-
-        if (connectIndicator) child.onTapDownAction += ConnectIndicator;
-        else child.onTapDownAction -= ConnectIndicator;
-    }
-
-    private void DisplayInfoUI(Unit unit)
-    {
-        if (_gameStats.activePlayer._playerUnits[0].tag == unit.tag)
-            _toggleInfoUI.RaiseEvent(true, unit);
-        if (_gameStats.enemyPlayer._playerUnits[0].tag == unit.tag)
-            _toggleEnemyInfoUI.RaiseEvent(true, unit);
-    }
-    private void DisplayInteractionUI()
-    {
-        //Raise event to display UI
-        _toggleInteractionUI.RaiseEvent(true, InteractionType.Activate);
-    }
-
-    private void ResetInteraction(Unit unit)
-    {
-        if (!unit.selected) _toggleInteractionUI.RaiseEvent(false, InteractionType.None);
-        if (!unit.activated) _toggleInfoUI.RaiseEvent(false, unit);
-        _toggleEnemyInfoUI.RaiseEvent(false, unit);
-    }
-    private void ConnectIndicator(Unit unit)
-    {
-        //Debug.Log("Connect");
-        SetShootingPhase(_gameStats);
-        _toggleIndicatorConnectionUI.RaiseEvent(true, unit);
-
     }
 
     private void NextPhase()
@@ -198,6 +159,11 @@ public class ShootingPhaseManager : MonoBehaviour
         }
     }
 
+    public void ResetUnits(GameStatsSO gameStats)
+    {
+        foreach (Unit child in gameStats.activePlayer._playerUnits) child.ResetData();
+    }
+
     private void Wait()
     {
         StartCoroutine(WaitForButton());
@@ -210,4 +176,45 @@ public class ShootingPhaseManager : MonoBehaviour
         HandleShooting();
     }
 
+    //public void FillMethods(Unit child, bool displayInteraction, bool resetInteraction, bool displayInfo, bool connectIndicator)
+    //{
+    //    if (displayInteraction) child.onPointerEnter += DisplayInteractionUI;
+    //    else child.onPointerEnter -= DisplayInteractionUI;
+
+    //    if (resetInteraction) child.onPointerExit += ResetInteraction;
+    //    else child.onPointerExit -= ResetInteraction;
+
+    //    if (displayInfo) child.onPointerEnterInfo += DisplayInfoUI;
+    //    else child.onPointerEnterInfo -= DisplayInfoUI;
+
+    //    if (connectIndicator) child.onTapDownAction += ConnectIndicator;
+    //    else child.onTapDownAction -= ConnectIndicator;
+    //}
+
+    //private void DisplayInfoUI(Unit unit)
+    //{
+    //    if (_gameStats.activePlayer._playerUnits[0].tag == unit.tag)
+    //        _toggleInfoUI.RaiseEvent(true, unit);
+    //    if (_gameStats.enemyPlayer._playerUnits[0].tag == unit.tag)
+    //        _toggleEnemyInfoUI.RaiseEvent(true, unit);
+    //}
+    //private void DisplayInteractionUI()
+    //{
+    //    //Raise event to display UI
+    //    _toggleInteractionUI.RaiseEvent(true, InteractionType.Activate);
+    //}
+
+    //private void ResetInteraction(Unit unit)
+    //{
+    //    if (!unit.selected) _toggleInteractionUI.RaiseEvent(false, InteractionType.None);
+    //    if (!unit.activated) _toggleInfoUI.RaiseEvent(false, unit);
+    //    _toggleEnemyInfoUI.RaiseEvent(false, unit);
+    //}
+    //private void ConnectIndicator(Unit unit)
+    //{
+    //    //Debug.Log("Connect");
+    //    SetShootingPhase(_gameStats);
+    //    _toggleIndicatorConnectionUI.RaiseEvent(true, unit);
+
+    //}
 }
