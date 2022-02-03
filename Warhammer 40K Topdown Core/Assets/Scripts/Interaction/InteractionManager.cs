@@ -5,7 +5,7 @@ public enum InteractionType { None = 0, Activate, ShowStats }
 public enum GamePhase { None = 0, MovementPhase, ShootingPhase }
 public enum MovementPhase { None = 0, Selection, Move, Next }
 public enum ShootingPhase { None = 0, Selection, Shoot, Next }
-//public enum ShootingSubEvents { none = 0, SelectEnemy, Shoot, Hit, Wound, Save, Damage }
+public enum DiceEvent { None = 0, HitEvent,ShootEvent, SaveEvent}
 
 public class InteractionManager : MonoBehaviour
 {

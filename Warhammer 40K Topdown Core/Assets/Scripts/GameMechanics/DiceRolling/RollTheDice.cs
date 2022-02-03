@@ -5,21 +5,35 @@ using UnityEngine;
 public class RollTheDice : MonoBehaviour
 {
     public GameObject camRoll;
+    public GameObject canvas;
+    public RollTheDiceSO diceRollingEvent;
 
     private string galleryDie = "d6-red";
     Vector3 spawnPoint;
+    DiceEvent diceRollType;
+    List<int> Values = new List<int>();
     // Start is called before the first frame update
     void Start()
     {
 
-        //UpdateRoll();
+    }
+    
+    //// Update is called once per frame
+    //void Update()
+    //{
+
+    //}
+    public void OnEnable()
+    {
+        Debug.Log("Roll the Dice");
+        if (diceRollingEvent != null) diceRollingEvent.OnEventRaised += Activate;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnDisable()
     {
-        
+        if (diceRollingEvent != null) diceRollingEvent.OnEventRaised -= Activate;
     }
+
 
     private void OnGUI()
     {
@@ -35,13 +49,28 @@ public class RollTheDice : MonoBehaviour
 
     public void UpdateRoll()
     {
-        spawnPoint = new Vector3(-160, 16, -5);
-        //if (Input.GetMouseButtonDown(Dice.MOUSE_RIGHT_BUTTON) && !PointInRect(GuiMousePosition(), rectModeSelect))
-        //{
+
+            spawnPoint = new Vector3(-160, 16, -5);
+            List<int> result = new List<int>();
+            //if (Input.GetMouseButtonDown(Dice.MOUSE_RIGHT_BUTTON) && !PointInRect(GuiMousePosition(), rectModeSelect))
+            //{
             // right mouse button clicked so roll 8 dice of dieType 'gallery die'
             Dice.Clear();
             string[] a = galleryDie.Split('-');
-            Dice.Roll("2" + a[0], galleryDie, spawnPoint, Force());
+            Dice.Roll(diceRollType, Values, galleryDie, spawnPoint, Force());
+            Debug.Log(diceRollType);
+
+
+        
         //}
+    }
+
+    public void Activate(DiceEvent diceEvent, List<int> values)
+    {
+        diceRollType = diceEvent;
+        Values = values;
+        camRoll.gameObject.SetActive(true);
+        canvas.gameObject.SetActive(true);
+
     }
 }

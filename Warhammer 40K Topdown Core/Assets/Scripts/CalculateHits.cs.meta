@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 046f485c2090fa04d8f60b9344edd3ee
+guid: 2e3075fdfbf9a1e49b78b55f29305ab1
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - rollDices: {fileID: 11400000, guid: 813266957258e7b44886c3ec5242cd3e, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

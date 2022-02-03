@@ -5,23 +5,60 @@ using UnityEngine;
 public class CalculateWoundsSO : ScriptableObject
 {
     public RollTheDiceSO rollDices;
+    public RollTheDiceSO rollWoundsResult;
+    public RollTheDiceSO rollDiceResult;
     public DataTablesSO dataTable;
 
-    public List<int> HandleToWound(List<int> hits, GameStatsSO gameStats)
+    int toWound;
+
+    private void OnEnable()
     {
-        List<int> wounds = new List<int>();
-        List<int> woundResult = new List<int>();
+        if (rollWoundsResult != null) rollWoundsResult.OnEventRaised += Result;
+    }
+
+    public void HandleToWound(List<int> hits, GameStatsSO gameStats)
+    {
+        //List<int> wounds = new List<int>();
 
         int toWound = dataTable.WoundTable(gameStats.activeUnit._weaponSO.Strength, gameStats.enemyUnit._unitSO.Toughness);
-
-        woundResult = rollDices.RollTheDice(hits);
-
-        foreach (int result in woundResult)
-        {
-            Debug.Log("Wounds: " + result);
-            if (result >= toWound)
-                wounds.Add(result);
-        }
-        return wounds;
+        Debug.Log("CalculateWoundsSO");
+        rollDices.RaiseEvent(DiceEvent.ShootEvent,hits);     
     }
+    private void Result(DiceEvent diceEvent, List<int> woundResult)
+    {
+        List<int> wounds = new List<int>();
+        Debug.Log("CalculateWoundsSO Result");
+        if (diceEvent == DiceEvent.ShootEvent)
+        {
+            if (woundResult != null)
+            {
+
+                foreach (int result in woundResult)
+                {
+                    Debug.Log("Wounds: " + result);
+                    if (result >= toWound)
+                        wounds.Add(result);
+                }
+                rollDiceResult.RaiseEvent(DiceEvent.ShootEvent, wounds);
+            }
+        }
+    }
+
+    //public List<int> HandleToWound(List<int> hits, GameStatsSO gameStats)
+    //{
+    //    List<int> wounds = new List<int>();
+    //    List<int> woundResult = new List<int>();
+
+    //    int toWound = dataTable.WoundTable(gameStats.activeUnit._weaponSO.Strength, gameStats.enemyUnit._unitSO.Toughness);
+
+    //    woundResult = rollDices.RollTheDice(hits);
+
+    //    foreach (int result in woundResult)
+    //    {
+    //        Debug.Log("Wounds: " + result);
+    //        if (result >= toWound)
+    //            wounds.Add(result);
+    //    }
+    //    return wounds;
+    //}
 }

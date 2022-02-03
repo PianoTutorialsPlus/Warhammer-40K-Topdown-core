@@ -8,6 +8,7 @@ public class ShootingPhaseManager : MonoBehaviour
     public InputReader _inputReader;
     public BattleRoundsSO _battleroundEvents;
 
+    //[SerializeField] private CalculateHits calculateHits;
     [SerializeField] private CalculateHitsSO calculateHits;
     [SerializeField] private CalculateWoundsSO calculateWounds;
     [SerializeField] private CalculateSaverolesSO calculateSaves;
@@ -21,6 +22,8 @@ public class ShootingPhaseManager : MonoBehaviour
 
     [SerializeField] private BattleroundEventChannelSO SetShootingPhaseEvent;
 
+    public RollTheDiceSO diceRollingResult;
+
     public void OnEnable()
     {
         Debug.Log(_gameStats.phase);
@@ -28,9 +31,10 @@ public class ShootingPhaseManager : MonoBehaviour
         //{
             Debug.Log("Enable Shooting");
             if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += SetShootingPhase;
+        if (diceRollingResult != null) diceRollingResult.OnEventRaised += ProcessResult;
             //if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += ResetUnits;
             //if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised -= ClearShootingPhase;
-        //}
+            //}
     }
 
     public void OnDisable()
@@ -121,23 +125,24 @@ public class ShootingPhaseManager : MonoBehaviour
                 }
             case (ShootingSubEvents.Hit):
                 {
-                    hits = calculateHits.HandleToHit(_gameStats);
-                    shootingSubPhase = ShootingSubEvents.Wound;
-                    CheckNullValues(hits);
+                    calculateHits.HandleToHit(_gameStats);
+                    //shootingSubPhase = ShootingSubEvents.Wound;
+                    //CheckNullValues(hits);
                     break;
                 }
             case (ShootingSubEvents.Wound):
                 {
-                    wounds = calculateWounds.HandleToWound(hits, _gameStats);
-                    shootingSubPhase = ShootingSubEvents.Save;
-                    CheckNullValues(wounds);
+                    Debug.Log("Wounds case");
+                    calculateWounds.HandleToWound(hits, _gameStats);
+                    //shootingSubPhase = ShootingSubEvents.Save;
+                    //CheckNullValues(wounds);
                     break;
                 }
             case (ShootingSubEvents.Save):
                 {
-                    saves = calculateSaves.HandleSaveRoles(wounds, _gameStats);
-                    shootingSubPhase = ShootingSubEvents.Damage;
-                    CheckNullValues(saves);
+                    calculateSaves.HandleSaveRoles(wounds, _gameStats);
+                    //shootingSubPhase = ShootingSubEvents.Damage;
+                    //CheckNullValues(saves);
                     break;
                 }
             case (ShootingSubEvents.Damage):
@@ -148,6 +153,40 @@ public class ShootingPhaseManager : MonoBehaviour
                 }
         }
 
+    }
+
+    private void ProcessResult(DiceEvent diceEvent, List<int> result)
+    {
+        switch (diceEvent)
+        {
+            case (DiceEvent.HitEvent):
+                {
+                    Debug.Log("Process Hit Result");
+                    hits = result;
+                    shootingSubPhase = ShootingSubEvents.Wound;
+                    CheckNullValues(hits);
+                    
+                    break;
+                }
+            case (DiceEvent.ShootEvent):
+            {
+                    Debug.Log("Process Wound Result");
+                    wounds = result;
+                    shootingSubPhase = ShootingSubEvents.Save;
+                    CheckNullValues(wounds);
+                    break;
+                }
+            case (DiceEvent.SaveEvent):
+                {
+                    Debug.Log("Process Save Result");
+                    saves = result;
+                    shootingSubPhase = ShootingSubEvents.Damage;
+                    CheckNullValues(saves);
+                    break;
+                }
+        }
+        Debug.Log(shootingSubPhase);
+        HandleShooting();
     }
 
     private void CheckNullValues(List<int> values)
