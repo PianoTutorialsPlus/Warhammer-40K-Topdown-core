@@ -56,7 +56,7 @@ public class Dice : MonoBehaviour
     public GameObject camRoll;
     public GameObject canvas;
     public RollTheDiceSO diceRollingResult;
-    public static DiceEvent diceRollType;
+    public static ShootingSubEvents diceRollType;
 
     //------------------------------------------------------------------------------------------------------------------------------
     // public methods
@@ -134,7 +134,7 @@ public class Dice : MonoBehaviour
     /// format dice 			: 	({count}){die type}	, exmpl.  d6, 4d4, 12d8 , 1d20
     /// possible die types 	:	d4, d6, d8 , d10, d12, d20
     /// </summary>
-    public static void Roll(DiceEvent diceEvent ,List<int> dice, string mat, Vector3 spawnPoint, Vector3 force)
+    public static void Roll(ShootingSubEvents diceEvent ,List<int> dice, string mat, Vector3 spawnPoint, Vector3 force)
     {
         diceRollType = diceEvent;
         rolling = true;
@@ -371,7 +371,7 @@ public class Dice : MonoBehaviour
 
     private IEnumerator test()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         diceRollingResult.RaiseEvent(diceRollType, result);
         foreach (int die in result)
         {

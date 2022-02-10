@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Deal Damage Event")]
-public class DealDamageSO : ScriptableObject
+public class DealDamageSO : CalculationBaseSO
 {
-    public void DealDamage(List<int> notSaved, GameStatsSO gameStats)
+    public override void Action(List<int> notSaved, GameStatsSO gameStats)
     {
         int damage = gameStats.activeUnit._weaponSO.Damage;
 
@@ -16,6 +16,14 @@ public class DealDamageSO : ScriptableObject
         }
         if (gameStats.enemyUnit._unitSO.Wounds <= 0)
             gameStats.enemyUnit.Destroy();
+
+        Result(ShootingSubEvents.Damage, null);
+    }
+
+
+    public override void Result(ShootingSubEvents diceEvent, List<int> result)
+    {
+        rollDiceResult.RaiseEvent(diceEvent, result);
     }
 }
 

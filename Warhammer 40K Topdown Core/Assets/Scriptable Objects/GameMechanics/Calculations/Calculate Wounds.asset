@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb4e194bf37046a41adc94d599f7636c, type: 3}
-  m_Name: Calculate Saveroles
+  m_Script: {fileID: 11500000, guid: 3124b35a1890dce4e8a9dd4e66e7a59f, type: 3}
+  m_Name: Calculate Wounds
   m_EditorClassIdentifier: 
   rollDices: {fileID: 11400000, guid: 813266957258e7b44886c3ec5242cd3e, type: 2}
-  rollSaveResult: {fileID: 11400000, guid: 898753be13cf34042823ad734f12c5bc, type: 2}
+  rollSubResult: {fileID: 11400000, guid: 898753be13cf34042823ad734f12c5bc, type: 2}
   rollDiceResult: {fileID: 11400000, guid: f31b0541c9c601441867066a326a70ae, type: 2}
+  dataTable: {fileID: 11400000, guid: 70c677795bd44554d9c2e3fa60f57ceb, type: 2}

@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 
-public class MovementPhaseManager : MonoBehaviour
+public class MovementPhaseManager : PhaseManagerBase
 {
     public GameStatsSO _gameStats;
     public InputReader _inputReader;
@@ -10,6 +10,8 @@ public class MovementPhaseManager : MonoBehaviour
     public BattleRoundsSO _battleroundEvents;
 
     [SerializeField] private BattleroundEventChannelSO SetMovementPhaseEvent;
+
+    MovementPhase movementPhase;
 
     public void OnEnable()
     {
@@ -29,47 +31,17 @@ public class MovementPhaseManager : MonoBehaviour
 
     public void SetMovementPhase(GameStatsSO gameStats)
     {
-        
-        if (_gameStats.phase != GamePhase.MovementPhase) return;
-            Debug.Log("Movement Setup");
+        //if (_gameStats.phase != GamePhase.MovementPhase) return;
         ClearMovementPhase(gameStats);
+        Debug.Log("Movement Setup");
 
-        switch (gameStats.movementSubPhase)
-        {
-            case MovementPhase.Selection:
-                {
-                    foreach (Unit child in gameStats.activePlayer._playerUnits)
-                    {
-                        if (child.done)
-                        {
-                            _battleroundEvents.FillMethods(child, false, true, false, false);
-                            continue;
-                        }
-                        if (child == gameStats.activeUnit)
-                        {
-                            _battleroundEvents.FillMethods(child, true, true, true, true);
-                            _inputReader.activateEvent += NextPhase;
-                            //Debug.Log("Element");
-                        }
-
-                        else
-                        {
-                            Debug.Log("Element");
-                            _battleroundEvents.FillMethods(child, false, true, true, true);
-                        }
-                    }
-                    foreach (Unit child in gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, true, true, false);
-                    break;
-                }
-            case MovementPhase.Move:
-                {
-                    _battleroundEvents.FillMethods(_gameStats.activeUnit, true, true, true, false);
-                    //Debug.Log("Move");
-                    gameStats.activeUnit.activated = true;
-                    gameStats.gameTable.gameTable.onTapDownAction += Move;
-                    break;
-                }
-        }
+        movementPhase = gameStats.movementSubPhase;
+        bool selection = MovementPhaseProcessor.HandleMovement(gameStats, _battleroundEvents, movementPhase);
+        bool move = MovementPhaseProcessor.HandleMove(gameStats, _battleroundEvents, movementPhase);
+        
+        if (selection) _inputReader.activateEvent += NextPhase;
+        if(move) gameStats.gameTable.gameTable.onTapDownAction += Move;
+        
     }
 
     public void Move(Vector3 position)
@@ -94,7 +66,8 @@ public class MovementPhaseManager : MonoBehaviour
     private void NextPhase()
     {
         //Debug.Log("Phase");
-        _gameStats.movementSubPhase = MovementPhase.Move;
+        _gameStats.movementSubPhase = MovementPhaseProcessor.SetPhase(movementPhase);
+        //_gameStats.movementSubPhase = MovementPhase.Move;
         SetMovementPhase(_gameStats);
     }
 
@@ -126,6 +99,51 @@ public class MovementPhaseManager : MonoBehaviour
     //Check if the interaction ended 
     //[SerializeField] private BattleroundEventChannelSO _onPhaseEnded = default;
     // ---------------------------------------------------------------------------
+
+    //public void SetMovementPhase(GameStatsSO gameStats)
+    //{
+
+    //    if (_gameStats.phase != GamePhase.MovementPhase) return;
+    //    Debug.Log("Movement Setup");
+    //    ClearMovementPhase(gameStats);
+
+    //    switch (gameStats.movementSubPhase)
+    //    {
+    //        case MovementPhase.Selection:
+    //            {
+    //                foreach (Unit child in gameStats.activePlayer._playerUnits)
+    //                {
+    //                    if (child.done)
+    //                    {
+    //                        _battleroundEvents.FillMethods(child, false, true, false, false);
+    //                        continue;
+    //                    }
+    //                    if (child == gameStats.activeUnit)
+    //                    {
+    //                        _battleroundEvents.FillMethods(child, true, true, true, true);
+    //                        _inputReader.activateEvent += NextPhase;
+    //                        //Debug.Log("Element");
+    //                    }
+
+    //                    else
+    //                    {
+    //                        Debug.Log("Element");
+    //                        _battleroundEvents.FillMethods(child, false, true, true, true);
+    //                    }
+    //                }
+    //                foreach (Unit child in gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, true, true, false);
+    //                break;
+    //            }
+    //        case MovementPhase.Move:
+    //            {
+    //                _battleroundEvents.FillMethods(_gameStats.activeUnit, true, true, true, false);
+    //                //Debug.Log("Move");
+    //                gameStats.activeUnit.activated = true;
+    //                gameStats.gameTable.gameTable.onTapDownAction += Move;
+    //                break;
+    //            }
+    //    }
+    //}
 
     //public void FillMethods(Unit child, bool displayInteraction, bool resetInteraction, bool displayInfo, bool connectIndicator)
     //{

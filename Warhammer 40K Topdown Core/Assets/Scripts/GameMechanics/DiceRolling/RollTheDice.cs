@@ -10,7 +10,7 @@ public class RollTheDice : MonoBehaviour
 
     private string galleryDie = "d6-red";
     Vector3 spawnPoint;
-    DiceEvent diceRollType;
+    ShootingSubEvents diceRollType;
     List<int> Values = new List<int>();
     // Start is called before the first frame update
     void Start()
@@ -65,7 +65,7 @@ public class RollTheDice : MonoBehaviour
         //}
     }
 
-    public void Activate(DiceEvent diceEvent, List<int> values)
+    public void Activate(ShootingSubEvents diceEvent, List<int> values)
     {
         diceRollType = diceEvent;
         Values = values;

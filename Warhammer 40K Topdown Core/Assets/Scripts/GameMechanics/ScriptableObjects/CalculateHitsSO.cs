@@ -2,21 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Hit Calculation Event")]
-public class CalculateHitsSO : ScriptableObject
+public class CalculateHitsSO : CalculationBaseSO
 {
-    public RollTheDiceSO rollDices;
-    public RollTheDiceSO rollHitsResult;
-    public RollTheDiceSO rollDiceResult;
 
     //public List<int> hitResult = new List<int>();
     int toHit;
 
     private void OnEnable()
     {
-        if (rollHitsResult != null) rollHitsResult.OnEventRaised += Result;
+        if (rollSubResult != null) rollSubResult.OnEventRaised += Result;
     }
 
-    public void HandleToHit(GameStatsSO gameStats)
+    public override void Action(GameStatsSO gameStats)
     {
         List<int> shots = new List<int>();
 
@@ -26,29 +23,39 @@ public class CalculateHitsSO : ScriptableObject
         {
             shots.Add(shot);
         }
-        rollDices.RaiseEvent(DiceEvent.HitEvent, shots);
+        rollDices.RaiseEvent(ShootingSubEvents.Hit, shots);
     }
 
-    private void Result(DiceEvent diceEvent, List<int> hitResult)
+    public override void Result(ShootingSubEvents diceEvent, List<int> hitResult)
     {
-        List<int> hits = new List<int>();
-        if (diceEvent == DiceEvent.HitEvent)
-        {
-            if (hitResult != null)
-            {
+        if (hitResult == null || hitResult.Count == 0) return;
+        if (diceEvent != ShootingSubEvents.Hit) return;
+        Debug.Log("CalculateHitsSO Result");
 
-                foreach (int result in hitResult)
-                {
-                    Debug.Log("Hit result: " + result);
-                    if (result >= toHit)
-                        hits.Add(result);
-                }
-                rollDiceResult.RaiseEvent(DiceEvent.HitEvent, hits);
-            }
-        }
+        List<int> hits = ShootingSubPhaseProcessor.GetResult(toHit, hitResult, diceEvent);
+        rollDiceResult.RaiseEvent(diceEvent, hits);
+        
     }
 
+    //public override void Result(ShootingSubEvents diceEvent, List<int> hitResult)
+    //{
+    //    List<int> hits = new List<int>();
+    //    if (diceEvent == ShootingSubEvents.Hit)
+    //    {
+    //        if (hitResult != null)
+    //        {
 
+    //            foreach (int result in hitResult)
+    //            {
+    //                Debug.Log("Hit result: " + result);
+    //                if (result >= toHit)
+    //                    hits.Add(result);
+    //            }
+    //            rollDiceResult.RaiseEvent(ShootingSubEvents.Hit, hits);
+
+    //        }
+    //    }
+    //}
     //public RollTheDiceSO rollDices;
     //public RollTheDiceSO rollDicesResult;
 

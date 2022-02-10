@@ -255,27 +255,32 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         return lng;
     }
 
-    public virtual void ResetData()
+
+    public void ResetData()
     {
-        Debug.Log("Reset");
-        if (_gameStats.phase == GamePhase.MovementPhase)
-        {
-            m_Agent.isStopped = false;
-            restDistance = moveDistance;
-        }
-        else
-        {
-            m_Agent.isStopped = true;
-            restDistance = weaponRange;
-        }
-        //Debug.Log(name);
-        //canMove = true;
+        //Debug.Log("Reset");
+        Debug.Log("Reset:" + name);
+        ////canMove = true;
         canShoot = true;
         movedDistance = 0;
         activated = false;
         selected = false;
         done = false;
 
+    }
+
+    public void PrepareMovementPhase()
+    {
+        //Debug.Log("ResetMovement");
+        m_Agent.isStopped = false;
+        restDistance = moveDistance;
+    }
+
+    public void PrepareShootingPhase()
+    {
+        //Debug.Log("ResetShooting");
+        m_Agent.isStopped = true;
+        restDistance = weaponRange;
     }
 
     public virtual void Freeze()

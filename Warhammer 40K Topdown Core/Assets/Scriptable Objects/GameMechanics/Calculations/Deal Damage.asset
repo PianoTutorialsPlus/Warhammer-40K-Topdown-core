@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c269c92377e8fb34ea73de344a93cceb, type: 3}
   m_Name: Deal Damage
   m_EditorClassIdentifier: 
+  rollDices: {fileID: 0}
+  rollSubResult: {fileID: 0}
+  rollDiceResult: {fileID: 11400000, guid: f31b0541c9c601441867066a326a70ae, type: 2}

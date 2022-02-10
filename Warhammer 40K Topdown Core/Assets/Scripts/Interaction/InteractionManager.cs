@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -5,7 +6,9 @@ public enum InteractionType { None = 0, Activate, ShowStats }
 public enum GamePhase { None = 0, MovementPhase, ShootingPhase }
 public enum MovementPhase { None = 0, Selection, Move, Next }
 public enum ShootingPhase { None = 0, Selection, Shoot, Next }
-public enum DiceEvent { None = 0, HitEvent,ShootEvent, SaveEvent}
+//public enum DiceEvent { None = 0, HitEvent,ShootEvent, SaveEvent}
+
+
 
 public class InteractionManager : MonoBehaviour
 {
@@ -24,8 +27,11 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameinfoUIEventChannelSO _toggleGameinfoUI = default;
     [SerializeField] BattleroundEventChannelSO _toggleBattleRounds = default;
 
-    [SerializeField] MovementPhaseManager movementPhase;
-    [SerializeField] ShootingPhaseManager shootingPhase;
+    [SerializeField] List<PhaseManagerBase> gamePhases = new List<PhaseManagerBase>();
+    //[SerializeField] MovementPhaseManager movementPhase;
+    //[SerializeField] ShootingPhaseManager shootingPhase;
+
+    GamePhase _gamePhase;
 
     private void Start()
     {
@@ -36,11 +42,13 @@ public class InteractionManager : MonoBehaviour
     private void OnEnable()
     {
         //Initialization
-        _gameStats.phase = GamePhase.MovementPhase;
+        //_gameStats.phase = GamePhase.MovementPhase;
+        _gamePhase = GamePhase.MovementPhase;
         _gameStats.movementSubPhase = MovementPhase.Selection;
         _gameStats.shootingSubPhase = ShootingPhase.Selection;
         _gameStats.turn = 1;
         _gameStats.activeUnit = null;
+        _gameStats.enemyUnit = null;
 
         // StartCoroutine(Sets());
         _gameStats.activePlayer = _player1;
@@ -58,31 +66,19 @@ public class InteractionManager : MonoBehaviour
         _toggleGameinfoUI.RaiseEvent(true, _gameStats);
     }
 
-
-
-
     public void SetPhase(GameStatsSO gameStats)
     {
+        GamePhaseProcessor.ResetPhase(gameStats, gamePhases, _gamePhase);
+        _gamePhase = GamePhaseProcessor.SetPhase(gameStats, _gamePhase);
+        //gameStats.phase = _gamePhase;
+        bool endOfPlayerTurn = GamePhaseProcessor.HandlePhase(gamePhases,_gamePhase);
 
-        if (gameStats.phase == GamePhase.MovementPhase)
+        if (endOfPlayerTurn)
         {
-            gameStats.phase = GamePhase.ShootingPhase;
-            EnableShootingPhase();
-            movementPhase.ClearMovementPhase(gameStats);
-            movementPhase.ResetUnits(gameStats);
-
-        }
-        else if (gameStats.phase == GamePhase.ShootingPhase)
-        {
-            gameStats.phase = GamePhase.MovementPhase;
-            //gameStats.movementSubPhase = MovementPhase.Selection;
-            EnableMovementPhase();
-            shootingPhase.ClearShootingPhase(gameStats);
-            shootingPhase.ResetUnits(gameStats);
-
             TogglePlayers();
-            if (_gameStats.activePlayer == _player1) gameStats.turn += 1;
+            if (gameStats.activePlayer == _player1) gameStats.turn += 1;
         }
+
         _toggleGameinfoUI.RaiseEvent(true, gameStats);
         _toggleBattleRounds.RaiseEvent(gameStats);
     }
@@ -91,6 +87,7 @@ public class InteractionManager : MonoBehaviour
 
     public void TogglePlayers()
     {
+        Debug.Log("Toggle Player");
         if (_gameStats.activePlayer == _player1)
         {
             _gameStats.activePlayer = _player2;
@@ -103,18 +100,44 @@ public class InteractionManager : MonoBehaviour
         }
     }
 
-    private void EnableMovementPhase()
-    {
-        shootingPhase.enabled = false;
-        movementPhase.enabled = true; 
-    }
+    //private void EnableMovementPhase()
+    //{
+    //    shootingPhase.enabled = false;
+    //    movementPhase.enabled = true; 
+    //}
 
-    private void EnableShootingPhase()
-    {
-        movementPhase.enabled = false;
-        shootingPhase.enabled = true;
-    }
+    //private void EnableShootingPhase()
+    //{
+    //    movementPhase.enabled = false;
+    //    shootingPhase.enabled = true;
+    //}
 
+
+    //public void SetPhase(GameStatsSO gameStats)
+    //{
+
+    //    if (gameStats.phase == GamePhase.MovementPhase)
+    //    {
+    //        gameStats.phase = GamePhase.ShootingPhase;
+    //        EnableShootingPhase();
+    //        movementPhase.ClearMovementPhase(gameStats);
+    //        movementPhase.ResetUnits(gameStats);
+
+    //    }
+    //    else if (gameStats.phase == GamePhase.ShootingPhase)
+    //    {
+    //        gameStats.phase = GamePhase.MovementPhase;
+    //        //gameStats.movementSubPhase = MovementPhase.Selection;
+    //        EnableMovementPhase();
+    //        shootingPhase.ClearShootingPhase(gameStats);
+    //        shootingPhase.ResetUnits(gameStats);
+
+    //        TogglePlayers();
+    //        if (gameStats.activePlayer == _player1) gameStats.turn += 1;
+    //    }
+    //    _toggleGameinfoUI.RaiseEvent(true, gameStats);
+    //    _toggleBattleRounds.RaiseEvent(gameStats);
+    //}
     //public IEnumerator Sets()
     //{
     //    yield return new WaitForEndOfFrame();

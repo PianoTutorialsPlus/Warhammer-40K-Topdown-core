@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 046f485c2090fa04d8f60b9344edd3ee, type: 3}
-  m_Name: Calculate Hits
+  m_Script: {fileID: 11500000, guid: cb4e194bf37046a41adc94d599f7636c, type: 3}
+  m_Name: Calculate Saveroles
   m_EditorClassIdentifier: 
   rollDices: {fileID: 11400000, guid: 813266957258e7b44886c3ec5242cd3e, type: 2}
-  rollHitsResult: {fileID: 11400000, guid: 898753be13cf34042823ad734f12c5bc, type: 2}
+  rollSubResult: {fileID: 11400000, guid: 898753be13cf34042823ad734f12c5bc, type: 2}
   rollDiceResult: {fileID: 11400000, guid: f31b0541c9c601441867066a326a70ae, type: 2}

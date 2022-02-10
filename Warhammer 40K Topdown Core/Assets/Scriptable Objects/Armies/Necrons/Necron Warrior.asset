@@ -22,3 +22,4 @@ MonoBehaviour:
   _attack: 1
   _leadership: 10
   _armourSave: 4
+  takenWounds: 0
