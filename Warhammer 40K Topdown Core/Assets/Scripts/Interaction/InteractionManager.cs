@@ -1,68 +1,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+// Enum initialization
 public enum InteractionType { None = 0, Activate, ShowStats }
 public enum GamePhase { None = 0, MovementPhase, ShootingPhase }
 public enum MovementPhase { None = 0, Selection, Move, Next }
 public enum ShootingPhase { None = 0, Selection, Shoot, Next }
-//public enum DiceEvent { None = 0, HitEvent,ShootEvent, SaveEvent}
+public enum ShootingSubEvents { None = 0, SelectEnemy, Hit, Wound, Save, Damage }
 
-
+/// <summary>
+/// This script takes care of the interactions. It communicates with the UI Manager and triggers the GamePhase Processor.
+/// When "End Turn" button is pressed, a new gamephase is invoked.
+/// </summary>
 
 public class InteractionManager : MonoBehaviour
 {
-    // public PlayerSO _activePlayer;
-    // public PlayerSO _enemyPlayer;
-    public PlayerSO _player1;
-    public PlayerSO _player2;
+    //Initialization
+    // Gameplay
+    [SerializeField] private PlayerSO _player1;
+    [SerializeField] private PlayerSO _player2;
+    [SerializeField] private GameStatsSO _gameStats;
 
-    //public PhaseSO _phase; //Initialization
-    //public TurnSO _turn; //Initialization
-    public GameStatsSO _gameStats; //Initialization
-
-    //[SerializeField] PhaseEventChannelSO SetPhaseEvent = default;
-    [SerializeField] GameStatsEventChannelSO SetPhaseEvent = default;
-    [SerializeField] TurnEventChannelSO SetTurnEvent = default;
+    // Events
+    [SerializeField] private GameStatsEventChannelSO SetPhaseEvent = default;
     [SerializeField] private GameinfoUIEventChannelSO _toggleGameinfoUI = default;
-    [SerializeField] BattleroundEventChannelSO _toggleBattleRounds = default;
+    [SerializeField] private BattleroundEventChannelSO _toggleBattleRounds = default;
 
-    [SerializeField] List<PhaseManagerBase> gamePhases = new List<PhaseManagerBase>();
-    //[SerializeField] MovementPhaseManager movementPhase;
-    //[SerializeField] ShootingPhaseManager shootingPhase;
+    // Lists
+    [SerializeField] private List<PhaseManagerBase> gamePhases = new List<PhaseManagerBase>();
 
+    //Enums
     GamePhase _gamePhase;
 
     private void Start()
     {
-        //EnableMovementPhase();
         _toggleBattleRounds.RaiseEvent(_gameStats); //Initialization    
     }
 
     private void OnEnable()
     {
         //Initialization
-        //_gameStats.phase = GamePhase.MovementPhase;
         _gamePhase = GamePhase.MovementPhase;
-        _gameStats.movementSubPhase = MovementPhase.Selection;
-        _gameStats.shootingSubPhase = ShootingPhase.Selection;
         _gameStats.turn = 1;
         _gameStats.activeUnit = null;
         _gameStats.enemyUnit = null;
-
-        // StartCoroutine(Sets());
         _gameStats.activePlayer = _player1;
         _gameStats.enemyPlayer = _player2;
-
-        //_gameStats.activePlayer._playerUnits = _player1._playerUnits;
-        //_gameStats.enemyPlayer._playerUnits = _player2._playerUnits;
-
-
+        GamePhaseProcessor.HandlePhase(gamePhases, _gamePhase);
 
         if (SetPhaseEvent != null) SetPhaseEvent.OnEventRaised += SetPhase;
 
-        //_toggleBattleRounds.RaiseEvent(_gameStats); //Initialization
-        //_toggleGameinfoUI.RaiseEvent(true, _activePlayer._playerUnits[0],_phase,_turn);
         _toggleGameinfoUI.RaiseEvent(true, _gameStats);
     }
 
@@ -70,24 +57,20 @@ public class InteractionManager : MonoBehaviour
     {
         GamePhaseProcessor.ResetPhase(gameStats, gamePhases, _gamePhase);
         _gamePhase = GamePhaseProcessor.SetPhase(gameStats, _gamePhase);
-        //gameStats.phase = _gamePhase;
-        bool endOfPlayerTurn = GamePhaseProcessor.HandlePhase(gamePhases,_gamePhase);
+        gameStats.phase = _gamePhase;
+        bool endOfPlayerTurn = GamePhaseProcessor.HandlePhase(gamePhases, _gamePhase);
 
         if (endOfPlayerTurn)
         {
             TogglePlayers();
             if (gameStats.activePlayer == _player1) gameStats.turn += 1;
         }
-
         _toggleGameinfoUI.RaiseEvent(true, gameStats);
         _toggleBattleRounds.RaiseEvent(gameStats);
     }
 
-
-
     public void TogglePlayers()
     {
-        Debug.Log("Toggle Player");
         if (_gameStats.activePlayer == _player1)
         {
             _gameStats.activePlayer = _player2;
@@ -99,6 +82,46 @@ public class InteractionManager : MonoBehaviour
             _gameStats.enemyPlayer = _player2;
         }
     }
+
+    // public PlayerSO _activePlayer;
+    // public PlayerSO _enemyPlayer;
+    //public PhaseSO _phase; //Initialization
+    //public TurnSO _turn; //Initialization
+    //[SerializeField] MovementPhaseManager movementPhase;
+    //[SerializeField] ShootingPhaseManager shootingPhase;
+    //[SerializeField] TurnEventChannelSO SetTurnEvent = default;
+    //[SerializeField] PhaseEventChannelSO SetPhaseEvent = default;
+
+    // ---------------------------------------------------------------------
+
+    //private void OnEnable()
+    //{
+    //    //Initialization
+    //    //_gameStats.phase = GamePhase.MovementPhase;
+    //    _gamePhase = GamePhase.MovementPhase;
+    //    GamePhaseProcessor.HandlePhase(gamePhases, _gamePhase);
+
+    //    //_gameStats.movementSubPhase = MovementPhase.Selection;
+    //    //_gameStats.shootingSubPhase = ShootingPhase.Selection;
+    //    _gameStats.turn = 1;
+    //    _gameStats.activeUnit = null;
+    //    _gameStats.enemyUnit = null;
+
+    //    // StartCoroutine(Sets());
+    //    _gameStats.activePlayer = _player1;
+    //    _gameStats.enemyPlayer = _player2;
+
+    //    //_gameStats.activePlayer._playerUnits = _player1._playerUnits;
+    //    //_gameStats.enemyPlayer._playerUnits = _player2._playerUnits;
+
+
+
+    //    if (SetPhaseEvent != null) SetPhaseEvent.OnEventRaised += SetPhase;
+
+    //    //_toggleBattleRounds.RaiseEvent(_gameStats); //Initialization
+    //    //_toggleGameinfoUI.RaiseEvent(true, _activePlayer._playerUnits[0],_phase,_turn);
+    //    _toggleGameinfoUI.RaiseEvent(true, _gameStats);
+    //}
 
     //private void EnableMovementPhase()
     //{

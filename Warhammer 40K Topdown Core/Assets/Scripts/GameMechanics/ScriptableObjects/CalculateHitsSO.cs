@@ -34,7 +34,7 @@ public class CalculateHitsSO : CalculationBaseSO
 
         List<int> hits = ShootingSubPhaseProcessor.GetResult(toHit, hitResult, diceEvent);
         rollDiceResult.RaiseEvent(diceEvent, hits);
-        
+
     }
 
     //public override void Result(ShootingSubEvents diceEvent, List<int> hitResult)

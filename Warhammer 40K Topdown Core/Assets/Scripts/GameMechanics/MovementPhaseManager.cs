@@ -1,47 +1,49 @@
 using UnityEngine;
 
-
+/// <summary>
+/// this script manages the movement phase. 
+/// When SetMovementPhase is called, it triggers the movement phase processor.
+/// The manager handles the movement phase, dependend on what subphase its currently in.
+/// </summary>
 
 public class MovementPhaseManager : PhaseManagerBase
 {
-    public GameStatsSO _gameStats;
-    public InputReader _inputReader;
+    // Gameplay
+    [SerializeField] private GameStatsSO _gameStats;
+    [SerializeField] private InputReader _inputReader;
 
-    public BattleRoundsSO _battleroundEvents;
-
+    // Events
     [SerializeField] private BattleroundEventChannelSO SetMovementPhaseEvent;
+    [SerializeField] private BattleRoundsSO _battleroundEvents;
 
+    // Enums
     MovementPhase movementPhase;
 
     public void OnEnable()
     {
-            Debug.Log("Enable Movement");
-            if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += SetMovementPhase;
-            //if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += ResetUnits;
-            //if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised -= ClearMovementPhase;
+        //Debug.Log("Enable Movement");
+        movementPhase = MovementPhase.Selection;
+
+        if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += SetMovementPhase;
     }
 
     public void OnDisable()
     {
-            Debug.Log("Disable Movement");
+        //Debug.Log("Disable Movement");
         if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised -= SetMovementPhase;
-        //if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += ClearMovementPhase;
-        //    if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += ResetUnits;
     }
 
     public void SetMovementPhase(GameStatsSO gameStats)
     {
-        //if (_gameStats.phase != GamePhase.MovementPhase) return;
         ClearMovementPhase(gameStats);
-        Debug.Log("Movement Setup");
 
-        movementPhase = gameStats.movementSubPhase;
-        bool selection = MovementPhaseProcessor.HandleMovement(gameStats, _battleroundEvents, movementPhase);
-        bool move = MovementPhaseProcessor.HandleMove(gameStats, _battleroundEvents, movementPhase);
-        
+        bool selection = MovementPhaseProcessor.HandleSelection(gameStats, _battleroundEvents, movementPhase);
+        bool move = MovementPhaseProcessor.HandleMovement(gameStats, _battleroundEvents, movementPhase);
+        bool next = MovementPhaseProcessor.Next(gameStats, movementPhase);
+
         if (selection) _inputReader.activateEvent += NextPhase;
-        if(move) gameStats.gameTable.gameTable.onTapDownAction += Move;
-        
+        if (move) gameStats.gameTable.gameTable.onTapDownAction += Move;
+        if (next) NextPhase();
     }
 
     public void Move(Vector3 position)
@@ -51,25 +53,23 @@ public class MovementPhaseManager : PhaseManagerBase
 
     public void ClearMovementPhase(GameStatsSO gameStats)
     {
-        Debug.Log("Clear Movement");
         foreach (Unit child in gameStats.activePlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
         foreach (Unit child in gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
         gameStats.gameTable.gameTable.onTapDownAction -= Move;
         _inputReader.activateEvent -= NextPhase;
     }
 
-    public void ResetUnits(GameStatsSO gameStats)
-    {
-        foreach (Unit child in gameStats.activePlayer._playerUnits) child.ResetData();
-    }
 
-    private void NextPhase()
+    public void NextPhase()
     {
-        //Debug.Log("Phase");
-        _gameStats.movementSubPhase = MovementPhaseProcessor.SetPhase(movementPhase);
-        //_gameStats.movementSubPhase = MovementPhase.Move;
+        movementPhase = MovementPhaseProcessor.SetPhase(movementPhase);
         SetMovementPhase(_gameStats);
     }
+
+    //public void ResetUnits(GameStatsSO gameStats)
+    //{
+    //    foreach (Unit child in gameStats.activePlayer._playerUnits) child.ResetData();
+    //}
 
     //private void ActivateUnit()
     //{

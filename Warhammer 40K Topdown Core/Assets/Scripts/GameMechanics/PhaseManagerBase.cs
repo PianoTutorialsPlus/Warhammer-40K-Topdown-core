@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class PhaseManagerBase: MonoBehaviour
+public abstract class PhaseManagerBase : MonoBehaviour
 {
 
 }

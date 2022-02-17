@@ -1,25 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+
+/// <summary>
+/// This script executes the calls from the interaction manager in the specific state.
+/// When HandlePhase is called, it enables to the specific game phase manager responsible for that case.
+/// All other game phase managers will be disabled.
+/// </summary>
 
 public abstract class GamePhases
 {
-    public abstract GamePhase SubEvents { get; }
-    public abstract GamePhase SetPhase(GameStatsSO gameStats,GamePhase subPhase);
-    public abstract bool HandlePhase(List<PhaseManagerBase> gamePhases);
-    public abstract void ResetPhase(GameStatsSO gameStats, List<PhaseManagerBase> gamePhases);
-    public abstract void ResetUnits(GameStatsSO gameStats);
+    public abstract GamePhase SubEvents { get; } // gets the active game phase
+    public abstract GamePhase SetPhase(GameStatsSO gameStats, GamePhase subPhase); // sets the next game phase
+    public abstract bool HandlePhase(List<PhaseManagerBase> gamePhases); // Refers to the specific game phase manager
+    public abstract void ResetPhase(GameStatsSO gameStats, List<PhaseManagerBase> gamePhases); // clears all dependencies of the game phase
+    public abstract void ResetUnits(GameStatsSO gameStats); // clears all dependencies of the game phase
 }
 
 public class MovementPhaseBase : GamePhases
 {
     public MovementPhaseBase() { }
     public override GamePhase SubEvents => GamePhase.MovementPhase;
+
     public override GamePhase SetPhase(GameStatsSO gameStats, GamePhase subPhase)
     {
         gameStats.phase = GamePhase.ShootingPhase;
         return GamePhase.ShootingPhase;
     }
+
     public override bool HandlePhase(List<PhaseManagerBase> gamePhases)
     {
         foreach (PhaseManagerBase phase in gamePhases)
@@ -35,10 +41,10 @@ public class MovementPhaseBase : GamePhases
         movementPhase.ClearMovementPhase(gameStats);
         gameStats.activeUnit = null;
     }
+
     public override void ResetUnits(GameStatsSO gameStats)
     {
-        Debug.Log("Reset Units: " + gameStats.activePlayer.name);
-        foreach (Unit child in gameStats.activePlayer._playerUnits) 
+        foreach (Unit child in gameStats.activePlayer._playerUnits)
         {
             child.ResetData();
             child.PrepareShootingPhase();
@@ -50,6 +56,7 @@ public class ShootingPhaseBase : GamePhases
 {
     public ShootingPhaseBase() { }
     public override GamePhase SubEvents => GamePhase.ShootingPhase;
+
     public override GamePhase SetPhase(GameStatsSO gameStats, GamePhase subPhase)
     {
         gameStats.phase = GamePhase.MovementPhase;
@@ -72,9 +79,9 @@ public class ShootingPhaseBase : GamePhases
         gameStats.activeUnit = null;
         gameStats.enemyUnit = null;
     }
+
     public override void ResetUnits(GameStatsSO gameStats)
     {
-        Debug.Log("Reset Units: " + gameStats.activePlayer.name);
         foreach (Unit child in gameStats.enemyPlayer._playerUnits)
         {
             child.ResetData();

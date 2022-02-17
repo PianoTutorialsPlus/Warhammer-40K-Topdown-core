@@ -20,12 +20,12 @@ public class CalculateWoundsSO : CalculationBaseSO
         toWound = dataTable.WoundTable(gameStats.activeUnit._weaponSO.Strength, gameStats.enemyUnit._unitSO.Toughness);
         Debug.Log("to Wound: " + toWound);
         Debug.Log("CalculateWoundsSO");
-        rollDices.RaiseEvent(ShootingSubEvents.Wound,hits);  
-        
+        rollDices.RaiseEvent(ShootingSubEvents.Wound, hits);
+
     }
     public override void Result(ShootingSubEvents diceEvent, List<int> woundResult)
     {
-        
+
         if (woundResult == null || woundResult.Count == 0) return;
         if (diceEvent != ShootingSubEvents.Wound) return;
         List<int> wounds = new List<int>();

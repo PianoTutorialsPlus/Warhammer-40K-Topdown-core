@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Game/Battleround Events")]
+[CreateAssetMenu(menuName = "Game/Battleround Events")]
 public class BattleRoundsSO : ScriptableObject
 {
     public GameStatsSO _gameStats;

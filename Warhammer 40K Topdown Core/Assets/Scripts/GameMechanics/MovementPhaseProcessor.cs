@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
+
+/// <summary>
+/// This script processes the communication between the movement phase manager and the main movement phases executables.
+/// </summary>
 
 public static class MovementPhaseProcessor
 {
+    // Variables
     private static Dictionary<MovementPhase, MovementPhases> _movementPhases = new Dictionary<MovementPhase, MovementPhases>();
-
     public static bool _initialized;
 
     private static void Initialize()
@@ -19,7 +22,6 @@ public static class MovementPhaseProcessor
 
         foreach (var subphase in allShootingPhases)
         {
-            Debug.Log("Dictionary: " + subphase.Name);
             MovementPhases movementPhases = Activator.CreateInstance(subphase) as MovementPhases;
             _movementPhases.Add(movementPhases.SubEvents, movementPhases);
         }
@@ -27,7 +29,7 @@ public static class MovementPhaseProcessor
         _initialized = true;
     }
 
-    public static bool HandleMovement(GameStatsSO gameStats,BattleRoundsSO _battleroundEvents, MovementPhase subPhase)
+    public static bool HandleSelection(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents, MovementPhase subPhase)
     {
         if (!_initialized) Initialize();
 
@@ -35,14 +37,26 @@ public static class MovementPhaseProcessor
         return movementPhase.HandlePhase(gameStats, _battleroundEvents);
     }
 
-    internal static bool HandleMove(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents, MovementPhase subPhase)
+    internal static bool HandleMovement(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents, MovementPhase subPhase)
     {
+        if (!_initialized) Initialize();
+
         var movementPhase = _movementPhases[subPhase];
         return movementPhase.HandleMove(gameStats, _battleroundEvents);
     }
     public static MovementPhase SetPhase(MovementPhase subPhase)
     {
+        if (!_initialized) Initialize();
+
         var movementPhase = _movementPhases[subPhase];
         return movementPhase.SetPhase();
+    }
+
+    public static bool Next(GameStatsSO gameStats, MovementPhase subPhase)
+    {
+        if (!_initialized) Initialize();
+
+        var movementPhase = _movementPhases[subPhase];
+        return movementPhase.Next(gameStats);
     }
 }

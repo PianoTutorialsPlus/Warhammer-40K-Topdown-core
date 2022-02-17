@@ -134,7 +134,7 @@ public class Dice : MonoBehaviour
     /// format dice 			: 	({count}){die type}	, exmpl.  d6, 4d4, 12d8 , 1d20
     /// possible die types 	:	d4, d6, d8 , d10, d12, d20
     /// </summary>
-    public static void Roll(ShootingSubEvents diceEvent ,List<int> dice, string mat, Vector3 spawnPoint, Vector3 force)
+    public static void Roll(ShootingSubEvents diceEvent, List<int> dice, string mat, Vector3 spawnPoint, Vector3 force)
     {
         diceRollType = diceEvent;
         rolling = true;
@@ -329,7 +329,7 @@ public class Dice : MonoBehaviour
     /// Update is called once per frame
     /// </summary>
     void Update()
-    {     
+    {
         if (rolling)
         {
             // there are dice rolling so increment rolling time
@@ -352,11 +352,11 @@ public class Dice : MonoBehaviour
                 rollQueue.RemoveAt(0);
                 // reset rollTime so we can check when the next die has to be rolled
                 rollTime = 0;
-                
+
             }
             else
                 if (rollQueue.Count == 0)
-            {              
+            {
                 // roll queue is emp{ty so if no dice are rolling we can set the rolling attribute to false
                 if (!IsRolling())
                 {

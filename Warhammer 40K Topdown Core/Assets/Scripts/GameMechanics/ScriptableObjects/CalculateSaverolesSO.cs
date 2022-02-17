@@ -14,12 +14,12 @@ public class CalculateSaverolesSO : CalculationBaseSO
     }
 
     public override void Action(List<int> wounds, GameStatsSO gameStats)
-    { 
+    {
 
         saves = gameStats.enemyUnit._unitSO.ArmourSave;
         modifier = gameStats.activeUnit._weaponSO.ArmourPen;
 
-        rollDices.OnEventRaised(ShootingSubEvents.Save ,wounds);
+        rollDices.OnEventRaised(ShootingSubEvents.Save, wounds);
     }
 
     public override void Result(ShootingSubEvents diceEvent, List<int> saveResult)

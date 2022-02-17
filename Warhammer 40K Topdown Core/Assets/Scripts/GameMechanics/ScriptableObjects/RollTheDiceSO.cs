@@ -26,6 +26,6 @@ public class RollTheDiceSO : ScriptableObject
     {
         Debug.Log("Roll The Dice SO");
         if (OnEventRaised != null)
-            OnEventRaised.Invoke(diceEvent,values);
+            OnEventRaised.Invoke(diceEvent, values);
     }
 }

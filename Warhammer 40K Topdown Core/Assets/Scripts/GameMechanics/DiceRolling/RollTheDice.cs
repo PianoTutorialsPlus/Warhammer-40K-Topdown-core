@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +16,7 @@ public class RollTheDice : MonoBehaviour
     {
 
     }
-    
+
     //// Update is called once per frame
     //void Update()
     //{
@@ -50,18 +49,18 @@ public class RollTheDice : MonoBehaviour
     public void UpdateRoll()
     {
 
-            spawnPoint = new Vector3(-160, 16, -5);
-            List<int> result = new List<int>();
-            //if (Input.GetMouseButtonDown(Dice.MOUSE_RIGHT_BUTTON) && !PointInRect(GuiMousePosition(), rectModeSelect))
-            //{
-            // right mouse button clicked so roll 8 dice of dieType 'gallery die'
-            Dice.Clear();
-            string[] a = galleryDie.Split('-');
-            Dice.Roll(diceRollType, Values, galleryDie, spawnPoint, Force());
-            Debug.Log(diceRollType);
+        spawnPoint = new Vector3(-160, 16, -5);
+        List<int> result = new List<int>();
+        //if (Input.GetMouseButtonDown(Dice.MOUSE_RIGHT_BUTTON) && !PointInRect(GuiMousePosition(), rectModeSelect))
+        //{
+        // right mouse button clicked so roll 8 dice of dieType 'gallery die'
+        Dice.Clear();
+        string[] a = galleryDie.Split('-');
+        Dice.Roll(diceRollType, Values, galleryDie, spawnPoint, Force());
+        Debug.Log(diceRollType);
 
 
-        
+
         //}
     }
 

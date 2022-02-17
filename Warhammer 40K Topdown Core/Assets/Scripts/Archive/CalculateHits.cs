@@ -19,7 +19,7 @@
 //    public void HandleToHit(GameStatsSO gameStats)
 //    {
 //        List<int> shots = new List<int>();
-        
+
 //        toHit = gameStats.activeUnit._unitSO.BallisticSkill;
 
 //        for (int shot = 0; shot < gameStats.activeUnit._weaponSO.Shots; shot++)

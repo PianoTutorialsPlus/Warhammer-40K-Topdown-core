@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -79,7 +78,6 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         isMoving = false;
         singleton = false;
 
-
         moveDistance = _unitSO.Movement; //stats["Movement"];
         restDistance = moveDistance;
         weaponRange = _weaponSO.Range; //weaponStats["Range"];
@@ -91,7 +89,7 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         _unitSO.takenWounds = 0;
         path = new NavMeshPath();
-        phase = "Movement Phase";
+        //phase = "Movement Phase";
     }
 
     //public void OnEnable()
@@ -215,10 +213,10 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
                     if (restDistance <= 0)
                     {
-
                         Freeze();
                         Debug.Log("restDistance");
                         m_Agent.ResetPath();
+                        SetMovementPhaseEvent.RaiseEvent(_gameStats);
                         break;
                     }
                 }
@@ -231,7 +229,6 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
                 }
             }
         }
-        
     }
 
     public virtual void GetDistance(Vector3 position)
@@ -293,8 +290,8 @@ public abstract class Unit : MonoBehaviour, IPointerClickHandler, IPointerEnterH
         activated = false;
         selected = false;
         done = true;
-        _gameStats.movementSubPhase = MovementPhase.Selection;
-        SetMovementPhaseEvent.RaiseEvent(_gameStats);
+        //_gameStats.movementSubPhase = MovementPhase.Selection;
+        //SetMovementPhaseEvent.RaiseEvent(_gameStats);
     }
 
 
