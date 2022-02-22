@@ -1,29 +1,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/Wound Calculation Event")]
-public class CalculateWoundsSO : CalculationBaseSO
+//[CreateAssetMenu(menuName = "Game/Wound Calculation Event")]
+public class CalculateWoundsSO : ICalculation
 {
-    public DataTablesSO dataTable;
+    private readonly RollTheDiceSO rollSubResult;
+    private readonly RollTheDiceSO rollDices;
+    private readonly RollTheDiceSO rollDiceResult;
 
     int toWound;
+
+    public CalculateWoundsSO(List<RollTheDiceSO> rollTheDice)
+    {
+        this.rollDices = rollTheDice[0];
+        this.rollSubResult = rollTheDice[1];
+        this.rollDiceResult = rollTheDice[2];
+        OnEnable();
+    }
 
     private void OnEnable()
     {
         if (rollSubResult != null) rollSubResult.OnEventRaised += Result;
     }
 
-    public override void Action(List<int> hits, GameStatsSO gameStats)
+    public  void Action(List<int> hits, GameStatsSO gameStats)
     {
         //List<int> wounds = new List<int>();
         if (hits == null || hits.Count == 0) return;
+        DataTablesSO dataTable = gameStats.dataTable;
         toWound = dataTable.WoundTable(gameStats.activeUnit._weaponSO.Strength, gameStats.enemyUnit._unitSO.Toughness);
         Debug.Log("to Wound: " + toWound);
         Debug.Log("CalculateWoundsSO");
         rollDices.RaiseEvent(ShootingSubEvents.Wound, hits);
 
     }
-    public override void Result(ShootingSubEvents diceEvent, List<int> woundResult)
+    public  void Result(ShootingSubEvents diceEvent, List<int> woundResult)
     {
 
         if (woundResult == null || woundResult.Count == 0) return;
@@ -33,6 +44,11 @@ public class CalculateWoundsSO : CalculationBaseSO
 
         wounds = ShootingSubPhaseProcessor.GetResult(toWound, woundResult, diceEvent);
         rollDiceResult.RaiseEvent(diceEvent, wounds);
+    }
+
+    public void Action(GameStatsSO gameStats)
+    {
+        //throw new System.NotImplementedException();
     }
     //public override void Result(ShootingSubEvents diceEvent, List<int> woundResult)
     //{

@@ -2,18 +2,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Saverole Calculation Event")]
-public class CalculateSaverolesSO : CalculationBaseSO
+public class CalculateSaverolesSO :  ICalculation
 {
     //public List<int> hitResult = new List<int>();
+    private readonly RollTheDiceSO rollSubResult;
+    private readonly RollTheDiceSO rollDices;
+    private readonly RollTheDiceSO rollDiceResult;
+
     int saves;
     int modifier;
+
+    public CalculateSaverolesSO(List<RollTheDiceSO> rollTheDice)
+    {
+        this.rollDices = rollTheDice[0];
+        this.rollSubResult = rollTheDice[1];
+        this.rollDiceResult = rollTheDice[2];
+        OnEnable();
+    }
 
     private void OnEnable()
     {
         if (rollSubResult != null) rollSubResult.OnEventRaised += Result;
     }
 
-    public override void Action(List<int> wounds, GameStatsSO gameStats)
+    public void Action(List<int> wounds, GameStatsSO gameStats)
     {
 
         saves = gameStats.enemyUnit._unitSO.ArmourSave;
@@ -22,7 +34,7 @@ public class CalculateSaverolesSO : CalculationBaseSO
         rollDices.OnEventRaised(ShootingSubEvents.Save, wounds);
     }
 
-    public override void Result(ShootingSubEvents diceEvent, List<int> saveResult)
+    public void Result(ShootingSubEvents diceEvent, List<int> saveResult)
     {
         List<int> notSaved = new List<int>();
 
@@ -32,6 +44,11 @@ public class CalculateSaverolesSO : CalculationBaseSO
 
         notSaved = ShootingSubPhaseProcessor.GetResult(saves - modifier, saveResult, diceEvent);
         rollDiceResult.RaiseEvent(ShootingSubEvents.Save, notSaved);
+    }
+
+    public void Action(GameStatsSO gameStats)
+    {
+        //throw new System.NotImplementedException();
     }
     //public override void Result(ShootingSubEvents diceEvent, List<int> SaveResult)
     //{

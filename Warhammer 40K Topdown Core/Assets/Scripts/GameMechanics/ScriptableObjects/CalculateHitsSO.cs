@@ -1,19 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game/Hit Calculation Event")]
-public class CalculateHitsSO : CalculationBaseSO
+//[CreateAssetMenu(menuName = "Game/Hit Calculation Event")]
+public class CalculateHitsSO : ICalculation
 {
+
+    private readonly RollTheDiceSO rollSubResult;
+    private readonly RollTheDiceSO rollDices;
+    private readonly RollTheDiceSO rollDiceResult;
 
     //public List<int> hitResult = new List<int>();
     int toHit;
+
+    public CalculateHitsSO(List<RollTheDiceSO> rollTheDice)
+    {
+        this.rollDices = rollTheDice[0];
+        this.rollSubResult = rollTheDice[1];
+        this.rollDiceResult = rollTheDice[2];
+        OnEnable();
+    }
 
     private void OnEnable()
     {
         if (rollSubResult != null) rollSubResult.OnEventRaised += Result;
     }
 
-    public override void Action(GameStatsSO gameStats)
+    public void Action(GameStatsSO gameStats)
     {
         List<int> shots = new List<int>();
 
@@ -26,7 +38,7 @@ public class CalculateHitsSO : CalculationBaseSO
         rollDices.RaiseEvent(ShootingSubEvents.Hit, shots);
     }
 
-    public override void Result(ShootingSubEvents diceEvent, List<int> hitResult)
+    public void Result(ShootingSubEvents diceEvent, List<int> hitResult)
     {
         if (hitResult == null || hitResult.Count == 0) return;
         if (diceEvent != ShootingSubEvents.Hit) return;
@@ -35,6 +47,11 @@ public class CalculateHitsSO : CalculationBaseSO
         List<int> hits = ShootingSubPhaseProcessor.GetResult(toHit, hitResult, diceEvent);
         rollDiceResult.RaiseEvent(diceEvent, hits);
 
+    }
+
+    public void Action(List<int> action, GameStatsSO gameStats)
+    {
+        //throw new System.NotImplementedException();
     }
 
     //public override void Result(ShootingSubEvents diceEvent, List<int> hitResult)

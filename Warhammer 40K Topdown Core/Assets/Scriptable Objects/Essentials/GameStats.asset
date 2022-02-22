@@ -15,9 +15,10 @@ MonoBehaviour:
   phase: 2
   movementSubPhase: 1
   shootingSubPhase: 2
-  turn: 1
+  turn: 2
   activeUnit: {fileID: 0}
   enemyUnit: {fileID: 0}
   activePlayer: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
   enemyPlayer: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
   gameTable: {fileID: 11400000, guid: ce27887eadea6be40af3669d3ecd1558, type: 2}
+  dataTable: {fileID: 11400000, guid: 70c677795bd44554d9c2e3fa60f57ceb, type: 2}

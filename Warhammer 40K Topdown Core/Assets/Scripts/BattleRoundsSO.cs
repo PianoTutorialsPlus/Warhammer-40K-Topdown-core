@@ -18,7 +18,7 @@ public class BattleRoundsSO : ScriptableObject
     {
         if (displayInteraction) child.onPointerEnter += DisplayInteractionUI;
         else child.onPointerEnter -= DisplayInteractionUI;
-
+        
         if (resetInteraction) child.onPointerExit += ResetInteraction;
         else child.onPointerExit -= ResetInteraction;
 

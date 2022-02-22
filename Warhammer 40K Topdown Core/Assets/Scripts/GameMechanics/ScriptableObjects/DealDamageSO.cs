@@ -2,9 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Deal Damage Event")]
-public class DealDamageSO : CalculationBaseSO
+public class DealDamageSO : ICalculation
 {
-    public override void Action(List<int> notSaved, GameStatsSO gameStats)
+    private readonly RollTheDiceSO rollDiceResult;
+
+    public DealDamageSO(List<RollTheDiceSO> diceRoll)
+    {
+        this.rollDiceResult = diceRoll[2];
+    }
+
+    public void Action(List<int> notSaved, GameStatsSO gameStats)
     {
         int damage = gameStats.activeUnit._weaponSO.Damage;
 
@@ -20,8 +27,12 @@ public class DealDamageSO : CalculationBaseSO
         Result(ShootingSubEvents.Damage, null);
     }
 
+    public void Action(GameStatsSO gameStats)
+    {
+        //throw new System.NotImplementedException();
+    }
 
-    public override void Result(ShootingSubEvents diceEvent, List<int> result)
+    public void Result(ShootingSubEvents diceEvent, List<int> result)
     {
         rollDiceResult.RaiseEvent(diceEvent, result);
     }

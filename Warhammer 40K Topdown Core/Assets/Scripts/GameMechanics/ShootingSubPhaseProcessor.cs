@@ -29,7 +29,7 @@ public static class ShootingSubPhaseProcessor
         _initialized = true;
     }
 
-    public static CalculationBaseSO SetCalculation(List<CalculationBaseSO> calculations, ShootingSubEvents subPhase)
+    public static ICalculation SetCalculation(List<RollTheDiceSO> calculations, ShootingSubEvents subPhase)
     {
         if (!_initialized) Initialize();
 
@@ -38,7 +38,7 @@ public static class ShootingSubPhaseProcessor
     }
 
 
-    public static void HandleShooting(List<int> parameter, CalculationBaseSO action, GameStatsSO gameStats, ShootingSubEvents subPhase)
+    public static void HandleShooting(List<int> parameter, ICalculation action, GameStatsSO gameStats, ShootingSubEvents subPhase)
     {
         if (!_initialized) Initialize();
 

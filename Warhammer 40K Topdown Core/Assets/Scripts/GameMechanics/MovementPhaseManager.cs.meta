@@ -3,7 +3,13 @@ guid: e331178428f274040861a4abf6b593aa
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _gameStats: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33, type: 2}
+  - _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
+  - SetMovementPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
+      type: 2}
+  - _battleroundEvents: {fileID: 11400000, guid: 7248952e7b75bf64d909eb4792c09df2,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

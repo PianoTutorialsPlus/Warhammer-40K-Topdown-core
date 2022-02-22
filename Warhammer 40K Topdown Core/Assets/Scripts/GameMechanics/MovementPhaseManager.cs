@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class MovementPhaseManager : PhaseManagerBase
 {
+
+
     // Gameplay
     [SerializeField] private GameStatsSO _gameStats;
     [SerializeField] private InputReader _inputReader;
@@ -19,6 +21,12 @@ public class MovementPhaseManager : PhaseManagerBase
     // Enums
     MovementPhase movementPhase;
 
+    public override GamePhase SubEvents => GamePhase.MovementPhase;
+
+    private void Awake()
+    {
+        enabled = false;
+    }
     public void OnEnable()
     {
         //Debug.Log("Enable Movement");
@@ -35,7 +43,7 @@ public class MovementPhaseManager : PhaseManagerBase
 
     public void SetMovementPhase(GameStatsSO gameStats)
     {
-        ClearMovementPhase(gameStats);
+        ClearPhase();
 
         bool selection = MovementPhaseProcessor.HandleSelection(gameStats, _battleroundEvents, movementPhase);
         bool move = MovementPhaseProcessor.HandleMovement(gameStats, _battleroundEvents, movementPhase);
@@ -51,14 +59,13 @@ public class MovementPhaseManager : PhaseManagerBase
         _gameStats.activeUnit.SetDestination(position);
     }
 
-    public void ClearMovementPhase(GameStatsSO gameStats)
+    public override void ClearPhase()
     {
-        foreach (Unit child in gameStats.activePlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
-        foreach (Unit child in gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
-        gameStats.gameTable.gameTable.onTapDownAction -= Move;
+        foreach (Unit child in _gameStats.activePlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
+        foreach (Unit child in _gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
+        _gameStats.gameTable.gameTable.onTapDownAction -= Move;
         _inputReader.activateEvent -= NextPhase;
     }
-
 
     public void NextPhase()
     {

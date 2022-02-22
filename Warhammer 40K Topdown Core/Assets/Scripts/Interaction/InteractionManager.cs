@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 // Enum initialization
 public enum InteractionType { None = 0, Activate, ShowStats }
-public enum GamePhase { None = 0, MovementPhase, ShootingPhase }
+public enum GamePhase { MovementPhase, ShootingPhase }
 public enum MovementPhase { None = 0, Selection, Move, Next }
 public enum ShootingPhase { None = 0, Selection, Shoot, Next }
 public enum ShootingSubEvents { None = 0, SelectEnemy, Hit, Wound, Save, Damage }
@@ -19,7 +22,7 @@ public class InteractionManager : MonoBehaviour
     // Gameplay
     [SerializeField] private PlayerSO _player1;
     [SerializeField] private PlayerSO _player2;
-    [SerializeField] private GameStatsSO _gameStats;
+    [SerializeField] public GameStatsSO _gameStats;
 
     // Events
     [SerializeField] private GameStatsEventChannelSO SetPhaseEvent = default;
@@ -27,13 +30,20 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private BattleroundEventChannelSO _toggleBattleRounds = default;
 
     // Lists
-    [SerializeField] private List<PhaseManagerBase> gamePhases = new List<PhaseManagerBase>();
+    [SerializeField] private List<PhaseManagerBase> _gamePhases = new List<PhaseManagerBase>();
+
+    // Dictionaries
+    private static Dictionary<GamePhase, PhaseManagerBase> _gamePhaseManagers = new Dictionary<GamePhase, PhaseManagerBase>();
 
     //Enums
     GamePhase _gamePhase;
+    //[SerializeField] private Queue<GamePhase> _gamePhase = new Queue<GamePhase>();
+
+    public static bool _initializedManager;
+    
 
     private void Start()
-    {
+    {      
         _toggleBattleRounds.RaiseEvent(_gameStats); //Initialization    
     }
 
@@ -41,46 +51,107 @@ public class InteractionManager : MonoBehaviour
     {
         //Initialization
         _gamePhase = GamePhase.MovementPhase;
+
+        
+        //foreach(GamePhase phase in GamePhaseProcessor.GetAbilityByName())
+        //{
+        //    _gamePhase.Enqueue(phase);
+        //}
+
         _gameStats.turn = 1;
         _gameStats.activeUnit = null;
         _gameStats.enemyUnit = null;
         _gameStats.activePlayer = _player1;
         _gameStats.enemyPlayer = _player2;
-        GamePhaseProcessor.HandlePhase(gamePhases, _gamePhase);
+        InitializeManager();
+
+        GamePhaseProcessor.EnableNextPhase(_gamePhaseManagers,_gamePhase);
 
         if (SetPhaseEvent != null) SetPhaseEvent.OnEventRaised += SetPhase;
 
         _toggleGameinfoUI.RaiseEvent(true, _gameStats);
+
     }
 
-    public void SetPhase(GameStatsSO gameStats)
+    public void SetPhase(GameStatsSO gameStats) // 
     {
-        GamePhaseProcessor.ResetPhase(gameStats, gamePhases, _gamePhase);
-        _gamePhase = GamePhaseProcessor.SetPhase(gameStats, _gamePhase);
-        gameStats.phase = _gamePhase;
-        bool endOfPlayerTurn = GamePhaseProcessor.HandlePhase(gamePhases, _gamePhase);
+        ResetPreviousPhase(gameStats);
+        SetNextPhaseToActive(gameStats);      
+        GamePhaseProcessor.EnableNextPhase(_gamePhaseManagers, _gamePhase);
 
-        if (endOfPlayerTurn)
+        if(IsEndOfPlayerTurn(_gamePhase))
         {
-            TogglePlayers();
-            if (gameStats.activePlayer == _player1) gameStats.turn += 1;
+            TogglePlayers(gameStats);
+            SetNextBattleRound(gameStats);
         }
+
+        ToggleBattleRoundsAndUI(gameStats);
+        
+    }
+
+    private void ResetPreviousPhase(GameStatsSO gameStats)
+    {
+        GamePhaseProcessor.ResetPreviousPhase(_gamePhaseManagers, _gamePhase);
+        GamePhaseProcessor.ResetActivePlayerUnits(gameStats, _gamePhase);
+    }
+
+    private void SetNextPhaseToActive(GameStatsSO gameStats)
+    {
+        //GamePhase oldPhase = _gamePhase.Dequeue();
+        //_gamePhase.Enqueue(oldPhase);
+
+        _gamePhase = GamePhaseProcessor.SetNextPhaseToActive(_gamePhase);
+        gameStats.phase = _gamePhase;
+    }
+
+    private bool IsEndOfPlayerTurn(GamePhase gamePhases)
+    {
+        return GamePhaseProcessor.IsEndOfPlayerTurn(gamePhases);
+    }
+
+    public void TogglePlayers(GameStatsSO gameStats)
+    {
+        if (gameStats.activePlayer == _player1)
+        {
+            gameStats.activePlayer = _player2;
+            gameStats.enemyPlayer = _player1;
+        }
+        else
+        {
+            gameStats.activePlayer = _player1;
+            gameStats.enemyPlayer = _player2;
+        }
+    }
+
+    private void SetNextBattleRound(GameStatsSO gameStats)
+    {
+        if (gameStats.activePlayer == _player1) gameStats.turn += 1;
+    }
+
+    private void ToggleBattleRoundsAndUI(GameStatsSO gameStats)
+    {
         _toggleGameinfoUI.RaiseEvent(true, gameStats);
         _toggleBattleRounds.RaiseEvent(gameStats);
     }
 
-    public void TogglePlayers()
+    
+    // Initialization
+    private void InitializeManager()
     {
-        if (_gameStats.activePlayer == _player1)
+        if (_initializedManager) return;
+        _gamePhaseManagers.Clear();
+
+        var allPhases = Assembly.GetAssembly(typeof(PhaseManagerBase)).GetTypes()
+            .Where(t => typeof(PhaseManagerBase).IsAssignableFrom(t) && t.IsAbstract == false);
+
+        foreach (var subphase in allPhases)
         {
-            _gameStats.activePlayer = _player2;
-            _gameStats.enemyPlayer = _player1;
+            PhaseManagerBase instance = gameObject.GetComponentInChildren(subphase) as PhaseManagerBase;
+            _gamePhaseManagers.Add(instance.SubEvents, instance);
         }
-        else
-        {
-            _gameStats.activePlayer = _player1;
-            _gameStats.enemyPlayer = _player2;
-        }
+        //_gamePhaseManagers = _gamePhases.ToDictionary(key => key.SubEvents, value => value);
+
+        _initializedManager = true;
     }
 
     // public PlayerSO _activePlayer;
@@ -134,7 +205,51 @@ public class InteractionManager : MonoBehaviour
     //    movementPhase.enabled = false;
     //    shootingPhase.enabled = true;
     //}
+    //private void InitializeManager()
+    //{
+    //    if (_initializedManager) return;
 
+    //    _gamePhaseManagers.Clear();
+
+    //    var allPhases = Assembly.GetAssembly(typeof(PhaseManagerBase)).GetTypes()
+    //        .Where(t => typeof(PhaseManagerBase).IsAssignableFrom(t) && t.IsAbstract == false);
+
+
+    //    foreach (var subphase in allPhases)
+    //    {
+    //        GameObject gamePhaseManager = new GameObject();
+    //        //GameObject gamePhaseManager = Instantiate()
+
+    //        Component instance = gamePhaseManager.AddComponent(subphase);
+    //        PhaseManagerBase test = instance as PhaseManagerBase;
+
+
+
+    //        Debug.Log(test.name);
+    //        //PhaseManagerBase gamePhaseManager = Activator.CreateInstance(subphase) as PhaseManagerBase;
+    //        _gamePhaseManagers.Add(test.SubEvents, test);
+    //    }
+
+    //    //_gamePhaseManagers = _gamePhases.ToDictionary(key => key.SubEvents, value => value);
+
+    //    _initializedManager = true;
+    //}
+    //private static void InitializeManager()
+    //{
+    //    if (_initializedManager) return;
+    //    _gamePhaseManagers.Clear();
+
+    //    var allPhases = Assembly.GetAssembly(typeof(PhaseManagerBase)).GetTypes()
+    //        .Where(t => typeof(PhaseManagerBase).IsAssignableFrom(t) && t.IsAbstract == false);
+
+    //    foreach (var subphase in allPhases)
+    //    {
+    //        PhaseManagerBase gamePhaseManager = Activator.CreateInstance(subphase) as PhaseManagerBase;
+    //        _gamePhaseManagers.Add(gamePhaseManager.SubEvents, gamePhaseManager);
+    //    }
+
+    //    _initializedManager = true;
+    //}
 
     //public void SetPhase(GameStatsSO gameStats)
     //{

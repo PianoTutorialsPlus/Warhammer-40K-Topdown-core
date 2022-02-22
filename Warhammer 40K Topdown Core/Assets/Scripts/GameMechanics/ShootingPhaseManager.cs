@@ -10,6 +10,8 @@ using UnityEngine;
 
 public class ShootingPhaseManager : PhaseManagerBase
 {
+    public ShootingPhaseManager() { }
+
     // Gameplay
     [SerializeField] private GameStatsSO _gameStats;
     [SerializeField] private InputReader _inputReader;
@@ -20,16 +22,25 @@ public class ShootingPhaseManager : PhaseManagerBase
     [SerializeField] private RollTheDiceSO diceRollingResult;
 
     // Lists
-    [SerializeField] private List<CalculationBaseSO> calculations = new List<CalculationBaseSO>();
+    //[SerializeField] private List<CalculationBaseSO> calculations = new List<CalculationBaseSO>();
     [SerializeField] private List<int> parameter = new List<int>();
+    [SerializeField] private List<RollTheDiceSO> rollTheDice = new List<RollTheDiceSO>();
+  
 
     //Enums
     ShootingSubEvents shootingSubPhase;
     ShootingPhase shootingPhase;
 
+    public override GamePhase SubEvents => GamePhase.ShootingPhase;
+
+    private void Awake()
+    {
+        enabled = false;
+    }
+
     public void OnEnable()
     {
-        //Debug.Log("Enable Shooting");
+        Debug.Log("Enable Shooting");
         shootingPhase = ShootingPhase.Selection;
         shootingSubPhase = ShootingSubEvents.SelectEnemy;
 
@@ -46,7 +57,7 @@ public class ShootingPhaseManager : PhaseManagerBase
 
     public void SetShootingPhase(GameStatsSO gameStats)
     {
-        ClearShootingPhase(gameStats);
+        ClearPhase();
 
         bool selection = ShootingPhaseProcessor.HandlePhase(gameStats, _battleroundEvents, shootingPhase);
         bool shooting = ShootingPhaseProcessor.HandlePhase(shootingPhase);
@@ -62,10 +73,10 @@ public class ShootingPhaseManager : PhaseManagerBase
         if (next) NextPhase();
     }
 
-    public void ClearShootingPhase(GameStatsSO gameStats)
+    public override void ClearPhase()
     {
-        foreach (Unit child in gameStats.activePlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
-        foreach (Unit child in gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
+        foreach (Unit child in _gameStats.activePlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
+        foreach (Unit child in _gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
 
         _inputReader.activateEvent -= NextPhase;
         _inputReader.activateEvent -= HandleShooting;
@@ -80,7 +91,8 @@ public class ShootingPhaseManager : PhaseManagerBase
 
     private void HandleShooting()
     {
-        CalculationBaseSO calculation = ShootingSubPhaseProcessor.SetCalculation(calculations, shootingSubPhase);
+        //CalculationBaseSO calculation = ShootingSubPhaseProcessor.SetCalculation(calculations, shootingSubPhase);
+        ICalculation calculation = ShootingSubPhaseProcessor.SetCalculation(rollTheDice, shootingSubPhase);
 
         if (calculation == null) return;
         ShootingSubPhaseProcessor.HandleShooting(parameter, calculation, _gameStats, shootingSubPhase);

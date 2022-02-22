@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 
 /// <summary>
 /// This script processes the communication between the interaction manager and the main game phases executables.
@@ -14,7 +15,7 @@ public static class GamePhaseProcessor
 
     private static void Initialize()
     {
-        // Reset
+        if (_initialized) return;
         _gamePhases.Clear();
 
         var allPhases = Assembly.GetAssembly(typeof(GamePhases)).GetTypes()
@@ -29,29 +30,54 @@ public static class GamePhaseProcessor
         _initialized = true;
     }
 
-    public static bool HandlePhase(List<PhaseManagerBase> gamePhases, GamePhase subPhase)
+    public static void EnableNextPhase(Dictionary<GamePhase, PhaseManagerBase> gamePhaseManagers, GamePhase subPhase)
     {
-        if (!_initialized) Initialize();
+        Initialize();
 
         var gamePhase = _gamePhases[subPhase];
-        return gamePhase.HandlePhase(gamePhases);
+        var gamePhaseManager = gamePhaseManagers[subPhase];
+
+        gamePhase.EnableNextPhase(gamePhaseManager);
     }
 
-    public static void ResetPhase(GameStatsSO gameStats, List<PhaseManagerBase> gamePhases, GamePhase subPhase)
+    public static void ResetPreviousPhase(Dictionary<GamePhase, PhaseManagerBase> gamePhaseManagers, GamePhase subPhase)
     {
-        if (!_initialized) Initialize();
+        Initialize();
 
         var gamePhase = _gamePhases[subPhase];
-        gamePhase.ResetPhase(gameStats, gamePhases);
-        gamePhase.ResetUnits(gameStats);
+        var gamePhaseManager = gamePhaseManagers[subPhase];
+
+        gamePhase.ResetPreviousPhase(gamePhaseManager);
     }
 
-
-    public static GamePhase SetPhase(GameStatsSO gameStats, GamePhase subPhase)
+    public static void ResetActivePlayerUnits(GameStatsSO gameStats, GamePhase subPhase)
     {
-        if (!_initialized) Initialize();
+        Initialize();
 
         var gamePhase = _gamePhases[subPhase];
-        return gamePhase.SetPhase(gameStats, subPhase);
+        gamePhase.ResetActivePlayerUnits(gameStats);
+    }
+
+    public static bool IsEndOfPlayerTurn(GamePhase subPhase)
+    {
+        Initialize();
+
+        var gamePhase = _gamePhases[subPhase];
+        return gamePhase.IsEndOfPlayerTurn();
+    }
+
+    internal static IEnumerable<GamePhase> GetAbilityByName()
+    {
+        Initialize();
+
+        return _gamePhases.Keys;
+    }
+
+    public static GamePhase SetNextPhaseToActive(GamePhase subPhase)
+    {
+        Initialize();
+
+        var gamePhase = _gamePhases[subPhase];
+        return gamePhase.SetNextPhaseToActive();
     }
 }
