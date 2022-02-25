@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Battleround Events")]
-public class BattleRoundsSO : ScriptableObject
+public class BattleRoundsSO : ScriptableObject, IPhase
 {
     public GameStatsSO _gameStats;
     public InputReader _inputReader;
@@ -13,6 +14,52 @@ public class BattleRoundsSO : ScriptableObject
     [SerializeField] private InfoUIEventChannelSO _toggleInfoUI = default;
     [SerializeField] private InfoUIEventChannelSO _toggleEnemyInfoUI = default;
     [SerializeField] private IndicatorUIEventChannelSO _toggleIndicatorConnectionUI = default;
+
+    public void HandlePhase(GameStatsSO gameStats)
+    {
+        foreach (Unit child in gameStats.activePlayer._playerUnits)
+        {
+            CheckIfUnitIsDone(child);
+            CheckIfUnitIsActive(child);
+        }
+        foreach (Unit child in gameStats.enemyPlayer._playerUnits) FillMethods(child, false, true, true, false);
+    }
+        private void CheckIfUnitIsDone(Unit child)
+    {
+        if (isUnitDone(child))
+        {
+            FillMethods(child, false, true, false, false);
+        }
+    }
+    private bool isUnitDone(Unit child)
+    {
+        return child.done;
+    }
+
+    private void CheckIfUnitIsActive(Unit child)
+    {
+        if (isUnitDone(child)) return;
+
+        if (isUnitActive(child))
+        {
+            FillMethods(child, true, true, true, true);
+        } 
+        else
+        {
+            FillMethods(child, false, true, true, true);
+        }
+    }
+
+    private bool isUnitActive(Unit child)
+    {
+        return child == _gameStats.activeUnit;
+    }
+
+    public void HandleMove(GameStatsSO gameStats)
+    {
+        FillMethods(gameStats.activeUnit, true, true, true, false);
+    }
+
 
     public void FillMethods(Unit child, bool displayInteraction, bool resetInteraction, bool displayInfo, bool connectIndicator)
     {
@@ -28,6 +75,8 @@ public class BattleRoundsSO : ScriptableObject
         if (connectIndicator) child.onTapDownAction += ConnectIndicator;
         else child.onTapDownAction -= ConnectIndicator;
     }
+
+
 
     private void DisplayInfoUI(Unit unit)
     {
@@ -53,4 +102,6 @@ public class BattleRoundsSO : ScriptableObject
         SetPhaseEvent.RaiseEvent(_gameStats);
         _toggleIndicatorConnectionUI.RaiseEvent(true, unit);
     }
+
+
 }

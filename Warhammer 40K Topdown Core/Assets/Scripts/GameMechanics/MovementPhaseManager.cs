@@ -31,6 +31,7 @@ public class MovementPhaseManager : PhaseManagerBase
     {
         //Debug.Log("Enable Movement");
         movementPhase = MovementPhase.Selection;
+        MovementPhaseProcessor.InjectParamers(_gameStats, _battleroundEvents, _inputReader);
 
         if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += SetMovementPhase;
     }
@@ -45,9 +46,9 @@ public class MovementPhaseManager : PhaseManagerBase
     {
         ClearPhase();
 
-        bool selection = MovementPhaseProcessor.HandleSelection(gameStats, _battleroundEvents, movementPhase);
-        bool move = MovementPhaseProcessor.HandleMovement(gameStats, _battleroundEvents, movementPhase);
-        bool next = MovementPhaseProcessor.Next(gameStats, movementPhase);
+        bool selection = MovementPhaseProcessor.HandleSelection(movementPhase);
+        bool move = MovementPhaseProcessor.HandleMovement(movementPhase);
+        bool next = MovementPhaseProcessor.Next(movementPhase);
 
         if (selection) _inputReader.activateEvent += NextPhase;
         if (move) gameStats.gameTable.gameTable.onTapDownAction += Move;

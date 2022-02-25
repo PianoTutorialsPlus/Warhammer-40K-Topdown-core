@@ -13,8 +13,15 @@ public static class MovementPhaseProcessor
     private static Dictionary<MovementPhase, MovementPhases> _movementPhases = new Dictionary<MovementPhase, MovementPhases>();
     public static bool _initialized;
 
+    private static GameStatsSO _gamesStats;
+    private static IPhase _battleroundEvents;
+    private static InputReader _inputReader;
+
+    //private static 
+
     private static void Initialize()
     {
+        if (_initialized) return;
         _movementPhases.Clear();
 
         var allShootingPhases = Assembly.GetAssembly(typeof(MovementPhases)).GetTypes()
@@ -22,41 +29,85 @@ public static class MovementPhaseProcessor
 
         foreach (var subphase in allShootingPhases)
         {
-            MovementPhases movementPhases = Activator.CreateInstance(subphase) as MovementPhases;
+            MovementPhases movementPhases = Activator.CreateInstance(subphase, _battleroundEvents) as MovementPhases;
             _movementPhases.Add(movementPhases.SubEvents, movementPhases);
         }
 
         _initialized = true;
     }
-
-    public static bool HandleSelection(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents, MovementPhase subPhase)
+    public static void InjectParamers(GameStatsSO gameStats, BattleRoundsSO battleroundEvents,InputReader inputReader)
     {
-        if (!_initialized) Initialize();
+        _gamesStats = gameStats;
+        _battleroundEvents = battleroundEvents;
+        _inputReader = inputReader;
+    }
+    public static bool HandleSelection(MovementPhase subPhase)
+    {
+        Initialize();
 
         var movementPhase = _movementPhases[subPhase];
-        return movementPhase.HandlePhase(gameStats, _battleroundEvents);
+        return movementPhase.HandlePhase(_gamesStats);
     }
 
-    internal static bool HandleMovement(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents, MovementPhase subPhase)
+    internal static bool HandleMovement(MovementPhase subPhase)
     {
-        if (!_initialized) Initialize();
+        Initialize();
 
         var movementPhase = _movementPhases[subPhase];
-        return movementPhase.HandleMove(gameStats, _battleroundEvents);
+        return movementPhase.HandlePhase(_gamesStats);
     }
+
     public static MovementPhase SetPhase(MovementPhase subPhase)
     {
-        if (!_initialized) Initialize();
+        Initialize();
 
         var movementPhase = _movementPhases[subPhase];
         return movementPhase.SetPhase();
     }
 
-    public static bool Next(GameStatsSO gameStats, MovementPhase subPhase)
+    public static bool Next(MovementPhase subPhase)
     {
-        if (!_initialized) Initialize();
+        Initialize();
 
         var movementPhase = _movementPhases[subPhase];
-        return movementPhase.Next(gameStats);
+        return movementPhase.Next(_gamesStats);
     }
+
+    //public static void InjectParamers(GameStatsSO gameStats, BattleRoundsSO battleroundEvents, InputReader inputReader)
+    //{
+    //    _gamesStats = gameStats;
+    //    _battleroundEvents = battleroundEvents;
+    //    _inputReader = inputReader;
+    //}
+    //public static bool HandleSelection(GameStatsSO gameStats, BattleRoundsSO battleroundEvents, MovementPhase subPhase)
+    //{
+    //    Initialize();
+
+    //    var movementPhase = _movementPhases[subPhase];
+    //    return movementPhase.HandlePhase(gameStats, battleroundEvents);
+    //}
+
+    //internal static bool HandleMovement(GameStatsSO gameStats, BattleRoundsSO battleroundEvents, MovementPhase subPhase)
+    //{
+    //    Initialize();
+
+    //    var movementPhase = _movementPhases[subPhase];
+    //    return movementPhase.HandleMove(gameStats, battleroundEvents);
+    //}
+
+    //public static MovementPhase SetPhase(MovementPhase subPhase)
+    //{
+    //    Initialize();
+
+    //    var movementPhase = _movementPhases[subPhase];
+    //    return movementPhase.SetPhase();
+    //}
+
+    //public static bool Next(GameStatsSO gameStats, MovementPhase subPhase)
+    //{
+    //    Initialize();
+
+    //    var movementPhase = _movementPhases[subPhase];
+    //    return movementPhase.Next(gameStats);
+    //}
 }

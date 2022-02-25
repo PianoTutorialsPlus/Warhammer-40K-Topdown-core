@@ -40,7 +40,6 @@ public class InteractionManager : MonoBehaviour
     //[SerializeField] private Queue<GamePhase> _gamePhase = new Queue<GamePhase>();
 
     public static bool _initializedManager;
-    
 
     private void Start()
     {      
@@ -97,9 +96,6 @@ public class InteractionManager : MonoBehaviour
 
     private void SetNextPhaseToActive(GameStatsSO gameStats)
     {
-        //GamePhase oldPhase = _gamePhase.Dequeue();
-        //_gamePhase.Enqueue(oldPhase);
-
         _gamePhase = GamePhaseProcessor.SetNextPhaseToActive(_gamePhase);
         gameStats.phase = _gamePhase;
     }
