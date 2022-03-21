@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public abstract class UnitSO : ScriptableObject
+public abstract class UnitSO : ScriptableObject, IUnitStats
 {
     [Tooltip("Name of the Unit")]
     [SerializeField] private string _name = default;
 
-    [Tooltip("Movementrange")]
+    [Tooltip("Fraction of the Unit")]
+    [SerializeField] private Fraction _fraction = default;
+
+    [Tooltip("Movement Range")]
     [SerializeField] private int _movement = default;
 
     [Tooltip("Weapon Skill")]
@@ -34,8 +37,8 @@ public abstract class UnitSO : ScriptableObject
 
 
     public new string name { get => _name; }
-
-    public int Movement { get => _movement; }
+    public Fraction Fraction { get => _fraction; protected set => _fraction = value; }
+    public int Movement { get => _movement; protected set => _movement = value; }
 
     public int WeaponSkill { get => _weaponSkill; }
     public int Wounds { get => _wounds - takenWounds; set => takenWounds += value; }

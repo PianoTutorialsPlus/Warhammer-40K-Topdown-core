@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Saverole Calculation Event")]
-public class CalculateSaverolesSO :  ICalculation
+public class CalculateSaverolesSO : ICalculation
 {
     //public List<int> hitResult = new List<int>();
     private readonly RollTheDiceSO rollSubResult;

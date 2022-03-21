@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-/// <summary>
+﻿/// <summary>
 /// This script executes the calls from the interaction manager in the specific state.
 /// When EnableNextPhase is called, it enables to the specific game phase manager responsible for that case.
 /// All other game phase managers will be disabled.
@@ -10,15 +8,15 @@ public abstract class GamePhases
 {
     public abstract GamePhase SubEvents { get; } // gets the active game phase
     public abstract GamePhase SetNextPhaseToActive(); // sets the next game phase
-     
+
     //public abstract void ResetPreviousPhase(PhaseManagerBase gamePhaseManager); // clears all dependencies of the game phase
     public abstract void ResetActivePlayerUnits(GameStatsSO gameStats); // clears all dependencies of the game phase
 
     public bool IsEndOfPlayerTurn() { return SubEvents == GamePhase.MovementPhase; }
 
     public void EnableNextPhase(PhaseManagerBase gamePhaseManager) // Enables the specific game phase manager
-    { 
-        gamePhaseManager.enabled = true; 
+    {
+        gamePhaseManager.enabled = true;
     }
 
     public void ResetPreviousPhase(PhaseManagerBase gamePhaseManager) // clears all dependencies of the game phase

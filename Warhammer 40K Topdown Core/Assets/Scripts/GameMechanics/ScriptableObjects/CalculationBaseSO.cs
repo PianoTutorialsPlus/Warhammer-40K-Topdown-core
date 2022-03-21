@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public abstract class CalculationBaseSO: ScriptableObject
+public abstract class CalculationBaseSO : ScriptableObject
 {
     public RollTheDiceSO rollDices;
     public RollTheDiceSO rollSubResult;

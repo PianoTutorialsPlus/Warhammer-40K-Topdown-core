@@ -7,7 +7,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
 {
     // Assign delegate{} to events to initialise them with an empty delegate
     // so we can skip the null check when we use them
-    
+
     // public ActiveUnitSO _unit;
 
     // Gameplay

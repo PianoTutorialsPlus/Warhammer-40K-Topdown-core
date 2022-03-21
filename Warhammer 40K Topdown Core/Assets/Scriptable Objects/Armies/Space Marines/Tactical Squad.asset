@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Tactical Squad
   m_EditorClassIdentifier: 
   _name: Tactical Squad
+  _fraction: 1
   _movement: 6
   _weaponSkill: 3
   _ballisticSkill: 3

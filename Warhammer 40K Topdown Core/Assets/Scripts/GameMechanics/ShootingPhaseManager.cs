@@ -25,7 +25,7 @@ public class ShootingPhaseManager : PhaseManagerBase
     //[SerializeField] private List<CalculationBaseSO> calculations = new List<CalculationBaseSO>();
     [SerializeField] private List<int> parameter = new List<int>();
     [SerializeField] private List<RollTheDiceSO> rollTheDice = new List<RollTheDiceSO>();
-  
+
 
     //Enums
     ShootingSubEvents shootingSubPhase;

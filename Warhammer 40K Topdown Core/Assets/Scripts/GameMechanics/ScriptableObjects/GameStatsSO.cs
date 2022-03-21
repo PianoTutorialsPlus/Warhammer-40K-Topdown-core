@@ -13,4 +13,8 @@ public class GameStatsSO : ScriptableObject
     public PlayerSO enemyPlayer;
     public GameTableSO gameTable;
     public DataTablesSO dataTable;
+
+    public IUnitStats activeUnitTest;
+    public IUnitStats enemyUnitTest;
+
 }

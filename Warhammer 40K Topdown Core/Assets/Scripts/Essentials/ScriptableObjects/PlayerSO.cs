@@ -5,4 +5,5 @@ using UnityEngine;
 public class PlayerSO : ScriptableObject
 {
     public List<Unit> _playerUnits;
+    public Fraction fraction;
 }

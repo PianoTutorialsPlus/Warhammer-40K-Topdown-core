@@ -35,7 +35,7 @@ public static class MovementPhaseProcessor
 
         _initialized = true;
     }
-    public static void InjectParamers(GameStatsSO gameStats, BattleRoundsSO battleroundEvents,InputReader inputReader)
+    public static void InjectParamers(GameStatsSO gameStats, BattleRoundsSO battleroundEvents, InputReader inputReader)
     {
         _gamesStats = gameStats;
         _battleroundEvents = battleroundEvents;

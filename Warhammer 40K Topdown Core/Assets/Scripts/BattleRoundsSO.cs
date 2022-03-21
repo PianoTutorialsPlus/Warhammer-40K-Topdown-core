@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game/Battleround Events")]
@@ -24,7 +23,7 @@ public class BattleRoundsSO : ScriptableObject, IPhase
         }
         foreach (Unit child in gameStats.enemyPlayer._playerUnits) FillMethods(child, false, true, true, false);
     }
-        private void CheckIfUnitIsDone(Unit child)
+    private void CheckIfUnitIsDone(Unit child)
     {
         if (isUnitDone(child))
         {
@@ -43,7 +42,7 @@ public class BattleRoundsSO : ScriptableObject, IPhase
         if (isUnitActive(child))
         {
             FillMethods(child, true, true, true, true);
-        } 
+        }
         else
         {
             FillMethods(child, false, true, true, true);
@@ -65,7 +64,7 @@ public class BattleRoundsSO : ScriptableObject, IPhase
     {
         if (displayInteraction) child.onPointerEnter += DisplayInteractionUI;
         else child.onPointerEnter -= DisplayInteractionUI;
-        
+
         if (resetInteraction) child.onPointerExit += ResetInteraction;
         else child.onPointerExit -= ResetInteraction;
 
@@ -93,7 +92,7 @@ public class BattleRoundsSO : ScriptableObject, IPhase
 
     private void ResetInteraction(Unit unit)
     {
-        if (!unit.selected) _toggleInteractionUI.RaiseEvent(false, InteractionType.None);
+        if (!unit.IsSelected) _toggleInteractionUI.RaiseEvent(false, InteractionType.None);
         if (!unit.activated) _toggleInfoUI.RaiseEvent(false, unit);
         _toggleEnemyInfoUI.RaiseEvent(false, unit);
     }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>
 /// This script executes the calls from the shooting phase manager in the specific state.
@@ -28,7 +27,7 @@ public class SelectEnemy : ShootingSubPhases
         return calculation;
     }
 
-public override void HandleShooting(List<int> parameter, ICalculation selectEnemy, GameStatsSO gameStats)
+    public override void HandleShooting(List<int> parameter, ICalculation selectEnemy, GameStatsSO gameStats)
     {
         selectEnemy.Action(gameStats);
     }
@@ -48,7 +47,7 @@ public class Hit : ShootingSubPhases
         return calculation;
     }
 
-public override void HandleShooting(List<int> parameter, ICalculation calculateHits, GameStatsSO gameStats)
+    public override void HandleShooting(List<int> parameter, ICalculation calculateHits, GameStatsSO gameStats)
     {
         calculateHits.Action(gameStats);
     }

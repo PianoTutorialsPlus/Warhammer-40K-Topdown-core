@@ -1,5 +1,4 @@
-﻿using System;
-/// <summary>
+﻿/// <summary>
 /// This script executes the calls from the movement phase manager in the specific state.
 /// </summary>
 public abstract class MovementPhases
@@ -9,7 +8,7 @@ public abstract class MovementPhases
     {
         _phase = phase;
     }
-  
+
     public abstract MovementPhase SubEvents { get; } // gets the active subphase
     public abstract MovementPhase SetPhase(); // sets the next subphase
     public virtual bool HandlePhase(GameStatsSO gameStats) { return false; } // handles the selection subphase
@@ -20,8 +19,8 @@ public abstract class MovementPhases
 
 public class M_Selection : MovementPhases
 {
-    public M_Selection(IPhase phase): base(phase) { }
-  
+    public M_Selection(IPhase phase) : base(phase) { }
+
     public override MovementPhase SubEvents => MovementPhase.Selection;
     public override MovementPhase SetPhase() { return MovementPhase.Move; }
     public override bool HandlePhase(GameStatsSO gameStats)

@@ -1,4 +1,4 @@
-public class Necrons : Unit
+public class Necrons : UnitMovementPhase
 {
     //// Start is called before the first frame update
     //void Start()

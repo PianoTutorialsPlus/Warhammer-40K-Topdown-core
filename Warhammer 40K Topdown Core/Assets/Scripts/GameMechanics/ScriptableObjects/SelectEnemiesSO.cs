@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 //[CreateAssetMenu(menuName = "Game/Enemy Selection Event")]
 public class SelectEnemiesSO : ICalculation

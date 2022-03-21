@@ -23,7 +23,7 @@ public class CalculateWoundsSO : ICalculation
         if (rollSubResult != null) rollSubResult.OnEventRaised += Result;
     }
 
-    public  void Action(List<int> hits, GameStatsSO gameStats)
+    public void Action(List<int> hits, GameStatsSO gameStats)
     {
         //List<int> wounds = new List<int>();
         if (hits == null || hits.Count == 0) return;
@@ -34,7 +34,7 @@ public class CalculateWoundsSO : ICalculation
         rollDices.RaiseEvent(ShootingSubEvents.Wound, hits);
 
     }
-    public  void Result(ShootingSubEvents diceEvent, List<int> woundResult)
+    public void Result(ShootingSubEvents diceEvent, List<int> woundResult)
     {
 
         if (woundResult == null || woundResult.Count == 0) return;

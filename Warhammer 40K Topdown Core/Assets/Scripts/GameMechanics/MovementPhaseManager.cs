@@ -57,7 +57,7 @@ public class MovementPhaseManager : PhaseManagerBase
 
     public void Move(Vector3 position)
     {
-        _gameStats.activeUnit.SetDestination(position);
+        //_gameStats.activeUnit.SetDestination(position);
     }
 
     public override void ClearPhase()

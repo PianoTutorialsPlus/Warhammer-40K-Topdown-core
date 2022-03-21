@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,6 +9,7 @@ public enum GamePhase { MovementPhase, ShootingPhase }
 public enum MovementPhase { None = 0, Selection, Move, Next }
 public enum ShootingPhase { None = 0, Selection, Shoot, Next }
 public enum ShootingSubEvents { None = 0, SelectEnemy, Hit, Wound, Save, Damage }
+public enum Fraction { None = 0, SpaceMarines, Necrons }
 
 /// <summary>
 /// This script takes care of the interactions. It communicates with the UI Manager and triggers the GamePhase Processor.
@@ -42,7 +42,7 @@ public class InteractionManager : MonoBehaviour
     public static bool _initializedManager;
 
     private void Start()
-    {      
+    {
         _toggleBattleRounds.RaiseEvent(_gameStats); //Initialization    
     }
 
@@ -51,7 +51,7 @@ public class InteractionManager : MonoBehaviour
         //Initialization
         _gamePhase = GamePhase.MovementPhase;
 
-        
+
         //foreach(GamePhase phase in GamePhaseProcessor.GetAbilityByName())
         //{
         //    _gamePhase.Enqueue(phase);
@@ -64,7 +64,7 @@ public class InteractionManager : MonoBehaviour
         _gameStats.enemyPlayer = _player2;
         InitializeManager();
 
-        GamePhaseProcessor.EnableNextPhase(_gamePhaseManagers,_gamePhase);
+        GamePhaseProcessor.EnableNextPhase(_gamePhaseManagers, _gamePhase);
 
         if (SetPhaseEvent != null) SetPhaseEvent.OnEventRaised += SetPhase;
 
@@ -75,17 +75,17 @@ public class InteractionManager : MonoBehaviour
     public void SetPhase(GameStatsSO gameStats) // 
     {
         ResetPreviousPhase(gameStats);
-        SetNextPhaseToActive(gameStats);      
+        SetNextPhaseToActive(gameStats);
         GamePhaseProcessor.EnableNextPhase(_gamePhaseManagers, _gamePhase);
 
-        if(IsEndOfPlayerTurn(_gamePhase))
+        if (IsEndOfPlayerTurn(_gamePhase))
         {
             TogglePlayers(gameStats);
             SetNextBattleRound(gameStats);
         }
 
         ToggleBattleRoundsAndUI(gameStats);
-        
+
     }
 
     private void ResetPreviousPhase(GameStatsSO gameStats)
@@ -130,7 +130,7 @@ public class InteractionManager : MonoBehaviour
         _toggleBattleRounds.RaiseEvent(gameStats);
     }
 
-    
+
     // Initialization
     private void InitializeManager()
     {

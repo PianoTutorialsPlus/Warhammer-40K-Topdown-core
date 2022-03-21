@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Necron Warrior
   m_EditorClassIdentifier: 
   _name: Necron Warrior
+  _fraction: 2
   _movement: 5
   _weaponSkill: 3
   _ballisticSkill: 3
