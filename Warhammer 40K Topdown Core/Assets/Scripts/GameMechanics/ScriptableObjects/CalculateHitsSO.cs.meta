@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 046f485c2090fa04d8f60b9344edd3ee
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rollDices: {fileID: 11400000, guid: 813266957258e7b44886c3ec5242cd3e, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

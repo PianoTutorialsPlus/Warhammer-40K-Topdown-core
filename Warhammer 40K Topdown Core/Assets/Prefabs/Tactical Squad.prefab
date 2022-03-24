@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4266572808521110751}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 2, z: 0.5099999}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -134,8 +134,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   canMove: 1
+  activated: 0
+  canShoot: 1
   singleton: 0
-  moveDistance: 6
+  isMoving: 0
+  done: 0
   movedDistance: 0
+  weaponRange: 0
   distanceToMove: 0
   restDistance: 1
+  phase: 
+  SetMovementPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
+    type: 2}
+  _weaponSO: {fileID: 11400000, guid: 4a5aec3aa3d661c4b8fc25a0ab48c5df, type: 2}
+  _unitSO: {fileID: 11400000, guid: fa1d5cbd72c003643a43243307e9c2af, type: 2}
+  _gameStats: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33, type: 2}
+  _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
+  UnitMover: {fileID: 0}
+  test: 0

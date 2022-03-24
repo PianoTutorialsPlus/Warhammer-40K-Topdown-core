@@ -1,0 +1,1720 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TestStack.Dossier</name>
+    </assembly>
+    <members>
+        <member name="T:TestStack.Dossier.AnonymousValueFixture">
+            <summary>
+            Allows you to create extension methods to generate anonymous values and to set up
+              conventions for automatic generation of anonymous values based on property expressions.
+            </summary>
+            <summary>
+            Equivalence classes for generating anonymous values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.AnonymousValueFixture.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.RegexGenerator">
+            <summary>
+            An AutoFixture RegularExpressionGenerator instance that can be used to generate
+              strings matching a regex pattern.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.Fixture">
+            <summary>
+            An AutoFixture Fixture instance that is scoped to this anonymous value fixture
+              and can be used to generate anonymous values using AutoFixture.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.Bag">
+            <summary>
+            Dynamic bag of objects that can be used by equivalence classes / anonymous value suppliers to store state.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.DefaultValueSuppliers">
+            <summary>
+            Ordered, immutable collection of default anonymous value suppliers to interrogate when automatically generating an anonymous value.
+            These have the lowest priority and are a fallback if there are no local or global value suppliers that apply.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.GlobalValueSuppliers">
+            <summary>
+            Ordered, mutable collection of global anonymous value suppliers to interrogate when automatically generating an anonymous value.
+            These have a higher priority than the defaut value suppliers, but a lower priority than the local value suppliers.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.LocalValueSuppliers">
+            <summary>
+            Ordered, mutable collection of fixture-specific anonymous value suppliers to interrogate when automatically generating an anonymous value.
+            These have the highest priority.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.AnonymousValueFixture.Get``2(System.Linq.Expressions.Expression{System.Func{``0,``1}})">
+            <summary>
+            Automatically generate an anonymous value for the given property expression.
+            </summary>
+            <typeparam name="TObject">The type of the parent object of the property</typeparam>
+            <typeparam name="T">The type of the property</typeparam>
+            <param name="property">The expression identifying the property</param>
+            <returns>The anonymous value, taking into account any registered conventions</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AnonymousValueFixture.Get(System.Type,System.String)">
+            <summary>
+            Automatically generate an anonymous value for the given property expression.
+            </summary>
+            <param name="type">The type of the property</param>
+            <param name="propertyName">The name of the property</param>
+            <returns>The anonymous value, taking into account any registered conventions</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AnonymousValueFixture.Words(System.String)">
+            <summary>
+            Gets a data source for a file dictionary, which can be built-in or a user-supplied text file.
+            </summary>
+            <param name="dictionaryName">The name of the file dictionary, without the extension.
+            Recommended to use the FromDictionary list of constants for the built-in file dictionaries.
+            Just use a normal string for user-supplied text files.</param>
+            <returns></returns>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.AddressAus">
+            <summary>
+            Equivalence classes for generating anonymous Australian address-related values.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.AddressUk">
+            <summary>
+            Equivalence classes for generating anonymous United Kingdom address-related values.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.AddressUs">
+            <summary>
+            Equivalence classes for generating anonymous United States address-related values.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.Colour">
+            <summary>
+            Equivalence classes for generating anonymous colour-related values.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.Company">
+            <summary>
+            Equivalence classes for generating anonymous company-related values.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.Finance">
+            <summary>
+            Equivalence classes for generating anonymous finance-related values.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.Geography">
+            <summary>
+            Equivalence classes for generating anonymous geography-related values.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.Identifier">
+            <summary>
+            Equivalence classes for generating anonymous identifier-related values.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.Internet">
+            <summary>
+            Equivalence classes for generating anonymous internet-related values.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.AnonymousValueFixture.Person">
+            <summary>
+            Equivalence classes for generating anonymous person-related values.
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.Builder`1">
+            <summary>
+            A generic Test Data Builder implementation for building objects on the fly
+              without needing to create a custom builder.
+            </summary>
+            <typeparam name="T">The type of object this class generates.</typeparam>
+        </member>
+        <member name="M:TestStack.Dossier.Builder`1.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Builder`1.CreateNew(TestStack.Dossier.Factories.IFactory)">
+            <summary>
+            Initialises a new Builder.
+            </summary>
+            <param name="factory">The type of factory to use to construct the object, uses <see cref="T:TestStack.Dossier.Factories.AllPropertiesFactory"/> by default</param>
+            <returns>Returns a new instance of a Builder for the type of T</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Builder`1.CreateListOfSize(System.Int32,TestStack.Dossier.Factories.IFactory)">
+            <summary>
+            Creates an list builder expression that allows you to create a list of entities.
+            You can call .First(x), .Last(x), etc. methods followed by chained builder method calls.
+            When you are done call .BuildList() to get the list of entities.
+            This override allows you to specify the factory that is used to construct the objects,
+              the default implementation uses the <see cref="T:TestStack.Dossier.Factories.AllPropertiesFactory"/>.
+            </summary>
+            <param name="size">The size of list</param>
+            <param name="factory">The factory to use to construct the object</param>
+            <returns>The list builder for a list of {TBuilder} of the specified size</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Builder`1.BuildObject">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.Builder`1.SetUsingBuilder``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Func{``1,``1})">
+            <summary>
+            Set a property value using a custom builder.
+            </summary>
+            <typeparam name="TPropertyType">The type of the property being set</typeparam>
+            <typeparam name="TPropertyBuilder">The type of the custom builder to build the property value using</typeparam>
+            <param name="property">The property to set</param>
+            <param name="modifier">An optional modifier to customise the builder</param>
+            <returns>The builder so that other method calls can be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Builder`1.SetUsingBuilder``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Func{TestStack.Dossier.Builder{``0},TestStack.Dossier.Builder{``0}})">
+            <summary>
+            Set a property value using a <see cref="T:TestStack.Dossier.Builder`1"/>.
+            </summary>
+            <typeparam name="TPropertyType">The type of the property being set</typeparam>
+            <param name="property">The property to set</param>
+            <param name="modifier">An optional modifier to customise the builder</param>
+            <returns>The builder so that other method calls can be chained</returns>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.DataSource`1">
+            <summary>
+            The base class for data sources to inherit from.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.DataSource`1.#ctor(TestStack.Dossier.DataSources.Generators.IGenerator)">
+            <summary>
+            Allows a custom data generation strategy to be passed to the data source
+            </summary>
+            <param name="generator">The generator that determines the strategy for returning each item from the data source collection</param>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.DataSource`1.#ctor">
+            <summary>
+            The default constructor implements a RandomGenerator strategy
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.DataSource`1.Data">
+            <summary>
+            The data source data
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.DataSource`1.Generator">
+            <summary>
+            The Generator that determines which record from the data source collection is returned with the Next operation.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.DataSource`1.InitializeDataSource">
+            <summary>
+            Each data source implements this method to load data into the data source the first time the data is accessed
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.DataSource`1.Next">
+            <summary>
+            Returns the next item from the data source as determined by the Generator
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Dictionaries.CachedFileDictionaryRepository">
+            <summary>
+            Retrieves words from dictionaries stored in files. First looks for external file that user might have created. If this does not exist then data is retrieved from embedded resource files.
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Dictionaries.FileDictionarySource">
+            <summary>
+            The base class for data sources that load their data from dictionaries stored in files
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Dictionaries.FileDictionarySource.#ctor">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Dictionaries.FileDictionarySource.#ctor(TestStack.Dossier.DataSources.Generators.IGenerator,TestStack.Dossier.DataSources.Dictionaries.IDictionaryRepository)">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Dictionaries.FileDictionarySource.InitializeDataSource">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Dictionaries.FromDictionary">
+            <summary>
+            Provides strongly-typed access to all of the built-in file dictionary names.
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Dictionaries.IDictionaryRepository">
+            <summary>
+            Retrieves words from specified dictionaries
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Dictionaries.IDictionaryRepository.GetWordsFrom(System.String)">
+            <summary>
+            Retrieves words from specified dictionary
+            </summary>
+            <param name="dictionary">The name of the dictionary</param>
+            <returns>A list of words</returns>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Dictionaries.Words">
+            <summary>
+            The wrapper class for data sources that load words from dictionaries stored in files
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Dictionaries.Words.#ctor(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Dictionaries.Words.#ctor(TestStack.Dossier.DataSources.Generators.IGenerator,TestStack.Dossier.DataSources.Dictionaries.IDictionaryRepository,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Dictionaries.Words.InitializeDataSource">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Dictionaries.WordsCache">
+            <summary>
+            Just caches a file dictionary <see cref="T:TestStack.Dossier.DataSources.Dictionaries.Words"/> data source the first time it is accessed and returns the same instance
+            each subsequent request. The Words data source is then responsible for lazy loading its dictionary contents
+            the first time it is accessed. At that point an exception will be thrown if the dictionary does not exist.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Dictionaries.WordsCache.Get(System.String)">
+            <summary>
+            Gets the Words in the file with the specified dictionary name. 
+            This method is used by <see cref="T:TestStack.Dossier.AnonymousValueFixture"/>.
+            </summary>
+            <param name="dictionaryName">Name of the dictionary file.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Dictionaries.WordsCache.Clear">
+            <summary>
+            Just exposed for testing purposes.
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Generators.IGenerator">
+            <summary>
+            A strategy to determine the index of the next item to be selected from a list
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Generators.IGenerator.Generate">
+            <summary>
+            Derives the next item to be selected in the list
+            </summary>
+            <returns>The index of the next item to be selected in the list</returns>
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.Generators.IGenerator.StartIndex">
+            <summary>
+            The first index that can be selected in a list. Ranges from 0 to one less than the number of items in the list
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.Generators.IGenerator.ListSize">
+            <summary>
+            The number of items in the list
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Generators.RandomGenerator">
+            <summary>
+            A strategy that randomly selects an index from the collection
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.Generators.RandomGenerator.StartIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.Generators.RandomGenerator.ListSize">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Generators.RandomGenerator.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Generators.RandomGenerator.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Specify the startIndex and listSize
+            </summary>
+            <param name="startIndex">The first index that can be selected in a list. Ranges from 0 to one less than the number of items in the list</param>
+            <param name="listSize">The number of items in the list</param>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Generators.RandomGenerator.Generate">
+            <inerhitdoc />
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Generators.SequentialGenerator">
+            <summary>
+            A strategy that selects each item from the collection in sequence. At the end of the collection it can optionally start from the beginning or throw an exception. By default it starts from the beginning again.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.Generators.SequentialGenerator.StartIndex">
+            <inheritdoc />
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.Generators.SequentialGenerator.ListSize">
+            <inheritdoc />
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.Generators.SequentialGenerator.ListShouldBeUnique">
+            <summary>
+            Whether or not the list should be unique
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Generators.SequentialGenerator.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Generators.SequentialGenerator.#ctor(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Specify the startIndex and listSize
+            </summary>
+            <param name="startIndex">The first index that can be selected in a list. Ranges from 0 to one less than the number of items in the list</param>
+            <param name="listSize">The number of items in the list</param>
+            <param name="listShouldBeUnique">Whether or not the generated list should be guaranteed to be unique or the range of values can be looped through infinitely</param>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Generators.SequentialGenerator.Generate">
+            <inerhitdoc />
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Geography.GeoContinentSource">
+            <summary>
+            Dictionary of continent names
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Geography.GeoCountryCodeSource">
+            <summary>
+            Dictionary of country codes
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Geography.GeoCountrySource">
+            <summary>
+            Dictionary of country names
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Geography.GeoLatitudeSource">
+            <summary>
+            Dictionary of latitude coordinates
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Geography.GeoLongitudeSource">
+            <summary>
+            Dictionary of longitude coordinates codes
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.IDataSource`1">
+            <summary>
+            Provides data.
+            </summary>
+            <typeparam name="T">The type of data that is provided</typeparam>
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.IDataSource`1.Data">
+            <summary>
+            The underlying source of data.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.DataSources.IDataSource`1.Generator">
+            <summary>
+            The generator that is being used to return the data.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.IDataSource`1.Next">
+            <summary>
+            Retrieve the next data value.
+            </summary>
+            <returns>The data value</returns>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Person.PersonEmailAddressSource">
+            <summary>
+            Dictionary of email addresses names
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Person.PersonEmailAddressSource.#ctor">
+            <summary>
+            Create a person email address source with random generation.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Person.PersonEmailAddressSource.#ctor(TestStack.Dossier.DataSources.Generators.IGenerator)">
+            <summary>
+            Create a person email address source with custom generation.
+            </summary>
+            <param name="generator">The generator to use</param>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Person.PersonLanguageSource">
+            <summary>
+            Dictionary of language names
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Person.PersonNameFirstFemaleSource">
+            <summary>
+            Dictionary of female first names
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Person.PersonNameFirstMaleSource">
+            <summary>
+            Dictionary of male first names
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Person.PersonNameFirstSource">
+            <summary>
+            Dictionary of male and female first names
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Person.PersonNameFullSource">
+            <summary>
+            Dictionary of male and female full names - first and last name
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Person.PersonNameLastSource">
+            <summary>
+            Dictionary of last names
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Person.PersonNameSuffixSource">
+            <summary>
+            Dictionary of name suffixes
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Person.PersonNameTitleSource">
+            <summary>
+            Dictionary of name titles
+            </summary>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Picking.Pick">
+            <summary>
+            Pick a sequence of items from a collection of items according to different selection strategies.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Picking.Pick.RandomItemFrom``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            Selects a random item from the list each time it is called.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list">The list.</param>
+            <returns>The RandomItemSource class.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Picking.Pick.RepeatingSequenceFrom``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            Selects each item sequentially from the list and starts again from the beginning when the list is exhausted.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list">The list.</param>
+            <returns></returns>
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Picking.RandomItemSource`1">
+            <summary>
+            Implements the random item strategy
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Picking.RandomItemSource`1.#ctor(System.Collections.Generic.IList{`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Picking.RandomItemSource`1.InitializeDataSource">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.DataSources.Picking.RepeatingSequenceSource`1">
+            <summary>
+            Implements the repeatable sequence strategy
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Picking.RepeatingSequenceSource`1.#ctor(System.Collections.Generic.IList{`0})">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.DataSources.Picking.RepeatingSequenceSource`1.InitializeDataSource">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.AddressAusEquivalence">
+            <summary>
+            Methods that describe equivalence classes for generating anonymous Australian address-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.AddressAusEquivalence.#ctor(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Creates a new <see cref="T:TestStack.Dossier.AddressAusEquivalence"/> with the AnonymousValueFixture from the extension method.
+            </summary>
+            <param name="fixture">The </param>
+        </member>
+        <member name="M:TestStack.Dossier.AddressAusEquivalence.City">
+            <summary>
+            Generate and return an Australian address city name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressAusEquivalence.Company">
+            <summary>
+            Generate and return an Australian address company name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressAusEquivalence.Phone">
+            <summary>
+            Generate and return an Australian address phone number.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressAusEquivalence.PostCode">
+            <summary>
+            Generate and return an Australian address post code.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressAusEquivalence.State">
+            <summary>
+            Generate and return an Australian address state name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressAusEquivalence.StateAbbreviation">
+            <summary>
+            Generate and return an Australian address state abbreviation.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressAusEquivalence.Street">
+            <summary>
+            Generate and return an Australian address street name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressAusEquivalence.Website">
+            <summary>
+            Generate and return an Australian address website name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.AddressUkEquivalence">
+            <summary>
+            Methods that describe equivalence classes for generating anonymous UK address-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUkEquivalence.#ctor(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Creates a new <see cref="T:TestStack.Dossier.AddressUkEquivalence"/> with the AnonymousValueFixture from the extension method.
+            </summary>
+            <param name="fixture">The </param>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUkEquivalence.City">
+            <summary>
+            Generate and return a UK address city name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUkEquivalence.Company">
+            <summary>
+            Generate and return a UK address company name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUkEquivalence.County">
+            <summary>
+            Generate and return a UK address county name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUkEquivalence.Phone">
+            <summary>
+            Generate and return a UK address phone number.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUkEquivalence.PostCode">
+            <summary>
+            Generate and return a UK address post code.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUkEquivalence.Street">
+            <summary>
+            Generate and return a UK address street name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUkEquivalence.Website">
+            <summary>
+            Generate and return a UK address website name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.AddressUsEquivalence">
+            <summary>
+            Methods that describe equivalence classes for generating anonymous US adress-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUsEquivalence.#ctor(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Creates a new <see cref="T:TestStack.Dossier.AddressUsEquivalence"/> with the AnonymousValueFixture from the extension method.
+            </summary>
+            <param name="fixture">The </param>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUsEquivalence.City">
+            <summary>
+            Generate and return a US address city name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUsEquivalence.Company">
+            <summary>
+            Generate and return a US address company name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUsEquivalence.Phone">
+            <summary>
+            Generate and return a US address phone number.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUsEquivalence.SocialSecurityNumber">
+            <summary>
+            Generate and return a US address social security number.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUsEquivalence.State">
+            <summary>
+            Generate and return a US address state name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUsEquivalence.StateAbbreviation">
+            <summary>
+            Generate and return a US address state abbreviation.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUsEquivalence.Street">
+            <summary>
+            Generate and return a US address street name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUsEquivalence.Website">
+            <summary>
+            Generate and return a US address website name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.AddressUsEquivalence.ZipCode">
+            <summary>
+            Generate and return a US address zip code.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.ColourEquivalence">
+            <summary>
+            Methods that describe equivalence classes for generating anonymous Colour-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.ColourEquivalence.#ctor(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Creates a new <see cref="T:TestStack.Dossier.ColourEquivalence"/> with the AnonymousValueFixture from the extension method.
+            </summary>
+            <param name="fixture">The </param>
+        </member>
+        <member name="M:TestStack.Dossier.ColourEquivalence.Hex">
+            <summary>
+            Generate and return a Colour Hex value.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.ColourEquivalence.Name">
+            <summary>
+            Generate and return a Colour name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.CompanyEquivalence">
+            <summary>
+            Methods that describe equivalence classes for generating anonymous Company-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.CompanyEquivalence.#ctor(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Creates a new <see cref="T:TestStack.Dossier.CompanyEquivalence"/> with the AnonymousValueFixture from the extension method.
+            </summary>
+            <param name="fixture">The </param>
+        </member>
+        <member name="M:TestStack.Dossier.CompanyEquivalence.Industry">
+            <summary>
+            Generate and return a company industry name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.CompanyEquivalence.JobTitle">
+            <summary>
+            Generate and return a company job title.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.CompanyEquivalence.Location">
+            <summary>
+            Generate and return a company location name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.CompanyEquivalence.Name">
+            <summary>
+            Generate and return a company name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.EquivalenceClasses.EnumEquivalenceClasses">
+            <summary>
+            Extension methods that describe equivalence classes for generating anonymous enum values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.EnumEquivalenceClasses.Of``1(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return an enum from any available values in the enum.
+            </summary>
+            <param name="fixture">The fixture to generate an enum for</param>
+            <returns>The generated enum</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.EnumEquivalenceClasses.Except``1(TestStack.Dossier.AnonymousValueFixture,``0[])">
+            <summary>
+            Generate and return an enum from any values in the enum except the provided exceptions.
+            </summary>
+            <param name="fixture">The fixture to generate an enum for</param>
+            <param name="except">A list of exceptions; recommend you specify by label for readability</param>
+            <returns>The generated enum</returns>
+        </member>
+        <member name="T:TestStack.Dossier.EquivalenceClasses.Geo.GeographyEquivalenceClassescs">
+            <summary>
+            Extension methods that describe equivalence classes for generating anonymous geography-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Geo.GeographyEquivalenceClassescs.Continent(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a continent name.
+            </summary>
+            <param name="fixture">The fixture to generate a continent for</param>
+            <returns>The generated continent</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Geo.GeographyEquivalenceClassescs.Country(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a country name.
+            </summary>
+            <param name="fixture">The fixture to generate a country for</param>
+            <returns>The generated country</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Geo.GeographyEquivalenceClassescs.CountryCode(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a country code.
+            </summary>
+            <param name="fixture">The fixture to generate a country code for</param>
+            <returns>The generated country code</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Geo.GeographyEquivalenceClassescs.Latitude(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a latitude coordinate.
+            </summary>
+            <param name="fixture">The fixture to generate a latitutde for</param>
+            <returns>The generated latitude</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Geo.GeographyEquivalenceClassescs.Longitude(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a longitude coordinate.
+            </summary>
+            <param name="fixture">The fixture to generate a longitude for</param>
+            <returns>The generated longitude</returns>
+        </member>
+        <member name="T:TestStack.Dossier.EquivalenceClasses.IntegerEquivalenceClasses">
+            <summary>
+            Extension methods that describe equivalence classes for generating anonymous integer values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.IntegerEquivalenceClasses.PositiveInteger(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a positive integer.
+            </summary>
+            <param name="fixture">The fixture to generate an integer for</param>
+            <returns>The generated integer</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.IntegerEquivalenceClasses.NegativeInteger(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a negative integer.
+            </summary>
+            <param name="fixture">The fixture to generate an integer for</param>
+            <returns>The generated integer</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.IntegerEquivalenceClasses.IntegerExcept(TestStack.Dossier.AnonymousValueFixture,System.Int32[])">
+            <summary>
+            Generate and return an integer except for the passed in integer(s).
+            </summary>
+            <param name="fixture">The fixture to generate an integer for</param>
+            <param name="exceptFor">A list of integers to not return</param>
+            <returns>The generated integer</returns>
+        </member>
+        <member name="T:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses">
+            <summary>
+            Extension methods that describe equivalence classes for generating anonymous person-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses.EmailAddress(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return an email address.
+            </summary>
+            <param name="fixture">The fixture to generate a email for</param>
+            <returns>The generated email</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses.UniqueEmailAddress(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a unique email address (within the fixture).
+            </summary>
+            <param name="fixture">The fixture to generate a unique email for</param>
+            <returns>The generated unique email</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses.Language(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a language name.
+            </summary>
+            <param name="fixture">The fixture to generate a language for</param>
+            <returns>The generated language</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses.FemaleFirstName(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a female first name.
+            </summary>
+            <param name="fixture">The fixture to generate a first name for</param>
+            <returns>The generated female first name</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses.FirstName(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a male or female first name.
+            </summary>
+            <param name="fixture">The fixture to generate a first name for</param>
+            <returns>The generated first name</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses.FullName(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a male or female full name (first and last names).
+            </summary>
+            <param name="fixture">The fixture to generate a full name for</param>
+            <returns>The generated full name</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses.LastName(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a last name.
+            </summary>
+            <param name="fixture">The fixture to generate a last name for</param>
+            <returns>The generated last name</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses.MaleFirstName(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a male first name.
+            </summary>
+            <param name="fixture">The fixture to generate a male first name for</param>
+            <returns>The generated male first name</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses.Suffix(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return name suffix.
+            </summary>
+            <param name="fixture">The fixture to generate a suffix for</param>
+            <returns>The generated suffix</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.Person.PersonEquivalenceClasses.Title(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a name title.
+            </summary>
+            <param name="fixture">The fixture to generate a title for</param>
+            <returns>The generated title</returns>
+        </member>
+        <member name="T:TestStack.Dossier.EquivalenceClasses.StringEquivalenceClasses">
+            <summary>
+            Extension methods that describe equivalence classes for generating anonymous string values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.StringEquivalenceClasses.String(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a string.
+            </summary>
+            <param name="fixture">The fixture to generate a string for</param>
+            <returns>The generated string</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.StringEquivalenceClasses.StringMatching(TestStack.Dossier.AnonymousValueFixture,System.String)">
+            <summary>
+            Generate and return a string matching the given regex.
+            Only a limited subset of regex expressions are supported: http://www.brics.dk/automaton/faq.html.
+            </summary>
+            <param name="fixture">The fixture to generate a string for</param>
+            <param name="regexPattern">The regex pattern to match</param>
+            <returns>The generated string</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.StringEquivalenceClasses.DummyContext.Resolve(System.Object)">
+            <inerhitdoc />
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.StringEquivalenceClasses.StringStartingWith(TestStack.Dossier.AnonymousValueFixture,System.String)">
+            <summary>
+            Generate and return a string starting with the given prefix.
+            </summary>
+            <param name="fixture">The fixture to generate a string for</param>
+            <param name="prefix">String to prefix the returned anonymous string with</param>
+            <returns>The generated string</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.StringEquivalenceClasses.StringEndingWith(TestStack.Dossier.AnonymousValueFixture,System.String)">
+            <summary>
+            Generate and return a string ending with the given suffix.
+            </summary>
+            <param name="fixture">The fixture to generate a string for</param>
+            <param name="suffix">String to end the returned anonymous string with</param>
+            <returns>The generated string</returns>
+        </member>
+        <member name="M:TestStack.Dossier.EquivalenceClasses.StringEquivalenceClasses.StringOfLength(TestStack.Dossier.AnonymousValueFixture,System.Int32)">
+            <summary>
+            Generate and return a string of the given length.
+            </summary>
+            <param name="fixture">The fixture to generate a string for</param>
+            <param name="length">The length of string to generate</param>
+            <returns>The generated string</returns>
+        </member>
+        <member name="T:TestStack.Dossier.FinanceEquivalence">
+            <summary>
+            Methods that describe equivalence classes for generating anonymous Finance-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.FinanceEquivalence.#ctor(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Creates a new <see cref="T:TestStack.Dossier.FinanceEquivalence"/> with the AnonymousValueFixture from the extension method.
+            </summary>
+            <param name="fixture">The </param>
+        </member>
+        <member name="M:TestStack.Dossier.FinanceEquivalence.CreditCardNumber">
+            <summary>
+            Generate and return a finance credit card number.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.FinanceEquivalence.CreditCardType">
+            <summary>
+            Generate and return a finance credit card type.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.FinanceEquivalence.Currency">
+            <summary>
+            Generate and return a finance currency name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.FinanceEquivalence.CurrencyCode">
+            <summary>
+            Generate and return a finance currency code.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.FrequencyEquivalence">
+            <summary>
+            Extension methods that describe equivalence classes for generating anonymous Frequency-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.FrequencyEquivalence.Frequency(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a frequency.
+            </summary>
+            <param name="fixture">The fixture to generate a value for.</param>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.GeoEquivalence">
+            <summary>
+            Methods that describe equivalence classes for generating anonymous Geography-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.GeoEquivalence.#ctor(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Creates a new <see cref="T:TestStack.Dossier.GeoEquivalence"/> with the AnonymousValueFixture from the extension method.
+            </summary>
+            <param name="fixture">The </param>
+        </member>
+        <member name="M:TestStack.Dossier.GeoEquivalence.Continent">
+            <summary>
+            Generate and return a geography continent name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.GeoEquivalence.Country">
+            <summary>
+            Generate and return a geography country name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.GeoEquivalence.CountryCode">
+            <summary>
+            Generate and return a geography country code.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.GeoEquivalence.Latitude">
+            <summary>
+            Generate and return a geography latitude.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.GeoEquivalence.Longitude">
+            <summary>
+            Generate and return a geography longitude.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.IdentifierEquivalence">
+            <summary>
+            Methods that describe equivalence classes for generating anonymous Identifier-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.IdentifierEquivalence.#ctor(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Creates a new <see cref="T:TestStack.Dossier.IdentifierEquivalence"/> with the AnonymousValueFixture from the extension method.
+            </summary>
+            <param name="fixture">The </param>
+        </member>
+        <member name="M:TestStack.Dossier.IdentifierEquivalence.BitcoinAddress">
+            <summary>
+            Generate and return an identifier bitcoing address.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.IdentifierEquivalence.Iban">
+            <summary>
+            Generate and return an identifier IBAN.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.IdentifierEquivalence.IpAddressV4">
+            <summary>
+            Generate and return an identifier IP address v4.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.IdentifierEquivalence.IpAddressV6">
+            <summary>
+            Generate and return an identifier IP address v6.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.IdentifierEquivalence.Isbn">
+            <summary>
+            Generate and return an identifier ISBN.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.IdentifierEquivalence.MacAddress">
+            <summary>
+            Generate and return an identifier MAC address.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.InternetEquivalence">
+            <summary>
+            Methods that describe equivalence classes for generating anonymous Internet-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.InternetEquivalence.#ctor(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Creates a new <see cref="T:TestStack.Dossier.InternetEquivalence"/> with the AnonymousValueFixture from the extension method.
+            </summary>
+            <param name="fixture">The </param>
+        </member>
+        <member name="M:TestStack.Dossier.InternetEquivalence.DomainCountryCodeTopLevelDomain">
+            <summary>
+            Generate and return an internet domain country code top level domain.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.InternetEquivalence.DomainName">
+            <summary>
+            Generate and return an internet domain name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.InternetEquivalence.DomainTopLevel">
+            <summary>
+            Generate and return a an internet domain top level name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.InternetEquivalence.Url">
+            <summary>
+            Generate and return an internet URL.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.LoremIpsumEquivalence">
+            <summary>
+            Extension methods that describe equivalence classes for generating anonymous Lorem Ipsum values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.LoremIpsumEquivalence.LoremIpsum(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a lorem ipsum value.
+            </summary>
+            <param name="fixture">The fixture to generate a value for.</param>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.PersonEquivalence">
+            <summary>
+            Methods that describe equivalence classes for generating anonymous Person-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.#ctor(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Creates a new <see cref="T:TestStack.Dossier.PersonEquivalence"/> with the AnonymousValueFixture from the extension method.
+            </summary>
+            <param name="fixture">The </param>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.EmailAddress">
+            <summary>
+            Generate and return a person email address.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.Language">
+            <summary>
+            Generate and return a person language.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.NameFirst">
+            <summary>
+            Generate and return a person first name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.NameFirstFemale">
+            <summary>
+            Generate and return a person female first name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.NameFirstMale">
+            <summary>
+            Generate and return a person male first name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.NameFull">
+            <summary>
+            Generate and return a person full name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.NameLast">
+            <summary>
+            Generate and return a person last name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.NameSuffix">
+            <summary>
+            Generate and return a person name suffix.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.NameTitle">
+            <summary>
+            Generate and return a person name title.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.Password">
+            <summary>
+            Generate and return a person password.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.Race">
+            <summary>
+            Generate and return a person race.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalence.Username">
+            <summary>
+            Generate and return a person user name.
+            </summary>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.PersonEquivalenceExtensions">
+            <summary>
+            Extension methods that describe equivalence classes for generating anonymous Person-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.PersonEquivalenceExtensions.UniqueEmailAddress(TestStack.Dossier.PersonEquivalence)">
+            <summary>
+            Generate and return a unique email address (within the fixture).
+            </summary>
+            <param name="personEquivalence">The fixture to generate a unique email for</param>
+            <returns>The generated unique email</returns>
+        </member>
+        <member name="T:TestStack.Dossier.ShirtSizeEquivalence">
+            <summary>
+            Extension methods that describe equivalence classes for generating anonymous Shirt Size-related values.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.ShirtSizeEquivalence.ShirtSize(TestStack.Dossier.AnonymousValueFixture)">
+            <summary>
+            Generate and return a shirt size.
+            </summary>
+            <param name="fixture">The fixture to generate a value for.</param>
+            <returns>The generated value.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.Factories.AllPropertiesFactory">
+            <summary>
+            Builds the object using the constructor with the most arguments using values stored in the builder that match
+              the constructor parameter name case insensitively and then sets all public and private property setters with
+              values from the builder.
+            If there is no value specified in the builder for a ctor argument / property then the builder will supply an anonymous value.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Factories.AllPropertiesFactory.BuildObject``2(TestStack.Dossier.TestDataBuilder{``0,``1})">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.Factories.AutoFixtureFactory">
+            <summary>
+            Creates an instance of an object with AutoFixture - any values set in your builder will NOT be used to construct the object.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Factories.AutoFixtureFactory.BuildObject``2(TestStack.Dossier.TestDataBuilder{``0,``1})">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.Factories.CallConstructorFactory">
+            <summary>
+            Builds the object using the constructor with the most arguments using values stored in the builder that match
+              the constructor parameter name case insensitively.
+            If there is no value specified in the builder for an argument then the builder will supply an anonymous value.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Factories.CallConstructorFactory.BuildObject``2(TestStack.Dossier.TestDataBuilder{``0,``1})">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.Factories.IFactory">
+            <summary>
+            Interface for object building strategies
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Factories.IFactory.BuildObject``2(TestStack.Dossier.TestDataBuilder{``0,``1})">
+            <summary>
+            Takes a builder and generates an object of the specified type.
+            </summary>
+            <param name="builder">An instance of the TestDataBuilder.</param>
+            <typeparam name="TObject">The generic type of the object that will be generated.</typeparam>
+            <typeparam name="TBuilder">The generic type of the TestDataBuilder.</typeparam>
+            <returns>An instance of the created object.</returns>
+        </member>
+        <member name="T:TestStack.Dossier.Factories.PublicPropertySettersFactory">
+            <summary>
+            Builds the object using the constructor with the most arguments using values stored in the builder that match
+              the constructor parameter name case insensitively and then sets all public property setters with values from
+              the builder.
+            If there is no value specified in the builder for a ctor argument / property then the builder will supply an anonymous value.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Factories.PublicPropertySettersFactory.BuildObject``2(TestStack.Dossier.TestDataBuilder{``0,``1})">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.IAnonymousValueSupplier">
+            <summary>
+            Inheritors can supply an anonymous value.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.IAnonymousValueSupplier.CanSupplyValue(System.Type,System.String)">
+            <summary>
+            Returns whether or not this supplier can supply an anonymous value for the given property.
+            </summary>
+            <param name="type">The type of the property to generate a value for</param>
+            <param name="propertyName">The name of the property to generate a value for</param>
+            <returns>Whether or not this supplier can supply an anonymous value</returns>
+        </member>
+        <member name="M:TestStack.Dossier.IAnonymousValueSupplier.GenerateAnonymousValue(TestStack.Dossier.AnonymousValueFixture,System.Type,System.String)">
+            <summary>
+            Return an anonymous value for the given property and fixture.
+            </summary>
+            <param name="type">The type that the property is enclosed in</param>
+            <param name="any">Anonymous value fixture</param>
+            <param name="propertyName">The name of the property to return an anonymous value for</param>
+            <returns>The anonymous value</returns>
+        </member>
+        <member name="T:TestStack.Dossier.ITestDataBuilder`1">
+            <summary>
+            Base class definining infrastructure for a class that generates objects of type {TObject}.
+            </summary>
+            <typeparam name="TObject">The type of object this class generates</typeparam>
+        </member>
+        <member name="M:TestStack.Dossier.ITestDataBuilder`1.Build">
+            <summary>
+            Build the object.
+            </summary>
+            <returns>The built object</returns>
+        </member>
+        <member name="T:TestStack.Dossier.Lists.ListBuilder`2">
+            <summary>
+            Class that builds lists of objects by proxying a list of object builders.
+            </summary>
+            <typeparam name="TObject">The type of object being built</typeparam>
+            <typeparam name="TBuilder">The type of builder that is building the object</typeparam>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilder`2.TheFirst(System.Int32)">
+            <summary>
+            Will target the first x objects (as specified) for subsequent builder calls (or .With call).
+            You can combine this with .TheNext(y) to target the next y after the first x.
+            </summary>
+            <param name="howMany">The first {howMany} objects should be targeted?</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilder`2.TheNext(System.Int32)">
+            <summary>
+            Will target the next x objects (as specified) for subsequent builder calls (or .With call).
+            </summary>
+            <param name="howMany">The next {howMany} objects should be targeted?</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilder`2.TheLast(System.Int32)">
+            <summary>
+            Will target the last x objects (as specified) for subsequent builder calls (or .With call).
+            You can combine this with .ThePrevious(y) to target the previous y after the last x.
+            </summary>
+            <param name="howMany">The last {howMany} objects should be targeted?</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilder`2.ThePrevious(System.Int32)">
+            <summary>
+            Will target the previous x objects (as specified) for subsequent builder calls (or .With call).
+            </summary>
+            <param name="howMany">The previous {howMany} objects should be targeted?</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilder`2.All">
+            <summary>
+            Will target all objects for subsequent builder calls (or .With call).
+            </summary>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilder`2.With(System.Func{`1,`1})">
+            <summary>
+            Will apply the given lambda expression to all builders that are currently targeted (e.g. via .TheFirst, .TheNext, etc. calls).
+            </summary>
+            <param name="modifier">The lambda expression to apply to the targeted builders</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilder`2.BuildList">
+            <summary>
+            Builds the list of objects by processing all of the builder calls and then calling .Build on all the builders.
+            </summary>
+            <returns>The list of generated objects</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilder`2.GetBuilders">
+            <summary>
+            Return the list of builder objects.
+            </summary>
+            <returns>The list of builder objects</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilder`2.op_Implicit(TestStack.Dossier.Lists.ListBuilder{`0,`1})~System.Collections.Generic.List{`0}">
+            <summary>
+            Builds the list of objects with implicit conversion operator.
+            </summary>
+            <returns>The built object</returns>
+        </member>
+        <member name="T:TestStack.Dossier.Lists.ListBuilderExtensions">
+            <summary>
+            Extension methods to allow chaining list builder calls onto builder instances.
+            These extension methods make use of the proxy builder that is returned when you call .CreateListOfSize(x).
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilderExtensions.TheFirst``2(TestStack.Dossier.TestDataBuilder{``0,``1},System.Int32)">
+            <summary>
+            Will target the first x objects (as specified) for subsequent builder calls (or .With call).
+            You can combine this with .TheNext(y) to target the next y after the first x.
+            </summary>
+            <typeparam name="TObject">The type of object being generated</typeparam>
+            <typeparam name="TBuilder">The type of builder that is building the objects</typeparam>
+            <param name="builder">The builder proxy to chain</param>
+            <param name="howMany">The first {howMany} objects should be targeted?</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilderExtensions.TheNext``2(TestStack.Dossier.TestDataBuilder{``0,``1},System.Int32)">
+            <summary>
+            Will target the next x objects (as specified) for subsequent builder calls (or .With call).
+            </summary>
+            <typeparam name="TObject">The type of object being generated</typeparam>
+            <typeparam name="TBuilder">The type of builder that is building the objects</typeparam>
+            <param name="builder">The builder proxy to chain</param>
+            <param name="howMany">The next {howMany} objects should be targeted?</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilderExtensions.TheLast``2(TestStack.Dossier.TestDataBuilder{``0,``1},System.Int32)">
+            <summary>
+            Will target the last x objects (as specified) for subsequent builder calls (or .With call).
+            You can combine this with .ThePrevious(y) to target the previous y after the last x.
+            </summary>
+            <typeparam name="TObject">The type of object being generated</typeparam>
+            <typeparam name="TBuilder">The type of builder that is building the objects</typeparam>
+            <param name="builder">The builder proxy to chain</param>
+            <param name="howMany">The last {howMany} objects should be targeted?</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilderExtensions.ThePrevious``2(TestStack.Dossier.TestDataBuilder{``0,``1},System.Int32)">
+            <summary>
+            Will target the previous x objects (as specified) for subsequent builder calls (or .With call).
+            </summary>
+            <typeparam name="TObject">The type of object being generated</typeparam>
+            <typeparam name="TBuilder">The type of builder that is building the objects</typeparam>
+            <param name="builder">The builder proxy to chain</param>
+            <param name="howMany">The previous {howMany} objects should be targeted?</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilderExtensions.All``2(TestStack.Dossier.TestDataBuilder{``0,``1})">
+            <summary>
+            Will target all objects for subsequent builder calls (or .With call).
+            </summary>
+            <typeparam name="TObject">The type of object being generated</typeparam>
+            <typeparam name="TBuilder">The type of builder that is building the objects</typeparam>
+            <param name="builder">The builder proxy to chain</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilderExtensions.With``2(TestStack.Dossier.TestDataBuilder{``0,``1},System.Func{``1,``1})">
+            <summary>
+            Will apply the given lambda expression to all builders that are currently targeted (e.g. via .TheFirst, .TheNext, etc. calls).
+            </summary>
+            <typeparam name="TObject">The type of object being generated</typeparam>
+            <typeparam name="TBuilder">The type of builder that is building the objects</typeparam>
+            <param name="builder">The builder proxy to chain</param>
+            <param name="modifier">The lambda expression to apply to the targeted builders</param>
+            <returns>The builder proxy so that calls can continue to be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.Lists.ListBuilderExtensions.BuildList``2(TestStack.Dossier.TestDataBuilder{``0,``1})">
+            <summary>
+            Builds the list of objects by processing all of the builder calls and then calling .Build on all the builders.
+            </summary>
+            <typeparam name="TObject">The type of object being generated</typeparam>
+            <typeparam name="TBuilder">The type of builder that is building the objects</typeparam>
+            <param name="builder">The builder proxy to build</param>
+            <returns>The list of generated objects</returns>
+        </member>
+        <member name="T:TestStack.Dossier.ProxyBuilder`1">
+            <summary>
+            Builds an NSubstitute proxy for the given type that has .Returns values set for the given dictionary of properties.
+            </summary>
+            <typeparam name="T">The type being proxied</typeparam>
+        </member>
+        <member name="M:TestStack.Dossier.ProxyBuilder`1.#ctor(System.Collections.Generic.Dictionary{System.String,System.Func{System.Object}})">
+            <summary>
+            Create a proxy builder to proxy the given property values for the type {T}.
+            </summary>
+            <param name="properties"></param>
+        </member>
+        <member name="M:TestStack.Dossier.ProxyBuilder`1.Build">
+            <summary>
+            Build the proxy object and set up the .Returns values for the properties.
+            </summary>
+            <returns>The proxy object</returns>
+        </member>
+        <member name="T:TestStack.Dossier.Suppliers.DefaultEmailValueSupplier">
+            <summary>
+            Supplies default anonymous value for email addresses.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultEmailValueSupplier.CanSupplyValue(System.Type,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultEmailValueSupplier.GenerateAnonymousValue(TestStack.Dossier.AnonymousValueFixture,System.Type,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.Suppliers.DefaultFirstNameValueSupplier">
+            <summary>
+            Supplies default anonymous value for first names.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultFirstNameValueSupplier.CanSupplyValue(System.Type,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultFirstNameValueSupplier.GenerateAnonymousValue(TestStack.Dossier.AnonymousValueFixture,System.Type,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.Suppliers.DefaultLastNameValueSupplier">
+            <summary>
+            Supplies default anonymous value for last names.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultLastNameValueSupplier.CanSupplyValue(System.Type,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultLastNameValueSupplier.GenerateAnonymousValue(TestStack.Dossier.AnonymousValueFixture,System.Type,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.Suppliers.DefaultStringValueSupplier">
+            <summary>
+            Supplies default anonymous value for a string type.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultStringValueSupplier.CanSupplyValue(System.Type,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultStringValueSupplier.GenerateAnonymousValue(TestStack.Dossier.AnonymousValueFixture,System.Type,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.Suppliers.DefaultValueSupplier">
+            <summary>
+            Supplies default value for any type.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultValueSupplier.CanSupplyValue(System.Type,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultValueSupplier.GenerateAnonymousValue(TestStack.Dossier.AnonymousValueFixture,System.Type,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:TestStack.Dossier.Suppliers.DefaultValueTypeValueSupplier">
+            <summary>
+            Supplies default anonymous value for a value type e.g. int, double, etc.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultValueTypeValueSupplier.CanSupplyValue(System.Type,System.String)">
+            <inerhitdoc />
+        </member>
+        <member name="M:TestStack.Dossier.Suppliers.DefaultValueTypeValueSupplier.GenerateAnonymousValue(TestStack.Dossier.AnonymousValueFixture,System.Type,System.String)">
+            <inerhitdoc />
+        </member>
+        <member name="T:TestStack.Dossier.TestDataBuilder`2">
+            <summary>
+            Base class definining infrastructure for a class that generates objects of type {TObject}.
+            </summary>
+            <typeparam name="TObject">The type of object this class generates</typeparam>
+            <typeparam name="TBuilder">The type for this class, yes this is a recursive type definition</typeparam>
+        </member>
+        <member name="P:TestStack.Dossier.TestDataBuilder`2.ListBuilder">
+            <summary>
+            The list builder instance (if this is a a list builder proxy).
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.#ctor">
+            <summary>
+            Default Constructor.
+            </summary>
+        </member>
+        <member name="P:TestStack.Dossier.TestDataBuilder`2.Any">
+            <summary>
+            Generate anonymous data using this fixture - one instance per builder instance.
+            </summary>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.Build">
+            <summary>
+            Build the object.
+            </summary>
+            <returns>The built object</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.op_Implicit(TestStack.Dossier.TestDataBuilder{`0,`1})~`0">
+            <summary>
+            Builds the object with implicit conversion operator.
+            </summary>
+            <returns>The built object</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.op_Implicit(TestStack.Dossier.TestDataBuilder{`0,`1})~System.Collections.Generic.List{`0}">
+            <summary>
+            Builds the list of objects with implicit conversion operator.
+            </summary>
+            <returns>The built object</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.BuildObject">
+            <summary>
+            Build the actual object - you can call the <see cref="M:TestStack.Dossier.TestDataBuilder`2.BuildUsing``1"/> method to quickly build a builder.
+            </summary>
+            <returns>The built object</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.BuildUsing``1">
+            <summary>
+            Builds the object from this builder using an <see cref="T:TestStack.Dossier.Factories.IFactory"/>.
+            </summary>
+            <typeparam name="TFactory">The factory to use to build the object</typeparam>
+            <returns>The built object</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.AsProxy">
+            <summary>
+            Return an NSubstitute proxy object when .Build() is called rather than a real object.
+            </summary>
+            <returns>The builder so that other method calls can be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.AlterProxy(`0)">
+            <summary>
+            Alter the proxy object just after it has been built and before it's returned from .Build().
+            This allows you to add any .Returns() values that are more complex than the public properties that are proxied by default.
+            </summary>
+            <param name="proxy">The proxy object</param>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.Set``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},``0)">
+            <summary>
+            Records the given value for the given property from {TObject} and returns the builder to allow chaining.
+            </summary>
+            <typeparam name="TValue">The type of the property</typeparam>
+            <param name="property">A lambda expression specifying the property to record a value for</param>
+            <param name="value">The value to set the property to</param>
+            <returns>The builder so that other method calls can be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.Set``1(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Func{``0})">
+            <summary>
+            Records a given value provider for the given property from {TObject} and returns the builder to allow chaining.
+            </summary>
+            <typeparam name="TValue">The type of the property</typeparam>
+            <param name="property">A lambda expression specifying the property to record a value for</param>
+            <param name="factory">A method which produces instances of {TValue} for the property.</param>
+            <returns>The builder so that other method calls can be chained</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.Get``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Gets the recorded value for the given property from {TObject} or an anonymous
+             value if there isn't one specified.
+            </summary>
+            <typeparam name="TValue">The type of the property.</typeparam>
+            <param name="property">A lambda expression specifying the property to retrieve the recorded value for</param>
+            <returns>The recorded value of the property or an anonymous value for it</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.Get(System.Type,System.String)">
+            <summary>
+            Gets the recorded value for the given property from {type} or an anonymous
+             value if there isn't one specified.
+            </summary>
+            <param name="type">The type of the property.</param>
+            <param name="propertyName">The property name.</param>
+            <returns></returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.GetOrDefault``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Gets the recorded value for the given property from {TObject} or if no
+            value has been recorded the default value for {TValue}.
+            </summary>
+            <typeparam name="TValue">The type of the property</typeparam>
+            <param name="property">A lambda expression specifying the property to retrieve the recorded value for</param>
+            <returns>The recorded value of the property or teh default value for {TValue} if no value recorded</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.CreateListOfSize(System.Int32)">
+            <summary>
+            Creates an list builder expression that allows you to create a list of entities.
+            You can call .First(x), .Last(x), etc. methods followed by chained builder method calls.
+            When you are done call .BuildList() to get the list of entities.
+            </summary>
+            <param name="size">The size of list</param>
+            <returns>The list builder for a list of {TBuilder} of the specified size</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.Has``1(System.Linq.Expressions.Expression{System.Func{`0,``0}})">
+            <summary>
+            Returns whether or not there is currently an explicit value recorded against the given property from {TObject}.
+            </summary>
+            <typeparam name="TValue">The type of the property</typeparam>
+            <param name="property">A lambda expression specifying the property to retrieve the recorded value for</param>
+            <returns>Whether or not there is a recorded value for the property</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.Has(System.String)">
+            <summary>
+            Returns whether or not there is currently an explicit value recorded against the given property from {TObject}.
+            </summary>
+            <param name="propertyName">A string specifying the name of the property to retrieve the recorded value for</param>
+            <returns>Whether or not there is a recorded value for the property</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.IsListBuilderProxy">
+            <summary>
+            Returns whether or not the builder instance is a proxy for building a list or an actual builder instance.
+            </summary>
+            <returns>Whether or not the instance is a list builder proxy</returns>
+        </member>
+        <member name="M:TestStack.Dossier.TestDataBuilder`2.GetChildBuilder``2(System.Func{``1,``1})">
+            <summary>
+            Creates (and optionally modifies) a child builder class of this builder; sharing the anonymous value fixture.
+            </summary>
+            <typeparam name="TChildObject">The type of the child object being built</typeparam>
+            <typeparam name="TChildBuilder">The type of the builder for the child object being built</typeparam>
+            <param name="modifier">An optional modifier lambda expression with fluent builder method calls for the child builder</param>
+            <returns>The instance of the child builder</returns>
+        </member>
+    </members>
+</doc>

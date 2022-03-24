@@ -1,96 +1,117 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+namespace WH40K
 {
-    public GameObject[] player1;
-    public GameObject[] player2;
-    public Text turnText;
-    public Text[] infoPanel;
-
-    public GameObject[] player;
-    public GameObject userControl;
-    public string phase;
-   
-    int turn = 1;
-    // Start is called before the first frame update
-    void Start()
+    public class GameManager : MonoBehaviour
     {
-        player = player1;
-        phase = "Movement Phase";
-        UpdateTurnText();
-    }
+        public Unit[] player1;
+        public Unit[] player2;
+        //public Text turnText;
+        //public Text[] infoPanel;
+        public PlayerSO _player1;
+        public PlayerSO _player2;
+        public GameTableSO _table;
 
-    //// Update is called once per frame
-    //void Update()
-    //{
+        public Unit[] player;
+        public GameObject userControl;
+        //public string phase;
+        public GameTable gameTable;
+        //private UnitManager unitManager;
 
-    //}
-
-    public void EndTurn()
-    {
-        switch (phase)
+        int turn = 1;
+        // Start is called before the first frame update
+        void Start()
         {
-            case "Movement Phase":
-                phase = "Shooting Phase";
+            //unitManager = GetComponent<UnitManager>();
+            //unitManager.Load();
 
-                foreach (GameObject unit in player)
-                {
-                    if (unit != null)
-                    {
-                        unit.GetComponent<Unit>().Freeze();
-                        unit.GetComponent<Unit>().phase = phase;
-                    }
-                }
+            _table.gameTable = gameTable;
+            _player1._playerUnits.Clear();
+            _player2._playerUnits.Clear();
 
-                break;
-            case "Shooting Phase":
-                phase = "Movement Phase";
-
-                if (player == player1)
-                {
-                    player = player2;
-                }
-                else
-                {
-                    player = player1;
-                    turn++;
-                }
-                
-                foreach (GameObject unit in player)
-                {
-                    if (unit != null)
-                    {
-                        unit.GetComponent<Unit>().ResetData();
-                        unit.GetComponent<Unit>().phase = phase;
-                    }
-                }
-                
-                break;
-        }
-
-        UpdateTurnText();
-
-    }
-
-    public void UpdateTurnText()
-    {
-        foreach(GameObject unit in player)
-        {
-            if (unit != null)
+            foreach (Unit unit in player1)
             {
-                turnText.text = $"{unit.tag} \n{phase}\nTurn: {turn}";
-                break;
+                _player1._playerUnits.Add(unit);
             }
+
+            foreach (Unit unit in player2)
+            {
+                _player2._playerUnits.Add(unit);
+            }
+            player = player1;
+            //phase = "Movement Phase";
+            //UpdateTurnText();
         }
-        
-        
-    }
 
-    public void UpdateInfoPanel()
-    {
+        //// Update is called once per frame
+        //void Update()
+        //{
 
+        //}
+
+        //public void EndTurn()
+        //{
+        //    switch (phase)
+        //    {
+        //        case "Movement Phase":
+        //            phase = "Shooting Phase";
+
+        //            foreach (Unit unit in player)
+        //            {
+        //                if (unit != null)
+        //                {
+        //                    unit.GetComponent<Unit>().Freeze();
+        //                    unit.GetComponent<Unit>().phase = phase;
+        //                }
+        //            }
+
+        //            break;
+        //        case "Shooting Phase":
+        //            phase = "Movement Phase";
+
+        //            if (player == player1)
+        //            {
+        //                player = player2;
+        //            }
+        //            else
+        //            {
+        //                player = player1;
+        //                turn++;
+        //            }
+
+        //            foreach (Unit unit in player)
+        //            {
+        //                if (unit != null)
+        //                {
+        //                    unit.GetComponent<Unit>().ResetData();
+        //                    unit.GetComponent<Unit>().phase = phase;
+        //                }
+        //            }
+
+        //            break;
+        //    }
+
+        //    UpdateTurnText();
+
+        //}
+
+        //public void UpdateTurnText()
+        //{
+        //    foreach (Unit unit in player)
+        //    {
+        //        if (unit != null)
+        //        {
+        //            turnText.text = $"{unit.tag} \n{phase}\nTurn: {turn}";
+        //            break;
+        //        }
+        //    }
+
+
+        //}
+
+        //public void UpdateInfoPanel()
+        //{
+
+        //}
     }
 }
