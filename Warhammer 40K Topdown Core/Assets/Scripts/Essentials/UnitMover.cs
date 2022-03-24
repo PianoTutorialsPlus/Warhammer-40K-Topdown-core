@@ -1,31 +1,90 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class UnitMover : MonoBehaviour
+public class UnitMover : MonoBehaviour, IUnitMover
 {
-    protected const float DistanceTolerance = 0.02f;
-    public IPathCalculator PathCalculator;
-    public DistanceCalculator DistanceCalculator;
-    public Unit Unit;
+    public IPathCalculator PathCalculator { get; private set; }
 
-    //private bool isMoving;
-    //float restDistance = 1;
-    //float movedInstance = 0;
-    //float movedDistance = 0;
+    private IUnitStats _unit;
+    public Unit Unit { get; set; }
+    public UnitMovementController MoveController;
+    public MovementRange MovementRange { get; set; }
 
-    float maxDistance;
-    [SerializeField] float distanceToMove = 0;
+    public float MaxDistance => _unit.Movement;
 
-    //public float RestDistance { get; protected set; }
-    //public float MovedDistance { get; protected set; }
-    //public float MoveDistance => maxDistance;
-    public float DistanceToMove => distanceToMove;
-    public bool IsMoveDistanceZero => DistanceToMove <= DistanceTolerance;
-    //public bool IsMoving { get; protected set; }
-    public float MoveDistance { get; protected set; }
+    public float MoveDistance => MovementRange.MoveRange;
+    public float MovedDistance => MovementRange.MovedDistance;
     public bool IsAgentStopped => PathCalculator.AgentIsStopped;
-    private bool LoopBreakConditions => IsMoveDistanceZero;
-    private float RemainingDistance => PathCalculator.RemainingDistance;
+    private bool LoopBreakConditions => MovementRange.IsMoveRangeZero;
+    public Vector3 CurrentPosition => transform.position;
+
+    public void Awake()
+    {
+        Unit = GetComponent<Unit>();
+        MoveController = new UnitMovementController(this);
+        MovementRange = new MovementRange(MaxDistance);
+        Debug.Log(Unit.name);
+    }
+    public void Initialize(IPathCalculator pathCalculator, IUnitStats unit)
+    {
+        PathCalculator = pathCalculator;
+        _unit = unit;
+    }
+    public void SetDestination(Vector3 position)
+    {
+        if (!IsAgentStopped)
+        {
+            MoveController.SetDestination(position);
+            StartCoroutine(GoToCoroutine());
+        }
+    }
+    private IEnumerator GoToCoroutine()
+    {
+        while (true)
+        {
+            MovementRange.UpdatePosition(CurrentPosition);
+            MoveController.UpdateMoveDistance();
+
+            if (LoopBreakConditions)
+            {
+                MovementRange.UpdateRange();
+                break;
+            }
+            yield return null;
+        }
+    }
+    //private void SetStaticDistance(Vector3 position)
+    //{
+    //    staticDistance = PathCalculator.GetDistance(position) > MoveDistance
+    //        ? MoveDistance
+    //        : PathCalculator.GetDistance(position);
+
+    //    startPosition = transform.position;
+    //}
+    //private void SetDistanceToMove()
+    //{
+    //    movedDistance = (startPosition - currentPosition).magnitude;
+    //    distanceToMove = staticDistance - movedDistance;
+
+    //}
+    //private void SetNavMeshDestination(Vector3 position)
+    //{
+    //    PathCalculator.SetDestination(position);
+    //}
+    //private void SetMoveDistance()
+    //{
+    //    MoveDistance -= movedDistance;
+    //}
+
+    //public void FreezeUnitsWithZeroMoveDistance()
+    //{
+    //    if (IsMoveDistanceZero)
+    //    {
+    //        PathCalculator.FreezeAgent();
+    //        Unit.Freeze();
+    //    }
+    //}
 
     //public float MovedInstance
     //{
@@ -52,101 +111,39 @@ public class UnitMover : MonoBehaviour
     //    //}
     //}
 
-    //public GameStatsSO _gameStats;
-    private float staticDistance;
-    private float restDistance;
+    //private float CalculateDistanceInCoroutine()
+    //{
+    //    var rest = RemainingDistance > movedDistance
+    //        ? restDistance
+    //        : 0;
+    //    return RemainingDistance + rest;
+    //}
+    //private float CalculateDistanceStatic()
+    //{
+    //    return staticDistance > movedDistance
+    //                ? movedDistance
+    //                : staticDistance;
+    //}
+    //private void CalculateDeltaDistance()
+    //{
+    //    restDistance = movedDistance - staticDistance;
+    //}
+    //private void AddMoveDistance()
+    //{
+    //    movedDistance = PathCalculator.IsPathCalculated
+    //        ? CalculateMoveDistanceInCoroutine()
+    //        : movedDistance;
 
-    public void Awake()
-    {
-        Unit = GetComponent<Unit>();
-        Debug.Log(Unit.name);
-    }
-    public void Initialize(IPathCalculator pathCalculator, IUnitStats unit)
-    {
-        PathCalculator = pathCalculator;
-        maxDistance = unit.Movement;
-        MoveDistance = maxDistance;
-    }
-    public void SetDestination(Vector3 position)
-    {
-        if (!IsAgentStopped)
-        {
-            SetStaticDistance(position);
+    //    FreezeUnitsWithZeroMoveDistance();
+    //}
+    //private float CalculateMoveDistanceInCoroutine()
+    //{
+    //    var rest = RemainingDistance < movedDistance
+    //       ? restDistance
+    //       : 0;
+    //    return distanceToMove + rest;
+    //}
 
-            SetDistanceToMove();
-            SetNavMeshDestination(position);
-            StartCoroutine(GoToCoroutine());
-        }
-    }
-
-    private void SetStaticDistance(Vector3 position)
-    {
-        staticDistance = PathCalculator.GetDistance(position);
-        CalculateDeltaDistance();
-    }
-    private void SetDistanceToMove()
-    {
-        distanceToMove = PathCalculator.IsPathCalculated
-            ? CalculateDistanceInCoroutine()
-            : CalculateDistanceStatic();
-
-        AddMoveDistance();
-    }
-    private void SetNavMeshDestination(Vector3 position)
-    {
-        PathCalculator.SetDestination(position);
-    }
-    private IEnumerator GoToCoroutine()
-    {
-        while (true)
-        {
-            yield return new WaitForEndOfFrame();
-            SetDistanceToMove();
-            if (LoopBreakConditions) break;
-        }
-    }
-    private float CalculateDistanceInCoroutine()
-    {
-        var rest = RemainingDistance > MoveDistance
-            ? restDistance
-            : 0;
-        return RemainingDistance + rest;
-    }
-    private float CalculateDistanceStatic()
-    {
-        return staticDistance > MoveDistance
-                    ? MoveDistance
-                    : staticDistance;
-    }
-    private void CalculateDeltaDistance()
-    {
-        restDistance = MoveDistance - staticDistance;
-    }
-    private void AddMoveDistance()
-    {
-        MoveDistance = PathCalculator.IsPathCalculated
-            ? CalculateMoveDistanceInCoroutine()
-            : MoveDistance;
-
-        FreezeUnitsWithZeroMoveDistance();
-    }
-    private float CalculateMoveDistanceInCoroutine()
-    {
-        var rest = RemainingDistance < MoveDistance
-           ? restDistance
-           : 0;
-        return distanceToMove + rest;
-    }
-    public void FreezeUnitsWithZeroMoveDistance()
-    {
-        if (IsMoveDistanceZero)
-        {
-            PathCalculator.FreezeAgent();
-            Unit.Freeze();
-
-            //PathCalculator.ResetPath();
-        }
-    }
 
 
 

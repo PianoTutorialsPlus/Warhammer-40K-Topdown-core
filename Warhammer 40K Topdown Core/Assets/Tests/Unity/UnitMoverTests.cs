@@ -76,7 +76,22 @@ namespace Unity
             }
 
             [UnityTest]
-            public IEnumerator When_Unit_With_Movement_1_Has_Moved_2_And_Is_Moving_1_Then_UnitIsDone_Is_True()
+            public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_X_Position_Is_5()
+            {
+                //ARRANGE
+                position = new Vector3(6, 0, 0);
+
+                // ACT
+                Target.SetDestination(position);
+
+                // ASSERT
+                yield return new WaitForSeconds(Seconds);
+                Assert.AreEqual(5, dut.transform.position.x, Delta);
+
+            }
+
+            [UnityTest]
+            public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_UnitIsDone_Is_True()
             {
                 // ARRANGE
                 position = new Vector3(6, 0, 0);
@@ -87,6 +102,19 @@ namespace Unity
                 // ASSERT
                 yield return new WaitForSeconds(Seconds);
                 Assert.IsTrue(Target.Unit.IsDone);
+            }
+            [UnityTest]
+            public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_AgentIsStopped_Is_True()
+            {
+                // ARRANGE
+                position = new Vector3(6, 0, 0);
+
+                // ACT
+                Target.SetDestination(position);
+
+                // ASSERT
+                yield return new WaitForSeconds(Seconds);
+                Assert.IsTrue(Target.IsAgentStopped);
             }
 
 

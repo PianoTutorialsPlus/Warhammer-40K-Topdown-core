@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class PathCalculator : IPathCalculator
@@ -8,6 +9,8 @@ public class PathCalculator : IPathCalculator
     public NavMeshPath path;
 
     public float speed = 20;
+    private static float moveDistance;
+    private static Vector3 EndPosition;
 
     public PathCalculator(NavMeshAgent agent)
     {
@@ -21,50 +24,77 @@ public class PathCalculator : IPathCalculator
         m_Agent.isStopped = false;
     }
 
-    public virtual float GetDistance(Vector3 position)
+    public void SetMoveDistance(float distance)
+    {
+        moveDistance = distance;
+    }
+
+    public void SetEndPosition(Vector3 position)
     {
         m_Agent.CalculatePath(position, path);
-        return GetPathLength(path);
+        SetPathLength(path);
     }
     public void SetDestination(Vector3 position)
     {
+        position = GetEndPosition(position);
         m_Agent.SetDestination(position);
     }
+
+    public Vector3 GetEndPosition(Vector3 position)
+    {
+        return (EndPosition != Vector3.zero)
+            ? EndPosition
+            : position;
+    }
+
     public bool IsPathCalculated => m_Agent.hasPath && !m_Agent.pathPending;
-    public float RemainingDistance => m_Agent.remainingDistance;
     public bool AgentIsStopped => m_Agent.isStopped;
     public void ResetPath()
     {
         m_Agent.ResetPath();
     }
-    public static float GetPathLength(NavMeshPath path)
+    public static void SetPathLength(NavMeshPath path)
     {
+        
         float lng = 0.0f;
 
         if (path.status != NavMeshPathStatus.PathInvalid)
         {
-            lng = AddPathCorners(path, lng);
+            AddPathCorners(path, lng);
         }
-
-        return lng;
     }
-    public static float AddPathCorners(NavMeshPath path, float lng)
+    public static void AddPathCorners(NavMeshPath path, float lng)
     {
         for (int i = 1; i < path.corners.Length; ++i)
         {
+            SetEndPosition(path, lng, i);
+
+            if(EndPosition!= Vector3.zero) break; 
+
             lng += Vector3.Distance(path.corners[i - 1], path.corners[i]);
         }
-
-        return lng;
     }
+
+    private static void SetEndPosition(NavMeshPath path,float lng, int i)
+    {
+        EndPosition = Vector3.zero;
+
+        if (lng + Vector3.Distance(path.corners[i - 1], path.corners[i]) >= moveDistance)
+        {
+            Vector3 normalizedVector = (path.corners[i] - path.corners[i - 1]).normalized;
+            float delta = moveDistance - lng;
+
+            EndPosition = normalizedVector * delta;
+        }
+    }
+
     public void ResetAgent()
     {
         m_Agent.isStopped = false;
     }
     public void FreezeAgent()
     {
-        Debug.Log("Freeze");
-
+        ResetPath();
         m_Agent.isStopped = true;
     }
 }

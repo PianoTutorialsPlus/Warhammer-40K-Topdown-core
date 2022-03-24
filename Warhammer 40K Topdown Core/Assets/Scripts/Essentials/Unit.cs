@@ -227,7 +227,7 @@ public class Unit : MonoBehaviour // INHARITANCE
         //movedDistance = 0;
         //activated = false;
         //IsSelected = false;
-        PathCalculator.ResetAgent();
+        //PathCalculator.ResetAgent();
         done = false;
     }
     public void PrepareMovementPhase()

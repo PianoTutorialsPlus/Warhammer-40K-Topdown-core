@@ -42,6 +42,6 @@ public class TestSpawner : MonoBehaviour
 
     private IEnumerator test()
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1);
     }
 }
