@@ -10,6 +10,7 @@ public interface IPathCalculator
     void SetDestination(Vector3 position);
     void FreezeAgent();
     void ResetAgent();
-    void SetMoveDistance(float distance);
+    //void SetMoveDistance(float distance);
     Vector3 GetEndPosition(Vector3 position);
+    Vector3 GetEndPosition(Vector3 position, float range);
 }

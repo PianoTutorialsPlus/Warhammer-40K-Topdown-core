@@ -37,13 +37,13 @@ public class UnitMovementController
     }
     private void SetEndPosition(Vector3 position)
     {
-        Debug.Log(MoveDistance);
-        PathCalculator.SetMoveDistance(MoveDistance);
-        PathCalculator.SetEndPosition(position);
+        //PathCalculator.SetMoveDistance(MoveDistance);
+        //PathCalculator.SetEndPosition(position);
 
-        EndPosition = PathCalculator.GetEndPosition(position);
+        EndPosition = PathCalculator.GetEndPosition(position, MoveDistance);
     }
 
+    // Can Be Deleted
     public void UpdateMoveDistance()
     {
         FreezeUnitsWithZeroMoveDistance();
@@ -57,7 +57,6 @@ public class UnitMovementController
     {
         if (IsMoveDistanceZero)
         {
-            Debug.Log("FReee");
             PathCalculator.FreezeAgent();
             Unit.Freeze();
         }

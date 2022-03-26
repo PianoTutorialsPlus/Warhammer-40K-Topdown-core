@@ -44,7 +44,7 @@ public class UnitMover : MonoBehaviour, IUnitMover
         while (true)
         {
             MovementRange.UpdatePosition(CurrentPosition);
-            MoveController.UpdateMoveDistance();
+            MoveController.FreezeUnitsWithZeroMoveDistance();
 
             if (LoopBreakConditions)
             {
