@@ -2,8 +2,9 @@ using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
+using WH40K.UnitHandler;
 
-namespace Editor
+namespace Editor.Unit.Movement
 {
     public class UnitMoverTests
     {

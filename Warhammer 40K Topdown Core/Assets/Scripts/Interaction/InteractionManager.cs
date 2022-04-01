@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using WH40K.ShootingPhaseHandler;
+using WH40K.UnitHandler;
 
 // Enum initialization
 public enum InteractionType { None = 0, Activate, ShowStats }

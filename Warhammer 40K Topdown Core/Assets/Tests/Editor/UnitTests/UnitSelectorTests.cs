@@ -1,7 +1,7 @@
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Editor
+namespace Editor.Unit
 {
     public class UnitSelectorTests
     {

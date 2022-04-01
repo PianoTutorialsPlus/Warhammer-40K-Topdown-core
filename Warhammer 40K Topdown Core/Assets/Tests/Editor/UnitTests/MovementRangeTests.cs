@@ -5,7 +5,7 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Editor
+namespace Editor.Unit.Movement
 {
     public class MovementRangeTests
     {

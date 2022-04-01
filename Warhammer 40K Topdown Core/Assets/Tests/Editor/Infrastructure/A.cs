@@ -5,5 +5,6 @@ namespace Editor.Infrastructure
         public static MovementRangeBuilder MovementRange => new MovementRangeBuilder();
         public static NavMeshPathPositionBuilder PathPosition => new NavMeshPathPositionBuilder();
         public static UnitPropertiesBuilder UnitProperties => new UnitPropertiesBuilder();
+        public static CombatResultsBuilder DiceResult => new CombatResultsBuilder();
     }
 }

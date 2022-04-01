@@ -1,4 +1,5 @@
 using UnityEngine;
+using WH40K.UnitHandler;
 
 namespace WH40K
 {
@@ -38,6 +39,8 @@ namespace WH40K
             {
                 _player2._playerUnits.Add(unit);
             }
+            _player1.fraction = _player1._playerUnits[0].Fraction;
+            _player2.fraction = _player2._playerUnits[0].Fraction;
             player = player1;
             //phase = "Movement Phase";
             //UpdateTurnText();

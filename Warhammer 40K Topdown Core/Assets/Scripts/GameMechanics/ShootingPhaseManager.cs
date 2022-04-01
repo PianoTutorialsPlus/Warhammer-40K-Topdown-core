@@ -1,131 +1,142 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.Combat;
+using WH40K.UnitHandler;
 
-/// <summary>
-/// this script manages the shooting phase, dependend on what subphase its currently in.
-/// When SetShootingPhase is called, it triggers the shooting phase processor.
-/// When the subphase "shooting" is enabled, it triggers the shooting sub phase processor.
-/// </summary>
-
-public class ShootingPhaseManager : PhaseManagerBase
+namespace WH40K.ShootingPhaseHandler
 {
-    public ShootingPhaseManager() { }
 
-    // Gameplay
-    [SerializeField] private GameStatsSO _gameStats;
-    [SerializeField] private InputReader _inputReader;
+    /// <summary>
+    /// this script manages the shooting phase, dependend on what subphase its currently in.
+    /// When SetShootingPhase is called, it triggers the shooting phase processor.
+    /// When the subphase "shooting" is enabled, it triggers the shooting sub phase processor.
+    /// </summary>
 
-    //Events
-    [SerializeField] private BattleroundEventChannelSO SetShootingPhaseEvent;
-    [SerializeField] private BattleRoundsSO _battleroundEvents;
-    [SerializeField] private RollTheDiceSO diceRollingResult;
-
-    // Lists
-    //[SerializeField] private List<CalculationBaseSO> calculations = new List<CalculationBaseSO>();
-    [SerializeField] private List<int> parameter = new List<int>();
-    [SerializeField] private List<RollTheDiceSO> rollTheDice = new List<RollTheDiceSO>();
-
-
-    //Enums
-    ShootingSubEvents shootingSubPhase;
-    ShootingPhase shootingPhase;
-
-    public override GamePhase SubEvents => GamePhase.ShootingPhase;
-
-    private void Awake()
+    public class ShootingPhaseManager : PhaseManagerBase, IResult
     {
-        enabled = false;
-    }
+        public ShootingPhaseManager() { }
 
-    public void OnEnable()
-    {
-        Debug.Log("Enable Shooting");
-        shootingPhase = ShootingPhase.Selection;
-        shootingSubPhase = ShootingSubEvents.SelectEnemy;
+        // Gameplay
+        [SerializeField] private GameStatsSO _gameStats;
+        [SerializeField] private InputReader _inputReader;
+        public GameStatsSO GameStats => _gameStats;
+        //Events
+        [SerializeField] private BattleroundEventChannelSO SetShootingPhaseEvent;
+        [SerializeField] private BattleRoundsSO _battleroundEvents;
+        [SerializeField] private RollTheDiceSO diceRollingResult;
 
-        if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += SetShootingPhase;
-        if (diceRollingResult != null) diceRollingResult.OnEventRaised += ProcessResult;
+        // Lists
+        //[SerializeField] private List<CalculationBaseSO> calculations = new List<CalculationBaseSO>();
+        [SerializeField] private List<int> parameter = new List<int>();
+        [SerializeField] private RollTheDiceSO _diceAction;
+        [SerializeField] private RollTheDiceSO _diceSubResult;
+        [SerializeField] private RollTheDiceSO _diceResult;
+        public RollTheDiceSO DiceAction => _diceAction;
+        public RollTheDiceSO DiceSubResult => _diceSubResult;
+        public RollTheDiceSO DiceResult => _diceResult;
 
-    }
+        //Enums
+        ShootingSubEvents shootingSubPhase;
+        ShootingPhase shootingPhase;
 
-    public void OnDisable()
-    {
-        Debug.Log("Disable Shooting");
-        if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised -= SetShootingPhase;
-    }
+        public override GamePhase SubEvents => GamePhase.ShootingPhase;
 
-    public void SetShootingPhase(GameStatsSO gameStats)
-    {
-        ClearPhase();
 
-        bool selection = ShootingPhaseProcessor.HandlePhase(gameStats, _battleroundEvents, shootingPhase);
-        bool shooting = ShootingPhaseProcessor.HandlePhase(shootingPhase);
-        bool next = ShootingPhaseProcessor.Next(gameStats, shootingPhase);
 
-        if (selection) _inputReader.activateEvent += NextPhase;
-
-        if (shooting)
+        private void Awake()
         {
-            _inputReader.activateEvent += HandleShooting;
-            _inputReader.ExecuteEvent += Wait;
+            enabled = false;
         }
-        if (next) NextPhase();
-    }
 
-    public override void ClearPhase()
-    {
-        foreach (Unit child in _gameStats.activePlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
-        foreach (Unit child in _gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
-
-        _inputReader.activateEvent -= NextPhase;
-        _inputReader.activateEvent -= HandleShooting;
-        _inputReader.ExecuteEvent -= Wait;
-    }
-
-    private void NextPhase()
-    {
-        shootingPhase = ShootingPhaseProcessor.SetPhase(shootingPhase);
-        SetShootingPhase(_gameStats);
-    }
-
-    private void HandleShooting()
-    {
-        //CalculationBaseSO calculation = ShootingSubPhaseProcessor.SetCalculation(calculations, shootingSubPhase);
-        ICalculation calculation = ShootingSubPhaseProcessor.SetCalculation(rollTheDice, shootingSubPhase);
-
-        if (calculation == null) return;
-        ShootingSubPhaseProcessor.HandleShooting(parameter, calculation, _gameStats, shootingSubPhase);
-    }
-
-    private void ProcessResult(ShootingSubEvents diceEvent, List<int> result)
-    {
-        parameter = ShootingSubPhaseProcessor.ProcessResult(result, diceEvent);
-        shootingSubPhase = ShootingSubPhaseProcessor.SetSubPhase(diceEvent);
-
-        if (parameter != null) Debug.Log(parameter.Count);
-
-        CheckNullValues(parameter);
-    }
-
-    private void CheckNullValues(List<int> values)
-    {
-        if (values == null || values.Count == 0)
+        public void OnEnable()
         {
-            NextPhase();
+            Debug.Log("Enable Shooting");
+            shootingPhase = ShootingPhase.Selection;
+            shootingSubPhase = ShootingSubEvents.SelectEnemy;
+
+            if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += SetShootingPhase;
+            if (diceRollingResult != null) diceRollingResult.OnEventRaised += ProcessResult;
+
         }
-    }
 
-    private void Wait()
-    {
-        StartCoroutine(WaitForButton());
-    }
+        public void OnDisable()
+        {
+            Debug.Log("Disable Shooting");
+            if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised -= SetShootingPhase;
+        }
 
-    public IEnumerator WaitForButton()
-    {
-        //Debug.Log("Waiting");
-        yield return null;
-        HandleShooting();
+        public void SetShootingPhase(GameStatsSO gameStats)
+        {
+            ClearPhase();
+
+            bool selection = ShootingPhaseProcessor.HandlePhase(gameStats, _battleroundEvents, shootingPhase);
+            bool shooting = ShootingPhaseProcessor.HandlePhase(shootingPhase);
+            bool next = ShootingPhaseProcessor.Next(gameStats, shootingPhase);
+
+            if (selection) _inputReader.activateEvent += NextPhase;
+
+            if (shooting)
+            {
+                _inputReader.activateEvent += HandleShooting;
+                _inputReader.ExecuteEvent += Wait;
+            }
+            if (next) NextPhase();
+        }
+
+        public override void ClearPhase()
+        {
+            foreach (Unit child in _gameStats.activePlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
+            foreach (Unit child in _gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
+
+            _inputReader.activateEvent -= NextPhase;
+            _inputReader.activateEvent -= HandleShooting;
+            _inputReader.ExecuteEvent -= Wait;
+        }
+
+        private void NextPhase()
+        {
+            shootingPhase = ShootingPhaseProcessor.SetPhase(shootingPhase);
+            SetShootingPhase(_gameStats);
+        }
+
+        private void HandleShooting()
+        {
+            //CalculationBaseSO calculation = ShootingSubPhaseProcessor.SetCalculation(calculations, shootingSubPhase);
+            ICalculation calculation = ShootingSubPhaseProcessor.SetCalculation(this, shootingSubPhase);
+
+            if (calculation == null) return;
+            ShootingSubPhaseProcessor.HandleShooting(parameter, calculation, _gameStats, shootingSubPhase);
+        }
+
+        private void ProcessResult(ShootingSubEvents diceEvent, List<int> result)
+        {
+            shootingSubPhase = ShootingSubPhaseProcessor.SetSubPhase(diceEvent);
+
+            if (parameter != null) Debug.Log(parameter.Count);
+
+            CheckNullValues(result);
+        }
+
+        private void CheckNullValues(List<int> values)
+        {
+            if (values == null || values.Count == 0)
+            {
+                NextPhase();
+            }
+        }
+
+        private void Wait()
+        {
+            StartCoroutine(WaitForButton());
+        }
+
+        public IEnumerator WaitForButton()
+        {
+            //Debug.Log("Waiting");
+            yield return null;
+            HandleShooting();
+        }
     }
 }
 

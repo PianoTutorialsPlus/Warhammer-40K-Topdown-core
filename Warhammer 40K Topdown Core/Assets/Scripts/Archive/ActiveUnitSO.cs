@@ -1,7 +1,11 @@
 using UnityEngine;
 
-//[CreateAssetMenu(menuName ="Player/Active Unit")]
-public class ActiveUnitSO : ScriptableObject
+namespace WH40K.UnitHandler
 {
-    public Unit activeUnit;
+
+    //[CreateAssetMenu(menuName ="Player/Active Unit")]
+    public class ActiveUnitSO : ScriptableObject
+    {
+        public Unit activeUnit;
+    }
 }

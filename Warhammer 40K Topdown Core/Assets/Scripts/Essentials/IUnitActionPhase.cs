@@ -1,5 +1,5 @@
 ﻿using UnityEngine.EventSystems;
 
-public interface IUnitActionPhase : IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
-{
-}
+    public interface IUnitActionPhase : IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+    {
+    }

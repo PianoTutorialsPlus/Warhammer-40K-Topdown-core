@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
-public abstract class PhaseManagerBase : MonoBehaviour
+namespace WH40K.ShootingPhaseHandler
 {
-    public abstract GamePhase SubEvents { get; } // gets the active game phase
-    public abstract void ClearPhase();
+    public abstract class PhaseManagerBase : MonoBehaviour
+    {
+        public abstract GamePhase SubEvents { get; } // gets the active game phase
+        public abstract void ClearPhase();
+    }
 }

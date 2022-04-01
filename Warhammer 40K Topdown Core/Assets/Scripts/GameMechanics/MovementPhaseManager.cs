@@ -1,4 +1,6 @@
 using UnityEngine;
+using WH40K.ShootingPhaseHandler;
+using WH40K.UnitHandler;
 
 /// <summary>
 /// this script manages the movement phase. 

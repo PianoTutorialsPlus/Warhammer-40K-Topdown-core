@@ -1,4 +1,5 @@
 using UnityEngine;
+using WH40K.UnitHandler;
 
 [CreateAssetMenu(menuName = "Game/Battleround Events")]
 public class BattleRoundsSO : ScriptableObject, IPhase
@@ -62,17 +63,17 @@ public class BattleRoundsSO : ScriptableObject, IPhase
 
     public void FillMethods(Unit child, bool displayInteraction, bool resetInteraction, bool displayInfo, bool connectIndicator)
     {
-        if (displayInteraction) child.onPointerEnter += DisplayInteractionUI;
-        else child.onPointerEnter -= DisplayInteractionUI;
+        if (displayInteraction) child.OnPointerEnter += DisplayInteractionUI;
+        else child.OnPointerEnter -= DisplayInteractionUI;
 
-        if (resetInteraction) child.onPointerExit += ResetInteraction;
-        else child.onPointerExit -= ResetInteraction;
+        if (resetInteraction) child.OnPointerExit += ResetInteraction;
+        else child.OnPointerExit -= ResetInteraction;
 
-        if (displayInfo) child.onPointerEnterInfo += DisplayInfoUI;
-        else child.onPointerEnterInfo -= DisplayInfoUI;
+        if (displayInfo) child.OnPointerEnterInfo += DisplayInfoUI;
+        else child.OnPointerEnterInfo -= DisplayInfoUI;
 
-        if (connectIndicator) child.onTapDownAction += ConnectIndicator;
-        else child.onTapDownAction -= ConnectIndicator;
+        if (connectIndicator) child.OnTapDownAction += ConnectIndicator;
+        else child.OnTapDownAction -= ConnectIndicator;
     }
 
 

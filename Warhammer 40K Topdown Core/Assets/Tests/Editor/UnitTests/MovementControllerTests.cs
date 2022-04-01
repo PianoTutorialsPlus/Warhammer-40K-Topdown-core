@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
+using WH40K.UnitHandler;
 
-namespace Editor
+namespace Editor.Unit.Movement
 {
     public class MovementControllerTests
     {
-       public class TheSetDestinationMethod
+        public class TheSetDestinationMethod
         {
             [Test]
             public void When_Unit_With_Movement_0_Is_Set_To_Move_1_Then_Then_x_Position_Is_0()
@@ -47,7 +45,7 @@ namespace Editor
                 IPathCalculator pathCalculator = Substitute.For<IPathCalculator>();
                 var position = Vector3.right;
                 pathCalculator.GetEndPosition(position).Returns(Vector3.right);
-   
+
                 unitMover.PathCalculator.Returns(pathCalculator);
 
                 var unit = new UnitMovementController(unitMover);
@@ -78,6 +76,6 @@ namespace Editor
                 Assert.AreEqual(1, unit.EndPosition.x);
             }
         }
-        
+
     }
 }

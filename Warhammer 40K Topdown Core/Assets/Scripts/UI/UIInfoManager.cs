@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.UnitHandler;
 
 public class UIInfoManager : MonoBehaviour
 {

@@ -1,4 +1,5 @@
 using UnityEngine;
+using WH40K.UnitHandler;
 
 [CreateAssetMenu(menuName = "Game/Essential stats")]
 public class GameStatsSO : ScriptableObject
@@ -12,7 +13,7 @@ public class GameStatsSO : ScriptableObject
     public PlayerSO activePlayer;
     public PlayerSO enemyPlayer;
     public GameTableSO gameTable;
-    public DataTablesSO dataTable;
+    public WoundTable dataTable;
 
     public IUnitStats activeUnitTest;
     public IUnitStats enemyUnitTest;
