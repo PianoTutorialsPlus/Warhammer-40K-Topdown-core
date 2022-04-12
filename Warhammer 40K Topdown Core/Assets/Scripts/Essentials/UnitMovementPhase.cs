@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-namespace WH40K.UnitHandler
+namespace WH40K.Essentials
 
 {
     public class UnitMovementPhase : MonoBehaviour, IUnitActionPhase
@@ -12,11 +12,11 @@ namespace WH40K.UnitHandler
         private UnitSelector UnitSelector => _unit.UnitSelector;
         private UnityAction<Unit> onTapDownAction => _unit.OnTapDownAction;
         private UnityAction onPointerEnter => _unit.OnPointerEnter;
-        private UnityAction<Unit> onPointerEnterInfo => _unit.OnPointerEnterInfo;
-        private UnityAction<Unit> onPointerExit => _unit.OnPointerExit;
+        private UnityAction<IUnit> onPointerEnterInfo => _unit.OnPointerEnterInfo;
+        private UnityAction<IUnit> onPointerExit => _unit.OnPointerExit;
         private GameStatsSO _gameStats => _unit.GameStats;
         public bool IsSelected { get; set; }
-        public IUnitStats ActiveUnit { get => _gameStats.activeUnitTest; set => _gameStats.activeUnitTest = value; }
+        public IStats ActiveUnit { get => _gameStats.activeUnitTest; set => _gameStats.activeUnitTest = value; }
 
         private void Awake()
         {
@@ -26,18 +26,18 @@ namespace WH40K.UnitHandler
 
         private void OnEnable()
         {
-            Debug.Log("enable");
+          //  Debug.Log("enable");
         }
 
         private void OnDisable()
         {
-            Debug.Log("disable");
+          //  Debug.Log("disable");
         }
 
         public void OnPointerEnter(PointerEventData pointerEvent)
         {
             if (onPointerEnter != null) onPointerEnter();
-            if (onPointerEnterInfo != null) onPointerEnterInfo(unit);
+            if (onPointerEnterInfo != null) onPointerEnterInfo(_unit);
             //if (onPointerEnterInfo != null) onPointerEnterInfo(gameObject.GetComponent<Unit>());
         }
 
@@ -45,7 +45,7 @@ namespace WH40K.UnitHandler
         {
             if (onPointerExit != null)
             {
-                onPointerExit(unit);
+                onPointerExit(_unit);
                 //onPointerExit(gameObject.GetComponent<Unit>());
             }
         }
@@ -72,7 +72,7 @@ namespace WH40K.UnitHandler
 
         public void SetIsSelected()
         {
-            IsSelected = UnitSelector.UnitIsFromFraction();
+            IsSelected = UnitSelector.IsSelected;
         }
     }
 }

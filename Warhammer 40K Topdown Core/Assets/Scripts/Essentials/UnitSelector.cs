@@ -1,26 +1,30 @@
-﻿public class UnitSelector
+﻿namespace WH40K.Essentials
 {
-    private Fraction _playerFraction;
-    private IUnitStats _unit;
-
-    public UnitSelector(Fraction fraction, IUnitStats unit)
+    public class UnitSelector
     {
-        _playerFraction = fraction;
-        _unit = unit;
-    }
+        private Fraction _playerFraction;
+        private IStats _unit;
 
-    public IUnitStats GetUnit(Fraction enemyFraction = Fraction.None)
-    {
-        return (UnitIsFromFraction(enemyFraction))
-            ? _unit
-            : null;
-    }
+        public bool IsSelected => UnitIsFromFraction();
 
-    public bool UnitIsFromFraction(Fraction enemyFraction = Fraction.None)
-    {
-        return (enemyFraction == Fraction.None)
-            ? _unit.Fraction == _playerFraction
-            : _unit.Fraction == enemyFraction;
+        public UnitSelector(Fraction fraction, IStats unit)
+        {
+            _playerFraction = fraction;
+            _unit = unit;
+        }
 
+        public IStats GetUnit(Fraction enemyFraction = Fraction.None)
+        {
+            return UnitIsFromFraction(enemyFraction)
+                ? _unit
+                : null;
+        }
+
+        public bool UnitIsFromFraction(Fraction enemyFraction = Fraction.None)
+        {
+            return enemyFraction == Fraction.None
+                ? _unit.Fraction == _playerFraction
+                : _unit.Fraction == enemyFraction;
+        }
     }
 }

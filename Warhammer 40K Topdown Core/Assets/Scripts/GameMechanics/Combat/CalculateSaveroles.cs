@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.Essentials;
 
-namespace WH40K.Combat
+namespace WH40K.GameMechanics.Combat
 {
     public class CalculateSaveroles : ICalculation
     {
@@ -14,7 +15,7 @@ namespace WH40K.Combat
         private RollTheDiceSO DiceResult => _results.DiceResult;
 
         private int Saves => _gameStats.enemyUnit._unitSO.ArmourSave;
-        private int Modifier => _gameStats.activeUnit._weaponSO.ArmourPen;
+        private int Modifier => _gameStats.activeUnit._weaponSO.WeaponArmourPen;
         private int ModifiedSaves => Saves - Modifier;
 
         public CalculateSaveroles(IResult results)

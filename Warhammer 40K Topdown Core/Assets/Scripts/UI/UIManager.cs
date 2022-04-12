@@ -1,5 +1,6 @@
 using UnityEngine;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
+using WH40K.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] UIInteractionManager interactionPanel;
     [SerializeField] UIInfoManager infoPanel;
     [SerializeField] UIInfoManager enemyInfoPanel;
-    [SerializeField] UIDistanceIndicator distanceIndicator;
+    [SerializeField] UIRangeIndicator distanceIndicator;
     [SerializeField] UIGameInfoManager gameinfoPanel;
 
 
@@ -47,18 +48,16 @@ public class UIManager : MonoBehaviour
         interactionPanel.gameObject.SetActive(isOpenEvent);
     }
 
-    public void SetInfoPanel(bool isOpenEvent, Unit unit)
+    public void SetInfoPanel(bool isOpenEvent, IStats unit)
     {
         if (isOpenEvent)
         {
             infoPanel.FillInfoPanel(unit);
         }
-
         infoPanel.gameObject.SetActive(isOpenEvent);
-
     }
 
-    public void SetEnemyInfoPanel(bool isOpenEvent, Unit unit)
+    public void SetEnemyInfoPanel(bool isOpenEvent, IStats unit)
     {
         if (isOpenEvent)
         {
@@ -77,15 +76,6 @@ public class UIManager : MonoBehaviour
         }
         distanceIndicator.gameObject.SetActive(isOpenEvent);
     }
-    //public void SetGameinfoPanel(bool isOpenEvent, Unit unit, PhaseSO phase, TurnSO turn)
-    //{
-    //    if (isOpenEvent)
-    //    {
-    //        gameinfoPanel.FillInfoPanel(unit,phase,turn);
-    //    }
-
-    //    gameinfoPanel.gameObject.SetActive(isOpenEvent);
-    //}
 
     public void SetGameinfoPanel(bool isOpenEvent, GameStatsSO gameStats)
     {

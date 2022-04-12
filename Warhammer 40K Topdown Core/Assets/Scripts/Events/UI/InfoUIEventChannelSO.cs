@@ -1,19 +1,21 @@
 using UnityEngine;
 using UnityEngine.Events;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
 
 /// <summary>
 /// This class is used for Events to toggle the info UI.
 /// Example: Dispaly or hide the interaction UI via a bool and the interaction type from the enum via int
 /// </summary>
-
-[CreateAssetMenu(menuName = "Events/Toggle Info UI Events Channel")]
-public class InfoUIEventChannelSO : ScriptableObject
+namespace WH40K.UI
 {
-    public UnityAction<bool, Unit> OnEventRaised;
-    public void RaiseEvent(bool state, Unit unit)
+    [CreateAssetMenu(menuName = "Events/Toggle Info UI Events Channel")]
+    public class InfoUIEventChannelSO : ScriptableObject
     {
-        if (OnEventRaised != null)
-            OnEventRaised.Invoke(state, unit);
+        public UnityAction<bool, IStats> OnEventRaised;
+        public void RaiseEvent(bool state, IStats unit)
+        {
+            if (OnEventRaised != null)
+                OnEventRaised.Invoke(state, unit);
+        }
     }
 }

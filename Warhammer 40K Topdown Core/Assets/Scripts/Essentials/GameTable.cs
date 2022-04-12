@@ -3,22 +3,25 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(BoxCollider))]
-[RequireComponent(typeof(NavMeshSurface))]
-public class GameTable : MonoBehaviour, IPointerClickHandler
+namespace WH40K.Essentials
 {
-    public BattleroundEventChannelSO SetMovementPhaseEvent;
-    public GameStatsSO _gameStats;
-    public NavMeshSurface Surface;
-
-    public UnityAction<Vector3> onTapDownAction;
-    public void OnPointerClick(PointerEventData pointerEvent)
+    [RequireComponent(typeof(BoxCollider))]
+    [RequireComponent(typeof(NavMeshSurface))]
+    public class GameTable : MonoBehaviour, IPointerClickHandler
     {
-        if (pointerEvent.button == PointerEventData.InputButton.Right)
+        //public BattleroundEventChannelSO SetMovementPhaseEvent;
+        //public GameStatsSO _gameStats;
+        public NavMeshSurface Surface;
+
+        public UnityAction<Vector3> onTapDownAction;
+        public void OnPointerClick(PointerEventData pointerEvent)
         {
-            if (onTapDownAction != null)
+            if (pointerEvent.button == PointerEventData.InputButton.Right)
             {
-                onTapDownAction.Invoke(pointerEvent.pointerCurrentRaycast.worldPosition);
+                if (onTapDownAction != null)
+                {
+                    onTapDownAction.Invoke(pointerEvent.pointerCurrentRaycast.worldPosition);
+                }
             }
         }
     }

@@ -2,11 +2,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
-namespace WH40K.UnitHandler
+namespace WH40K.Essentials
 {
+    public enum Fraction { None = 0, SpaceMarines, Necrons }
+    
     [RequireComponent(typeof(NavMeshAgent))]
     //[RequireComponent(typeof(NecronWarriorSO))]
-
+        
     public class Unit : MonoBehaviour, IUnit// INHARITANCE
     {
         public float speed = 3;
@@ -34,28 +36,45 @@ namespace WH40K.UnitHandler
 
         [SerializeField] public UnityAction<Unit> onTapDownAction;
         [SerializeField] public UnityAction onPointerEnter;
-        [SerializeField] public UnityAction<Unit> onPointerEnterInfo;
-        [SerializeField] public UnityAction<Unit> onPointerExit;
+        [SerializeField] public UnityAction<IUnit> onPointerEnterInfo;
+        [SerializeField] public UnityAction<IUnit> onPointerExit;
 
         public bool IsDone => done;
+        public bool IsActivated { get => activated; set => activated = value; }
         // public IUnit unit => (IUnit)gameObject.GetComponent<Unit>();
-        public Fraction ActivePlayerFraction => _gameStats.activePlayer.fraction;
-        public Fraction EnemyFraction => _gameStats.enemyPlayer.fraction;
-        public IUnitStats EnemyUnit { get => _gameStats.enemyUnitTest; set => _gameStats.enemyUnitTest = value; }
-        public IUnitStats ActiveUnit { get => _gameStats.activeUnitTest; set => _gameStats.activeUnitTest = value; }
-
+        public Fraction ActivePlayerFraction => _gameStats.ActivePlayer.Fraction;
+        public Fraction EnemyFraction => _gameStats.EnemyPlayer.Fraction;
+        public IStats EnemyUnit { get => _gameStats.enemyUnitTest; set => _gameStats.enemyUnitTest = value; }
+        public IStats ActiveUnit { get => _gameStats.activeUnitTest; set => _gameStats.activeUnitTest = value; }
 
         public UnitMovementPhase unitMovementPhase;
+        public UnitShootingPhase unitShootingPhase;
         public UnitSelector UnitSelector { get; protected set; }
-        public UnitMover UnitMover;
+        public IUnitMover UnitMover;
         internal float restDistance;
-        public Unit unit => gameObject.GetComponent<Unit>();
+        public Unit unit => this;//gameObject.GetComponent<Unit>();
         public IPathCalculator PathCalculator { get; protected set; }
         public UnityAction<Unit> OnTapDownAction { get => onTapDownAction; set => onTapDownAction = value; }
         public UnityAction OnPointerEnter { get => onPointerEnter; set => onPointerEnter = value; }
-        public UnityAction<Unit> OnPointerEnterInfo { get => onPointerEnterInfo; set => onPointerEnterInfo = value; }
-        public UnityAction<Unit> OnPointerExit { get => onPointerExit; set => onPointerExit = value; }
+        public UnityAction<IUnit> OnPointerEnterInfo { get => onPointerEnterInfo; set => onPointerEnterInfo = value; }
+        public UnityAction<IUnit> OnPointerExit { get => onPointerExit; set => onPointerExit = value; }
         public GameStatsSO GameStats { get => _gameStats; set => _gameStats = value; }
+
+        public int WeaponRange => _weaponSO.WeaponRange;
+
+        public int WeaponShots => _weaponSO.WeaponShots;
+
+        public int WeaponStrength => _weaponSO.WeaponStrength;
+
+        public int WeaponArmourPen => _weaponSO.WeaponArmourPen;
+
+        public int WeaponDamage => _weaponSO.WeaponDamage;
+
+        public string WeaponName => _weaponSO.WeaponName;
+
+        public int Movement => _unitSO.Movement;
+
+
 
         //public ActiveUnitSO activeUnit;
         //public  GameObject distanceIndicator;
@@ -65,15 +84,15 @@ namespace WH40K.UnitHandler
 
             //_unitSelector = new UnitSelector(_gameStats, gameObject.GetComponent<Unit>());
             //UnitMover = new UnitMover();
-
+            UnitMover = GetComponent<IUnitMover>();
             m_Agent = GetComponent<NavMeshAgent>();
             PathCalculator = new PathCalculator(m_Agent);
 
-            UnitSelector = new UnitSelector(ActivePlayerFraction, gameObject.GetComponent<Unit>()._unitSO);
-            UnitMover.Initialize(PathCalculator, _unitSO);
+            UnitSelector = new UnitSelector(ActivePlayerFraction, this);
+            //UnitMover.Initialize(PathCalculator, _unitSO);
             //unitMovementPhase.Initialize(this);
-            gameObject.AddComponent<UnitMovementPhase>();
-            unitMovementPhase = GetComponent<UnitMovementPhase>();
+            //gameObject.AddComponent<UnitMovementPhase>();
+            //unitMovementPhase = GetComponent<UnitMovementPhase>();
 
             canMove = true;
         }

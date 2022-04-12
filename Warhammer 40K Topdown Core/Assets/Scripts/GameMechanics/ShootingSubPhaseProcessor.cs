@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using WH40K.Combat;
+using WH40K.Essentials;
+using WH40K.GameMechanics.Combat;
 
-namespace WH40K.ShootingPhaseHandler
+namespace WH40K.GameMechanics
 {
 
     /// <summary>

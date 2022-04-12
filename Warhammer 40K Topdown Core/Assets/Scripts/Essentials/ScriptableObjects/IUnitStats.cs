@@ -1,5 +1,8 @@
-﻿public interface IUnitStats
+﻿namespace WH40K.Essentials
 {
-    public Fraction Fraction { get; }
-    public int Movement { get; }
+    public interface IUnitStats
+    {
+        public Fraction Fraction { get; }
+        public int Movement { get; }
+    }
 }

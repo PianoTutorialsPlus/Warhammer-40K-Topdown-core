@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
 
 public class UIInfoUnitStatsFiller : MonoBehaviour
 {
@@ -9,11 +9,11 @@ public class UIInfoUnitStatsFiller : MonoBehaviour
     [SerializeField] TextMeshProUGUI infoWeaponName;
     [SerializeField] TextMeshProUGUI infoWeaponStats;
 
-    public void FillInfoPanel(Unit unit)
+    public void FillInfoPanel(IStats unit)
     {
-        infoUnitName.text = unit.name;
-        infoUnitStats.text = unit._unitSO.Movement.ToString();//"Necron Stats";
-        infoWeaponName.text = unit._weaponSO.name;//activeUnit.activeUnit._weaponSO.name;
-        infoWeaponStats.text = unit._weaponSO.Range.ToString(); //"Weapon Stats";
+        infoUnitName.text = unit.WeaponName;
+        infoUnitStats.text = unit.Movement.ToString();//"Necron Stats";
+        infoWeaponName.text = unit.WeaponName;//activeUnit.activeUnit._weaponSO.name;
+        infoWeaponStats.text = unit.WeaponRange.ToString(); //"Weapon Stats";
     }
 }

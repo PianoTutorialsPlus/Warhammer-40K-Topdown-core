@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using WH40K.Essentials;
 
 /// <summary>
 /// This class is used for Events to switch the gamestats.

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
 
 //[RequireComponent(typeof(GameTable))]
 public class TestSpawner : MonoBehaviour
@@ -20,7 +20,7 @@ public class TestSpawner : MonoBehaviour
         builder.name = "Builder";
         NecronWarrior dut = Instantiate(Resources.Load("Necron Warrior", (typeof(NecronWarrior)))) as NecronWarrior;
 
-        UnitMover Target = dut.UnitMover;
+        UnitMover Target = (UnitMover)dut.UnitMover;
         float TargetMoveDistance = Target.MoveDistance;
         Vector3 position = new Vector3(6, 0, 0);
 

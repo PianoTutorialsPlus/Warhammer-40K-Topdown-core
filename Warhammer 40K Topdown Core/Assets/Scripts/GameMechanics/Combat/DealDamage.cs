@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.Essentials;
 
-namespace WH40K.Combat
+namespace WH40K.GameMechanics.Combat
 {
     public class DealDamage : ICalculation
     {
@@ -9,7 +10,7 @@ namespace WH40K.Combat
         private readonly IResult _results;
 
         private Wounds _wounds;
-        private int Damage => _gameStats.activeUnit._weaponSO.Damage;
+        private int Damage => _gameStats.activeUnit._weaponSO.WeaponDamage;
         private int WoundsLeft
         {
             get => _gameStats.enemyUnit._unitSO.Wounds;

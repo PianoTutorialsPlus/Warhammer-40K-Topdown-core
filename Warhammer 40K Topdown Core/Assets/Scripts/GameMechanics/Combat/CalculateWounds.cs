@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.Essentials;
 
-namespace WH40K.Combat
+namespace WH40K.GameMechanics.Combat
 {
     public class CalculateWounds : ICalculation
     {
@@ -14,7 +15,7 @@ namespace WH40K.Combat
         private RollTheDiceSO DiceAction => _results.DiceAction;
         private RollTheDiceSO DiceResult => _results.DiceResult;
 
-        private int Strength => _gameStats.activeUnit._weaponSO.Strength;
+        private int Strength => _gameStats.activeUnit._weaponSO.WeaponStrength;
         private int Toughness => _gameStats.enemyUnit._unitSO.Toughness;
 
         public CalculateWounds(IResult result)

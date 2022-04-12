@@ -2,7 +2,7 @@ using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
 
 namespace Editor.Unit.Movement
 {
@@ -11,7 +11,7 @@ namespace Editor.Unit.Movement
         private Vector3 position;
         protected UnitMover Target;
         public IPathCalculator pathCalculator;
-        protected IUnitStats unit;
+        protected IStats unit;
         private IUnitMover unitMover;
         private UnitMover unitMoverTest;
         private UnitMovementController moveController;
@@ -28,7 +28,7 @@ namespace Editor.Unit.Movement
             //Target.Unit = new GameObject().AddComponent<Unit>();
             pathCalculator = Substitute.For<IPathCalculator>();
             //Target.Unit.SetPrivate(t => t.PathCalculator, PathCalculator);
-            unit = Substitute.For<IUnitStats>();
+            unit = Substitute.For<IStats>();
 
             unitMover = Substitute.For<IUnitMover>();
             //unitMoverTest = new GameObject().AddComponent<UnitMover>();

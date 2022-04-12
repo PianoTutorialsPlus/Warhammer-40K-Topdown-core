@@ -1,4 +1,5 @@
 using UnityEngine;
+using WH40K.Essentials;
 
 public class UIGameInfoManager : MonoBehaviour
 {

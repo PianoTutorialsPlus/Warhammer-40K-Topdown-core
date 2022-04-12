@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace WH40K.UnitHandler
+namespace WH40K.Essentials
 {
     [CreateAssetMenu(menuName = "Game/Player")]
-    public class PlayerSO : ScriptableObject
+    public class PlayerSO : ScriptableObject, IPlayer
     {
-        public List<Unit> _playerUnits;
-        public Fraction fraction;
+        private List<Unit> _playerUnits;
+        public Fraction _fraction;
+        public Fraction Fraction { get => _fraction; set => _fraction = value; }
+        public List<Unit> PlayerUnits { get => _playerUnits; set => _playerUnits = value; }
     }
 }

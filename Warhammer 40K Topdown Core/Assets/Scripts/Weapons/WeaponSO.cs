@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "WeaponVariant", menuName = "Weapons/WeaponVariant")]
-public abstract class WeaponSO : ScriptableObject
+public abstract class WeaponSO : ScriptableObject, IWeaponStats
 {
     [Tooltip("Name of the Weapon")]
     [SerializeField] private string _name = default;
@@ -24,13 +24,13 @@ public abstract class WeaponSO : ScriptableObject
     [Tooltip("Damage of the Weapon")]
     [SerializeField] private int _damage;
 
-    public new string name { get => _name; } //ENCAPSULATION
-    public int Range { get => _range; }
-    public WeaponType Type { get => _type; }
-    public int Shots { get => _shots; }
-    public int Strength { get => _strength; }
-    public int ArmourPen { get => _armourPen; }
-    public int Damage { get => _damage; }
+    public string WeaponName => _name;  //ENCAPSULATION
+    public int WeaponRange => _range;
+    public WeaponType Type => _type;
+    public int WeaponShots => _shots;
+    public int WeaponStrength => _strength;
+    public int WeaponArmourPen => _armourPen;
+    public int WeaponDamage => _damage;
 
     public enum WeaponType
     {

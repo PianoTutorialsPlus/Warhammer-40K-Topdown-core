@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Editor.Infrastructure;
 using NUnit.Framework;
-using WH40K.Combat;
+using WH40K.GameMechanics.Combat;
 
 namespace Editor.ShootingCalculations
 {

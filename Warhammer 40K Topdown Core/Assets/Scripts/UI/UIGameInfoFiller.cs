@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using WH40K.Essentials;
 
 public class UIGameInfoFiller : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class UIGameInfoFiller : MonoBehaviour
     //}
     public void FillInfoPanel(GameStatsSO gameStats)
     {
-        infoUnitName.text = gameStats.activePlayer._playerUnits[0].tag;
+        infoUnitName.text = gameStats.ActivePlayer.PlayerUnits[0].tag;
         infoPhase.text = gameStats.phase.ToString();
         infoTurn.text = "Turn: " + gameStats.turn.ToString();
     }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using WH40K.Essentials;
 
-namespace WH40K.Combat
+namespace WH40K.GameMechanics.Combat
 {
     public class SelectEnemies : ICalculation
     {
@@ -17,7 +18,7 @@ namespace WH40K.Combat
         {
             List<int> item = new List<int>();
             item.Add(1);
-            _gameStats.enemyUnit = _gameStats.enemyPlayer._playerUnits[0];
+            _gameStats.enemyUnit = _gameStats.EnemyPlayer.PlayerUnits[0];
             Result(ShootingSubEvents.SelectEnemy, item);
         }
 

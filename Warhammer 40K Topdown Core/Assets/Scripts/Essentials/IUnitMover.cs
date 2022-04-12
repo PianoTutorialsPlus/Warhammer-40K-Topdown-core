@@ -1,6 +1,6 @@
-﻿using System.Numerics;
+﻿using UnityEngine;
 
-namespace WH40K.UnitHandler
+namespace WH40K.Essentials
 {
     public interface IUnitMover
     {
@@ -8,7 +8,7 @@ namespace WH40K.UnitHandler
         IPathCalculator PathCalculator { get; }
         Unit Unit { get; }
         float MaxDistance { get; }
-        UnityEngine.Vector3 CurrentPosition { get; }
+        Vector3 CurrentPosition { get; }
         float MoveDistance { get; }
         float MovedDistance { get; }
         MovementRange MovementRange { get; set; }

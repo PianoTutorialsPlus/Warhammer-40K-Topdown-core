@@ -1,107 +1,62 @@
 using UnityEngine;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
+using WH40K.GameMechanics;
 
-[CreateAssetMenu(menuName = "Game/Battleround Events")]
-public class BattleRoundsSO : ScriptableObject, IPhase
+namespace WH40K.UI
 {
-    public GameStatsSO _gameStats;
-    public InputReader _inputReader;
-
-    [SerializeField] private BattleroundEventChannelSO SetPhaseEvent;
-
-    //UI event
-    [SerializeField] private InteractionUIEventChannelSO _toggleInteractionUI = default;
-    [SerializeField] private InfoUIEventChannelSO _toggleInfoUI = default;
-    [SerializeField] private InfoUIEventChannelSO _toggleEnemyInfoUI = default;
-    [SerializeField] private IndicatorUIEventChannelSO _toggleIndicatorConnectionUI = default;
-
-    public void HandlePhase(GameStatsSO gameStats)
+    [CreateAssetMenu(menuName = "Game/Battleround Events")]
+    public class BattleRoundsSO : ScriptableObject, IPhase, IManageUIEvents, IUIMovementRange
     {
-        foreach (Unit child in gameStats.activePlayer._playerUnits)
+        [SerializeField] private GameStatsSO _gameStats;
+        [SerializeField] private BattleroundEventChannelSO _setPhaseEvent;
+
+        //UI event
+        [SerializeField] private InteractionUIEventChannelSO _toggleInteractionUI = default;
+        [SerializeField] private InfoUIEventChannelSO _toggleInfoUI = default;
+        [SerializeField] private InfoUIEventChannelSO _toggleEnemyInfoUI = default;
+        [SerializeField] private IndicatorUIEventChannelSO _toggleIndicatorConnectionUI = default;
+
+        private UIDisplayInteractionEvents _uIDisplayInteractionEvents;
+        private UIDisplayInfoEvents _uIDisplayInfoEvents;
+        private UIMovementRangeEvents _uIMovementRange;
+
+        private IPlayer _activePlayer => _gameStats.ActivePlayer;
+        private IPlayer _enemyPlayer => _gameStats.EnemyPlayer;
+
+        public InteractionUIEventChannelSO InteractionUIEvent { get => _toggleInteractionUI; set => _toggleInteractionUI = value; }
+        public InfoUIEventChannelSO InfoUIEvent { get => _toggleInfoUI; set => _toggleInfoUI = value; }
+        public InfoUIEventChannelSO EnemyInfoUIEvent { get => _toggleEnemyInfoUI; set => _toggleEnemyInfoUI = value; }
+        public IndicatorUIEventChannelSO IndicatorConnectionUIEvent { get => _toggleIndicatorConnectionUI; set => _toggleIndicatorConnectionUI = value; }
+        public BattleroundEventChannelSO SetPhaseEvent { get => _setPhaseEvent; set => _setPhaseEvent = value; }
+
+        public void OnEnable()
         {
-            CheckIfUnitIsDone(child);
-            CheckIfUnitIsActive(child);
+            _uIDisplayInteractionEvents = new UIDisplayInteractionEvents(this, _gameStats);
+            _uIDisplayInfoEvents = new UIDisplayInfoEvents(this, _activePlayer.Fraction);
+            _uIMovementRange = new UIMovementRangeEvents(this, _gameStats);
         }
-        foreach (Unit child in gameStats.enemyPlayer._playerUnits) FillMethods(child, false, true, true, false);
-    }
-    private void CheckIfUnitIsDone(Unit child)
-    {
-        if (isUnitDone(child))
+        public void HandlePhase(GameStatsSO gameStats)
         {
-            FillMethods(child, false, true, false, false);
+            foreach (Unit child in _activePlayer.PlayerUnits) FillMethods(child);
+            foreach (Unit child in _enemyPlayer.PlayerUnits) FillMethods(child);
         }
-    }
-    private bool isUnitDone(Unit child)
-    {
-        return child.done;
-    }
-
-    private void CheckIfUnitIsActive(Unit child)
-    {
-        if (isUnitDone(child)) return;
-
-        if (isUnitActive(child))
+        public void FillMethods(Unit child)
         {
-            FillMethods(child, true, true, true, true);
+            _uIDisplayInteractionEvents.SetResetInteraction(child);
+            _uIDisplayInfoEvents.SetResetInteraction(child);
+
+            _uIDisplayInteractionEvents.SetDisplayInteraction(child);
+            _uIDisplayInfoEvents.SetDisplayInfo(child);
+            _uIMovementRange.SetIndicatorConnection(child);
         }
-        else
+        public void ResetMethods(Unit child)
         {
-            FillMethods(child, false, true, true, true);
+            _uIDisplayInfoEvents.ResetOnPointerExit(child);
+            _uIDisplayInteractionEvents.ResetOnPointerExit(child);
+
+            _uIMovementRange.ResetOnTapDownAction(child);
+            _uIDisplayInteractionEvents.ResetOnPointerEnter(child);
+            _uIDisplayInfoEvents.ResetOnPointerEnterInfo(child);
         }
     }
-
-    private bool isUnitActive(Unit child)
-    {
-        return child == _gameStats.activeUnit;
-    }
-
-    public void HandleMove(GameStatsSO gameStats)
-    {
-        FillMethods(gameStats.activeUnit, true, true, true, false);
-    }
-
-
-    public void FillMethods(Unit child, bool displayInteraction, bool resetInteraction, bool displayInfo, bool connectIndicator)
-    {
-        if (displayInteraction) child.OnPointerEnter += DisplayInteractionUI;
-        else child.OnPointerEnter -= DisplayInteractionUI;
-
-        if (resetInteraction) child.OnPointerExit += ResetInteraction;
-        else child.OnPointerExit -= ResetInteraction;
-
-        if (displayInfo) child.OnPointerEnterInfo += DisplayInfoUI;
-        else child.OnPointerEnterInfo -= DisplayInfoUI;
-
-        if (connectIndicator) child.OnTapDownAction += ConnectIndicator;
-        else child.OnTapDownAction -= ConnectIndicator;
-    }
-
-
-
-    private void DisplayInfoUI(Unit unit)
-    {
-        if (_gameStats.activePlayer._playerUnits[0].tag == unit.tag)
-            _toggleInfoUI.RaiseEvent(true, unit);
-        if (_gameStats.enemyPlayer._playerUnits[0].tag == unit.tag)
-            _toggleEnemyInfoUI.RaiseEvent(true, unit);
-    }
-    private void DisplayInteractionUI()
-    {
-        //Raise event to display UI
-        _toggleInteractionUI.RaiseEvent(true, InteractionType.Activate);
-    }
-
-    private void ResetInteraction(Unit unit)
-    {
-        if (!unit.IsSelected) _toggleInteractionUI.RaiseEvent(false, InteractionType.None);
-        if (!unit.activated) _toggleInfoUI.RaiseEvent(false, unit);
-        _toggleEnemyInfoUI.RaiseEvent(false, unit);
-    }
-    private void ConnectIndicator(Unit unit)
-    {
-        SetPhaseEvent.RaiseEvent(_gameStats);
-        _toggleIndicatorConnectionUI.RaiseEvent(true, unit);
-    }
-
-
 }

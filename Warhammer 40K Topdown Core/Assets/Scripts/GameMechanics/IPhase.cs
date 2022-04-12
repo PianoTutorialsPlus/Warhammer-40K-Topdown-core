@@ -1,6 +1,10 @@
-﻿public interface IPhase
+﻿using WH40K.Essentials;
+
+namespace WH40K.GameMechanics
 {
-    //public MovementPhase SubEvents { get; }
-    public void HandlePhase(GameStatsSO gameStats);
-    void HandleMove(GameStatsSO gameStats);
+    public interface IPhase
+    {
+        //public MovementPhase SubEvents { get; }
+        public void HandlePhase(GameStatsSO gameStats);
+    }
 }

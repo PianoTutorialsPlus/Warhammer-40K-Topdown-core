@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace WH40K.ShootingPhaseHandler
+namespace WH40K.GameMechanics
 {
     public abstract class PhaseManagerBase : MonoBehaviour
     {

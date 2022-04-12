@@ -1,5 +1,5 @@
 using UnityEngine;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
 
 namespace WH40K
 {
@@ -27,20 +27,20 @@ namespace WH40K
             //unitManager.Load();
 
             _table.gameTable = gameTable;
-            _player1._playerUnits.Clear();
-            _player2._playerUnits.Clear();
+            _player1.PlayerUnits.Clear();
+            _player2.PlayerUnits.Clear();
 
             foreach (Unit unit in player1)
             {
-                _player1._playerUnits.Add(unit);
+                _player1.PlayerUnits.Add(unit);
             }
 
             foreach (Unit unit in player2)
             {
-                _player2._playerUnits.Add(unit);
+                _player2.PlayerUnits.Add(unit);
             }
-            _player1.fraction = _player1._playerUnits[0].Fraction;
-            _player2.fraction = _player2._playerUnits[0].Fraction;
+            _player1._fraction = _player1.PlayerUnits[0].Fraction;
+            _player2._fraction = _player2.PlayerUnits[0].Fraction;
             player = player1;
             //phase = "Movement Phase";
             //UpdateTurnText();

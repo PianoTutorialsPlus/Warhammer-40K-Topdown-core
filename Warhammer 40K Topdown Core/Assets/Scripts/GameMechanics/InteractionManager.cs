@@ -2,8 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using WH40K.ShootingPhaseHandler;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
+using WH40K.GameMechanics;
 
 // Enum initialization
 public enum InteractionType { None = 0, Activate, ShowStats }
@@ -11,7 +11,7 @@ public enum GamePhase { MovementPhase, ShootingPhase }
 public enum MovementPhase { None = 0, Selection, Move, Next }
 public enum ShootingPhase { None = 0, Selection, Shoot, Next }
 public enum ShootingSubEvents { None = 0, SelectEnemy, Hit, Wound, Save, Damage }
-public enum Fraction { None = 0, SpaceMarines, Necrons }
+
 
 /// <summary>
 /// This script takes care of the interactions. It communicates with the UI Manager and triggers the GamePhase Processor.
@@ -62,8 +62,8 @@ public class InteractionManager : MonoBehaviour
         _gameStats.turn = 1;
         _gameStats.activeUnit = null;
         _gameStats.enemyUnit = null;
-        _gameStats.activePlayer = _player1;
-        _gameStats.enemyPlayer = _player2;
+        _gameStats.ActivePlayer = _player1;
+        _gameStats.EnemyPlayer = _player2;
         InitializeManager();
 
         GamePhaseProcessor.EnableNextPhase(_gamePhaseManagers, _gamePhase);
@@ -109,21 +109,21 @@ public class InteractionManager : MonoBehaviour
 
     public void TogglePlayers(GameStatsSO gameStats)
     {
-        if (gameStats.activePlayer == _player1)
+        if (gameStats.ActivePlayer == _player1)
         {
-            gameStats.activePlayer = _player2;
-            gameStats.enemyPlayer = _player1;
+            gameStats.ActivePlayer = _player2;
+            gameStats.EnemyPlayer = _player1;
         }
         else
         {
-            gameStats.activePlayer = _player1;
-            gameStats.enemyPlayer = _player2;
+            gameStats.ActivePlayer = _player1;
+            gameStats.EnemyPlayer = _player2;
         }
     }
 
     private void SetNextBattleRound(GameStatsSO gameStats)
     {
-        if (gameStats.activePlayer == _player1) gameStats.turn += 1;
+        if (gameStats.ActivePlayer == _player1) gameStats.turn += 1;
     }
 
     private void ToggleBattleRoundsAndUI(GameStatsSO gameStats)

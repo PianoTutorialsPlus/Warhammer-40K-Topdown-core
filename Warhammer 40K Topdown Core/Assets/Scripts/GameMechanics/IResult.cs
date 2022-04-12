@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
+using WH40K.Essentials;
 
-public interface IResult
+namespace WH40K.GameMechanics
 {
-    RollTheDiceSO DiceAction { get; }
-    RollTheDiceSO DiceSubResult { get; }
-    RollTheDiceSO DiceResult { get; }
-    GameStatsSO GameStats { get; }
+    public interface IResult
+    {
+        RollTheDiceSO DiceAction { get; }
+        RollTheDiceSO DiceSubResult { get; }
+        RollTheDiceSO DiceResult { get; }
+        GameStatsSO GameStats { get; }
+    }
 }

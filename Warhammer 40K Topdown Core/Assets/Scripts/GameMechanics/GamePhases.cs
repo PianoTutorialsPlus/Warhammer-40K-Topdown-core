@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using WH40K.ShootingPhaseHandler;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
+using WH40K.GameMechanics;
 
 namespace WH40K.GamePhaseHandling
 {
@@ -29,6 +29,7 @@ namespace WH40K.GamePhaseHandling
             gamePhaseManager.ClearPhase();
             gamePhaseManager.enabled = false;
         }
+
     }
 
     public class MovementPhaseBase : GamePhases
@@ -61,7 +62,7 @@ namespace WH40K.GamePhaseHandling
         {
             gameStats.activeUnit = null;
 
-            foreach (Unit child in gameStats.activePlayer._playerUnits)
+            foreach (Unit child in gameStats.ActivePlayer.PlayerUnits)
             {
                 child.gameObject.AddComponent<UnitMovementPhase>();
                 child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
@@ -104,13 +105,14 @@ namespace WH40K.GamePhaseHandling
             gameStats.activeUnit = null;
             gameStats.enemyUnit = null;
 
-            foreach (Unit child in gameStats.enemyPlayer._playerUnits)
+            foreach (Unit child in gameStats.EnemyPlayer.PlayerUnits)
             {
                 //var test = new GameObject().AddComponent<UnitMovementPhase>();
 
-                child.gameObject.AddComponent<UnitMovementPhase>();
-                child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
-                child.unitMovementPhase.enabled = true;
+                child.gameObject.AddComponent<UnitShootingPhase>();
+                child.unitShootingPhase = child.GetComponent<UnitShootingPhase>();
+                //child.unitMovementPhase.enabled = false;
+                child.unitShootingPhase.enabled = true;
 
                 //child.ResetData();
                 //child.PrepareMovementPhase();

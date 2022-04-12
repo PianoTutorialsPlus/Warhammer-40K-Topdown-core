@@ -624,7 +624,7 @@ PrefabInstance:
     - target: {fileID: 2430091736876100063, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: GameStatsSO, Scripts
+      value: WH40K.Essentials.GameStatsSO, Scripts
       objectReference: {fileID: 0}
     - target: {fileID: 2430091736876100063, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}

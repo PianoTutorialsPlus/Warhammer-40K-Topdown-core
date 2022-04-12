@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
-using WH40K.Combat;
+using WH40K.Essentials;
+using WH40K.GameMechanics.Combat;
 
 /// <summary>
 /// This script executes the calls from the shooting phase manager in the specific state.
 /// </summary>
-namespace WH40K.ShootingPhaseHandler
+namespace WH40K.GameMechanics
 {
     public abstract class ShootingSubPhases
     {

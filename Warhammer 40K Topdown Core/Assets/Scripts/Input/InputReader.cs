@@ -11,7 +11,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     // public ActiveUnitSO _unit;
 
     // Gameplay
-    public event UnityAction activateEvent = delegate { };
+    public event UnityAction ActivateEvent = delegate { };
     public event UnityAction ExecuteEvent = delegate { };
 
     private GameInput gameInput;
@@ -44,7 +44,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
         if (context.phase == InputActionPhase.Performed)
         {
             Debug.Log("Button pressed");
-            activateEvent.Invoke();
+            ActivateEvent.Invoke();
         }
 
     }
@@ -52,6 +52,7 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     public void OnExecute(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
+            Debug.Log("Execute");
             ExecuteEvent.Invoke();
     }
 

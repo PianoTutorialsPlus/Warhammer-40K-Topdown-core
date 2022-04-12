@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace WH40K.UnitHandler
+namespace WH40K.Essentials
 {
     public class UnitMovementController
     {

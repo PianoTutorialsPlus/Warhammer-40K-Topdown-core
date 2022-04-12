@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.Essentials;
 
-namespace WH40K.Combat
+namespace WH40K.GameMechanics.Combat
 {
     public class CalculateHits : ICalculation
     {
@@ -15,7 +16,7 @@ namespace WH40K.Combat
         private RollTheDiceSO DiceResult => _results.DiceResult;
 
         private int ToHit => _gameStats.activeUnit._unitSO.BallisticSkill;
-        private int MaxShots => _gameStats.activeUnit._weaponSO.Shots;
+        private int MaxShots => _gameStats.activeUnit._weaponSO.WeaponShots;
 
         public CalculateHits(IResult results)
         {

@@ -1,6 +1,7 @@
-﻿using WH40K.UnitHandler;
+﻿using WH40K.Essentials;
+using WH40K.UI;
 
-namespace WH40K.ShootingPhaseHandler
+namespace WH40K.GameMechanics
 {
     /// <summary>
     /// This script executes the calls from the shooting phase manager in the specific state.
@@ -22,25 +23,12 @@ namespace WH40K.ShootingPhaseHandler
         public override ShootingPhase SetPhase() { return ShootingPhase.Shoot; }
         public override bool HandlePhase(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents)
         {
-            foreach (Unit child in gameStats.activePlayer._playerUnits)
+            foreach (Unit child in gameStats.ActivePlayer.PlayerUnits)
             {
-                if (child.done)
-                {
-                    _battleroundEvents.FillMethods(child, false, true, false, false);
-                    continue;
-                }
-
-                if (child == gameStats.activeUnit)
-                {
-                    _battleroundEvents.FillMethods(child, true, true, true, true);
-                }
-                else
-                {
-                    _battleroundEvents.FillMethods(child, false, true, true, true);
-                }
+                _battleroundEvents.FillMethods(child);
             }
 
-            foreach (Unit child in gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, true, true, false);
+            foreach (Unit child in gameStats.EnemyPlayer.PlayerUnits) _battleroundEvents.FillMethods(child);
 
             return gameStats.activeUnit != null ? true : false;
         }

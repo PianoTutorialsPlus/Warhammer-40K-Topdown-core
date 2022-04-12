@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace WH40K.Combat
+namespace WH40K.GameMechanics.Combat
 {
     public class CombatResults
     {

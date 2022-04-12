@@ -1,19 +1,20 @@
 using NSubstitute;
 using NUnit.Framework;
+using WH40K.Essentials;
 
 namespace Editor.Unit
 {
     public class UnitSelectorTests
     {
-        protected IUnitStats unit;
+        protected IStats unit;
         protected UnitSelector unitSelector;
-        protected IUnitStats Target;
+        protected IStats Target;
         public Fraction TargetFraction => Target.Fraction;
 
         [SetUp]
         public void BeforeEveryTest()
         {
-            unit = Substitute.For<IUnitStats>();
+            unit = Substitute.For<IStats>();
             unit.Fraction.Returns(Fraction.Necrons);
         }
 

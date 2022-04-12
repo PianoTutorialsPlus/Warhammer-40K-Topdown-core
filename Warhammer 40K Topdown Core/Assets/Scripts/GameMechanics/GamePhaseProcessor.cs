@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using WH40K.Essentials;
+using WH40K.GameMechanics;
 using WH40K.GamePhaseHandling;
-using WH40K.ShootingPhaseHandler;
 
 /// <summary>
 /// This script processes the communication between the interaction manager and the main game phases executables.

@@ -1,13 +1,9 @@
 ﻿using UnityEngine.Events;
 
-namespace WH40K.UnitHandler
+namespace WH40K.Essentials
 {
-    public interface IUnit
+    public interface IUnit: IStats, IUnitPointer, IUnitCondition
     {
-        UnityAction<Unit> OnTapDownAction { get; set; }
-        UnityAction OnPointerEnter { get; set; }
-        UnityAction<Unit> OnPointerEnterInfo { get; set; }
-        UnityAction<Unit> OnPointerExit { get; set; }
         Unit unit { get; }
         UnitSelector UnitSelector { get; }
         GameStatsSO GameStats { get; set; }

@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
 
 public class UIInfoManager : MonoBehaviour
 {
-    [SerializeField] private List<InteractionSO> listInteractions;
+    //[SerializeField] private List<InteractionSO> listInteractions;
 
     [SerializeField] private UIInfoUnitStatsFiller infoItem;
 
-    public void FillInfoPanel(Unit interactionType)
+    public void FillInfoPanel(IStats interactionType)
     {
         infoItem.FillInfoPanel(interactionType);
         //if ((listInteractions != null) && (infoItem != null))

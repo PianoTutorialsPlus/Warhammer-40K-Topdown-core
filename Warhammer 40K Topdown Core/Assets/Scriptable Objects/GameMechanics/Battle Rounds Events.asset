@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: Battle Rounds Events
   m_EditorClassIdentifier: 
   _gameStats: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33, type: 2}
-  _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
-  SetPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793, type: 2}
+  _setPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793, type: 2}
   _toggleInteractionUI: {fileID: 11400000, guid: e5da9e2f3b87fb743a963127ed2a21ce,
     type: 2}
   _toggleInfoUI: {fileID: 11400000, guid: 837cc3995138cc8408cc46a8c282b3c9, type: 2}

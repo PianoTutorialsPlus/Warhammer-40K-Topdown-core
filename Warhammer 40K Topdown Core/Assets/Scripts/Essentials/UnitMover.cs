@@ -2,13 +2,13 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace WH40K.UnitHandler
+namespace WH40K.Essentials
 {
     public class UnitMover : MonoBehaviour, IUnitMover
     {
         public IPathCalculator PathCalculator { get; private set; }
 
-        private IUnitStats _unit;
+        private IStats _unit;
         public Unit Unit { get; set; }
         public UnitMovementController MoveController;
         public MovementRange MovementRange { get; set; }
@@ -23,15 +23,16 @@ namespace WH40K.UnitHandler
 
         public void Awake()
         {
+            PathCalculator = GetComponent<IPathCalculator>();
             Unit = GetComponent<Unit>();
-            _unit = Unit._unitSO;
+            _unit = Unit;
             MoveController = new UnitMovementController(this);
             MovementRange = new MovementRange(MaxDistance);
             //Debug.Log(Unit.name);
         }
-        public void Initialize(IPathCalculator pathCalculator, IUnitStats unit)
+        public void Initialize(IPathCalculator pathCalculator, IStats unit)
         {
-            PathCalculator = pathCalculator;
+           // PathCalculator = pathCalculator;
             //_unit = unit;
         }
         public void SetDestination(Vector3 position)

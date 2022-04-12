@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using System;
-using WH40K.Combat;
+using WH40K.GameMechanics.Combat;
 
 namespace Editor.ShootingCalculations
 {

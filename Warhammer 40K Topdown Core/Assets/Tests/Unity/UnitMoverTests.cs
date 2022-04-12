@@ -1,10 +1,9 @@
-using Editor.Infrastructure;
 using NUnit.Framework;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.TestTools;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
 
 namespace Unity
 {
@@ -17,7 +16,7 @@ namespace Unity
             private Vector3 position;
             //protected UnitMover Target;
             protected IPathCalculator PathCalculator;
-            protected IUnitStats unit;
+            protected IStats unit;
             private bool initialize;
             private NecronWarrior dut;
             protected float TargetMoveDistance => Target.MoveDistance;
@@ -44,7 +43,7 @@ namespace Unity
                     initialize = true;
                 }
                 dut = GameObject.Instantiate(Resources.Load("Necron Warrior", (typeof(NecronWarrior)))) as NecronWarrior;
-                Target = dut.UnitMover;
+                Target = (UnitMover)dut.UnitMover;
 
             }
             [UnityTest]

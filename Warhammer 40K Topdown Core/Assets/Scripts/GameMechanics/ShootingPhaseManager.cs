@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WH40K.Combat;
-using WH40K.UnitHandler;
+using WH40K.Essentials;
+using WH40K.GameMechanics.Combat;
+using WH40K.UI;
 
-namespace WH40K.ShootingPhaseHandler
+namespace WH40K.GameMechanics
 {
 
     /// <summary>
@@ -74,11 +75,11 @@ namespace WH40K.ShootingPhaseHandler
             bool shooting = ShootingPhaseProcessor.HandlePhase(shootingPhase);
             bool next = ShootingPhaseProcessor.Next(gameStats, shootingPhase);
 
-            if (selection) _inputReader.activateEvent += NextPhase;
+            if (selection) _inputReader.ActivateEvent += NextPhase;
 
             if (shooting)
             {
-                _inputReader.activateEvent += HandleShooting;
+                _inputReader.ActivateEvent += HandleShooting;
                 _inputReader.ExecuteEvent += Wait;
             }
             if (next) NextPhase();
@@ -86,11 +87,11 @@ namespace WH40K.ShootingPhaseHandler
 
         public override void ClearPhase()
         {
-            foreach (Unit child in _gameStats.activePlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
-            foreach (Unit child in _gameStats.enemyPlayer._playerUnits) _battleroundEvents.FillMethods(child, false, false, false, false);
+            foreach (Unit child in _gameStats.ActivePlayer.PlayerUnits) _battleroundEvents.ResetMethods(child);
+            foreach (Unit child in _gameStats.EnemyPlayer.PlayerUnits) _battleroundEvents.ResetMethods(child);
 
-            _inputReader.activateEvent -= NextPhase;
-            _inputReader.activateEvent -= HandleShooting;
+            _inputReader.ActivateEvent -= NextPhase;
+            _inputReader.ActivateEvent -= HandleShooting;
             _inputReader.ExecuteEvent -= Wait;
         }
 
