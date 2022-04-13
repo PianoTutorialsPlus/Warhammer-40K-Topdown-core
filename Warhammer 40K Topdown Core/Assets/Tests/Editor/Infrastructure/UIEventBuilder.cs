@@ -1,10 +1,4 @@
 ﻿using NSubstitute;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 using WH40K.UI;
 
 namespace Editor.Infrastructure
@@ -13,6 +7,7 @@ namespace Editor.Infrastructure
     {
         private InfoUIEventChannelSO _playerEventListener;
         private InfoUIEventChannelSO _enemyEventListener;
+        private InteractionUIEventChannelSO _interactionEventListener;
 
         public UIEventBuilder()
         {
@@ -28,13 +23,18 @@ namespace Editor.Infrastructure
             _enemyEventListener = eventListener;
             return this;
         }
-
+        public UIEventBuilder WithInteractionEventListener(InteractionUIEventChannelSO eventListener)
+        {
+            _interactionEventListener = eventListener;
+            return this;
+        }
 
         public override IManageUIEvents Build()
         {
             var uIEvents = Substitute.For<IManageUIEvents>();
-            uIEvents.InfoUIEvent.Returns(_playerEventListener ??= An.InfoUIEventChannel);
-            uIEvents.EnemyInfoUIEvent.Returns(_enemyEventListener ??= An.InfoUIEventChannel);
+            uIEvents.InfoUIEvent.Returns(_playerEventListener ??= A.InfoUIEventChannel);
+            uIEvents.EnemyInfoUIEvent.Returns(_enemyEventListener ??= A.InfoUIEventChannel);
+            uIEvents.InteractionUIEvent.Returns(_interactionEventListener ??= A.InteractionUIEventChannel);
 
             return uIEvents;
         }

@@ -1,6 +1,6 @@
 ﻿namespace WH40K.Essentials
 {
-    public interface IStats: IWeaponStats, IUnitStats
+    public interface IStats: IWeaponStats, IUnitStats, IUnitCondition
     {
 
          

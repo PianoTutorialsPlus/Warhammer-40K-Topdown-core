@@ -25,7 +25,7 @@ namespace Editor.UI
             [Test]
             public void When_Unit_Fraction_Equals_Player_Fraction_Then_PlayerInfoUIEvent_Is_Raised()
             {
-                InfoUIEventChannelSO eventListener = An.InfoUIEventChannel;
+                InfoUIEventChannelSO eventListener = A.InfoUIEventChannel;
                 eventListener.OnEventRaised += FillWithStats;
 
                 ((UIDisplayInfoEvents)A.UIDisplayInfoEvent
@@ -41,7 +41,7 @@ namespace Editor.UI
             [Test]
             public void When_Unit_Fraction_Equals_Enemy_Fraction_Then_EnemyInfoUIEvent_Is_Raised()
             {
-                InfoUIEventChannelSO eventListener = An.InfoUIEventChannel;
+                InfoUIEventChannelSO eventListener = A.InfoUIEventChannel;
                 eventListener.OnEventRaised += FillWithStats;
 
                 ((UIDisplayInfoEvents)A.UIDisplayInfoEvent
@@ -109,7 +109,7 @@ namespace Editor.UI
             [Test]
             public void When_Unit_Is_From_Player_Fraction_Then_PlayerInfoUIEvent_Is_Raised()
             {
-                InfoUIEventChannelSO eventListener = An.InfoUIEventChannel;
+                InfoUIEventChannelSO eventListener = A.InfoUIEventChannel;
                 eventListener.OnEventRaised += FillWithStats;
 
                 var child = A.Unit
@@ -149,7 +149,7 @@ namespace Editor.UI
             public void When_OnPointerExit_Is_Invoked_Then_EnemyInfoUIEvent_Is_Raised()
             {
                 _state = true;
-                InfoUIEventChannelSO eventListener = An.InfoUIEventChannel;
+                InfoUIEventChannelSO eventListener = A.InfoUIEventChannel;
                 eventListener.OnEventRaised += FillWithStats;
 
                 var child = A.Unit
@@ -171,7 +171,7 @@ namespace Editor.UI
             public void When_OnPointerExit_Is_Invoked_And_Unit_Is_Not_Activated_Then_PlayerInfoUIEvent_Is_Raised()
             {
                 _state = true;
-                InfoUIEventChannelSO eventListener = An.InfoUIEventChannel;
+                InfoUIEventChannelSO eventListener = A.InfoUIEventChannel;
                 eventListener.OnEventRaised += FillWithStats;
 
                 var child = A.Unit
@@ -194,7 +194,7 @@ namespace Editor.UI
             public void When_OnPointerExit_Is_Invoked_And_Unit_Is_Activated_Then_PlayerInfoUIEvent_Is_Not_Raised()
             {
                 _state = true;
-                InfoUIEventChannelSO eventListener = An.InfoUIEventChannel;
+                InfoUIEventChannelSO eventListener = A.InfoUIEventChannel;
                 eventListener.OnEventRaised += FillWithStats;
 
                 var child = A.Unit

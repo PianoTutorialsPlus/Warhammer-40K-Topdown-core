@@ -16,6 +16,7 @@ namespace Editor.Infrastructure
         private bool _isActivated = false;
         private UnityAction<IUnit> _onPointerEnterInfo;
         private UnityAction<IUnit> _onPointerExit;
+        private UnityAction _onPointerEnter;
 
         public UnitBuilder()
         {
@@ -36,6 +37,11 @@ namespace Editor.Infrastructure
             _isDone = isDone;
             return this;
         }
+        public UnitBuilder WithOnPointerEnter(UnityAction onPointerEnter)
+        {
+            _onPointerEnter = onPointerEnter;
+            return this;
+        }
         public UnitBuilder WithOnPointerEnterInfo(UnityAction<IUnit> onPointerEnterInfo)
         {
             _onPointerEnterInfo = onPointerEnterInfo;
@@ -53,6 +59,7 @@ namespace Editor.Infrastructure
             unit.Fraction.Returns(_fraction);
             unit.IsDone.Returns(_isDone);
             unit.IsActivated.Returns(_isActivated);
+            unit.OnPointerEnter.Returns(_onPointerEnter);
             unit.OnPointerEnterInfo.Returns(_onPointerEnterInfo);
             unit.OnPointerExit.Returns(_onPointerExit);
 

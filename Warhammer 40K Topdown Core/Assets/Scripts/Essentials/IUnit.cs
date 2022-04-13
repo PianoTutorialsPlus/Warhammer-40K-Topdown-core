@@ -2,7 +2,7 @@
 
 namespace WH40K.Essentials
 {
-    public interface IUnit: IStats, IUnitPointer, IUnitCondition
+    public interface IUnit: IStats, IUnitPointer
     {
         Unit unit { get; }
         UnitSelector UnitSelector { get; }

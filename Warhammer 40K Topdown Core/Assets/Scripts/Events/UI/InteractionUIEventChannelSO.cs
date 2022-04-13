@@ -5,14 +5,16 @@ using UnityEngine.Events;
 /// This class is used for Events to toggle the interaction UI.
 /// Example: Dispaly or hide the interaction UI via a bool and the interaction type from the enum via int
 /// </summary>
-
-[CreateAssetMenu(menuName = "Events/Toggle Interaction UI Events Channel")]
-public class InteractionUIEventChannelSO : ScriptableObject
+namespace WH40K.UI
 {
-    public UnityAction<bool, InteractionType> OnEventRaised;
-    public void RaiseEvent(bool state, InteractionType interactionType)
+    [CreateAssetMenu(menuName = "Events/Toggle Interaction UI Events Channel")]
+    public class InteractionUIEventChannelSO : ScriptableObject
     {
-        if (OnEventRaised != null)
-            OnEventRaised.Invoke(state, interactionType);
+        public UnityAction<bool, InteractionType> OnEventRaised;
+        public void RaiseEvent(bool state, InteractionType interactionType)
+        {
+            if (OnEventRaised != null)
+                OnEventRaised.Invoke(state, interactionType);
+        }
     }
 }

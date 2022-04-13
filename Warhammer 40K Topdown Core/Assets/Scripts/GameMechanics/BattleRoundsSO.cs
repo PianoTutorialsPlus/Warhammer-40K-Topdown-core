@@ -31,7 +31,7 @@ namespace WH40K.UI
 
         public void OnEnable()
         {
-            _uIDisplayInteractionEvents = new UIDisplayInteractionEvents(this, _gameStats);
+            _uIDisplayInteractionEvents = new UIDisplayInteractionEvents(this, _activePlayer.Fraction,_gameStats.activeUnitTest);
             _uIDisplayInfoEvents = new UIDisplayInfoEvents(this, _activePlayer.Fraction);
             _uIMovementRange = new UIMovementRangeEvents(this, _gameStats);
         }
