@@ -14,9 +14,11 @@ namespace Editor.Infrastructure
         private Fraction _fraction = Fraction.Necrons;
         private bool _isDone = false;
         private bool _isActivated = false;
+
         private UnityAction<IUnit> _onPointerEnterInfo;
         private UnityAction<IUnit> _onPointerExit;
         private UnityAction _onPointerEnter;
+        private UnityAction<IUnit> _onTapDownAction;
 
         public UnitBuilder()
         {
@@ -52,6 +54,11 @@ namespace Editor.Infrastructure
             _onPointerExit = onPointerExit;
             return this;
         }
+        public UnitBuilder WithOnTapdownAction(UnityAction<IUnit> onTapDownAction)
+        {
+            _onTapDownAction = onTapDownAction;
+            return this;
+        }
         public override IUnit Build()
         {
             var unit = Substitute.For<IUnit>();
@@ -62,6 +69,7 @@ namespace Editor.Infrastructure
             unit.OnPointerEnter.Returns(_onPointerEnter);
             unit.OnPointerEnterInfo.Returns(_onPointerEnterInfo);
             unit.OnPointerExit.Returns(_onPointerExit);
+            unit.OnTapDownAction.Returns(_onTapDownAction);
 
             return unit;
         }

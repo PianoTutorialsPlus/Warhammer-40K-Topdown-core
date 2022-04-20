@@ -20,7 +20,6 @@ namespace WH40K.Essentials
 
         public NavMeshAgent m_Agent;     // Moving behaviour
                                          //private NavMeshPath path;
-        public float MoveDistance => _unitSO.Movement;
         public int weaponRange;
 
         public Fraction Fraction => _unitSO.Fraction;
@@ -34,27 +33,29 @@ namespace WH40K.Essentials
 
         public InputReader _inputReader;
 
-        [SerializeField] public UnityAction<Unit> onTapDownAction;
+        [SerializeField] public UnityAction<IUnit> onTapDownAction;
         [SerializeField] public UnityAction onPointerEnter;
         [SerializeField] public UnityAction<IUnit> onPointerEnterInfo;
         [SerializeField] public UnityAction<IUnit> onPointerExit;
 
         public bool IsDone => done;
         public bool IsActivated { get => activated; set => activated = value; }
+        public Transform Transform => gameObject.transform;
+        public Vector3 CurrentPosition => gameObject.transform.position;
         // public IUnit unit => (IUnit)gameObject.GetComponent<Unit>();
         public Fraction ActivePlayerFraction => _gameStats.ActivePlayer.Fraction;
         public Fraction EnemyFraction => _gameStats.EnemyPlayer.Fraction;
-        public IStats EnemyUnit { get => _gameStats.enemyUnitTest; set => _gameStats.enemyUnitTest = value; }
-        public IStats ActiveUnit { get => _gameStats.activeUnitTest; set => _gameStats.activeUnitTest = value; }
+        public IUnit EnemyUnit { get => _gameStats.enemyUnitTest; set => _gameStats.enemyUnitTest = value; }
+        public IUnit ActiveUnit { get => _gameStats.activeUnitTest; set => _gameStats.activeUnitTest = value; }
 
         public UnitMovementPhase unitMovementPhase;
         public UnitShootingPhase unitShootingPhase;
         public UnitSelector UnitSelector { get; protected set; }
-        public IUnitMover UnitMover;
+        public IUnitMover UnitMover { get; protected set; }
         internal float restDistance;
         public Unit unit => this;//gameObject.GetComponent<Unit>();
         public IPathCalculator PathCalculator { get; protected set; }
-        public UnityAction<Unit> OnTapDownAction { get => onTapDownAction; set => onTapDownAction = value; }
+        public UnityAction<IUnit> OnTapDownAction { get => onTapDownAction; set => onTapDownAction = value; }
         public UnityAction OnPointerEnter { get => onPointerEnter; set => onPointerEnter = value; }
         public UnityAction<IUnit> OnPointerEnterInfo { get => onPointerEnterInfo; set => onPointerEnterInfo = value; }
         public UnityAction<IUnit> OnPointerExit { get => onPointerExit; set => onPointerExit = value; }

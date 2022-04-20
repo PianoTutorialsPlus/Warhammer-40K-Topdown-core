@@ -6,14 +6,16 @@ using WH40K.Essentials;
 /// This class is used for Events to set the distance Indicator UI.
 /// Example: Dispaly or hide the distance Indicator via a bool.
 /// </summary>
-
-[CreateAssetMenu(menuName = "Events/Toggle Distance Indicator Connection UI Events Channel")]
-public class IndicatorUIEventChannelSO : ScriptableObject
+namespace WH40K.UI
 {
-    public UnityAction<bool, Unit> OnEventRaised;
-    public void RaiseEvent(bool state, Unit unit)
+    [CreateAssetMenu(menuName = "Events/Toggle Distance Indicator Connection UI Events Channel")]
+    public class IndicatorUIEventChannelSO : ScriptableObject
     {
-        if (OnEventRaised != null)
-            OnEventRaised.Invoke(state, unit);
+        public UnityAction<bool, IUnit> OnEventRaised;
+        public void RaiseEvent(bool state, IUnit unit)
+        {
+            if (OnEventRaised != null)
+                OnEventRaised.Invoke(state, unit);
+        }
     }
 }

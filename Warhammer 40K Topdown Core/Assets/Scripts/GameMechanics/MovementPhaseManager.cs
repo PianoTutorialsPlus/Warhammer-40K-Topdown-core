@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using WH40K.Essentials;
 using WH40K.UI;
@@ -11,7 +12,7 @@ namespace WH40K.GameMechanics
     /// The manager handles the movement phase, dependend on what subphase its currently in.
     /// </summary>
 
-    public class MovementPhaseManager : PhaseManagerBase
+    public class MovementPhaseManager : PhaseManagerBase, IGamePhase
     {
         // Gameplay
         [SerializeField] private GameStatsSO _gameStats;
@@ -22,19 +23,25 @@ namespace WH40K.GameMechanics
         [SerializeField] private BattleRoundsSO _battleroundEvents;
 
         // Enums
-        MovementPhase movementPhase;
+        private Queue<MovementPhase> movementPhase = new Queue<MovementPhase>();
 
         public override GamePhase SubEvents => GamePhase.MovementPhase;
+
+        public BattleRoundsSO BattleroundEvents { get => _battleroundEvents; set => _battleroundEvents = value; }
+        public InputReader InputReader { get => _inputReader; set => _inputReader = value; }
+        public GameStatsSO GameStats { get => _gameStats; set => _gameStats = value; }
 
         private void Awake()
         {
             enabled = false;
+            movementPhase.Enqueue(MovementPhase.Selection);
+            movementPhase.Enqueue(MovementPhase.Move);
+            movementPhase.Enqueue(MovementPhase.Next);
         }
         public void OnEnable()
         {
             //Debug.Log("Enable Movement");
-            movementPhase = MovementPhase.Selection;
-            MovementPhaseProcessor.InjectParamers(_gameStats, _battleroundEvents, _inputReader);
+            MovementPhaseProcessor.InjectParamers(this);
 
             if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += SetMovementPhase;
         }
@@ -49,35 +56,30 @@ namespace WH40K.GameMechanics
         {
             ClearPhase();
 
-            bool selection = MovementPhaseProcessor.HandleSelection(movementPhase);
-            bool move = MovementPhaseProcessor.HandleMovement(movementPhase);
-            bool next = MovementPhaseProcessor.Next(movementPhase);
-            Debug.Log("Selection: " + selection);
-            Debug.Log("Move: " + move);
-            if (selection) _inputReader.ActivateEvent += NextPhase;
-            if (move) gameStats.gameTable.gameTable.onTapDownAction += Move;
-            if (next) NextPhase();
-        }
+            MovementPhaseProcessor.HandlePhase(movementPhase.Peek());
 
-        public void Move(Vector3 position)
-        {
-            Debug.Log("Do I Get HEre");
-            _gameStats.activeUnit.UnitMover.SetDestination(position);
+            if (gameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
+            //if (move) gameStats.gameTable.gameTable.onTapDownAction += Move;
+            if (MovementPhaseProcessor.Next(movementPhase.Peek())) NextPhase();
         }
 
         public override void ClearPhase()
         {
-            foreach (Unit child in _gameStats.ActivePlayer.PlayerUnits) _battleroundEvents.ResetMethods(child);
-            foreach (Unit child in _gameStats.EnemyPlayer.PlayerUnits) _battleroundEvents.ResetMethods(child);
-            _gameStats.gameTable.gameTable.onTapDownAction -= Move;
-            _inputReader.ActivateEvent -= NextPhase;
+            MovementPhaseProcessor.ClearPhase(movementPhase.Peek());
+            InputReader.ActivateEvent -= NextPhase;
         }
 
         public void NextPhase()
         {
-            movementPhase = MovementPhaseProcessor.SetPhase(movementPhase);
-            SetMovementPhase(_gameStats);
+            movementPhase.Enqueue(movementPhase.Dequeue());
+            SetMovementPhase(GameStats);
         }
+
+        //public void Move(Vector3 position)
+        //{
+        //    Debug.Log("Do I Get HEre");
+        //    GameStats.ActiveUnit.UnitMover.SetDestination(position);
+        //}
 
         //public void ResetUnits(GameStatsSO gameStats)
         //{

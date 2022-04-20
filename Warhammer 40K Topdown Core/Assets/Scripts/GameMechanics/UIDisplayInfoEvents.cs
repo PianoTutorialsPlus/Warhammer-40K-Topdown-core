@@ -1,18 +1,21 @@
-﻿using WH40K.Essentials;
+﻿using UnityEngine;
+using WH40K.Essentials;
 
 namespace WH40K.UI
 {
     public class UIDisplayInfoEvents
     {
         private IManageUIEvents _uIEvents;
-        private Fraction _playerFraction;
+        private GameStatsSO _gameStats;
+
+        private Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
         private InfoUIEventChannelSO _toggleInfoUI => _uIEvents.InfoUIEvent;
         private InfoUIEventChannelSO _toggleEnemyInfoUI => _uIEvents.EnemyInfoUIEvent;
 
-        public UIDisplayInfoEvents(IManageUIEvents uIEvents, Fraction playerFraction)
+        public UIDisplayInfoEvents(IManageUIEvents uIEvents, GameStatsSO gameStats)
         {
             _uIEvents = uIEvents;
-            _playerFraction = playerFraction;
+            _gameStats = gameStats;
         }
         public void SetDisplayInfo(IUnit child)
         {

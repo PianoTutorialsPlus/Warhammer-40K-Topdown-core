@@ -6,7 +6,7 @@ namespace Editor.Infrastructure
     public class UIDisplayInfoEventBuilder : TestDataBuilder<UIDisplayInfoEvents>
     {
         private IManageUIEvents _uIEvents;
-        private Fraction _playerFraction = Fraction.Necrons;
+        private GameStatsSO _gameStats;
 
         public UIDisplayInfoEventBuilder()
         {
@@ -17,15 +17,16 @@ namespace Editor.Infrastructure
             _uIEvents = uIEvents;
             return this;
         }
-        public UIDisplayInfoEventBuilder WithPlayerFraction(Fraction playerFraction)
+        public UIDisplayInfoEventBuilder WithGameStats(GameStatsSO gameStats)
         {
-            _playerFraction = playerFraction;
+            _gameStats = gameStats;
             return this;
         }
 
         public override UIDisplayInfoEvents Build()
         {
-            return new UIDisplayInfoEvents(_uIEvents, _playerFraction);
+            //return null;
+            return new UIDisplayInfoEvents(_uIEvents, _gameStats);
         }
     }
 }

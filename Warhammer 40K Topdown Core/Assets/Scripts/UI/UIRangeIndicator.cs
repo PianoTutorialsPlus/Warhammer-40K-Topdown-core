@@ -28,18 +28,18 @@ namespace WH40K.UI
         {
             _rangeController = new RangeController(this);
         }
-        public void ConnectIndicator(Unit unit)
+        public void ConnectIndicator(IUnit unit)
         {
-            transform.SetParent(unit.gameObject.transform);
-            _rangeController.SetPosition(unit.transform.position);
+            transform.SetParent(unit.Transform);
+            _rangeController.SetPosition(unit.Transform.position);
             StartCoroutine(SetActionRadiusCoroutine(unit));
         }
-        public IEnumerator SetActionRadiusCoroutine(Unit unit)
+        public IEnumerator SetActionRadiusCoroutine(IUnit unit)
         {
             while (true)
             {
                 yield return new WaitForEndOfFrame();
-                _rangeController.ScaleRange(unit.MoveDistance);
+                _rangeController.ScaleRange(unit.Movement);
             }
         }
     }

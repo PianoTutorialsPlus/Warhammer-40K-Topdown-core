@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void SetIndicatorConnection(bool isOpenEvent, Unit unit)
+    public void SetIndicatorConnection(bool isOpenEvent, IUnit unit)
     {
         if (isOpenEvent)
         {

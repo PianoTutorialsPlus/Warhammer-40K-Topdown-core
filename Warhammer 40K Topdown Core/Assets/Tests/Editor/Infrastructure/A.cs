@@ -11,10 +11,16 @@ namespace Editor.Infrastructure
         public static InfoUIEventChannelBuilder InfoUIEventChannel => new InfoUIEventChannelBuilder();
         public static UIDisplayInteractionEventBuilder UIDisplayInteractionEvent => new UIDisplayInteractionEventBuilder();
         public static InteractionUIEventChannelBuilder InteractionUIEventChannel => new InteractionUIEventChannelBuilder();
+        public static UIMovementRangeEventBuilder UIMovementRangeEvent => new UIMovementRangeEventBuilder();
+        public static IndicatorUIEventChannel IndicatorUIEventChannel => new IndicatorUIEventChannel();
+        public static BattleRoundEventChannelBuilder BattleRoundEventChannel => new BattleRoundEventChannelBuilder();
         public static UnitBuilder Unit => new UnitBuilder();
+        public static PlayerBuilder Player => new PlayerBuilder();
+        public static GameStatsBuilder GameStats => new GameStatsBuilder();
     }
     public static class An
     {
         public static UIEventBuilder UIEvent => new UIEventBuilder();
+        public static BattleRoundEventBuilder BattleRoundEvent => new BattleRoundEventBuilder();
     }
 }

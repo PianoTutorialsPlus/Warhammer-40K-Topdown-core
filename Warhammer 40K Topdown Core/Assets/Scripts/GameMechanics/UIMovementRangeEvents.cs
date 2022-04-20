@@ -1,4 +1,5 @@
-﻿using WH40K.Essentials;
+﻿using UnityEngine;
+using WH40K.Essentials;
 
 namespace WH40K.UI
 {
@@ -9,31 +10,31 @@ namespace WH40K.UI
 
         public BattleroundEventChannelSO _setPhaseEvent => _uIMovementRange.SetPhaseEvent;
         public IndicatorUIEventChannelSO _toggleIndicatorConnectionUI => _uIMovementRange.IndicatorConnectionUIEvent;
-        public Fraction ActivePlayerFraction => _gameStats.ActivePlayer.Fraction;
-        public bool IsUnitDone(Unit child) => child.IsDone;
-        public bool IsUnitActivated(Unit child) => child.IsActivated;
+        public Fraction _playerFraction=> _gameStats.ActivePlayer.Fraction;
+        //public bool IsUnitDone(Unit child) => child.IsDone;
+        //public bool IsUnitActivated(Unit child) => child.IsActivated;
 
         public UIMovementRangeEvents(IUIMovementRange uIMovementRange, GameStatsSO gameStats)
         {
             _uIMovementRange = uIMovementRange;
             _gameStats = gameStats;
         }
-        public void SetIndicatorConnection(Unit child)
+        public void SetIndicatorConnection(IUnit child)
         {
             if (ConnectRangeIndicator(child)) child.OnTapDownAction += ConnectIndicator;
             else ResetOnTapDownAction(child);
         }
-        private bool ConnectRangeIndicator(Unit child)
+        private bool ConnectRangeIndicator(IUnit child)
         {
-            return ActivePlayerFraction == child.Fraction &&
-                !IsUnitDone(child) && !IsUnitActivated(child);
+            return _playerFraction == child.Fraction &&
+                !child.IsDone && !child.IsActivated;
         }
-        private void ConnectIndicator(Unit unit)
+        public void ConnectIndicator(IUnit unit)
         {
-            _setPhaseEvent.RaiseEvent(_gameStats);
+            //_setPhaseEvent.RaiseEvent(_gameStats);
             _toggleIndicatorConnectionUI.RaiseEvent(true, unit);
         }
-        public void ResetOnTapDownAction(Unit child)
+        public void ResetOnTapDownAction(IUnit child)
         {
             child.OnTapDownAction -= ConnectIndicator;
         }

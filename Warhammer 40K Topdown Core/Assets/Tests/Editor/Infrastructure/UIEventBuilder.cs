@@ -8,6 +8,8 @@ namespace Editor.Infrastructure
         private InfoUIEventChannelSO _playerEventListener;
         private InfoUIEventChannelSO _enemyEventListener;
         private InteractionUIEventChannelSO _interactionEventListener;
+        private IndicatorUIEventChannelSO _indicatorEventListener;
+        private BattleroundEventChannelSO _battleRoundEventListener;
 
         public UIEventBuilder()
         {
@@ -28,6 +30,16 @@ namespace Editor.Infrastructure
             _interactionEventListener = eventListener;
             return this;
         }
+        public UIEventBuilder WithMoveRangeIndicatorEventListener(IndicatorUIEventChannelSO eventListener)
+        {
+            _indicatorEventListener = eventListener;
+            return this;
+        }
+        public UIEventBuilder WithPhaseEventListener(BattleroundEventChannelSO eventListener)
+        {
+            _battleRoundEventListener = eventListener;
+            return this;
+        }
 
         public override IManageUIEvents Build()
         {
@@ -35,6 +47,8 @@ namespace Editor.Infrastructure
             uIEvents.InfoUIEvent.Returns(_playerEventListener ??= A.InfoUIEventChannel);
             uIEvents.EnemyInfoUIEvent.Returns(_enemyEventListener ??= A.InfoUIEventChannel);
             uIEvents.InteractionUIEvent.Returns(_interactionEventListener ??= A.InteractionUIEventChannel);
+            uIEvents.IndicatorConnectionUIEvent.Returns(_indicatorEventListener ??= A.IndicatorUIEventChannel);
+            uIEvents.SetPhaseEvent.Returns(_battleRoundEventListener ??= A.BattleRoundEventChannel);
 
             return uIEvents;
         }

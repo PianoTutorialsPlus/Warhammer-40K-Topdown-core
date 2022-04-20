@@ -4,5 +4,6 @@
     {
         PlayerSO ActivePlayer { get ; set; }
         PlayerSO EnemyPlayer { get; set; }
+        IUnit ActiveUnit { get; set; }
     }
 }

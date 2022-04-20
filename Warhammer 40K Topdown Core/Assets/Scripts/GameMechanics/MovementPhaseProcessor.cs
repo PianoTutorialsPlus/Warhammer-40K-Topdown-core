@@ -17,10 +17,8 @@ namespace WH40K.GameMechanics
         // Variables
         private static Dictionary<MovementPhase, MovementPhases> _movementPhases = new Dictionary<MovementPhase, MovementPhases>();
         public static bool _initialized;
-
-        private static GameStatsSO _gamesStats;
-        private static IPhase _battleroundEvents;
-        private static InputReader _inputReader;
+        private static IGamePhase _gamePhase;
+        private static GameStatsSO _gamesStats => _gamePhase.GameStats;
 
         private static void Initialize()
         {
@@ -32,42 +30,23 @@ namespace WH40K.GameMechanics
 
             foreach (var subphase in allShootingPhases)
             {
-                MovementPhases movementPhases = Activator.CreateInstance(subphase, _battleroundEvents) as MovementPhases;
+                MovementPhases movementPhases = Activator.CreateInstance(subphase, _gamePhase) as MovementPhases;
                 _movementPhases.Add(movementPhases.SubEvents, movementPhases);
             }
 
             _initialized = true;
         }
-        public static void InjectParamers(GameStatsSO gameStats, BattleRoundsSO battleroundEvents, InputReader inputReader)
+        public static void InjectParamers(IGamePhase gamePhase)
         {
-            _gamesStats = gameStats;
-            _battleroundEvents = battleroundEvents;
-            _inputReader = inputReader;
+            _gamePhase = gamePhase;
         }
-        public static bool HandleSelection(MovementPhase subPhase)
+        public static void HandlePhase(MovementPhase subPhase)
         {
             Initialize();
 
             var movementPhase = _movementPhases[subPhase];
-            return movementPhase.HandlePhase(_gamesStats);
+            movementPhase.HandlePhase(_gamesStats);
         }
-
-        internal static bool HandleMovement(MovementPhase subPhase)
-        {
-            Initialize();
-
-            var movementPhase = _movementPhases[subPhase];
-            return movementPhase.HandlePhase(_gamesStats);
-        }
-
-        public static MovementPhase SetPhase(MovementPhase subPhase)
-        {
-            Initialize();
-
-            var movementPhase = _movementPhases[subPhase];
-            return movementPhase.SetPhase();
-        }
-
         public static bool Next(MovementPhase subPhase)
         {
             Initialize();
@@ -76,6 +55,29 @@ namespace WH40K.GameMechanics
             return movementPhase.Next(_gamesStats);
         }
 
+        internal static void ClearPhase(MovementPhase subPhase)
+        {
+            Initialize();
+
+            var movementPhase = _movementPhases[subPhase];
+            movementPhase.ClearPhase(_gamesStats);
+        }
+
+        //internal static bool HandleMovement(MovementPhase subPhase)
+        //{
+        //    Initialize();
+
+        //    var movementPhase = _movementPhases[subPhase];
+        //    return movementPhase.HandlePhase(_gamesStats);
+        //}
+
+        //public static MovementPhase SetNextPhase(MovementPhase subPhase)
+        //{
+        //    Initialize();
+
+        //    var movementPhase = _movementPhases[subPhase];
+        //    return movementPhase.SetNextPhase();
+        //}
         //public static void InjectParamers(GameStatsSO gameStats, BattleRoundsSO battleroundEvents, InputReader inputReader)
         //{
         //    _gamesStats = gameStats;

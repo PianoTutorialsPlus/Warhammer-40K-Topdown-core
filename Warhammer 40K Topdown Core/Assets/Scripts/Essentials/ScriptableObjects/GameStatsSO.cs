@@ -15,10 +15,11 @@ namespace WH40K.Essentials
         [SerializeField] private PlayerSO _enemyPlayer;
 
         public PlayerSO ActivePlayer { get => _activePlayer; set => _activePlayer = value; }
-        public PlayerSO EnemyPlayer { get => _enemyPlayer; set => _enemyPlayer = value as PlayerSO; }
+        public PlayerSO EnemyPlayer { get => _enemyPlayer; set => _enemyPlayer = value; }
         public GameTableSO gameTable;
 
-        public IStats activeUnitTest;
-        public IStats enemyUnitTest;
+        public IUnit activeUnitTest;
+        public IUnit enemyUnitTest;
+        public IUnit ActiveUnit { get => activeUnitTest; set => activeUnitTest = value; }
     }
 }

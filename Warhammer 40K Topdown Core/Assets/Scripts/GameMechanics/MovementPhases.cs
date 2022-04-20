@@ -1,4 +1,6 @@
-﻿using WH40K.Essentials;
+﻿using System;
+using UnityEngine;
+using WH40K.Essentials;
 
 namespace WH40K.GameMechanics
 {
@@ -7,60 +9,74 @@ namespace WH40K.GameMechanics
     /// </summary>
     public abstract class MovementPhases
     {
-        public IPhase _phase;
-        public MovementPhases(IPhase phase)
+        private IGamePhase _gamePhase;
+        public GameStatsSO _gameStats => _gamePhase.GameStats;// { get => _gamePhase.GameStats; set => _gamePhase.GameStats = value; }
+        public IPhase _phase => _gamePhase.BattleroundEvents;
+        public InputReader _inputReader => _gamePhase.InputReader;
+
+        public MovementPhases(IGamePhase gamePhase)
         {
-            _phase = phase;
+            _gamePhase = gamePhase;
         }
 
         public abstract MovementPhase SubEvents { get; } // gets the active subphase
-        public abstract MovementPhase SetPhase(); // sets the next subphase
-        public virtual bool HandlePhase(GameStatsSO gameStats) { return false; } // handles the selection subphase
+        //public abstract MovementPhase SetNextPhase(); // sets the next subphase
+        public virtual void HandlePhase(GameStatsSO gameStats) { } // handles the selection subphase
                                                                                  //public virtual bool HandleMove(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents) { return false; } // handles the movement subphase
         public virtual bool Next(GameStatsSO gameStats) { return false; } // disables the current unit for this game phase
 
+        public void ClearPhase(GameStatsSO gamesStats)
+        {
+            _phase.ClearPhase(gamesStats);
+            gamesStats.gameTable.gameTable.onTapDownAction -= MoveUnit;
+        }
+        public void MoveUnit(Vector3 position)
+        {
+            _gameStats.ActiveUnit.UnitMover.SetDestination(position);
+        }
     }
 
     public class M_Selection : MovementPhases
     {
-        public M_Selection(IPhase phase) : base(phase) { }
+        public M_Selection(IGamePhase gamePhase) : base(gamePhase) { }
 
         public override MovementPhase SubEvents => MovementPhase.Selection;
-        public override MovementPhase SetPhase() { return MovementPhase.Move; }
-        public override bool HandlePhase(GameStatsSO gameStats)
+        //public override MovementPhase SetNextPhase() {  return MovementPhase.Move; }
+        public override void HandlePhase(GameStatsSO gameStats)
         {
             _phase.HandlePhase(gameStats);
-            //_battleroundEvents.HandlePhase(gameStats);
-            return gameStats.activeUnitTest != null ? true : false;
         }
+        
+
     }
 
     public class Move : MovementPhases
     {
-        public Move(IPhase phase) : base(phase) { }
+        public Move(IGamePhase gamePhase) : base(gamePhase) { }
 
         public override MovementPhase SubEvents => MovementPhase.Move;
-        public override MovementPhase SetPhase() { return MovementPhase.Next; }
+        //public override MovementPhase SetNextPhase() { return MovementPhase.Next; }
 
-        public override bool HandlePhase(GameStatsSO gameStats)
+        public override void HandlePhase(GameStatsSO gameStats)
         {
             _phase.HandlePhase(gameStats);
             //_battleroundEvents.FillMethods(gameStats.activeUnit, true, true, true, false);
-            gameStats.activeUnit.IsActivated = true;
-            return true;
+            gameStats.ActiveUnit.IsActivated = true;
+            gameStats.gameTable.gameTable.onTapDownAction += MoveUnit;
         }
 
         public override bool Next(GameStatsSO gameStats)
         {
-            return gameStats.activeUnit.done;
+            return gameStats.ActiveUnit.IsDone;
         }
+
     }
 
     public class MNext : MovementPhases
     {
-        public MNext(IPhase phase) : base(phase) { }
+        public MNext(IGamePhase gamePhase) : base(gamePhase) { }
         public override MovementPhase SubEvents => MovementPhase.Next;
-        public override MovementPhase SetPhase() { return MovementPhase.Selection; }
+        //public override MovementPhase SetNextPhase() { return MovementPhase.Selection; }
 
         public override bool Next(GameStatsSO gameStats)
         {

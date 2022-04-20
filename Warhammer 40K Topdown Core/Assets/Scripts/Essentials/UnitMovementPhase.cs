@@ -10,13 +10,13 @@ namespace WH40K.Essentials
         private IUnit _unit;
         private Unit unit;
         private UnitSelector UnitSelector => _unit.UnitSelector;
-        private UnityAction<Unit> onTapDownAction => _unit.OnTapDownAction;
+        private UnityAction<IUnit> onTapDownAction => _unit.OnTapDownAction;
         private UnityAction onPointerEnter => _unit.OnPointerEnter;
         private UnityAction<IUnit> onPointerEnterInfo => _unit.OnPointerEnterInfo;
         private UnityAction<IUnit> onPointerExit => _unit.OnPointerExit;
         private GameStatsSO _gameStats => _unit.GameStats;
         public bool IsSelected { get; set; }
-        public IStats ActiveUnit { get => _gameStats.activeUnitTest; set => _gameStats.activeUnitTest = value; }
+        public IUnit ActiveUnit { get => _gameStats.activeUnitTest; set => _gameStats.activeUnitTest = value; }
 
         private void Awake()
         {
@@ -57,6 +57,7 @@ namespace WH40K.Essentials
             if (pointerEvent.button == PointerEventData.InputButton.Left)
             {
                 SelectUnit();
+                Debug.Log("active Unit: " + ActiveUnit);
                 onTapDownAction(unit);
                 //onTapDownAction(gameObject.GetComponent<Unit>());
             }

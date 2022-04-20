@@ -6,15 +6,15 @@ namespace Editor.Unit
 {
     public class UnitSelectorTests
     {
-        protected IStats unit;
+        protected IUnit unit;
         protected UnitSelector unitSelector;
-        protected IStats Target;
+        protected IUnit Target;
         public Fraction TargetFraction => Target.Fraction;
 
         [SetUp]
         public void BeforeEveryTest()
         {
-            unit = Substitute.For<IStats>();
+            unit = Substitute.For<IUnit>();
             unit.Fraction.Returns(Fraction.Necrons);
         }
 

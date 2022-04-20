@@ -6,8 +6,9 @@ namespace Editor.Infrastructure
     public class UIDisplayInteractionEventBuilder : TestDataBuilder<UIDisplayInteractionEvents>
     {
         private IManageUIEvents _uIEvents;
-        private Fraction _playerFraction;
-        private IStats _activeUnit;
+        //private Fraction _playerFraction;
+        //private IStats _activeUnit;
+        private GameStatsSO _gameStats;
 
         public UIDisplayInteractionEventBuilder()
         {
@@ -18,19 +19,25 @@ namespace Editor.Infrastructure
             _uIEvents = uIEvents;
             return this;
         }
-        public UIDisplayInteractionEventBuilder WithPlayerFraction(Fraction playerFraction)
+        public UIDisplayInteractionEventBuilder WithGameStats(GameStatsSO gameStats)
         {
-            _playerFraction = playerFraction;
+            _gameStats = gameStats;
             return this;
         }
-        public UIDisplayInteractionEventBuilder WithActiveUnit(IStats activeUnit)
-        {
-            _activeUnit = activeUnit;
-            return this;
-        }
+
+        //public UIDisplayInteractionEventBuilder WithPlayerFraction(Fraction playerFraction)
+        //{
+        //    _playerFraction = playerFraction;
+        //    return this;
+        //}
+        //public UIDisplayInteractionEventBuilder WithActiveUnit(IStats activeUnit)
+        //{
+        //    _activeUnit = activeUnit;
+        //    return this;
+        //}
         public override UIDisplayInteractionEvents Build()
         {
-            return new UIDisplayInteractionEvents(_uIEvents, _playerFraction,_activeUnit);
+            return new UIDisplayInteractionEvents(_uIEvents, _gameStats);
         }
     }
 }
