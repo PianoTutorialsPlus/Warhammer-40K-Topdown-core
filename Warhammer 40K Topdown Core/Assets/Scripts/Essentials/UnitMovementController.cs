@@ -13,7 +13,7 @@ namespace WH40K.Essentials
 
         private IPathCalculator PathCalculator => _unitMover.PathCalculator;
         public bool IsAgentStopped => PathCalculator.AgentIsStopped;
-        public Unit Unit => _unitMover.Unit;
+        public IUnit Unit => _unitMover.Unit;
         public bool IsMoveDistanceZero => _movementRange.IsMoveRangeZero;
         public Vector3 CurrentPosition => _unitMover.CurrentPosition;
 

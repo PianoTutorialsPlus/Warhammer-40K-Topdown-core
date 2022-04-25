@@ -53,7 +53,7 @@ namespace Unity
                 position = new Vector3(1, 0, 0);
 
                 // ACT
-                Target.SetDestination(position);
+                dut.SetDestination(position);
 
                 // ASSERT
                 yield return new WaitForSeconds(Seconds);

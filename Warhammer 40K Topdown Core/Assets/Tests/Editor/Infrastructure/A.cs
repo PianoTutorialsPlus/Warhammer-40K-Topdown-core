@@ -1,3 +1,9 @@
+using Editor.Infrastructure.EventChannels;
+using Editor.Infrastructure.Events;
+using Editor.Infrastructure.GamePhases;
+using Editor.Infrastructure.GameStats;
+using Editor.Infrastructure.Player;
+
 namespace Editor.Infrastructure
 {
     public static class A
@@ -19,6 +25,9 @@ namespace Editor.Infrastructure
         public static GameStatsBuilder GameStats => new GameStatsBuilder();
         public static GamePhaseBuilder GamePhase => new GamePhaseBuilder();
         public static MovementPhaseProcessorBuilder MovementPhaseProcessor => new MovementPhaseProcessorBuilder();
+        public static PathCalculatorBuilder PathCalculator => new PathCalculatorBuilder();
+        public static UnitMoverBuilder UnitMover => new UnitMoverBuilder();
+        public static UnitMovementControllerBuilder UnitMovementController => new UnitMovementControllerBuilder();
     }
     public static class An
     {
