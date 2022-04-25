@@ -27,8 +27,8 @@ namespace WH40K.GameMechanics
 
         public override GamePhase SubEvents => GamePhase.MovementPhase;
 
-        public BattleRoundsSO BattleroundEvents { get => _battleroundEvents; set => _battleroundEvents = value; }
-        public InputReader InputReader { get => _inputReader; set => _inputReader = value; }
+        public IPhase BattleroundEvents { get => _battleroundEvents;/* set => _battleroundEvents = value;*/ }
+        public InputReader InputReader { get => _inputReader; /*set => _inputReader = value;*/ }
         public GameStatsSO GameStats { get => _gameStats; set => _gameStats = value; }
 
         private void Awake()
@@ -40,8 +40,9 @@ namespace WH40K.GameMechanics
         }
         public void OnEnable()
         {
+            new MovementPhaseProcessor(this);
             //Debug.Log("Enable Movement");
-            MovementPhaseProcessor.InjectParamers(this);
+            //MovementPhaseProcessor.InjectParamers(this);
 
             if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += SetMovementPhase;
         }

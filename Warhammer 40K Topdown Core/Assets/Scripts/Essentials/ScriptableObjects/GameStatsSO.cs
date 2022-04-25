@@ -13,13 +13,14 @@ namespace WH40K.Essentials
         public Unit enemyUnit;
         [SerializeField] private PlayerSO _activePlayer;
         [SerializeField] private PlayerSO _enemyPlayer;
+        [SerializeField] private GameTableSO gameTable;
 
         public PlayerSO ActivePlayer { get => _activePlayer; set => _activePlayer = value; }
         public PlayerSO EnemyPlayer { get => _enemyPlayer; set => _enemyPlayer = value; }
-        public GameTableSO gameTable;
 
         public IUnit activeUnitTest;
         public IUnit enemyUnitTest;
         public IUnit ActiveUnit { get => activeUnitTest; set => activeUnitTest = value; }
+        public GameTableSO GameTable { get => gameTable; set => gameTable = value; }
     }
 }

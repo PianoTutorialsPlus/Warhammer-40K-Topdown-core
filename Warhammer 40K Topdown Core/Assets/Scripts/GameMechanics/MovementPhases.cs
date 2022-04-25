@@ -10,9 +10,8 @@ namespace WH40K.GameMechanics
     public abstract class MovementPhases
     {
         private IGamePhase _gamePhase;
-        public GameStatsSO _gameStats => _gamePhase.GameStats;// { get => _gamePhase.GameStats; set => _gamePhase.GameStats = value; }
+        public GameStatsSO _gameStats => _gamePhase.GameStats;
         public IPhase _phase => _gamePhase.BattleroundEvents;
-        public InputReader _inputReader => _gamePhase.InputReader;
 
         public MovementPhases(IGamePhase gamePhase)
         {
@@ -25,14 +24,10 @@ namespace WH40K.GameMechanics
                                                                                  //public virtual bool HandleMove(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents) { return false; } // handles the movement subphase
         public virtual bool Next(GameStatsSO gameStats) { return false; } // disables the current unit for this game phase
 
-        public void ClearPhase(GameStatsSO gamesStats)
+        public virtual void ClearPhase(GameStatsSO gamesStats)
         {
+            Debug.Log("Clear");
             _phase.ClearPhase(gamesStats);
-            gamesStats.gameTable.gameTable.onTapDownAction -= MoveUnit;
-        }
-        public void MoveUnit(Vector3 position)
-        {
-            _gameStats.ActiveUnit.UnitMover.SetDestination(position);
         }
     }
 
@@ -46,8 +41,6 @@ namespace WH40K.GameMechanics
         {
             _phase.HandlePhase(gameStats);
         }
-        
-
     }
 
     public class Move : MovementPhases
@@ -60,16 +53,23 @@ namespace WH40K.GameMechanics
         public override void HandlePhase(GameStatsSO gameStats)
         {
             _phase.HandlePhase(gameStats);
-            //_battleroundEvents.FillMethods(gameStats.activeUnit, true, true, true, false);
-            gameStats.ActiveUnit.IsActivated = true;
-            gameStats.gameTable.gameTable.onTapDownAction += MoveUnit;
+            _gameStats.ActiveUnit.Activate();
+            _gameStats.GameTable.gameTable.OnTapDownAction += MoveUnit;
         }
 
         public override bool Next(GameStatsSO gameStats)
         {
             return gameStats.ActiveUnit.IsDone;
         }
-
+        public override void ClearPhase(GameStatsSO gameStats)
+        {
+            _phase.ClearPhase(gameStats);
+            _gameStats.GameTable.gameTable.OnTapDownAction -= MoveUnit;
+        }
+        public void MoveUnit(Vector3 position)
+        {
+            _gameStats.ActiveUnit.SetDestination(position);
+        }
     }
 
     public class MNext : MovementPhases
@@ -81,7 +81,7 @@ namespace WH40K.GameMechanics
         public override bool Next(GameStatsSO gameStats)
         {
             //gameStats.activeUnit.Freeze();
-            gameStats.activeUnit = null;
+            _gameStats.ActiveUnit = null;
             return true;
         }
 

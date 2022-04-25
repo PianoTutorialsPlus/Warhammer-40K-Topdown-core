@@ -21,8 +21,8 @@ namespace Editor.Unit.Movement
                 IPathCalculator pathCalculator = Substitute.For<IPathCalculator>();
                 var position = Vector3.right;
                 pathCalculator.GetEndPosition(position).Returns(Vector3.zero);
-
                 unitMover.PathCalculator.Returns(pathCalculator);
+                unitMover.MovementRange = new MovementRange(0);
 
                 var unit = new UnitMovementController(unitMover);
 
@@ -40,7 +40,7 @@ namespace Editor.Unit.Movement
                 var unitMover = Substitute.For<IUnitMover>();
                 unitMover.MaxDistance.Returns(1);
                 unitMover.CurrentPosition.Returns(Vector3.zero);
-
+                unitMover.MovementRange = new MovementRange(1);
 
                 IPathCalculator pathCalculator = Substitute.For<IPathCalculator>();
                 var position = Vector3.right;

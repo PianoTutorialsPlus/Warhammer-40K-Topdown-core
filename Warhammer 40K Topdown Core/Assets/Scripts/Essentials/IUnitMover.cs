@@ -12,6 +12,6 @@ namespace WH40K.Essentials
         float MoveDistance { get; }
         float MovedDistance { get; }
         MovementRange MovementRange { get; set; }
-        void SetDestination(UnityEngine.Vector3 position);
+        void SetDestination(Vector3 position);
     }
 }

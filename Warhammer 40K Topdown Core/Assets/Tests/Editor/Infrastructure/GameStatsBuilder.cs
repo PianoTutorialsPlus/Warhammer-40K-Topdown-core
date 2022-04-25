@@ -7,6 +7,7 @@ namespace Editor.Infrastructure
     {
         private PlayerSO _activePlayer;
         private IUnit _activeUnit;
+        private GameTableSO _gameTable;
 
         public GameStatsBuilder()
         {
@@ -22,12 +23,18 @@ namespace Editor.Infrastructure
             _activeUnit = unit;
             return this;
         }
+        public GameStatsBuilder WithGameTable(GameTableSO gameTable)
+        {
+            _gameTable = gameTable;
+            return this;
+        }
 
         public override GameStatsSO Build()
         {
             var gameStats = ScriptableObject.CreateInstance<GameStatsSO>();
             gameStats.ActivePlayer = _activePlayer;
-            gameStats.ActiveUnit = _activeUnit;
+            gameStats.ActiveUnit = _activeUnit ??= A.Unit.Build();
+            //gameStats.GameTable = _gameTable ??= A.GameTable;
             return gameStats;
         }
     }

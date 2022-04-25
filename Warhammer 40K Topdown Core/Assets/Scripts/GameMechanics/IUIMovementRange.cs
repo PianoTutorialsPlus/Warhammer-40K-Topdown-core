@@ -2,7 +2,7 @@
 {
     public interface IUIMovementRange
     {
-        IndicatorUIEventChannelSO IndicatorConnectionUIEvent { get; set; }
-        BattleroundEventChannelSO SetPhaseEvent { get; set; }
+        IndicatorUIEventChannelSO IndicatorConnectionUIEvent { get; }
+        BattleroundEventChannelSO SetPhaseEvent { get; }
     }
 }

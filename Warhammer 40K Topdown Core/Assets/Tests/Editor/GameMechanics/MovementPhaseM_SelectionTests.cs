@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using WH40K.Essentials;
 using WH40K.GameMechanics;
 using WH40K.UI;
@@ -14,31 +15,151 @@ namespace Editor.GameMechanics
 {
     public class MovementPhaseM_SelectionTests
     {
-        public class TheSubEventsMethod
+        public int counter;
+
+        public IGamePhase SetGamePhase()
         {
-            
+            return A.GamePhase.Build();
+        }
+        public void SetHandlePhase(IGamePhase gamePhase)
+        {
+            gamePhase.BattleroundEvents
+                .When(x => x.HandlePhase(Arg.Any<GameStatsSO>()))
+                .Do(x => counter++);
+        }
+        public void SetClearPhase(IGamePhase gamePhase)
+        {
+            gamePhase.BattleroundEvents
+                .When(x => x.ClearPhase(Arg.Any<GameStatsSO>()))
+                .Do(x => counter++);
+        }
+        public void SetMovementPhaseProcessor(IGamePhase gamePhase)
+        {
+            MovementPhaseProcessor processor = A.MovementPhaseProcessor.WithGamePhase(gamePhase);
+            processor.SetPrivate(x => x.Initialized, false);
+        }
 
+        [SetUp]
+        public void BeforeEveryTest()
+        {
+           counter = 0;
+        }
+
+        public class TheHandlePhaseMethod : MovementPhaseM_SelectionTests
+        {
             [Test]
-            public void When_M_Selection_Has_An_Instance_Then_SubEvents_Returns_MovementPhase_Selection()
+            public void When_MovementPhase_State_Is_Selection_Then_BattleRoundEvent_HandlePhase_Is_Raised()
             {
-                IGamePhase phase = Substitute.For<IGamePhase>();
-                var selection = new M_Selection(phase);
-                Assert.AreEqual(MovementPhase.Selection, selection.SubEvents);
+                IGamePhase gamePhase = SetGamePhase();
+                SetHandlePhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
+
+                MovementPhaseProcessor.HandlePhase(MovementPhase.Selection);
+                Assert.AreEqual(1, counter);
             }
+            [Test]
+            public void When_MovementPhase_State_Is_Move_Then_BattleRoundEvent_HandlePhase_Is_Raised()
+            {
+                IGamePhase gamePhase = SetGamePhase();
+                SetHandlePhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
 
-            //[Test]
-            //public void When_HandlePhase_Is_Called_Then_BattleRoundEvent_HandlePhase_Is_Raised()
-            //{
-            //    var counter = 0;
-            //     IGamePhase gamePhase = Substitute.For<IGamePhase>();
+                MovementPhaseProcessor.HandlePhase(MovementPhase.Move);
+                Assert.AreEqual(1, counter);
+            }
+            [Test]
+            public void When_MovementPhase_State_Is_Next_Then_BattleRoundEvent_HandlePhase_Is_Not_Raised()
+            {
+                IGamePhase gamePhase = SetGamePhase();
+                SetHandlePhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
 
-            //    gamePhase.When(x => x.BattleroundEvents.HandlePhase(Arg.Any<GameStatsSO>()))
-            //        .Do(x => counter++);
+                MovementPhaseProcessor.HandlePhase(MovementPhase.Next);
+                Assert.AreEqual(0, counter);
+            }
+        }
+        public class TheClearPhaseMethod : MovementPhaseM_SelectionTests
+        { 
+            [Test]
+            public void When_MovementPhase_State_Is_Selection_Then_BattleRoundEvent_ClearPhase_Is_Raised()
+            {
+                IGamePhase gamePhase = SetGamePhase();
+                SetClearPhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
 
-            //    var selection = new M_Selection(gamePhase);
-            //    selection.HandlePhase(A.GameStats);
-            //    Assert.AreEqual(1, counter);
-            //}
+                MovementPhaseProcessor.ClearPhase(MovementPhase.Selection);
+                Assert.AreEqual(1, counter);
+            }
+            [Test]
+            public void When_MovementPhase_State_Is_Move_Then_BattleRoundEvent_ClearPhase_Is_Raised()
+            {
+                IGamePhase gamePhase = SetGamePhase();
+                SetClearPhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
+
+                MovementPhaseProcessor.ClearPhase(MovementPhase.Move);
+                Assert.AreEqual(1, counter);
+            }
+            [Test]
+            public void When_MovementPhase_State_Is_Next_Then_BattleRoundEvent_ClearPhase_Is_Raised()
+            {
+                IGamePhase gamePhase = SetGamePhase();
+                SetClearPhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
+
+                MovementPhaseProcessor.ClearPhase(MovementPhase.Next);
+                Assert.AreEqual(1, counter);
+            }
+        }
+        public class TheNextMethod : MovementPhaseM_SelectionTests
+        {
+            [Test]
+            public void When_MovementPhase_State_Is_Selection_Then_Next_Is_False()
+            {
+                IGamePhase gamePhase = SetGamePhase();
+                SetClearPhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
+                
+                Assert.IsFalse(MovementPhaseProcessor.Next(MovementPhase.Selection));
+            }
+            [Test]
+            public void When_MovementPhase_State_Is_Move_Then_Next_Is_False()
+            {
+                IGamePhase gamePhase = SetGamePhase();
+                SetClearPhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
+
+                Assert.IsFalse(MovementPhaseProcessor.Next(MovementPhase.Move));
+            }
+            [Test]
+            public void When_MovementPhase_State_Is_Move_And_Unit_Is_Done_Then_Next_Is_True()
+            {
+                IGamePhase gamePhase = SetGamePhase();
+                gamePhase.GameStats.ActiveUnit.IsDone.Returns(true);
+                SetClearPhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
+
+                Assert.IsTrue(MovementPhaseProcessor.Next(MovementPhase.Move));
+            }
+            [Test]
+            public void When_MovementPhase_State_Is_Next_Then_Next_Is_True()
+            {
+                IGamePhase gamePhase = SetGamePhase();
+                SetClearPhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
+
+                Assert.IsTrue(MovementPhaseProcessor.Next(MovementPhase.Next));
+            }
+            [Test]
+            public void When_MovementPhase_State_Is_Next_Then_ActiveUnit_Is_Null()
+            {
+                IGamePhase gamePhase = SetGamePhase();
+                SetClearPhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase);
+                MovementPhaseProcessor.Next(MovementPhase.Next);
+
+                Assert.IsNull(gamePhase.GameStats.ActiveUnit);
+            }
         }
     }
 }

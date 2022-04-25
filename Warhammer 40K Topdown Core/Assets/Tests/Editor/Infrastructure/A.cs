@@ -17,10 +17,13 @@ namespace Editor.Infrastructure
         public static UnitBuilder Unit => new UnitBuilder();
         public static PlayerBuilder Player => new PlayerBuilder();
         public static GameStatsBuilder GameStats => new GameStatsBuilder();
+        public static GamePhaseBuilder GamePhase => new GamePhaseBuilder();
+        public static MovementPhaseProcessorBuilder MovementPhaseProcessor => new MovementPhaseProcessorBuilder();
     }
     public static class An
     {
         public static UIEventBuilder UIEvent => new UIEventBuilder();
         public static BattleRoundEventBuilder BattleRoundEvent => new BattleRoundEventBuilder();
+        public static IPhaseBuilder IPhaseEvent => new IPhaseBuilder();
     }
 }

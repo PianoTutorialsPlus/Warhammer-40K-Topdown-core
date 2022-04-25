@@ -5,8 +5,7 @@ namespace WH40K.GameMechanics
 {
     public interface IGamePhase
     {
-        BattleRoundsSO BattleroundEvents { get; set; }
-        InputReader InputReader { get; set; }
+        IPhase BattleroundEvents { get; }
         GameStatsSO GameStats { get; set; }
     }
 }

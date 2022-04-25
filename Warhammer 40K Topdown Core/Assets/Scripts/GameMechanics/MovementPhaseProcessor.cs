@@ -12,13 +12,15 @@ namespace WH40K.GameMechanics
     /// This script processes the communication between the movement phase manager and the main movement phases executables.
     /// </summary>
 
-    public static class MovementPhaseProcessor
+    public class MovementPhaseProcessor
     {
         // Variables
         private static Dictionary<MovementPhase, MovementPhases> _movementPhases = new Dictionary<MovementPhase, MovementPhases>();
-        public static bool _initialized;
+        private static bool _initialized;
         private static IGamePhase _gamePhase;
         private static GameStatsSO _gamesStats => _gamePhase.GameStats;
+
+        public bool Initialized { get => _initialized; protected set => _initialized = value; }
 
         private static void Initialize()
         {
@@ -36,7 +38,7 @@ namespace WH40K.GameMechanics
 
             _initialized = true;
         }
-        public static void InjectParamers(IGamePhase gamePhase)
+        public MovementPhaseProcessor(IGamePhase gamePhase)
         {
             _gamePhase = gamePhase;
         }
@@ -55,7 +57,7 @@ namespace WH40K.GameMechanics
             return movementPhase.Next(_gamesStats);
         }
 
-        internal static void ClearPhase(MovementPhase subPhase)
+        public static void ClearPhase(MovementPhase subPhase)
         {
             Initialize();
 

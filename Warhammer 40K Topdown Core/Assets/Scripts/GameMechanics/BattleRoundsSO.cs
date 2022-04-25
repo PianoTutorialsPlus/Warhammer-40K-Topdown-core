@@ -23,11 +23,11 @@ namespace WH40K.UI
         private IPlayer _activePlayer => _gameStats.ActivePlayer;
         private IPlayer _enemyPlayer => _gameStats.EnemyPlayer;
 
-        public InteractionUIEventChannelSO InteractionUIEvent { get => _toggleInteractionUI; set => _toggleInteractionUI = value; }
-        public InfoUIEventChannelSO InfoUIEvent { get => _toggleInfoUI; set => _toggleInfoUI = value; }
-        public InfoUIEventChannelSO EnemyInfoUIEvent { get => _toggleEnemyInfoUI; set => _toggleEnemyInfoUI = value; }
-        public IndicatorUIEventChannelSO IndicatorConnectionUIEvent { get => _toggleIndicatorConnectionUI; set => _toggleIndicatorConnectionUI = value; }
-        public BattleroundEventChannelSO SetPhaseEvent { get => _setPhaseEvent; set => _setPhaseEvent = value; }
+        public InteractionUIEventChannelSO InteractionUIEvent => _toggleInteractionUI;
+        public InfoUIEventChannelSO InfoUIEvent  => _toggleInfoUI;
+        public InfoUIEventChannelSO EnemyInfoUIEvent => _toggleEnemyInfoUI;
+        public IndicatorUIEventChannelSO IndicatorConnectionUIEvent => _toggleIndicatorConnectionUI; 
+        public BattleroundEventChannelSO SetPhaseEvent => _setPhaseEvent;
 
         public void OnEnable()
         {
@@ -45,7 +45,6 @@ namespace WH40K.UI
         {
             foreach (Unit child in _activePlayer.PlayerUnits) ResetMethods(child);
             foreach (Unit child in _enemyPlayer.PlayerUnits) ResetMethods(child);
-
         }
         public void FillMethods(Unit child)
         {

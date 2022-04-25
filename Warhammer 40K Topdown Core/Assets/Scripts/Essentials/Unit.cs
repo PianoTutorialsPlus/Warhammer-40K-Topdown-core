@@ -236,11 +236,19 @@ namespace WH40K.Essentials
             //PathCalculator.ResetAgent();
             done = false;
         }
+        public void Activate()
+        {
+            IsActivated = true;
+        }
         public void PrepareMovementPhase()
         {
             //Debug.Log("ResetMovement");
             //m_Agent.isStopped = false;
             //restDistance = MoveDistance;
+        }
+        public void SetDestination(Vector3 position)
+        {
+            UnitMover.SetDestination(position);
         }
         public void PrepareShootingPhase()
         {
