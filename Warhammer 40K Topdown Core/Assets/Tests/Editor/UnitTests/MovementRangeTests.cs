@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using WH40K.Essentials;
 
-namespace Editor.Unit.Movement
+namespace Editor.Units.Movement
 {
     public class MovementRangeTests
     {
@@ -32,7 +32,7 @@ namespace Editor.Unit.Movement
                 var startPosition = Vector3.zero;
                 var currentPosition = Vector3.right;
 
-                MovementRange movementRange = 
+                MovementRange movementRange =
                     A.MovementRange
                         .WithStartPosition(startPosition)
                         .WithCurrentPosition(currentPosition);
@@ -62,14 +62,14 @@ namespace Editor.Unit.Movement
                         .WithMaxRange(1)
                         .WithStartPosition(startPosition)
                         .WithCurrentPosition(currentPosition);
-                        
+
                 Assert.AreEqual(0, movementRange.MoveRange);
             }
             [Test]
             public void When_MaxRange_Is_1_With_Start_X_0_And_Current_X_2_Then_MoveRange_Is_0()
             {
                 var startPosition = Vector3.zero;
-                var currentPosition = new Vector3(2,0,0);
+                var currentPosition = new Vector3(2, 0, 0);
 
                 MovementRange movementRange =
                     A.MovementRange
@@ -171,14 +171,14 @@ namespace Editor.Unit.Movement
 
                 movementRange.UpdateRange();
 
-                Assert.AreEqual(0,movementRange.MoveRange);
+                Assert.AreEqual(0, movementRange.MoveRange);
             }
             [Test]
             public void When_MaxRange_Is_1_With_Start_X_Pos_Is_0_And_Current_X_Pos_Is_1_Then_MoveRange_Is_0()
             {
                 var currentPosition = Vector3.right;
 
-                MovementRange movementRange = 
+                MovementRange movementRange =
                     A.MovementRange
                         .WithMaxRange(1)
                         .WithCurrentPosition(currentPosition);

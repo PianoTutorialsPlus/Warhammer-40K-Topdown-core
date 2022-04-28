@@ -39,7 +39,7 @@ namespace WH40K.UI
             while (true)
             {
                 yield return new WaitForEndOfFrame();
-                _rangeController.ScaleRange(unit.Movement);
+                _rangeController.ScaleRange(unit.UnitMover.MoveDistance);
             }
         }
     }

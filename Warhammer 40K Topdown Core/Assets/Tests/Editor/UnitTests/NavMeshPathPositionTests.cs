@@ -3,7 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using WH40K.Essentials;
 
-namespace Editor.Unit.Movement
+namespace Editor.Units.Movement
 {
     public class NavMeshPathPositionTests
     {
@@ -22,7 +22,7 @@ namespace Editor.Unit.Movement
             {
                 Vector3 startPath = Vector3.right;
                 NavMeshPathPosition navMeshPosition = A.PathPosition.WithPathCorners(startPath);
-                
+
                 var endPath = navMeshPosition.EndPosition;
 
                 Assert.AreEqual(0, endPath.x);
@@ -33,10 +33,10 @@ namespace Editor.Unit.Movement
                 Vector3 startPath = Vector3.zero;
                 Vector3 endPath = Vector3.right;
 
-                NavMeshPathPosition navMeshPosition = 
+                NavMeshPathPosition navMeshPosition =
                     A.PathPosition
                         .WithMoveRange(0)
-                        .WithPathCorners(startPath,endPath);
+                        .WithPathCorners(startPath, endPath);
 
                 navMeshPosition.EndPosition = endPath;
                 var endPosition = navMeshPosition.EndPosition;
@@ -49,14 +49,14 @@ namespace Editor.Unit.Movement
                 Vector3 startPath = Vector3.zero;
                 Vector3 endPath = Vector3.right;
 
-                NavMeshPathPosition navMeshPosition = 
+                NavMeshPathPosition navMeshPosition =
                     A.PathPosition
                         .WithMoveRange(1)
                         .WithPathCorners(startPath, endPath);
 
                 navMeshPosition.EndPosition = endPath;
                 var endPosition = navMeshPosition.EndPosition;
-                
+
 
                 Assert.AreEqual(1, endPosition.x);
             }
@@ -64,7 +64,7 @@ namespace Editor.Unit.Movement
             public void When_Range_Is_1_Moved_2_In_X_Then_End_Position_X_Is_1()
             {
                 Vector3 startPath = Vector3.zero;
-                Vector3 endPath = new Vector3(2,0,0);
+                Vector3 endPath = new Vector3(2, 0, 0);
 
                 NavMeshPathPosition navMeshPosition =
                     A.PathPosition
@@ -108,7 +108,7 @@ namespace Editor.Unit.Movement
                 navMeshPosition.EndPosition = endPath;
                 var endPosition = navMeshPosition.EndPosition;
 
-                Assert.AreEqual(new Vector3(-3,0,-2), endPosition);
+                Assert.AreEqual(new Vector3(-3, 0, -2), endPosition);
             }
         }
     }

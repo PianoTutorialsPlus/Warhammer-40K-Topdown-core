@@ -4,7 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using WH40K.Essentials;
 
-namespace Editor.Unit.Movement
+namespace Editor.Units.Movement
 {
     public class UnitMoverTests
     {
@@ -17,6 +17,7 @@ namespace Editor.Unit.Movement
         private UnitMovementController moveController;
         private bool initialize;
         private int movement;
+        
 
         protected float TargetDistance => unitMover.MoveDistance;
         protected float TargetMoveDistance => Target.MoveDistance;
@@ -24,8 +25,9 @@ namespace Editor.Unit.Movement
         [SetUp]
         public void BeforeEveryTest()
         {
-            //Target = new GameObject().AddComponent<UnitMover>();
-            //Target.Unit = new GameObject().AddComponent<Unit>();
+            Target = new GameObject().AddComponent<UnitMover>();
+            Target.gameObject.AddComponent<Unit>();
+            Target.Awake();
             pathCalculator = Substitute.For<IPathCalculator>();
             //Target.Unit.SetPrivate(t => t.PathCalculator, PathCalculator);
             unit = Substitute.For<IStats>();
@@ -36,7 +38,7 @@ namespace Editor.Unit.Movement
             //unitMoverTest._moveController = new UnitMovementController(unitMover);
 
             moveController = new UnitMovementController(unitMover);
-            unitMoverTest.Initialize(pathCalculator, unit);
+            //unitMoverTest.Initialize(pathCalculator, unit);
             position = Vector3.zero;
             initialize = false;
 
@@ -46,9 +48,9 @@ namespace Editor.Unit.Movement
         private void UnitMovement(int value)
         {
             //movement = value;
-           // unit.Movement.Returns(value);
+            // unit.Movement.Returns(value);
             unitMover.MaxDistance.Returns(value);
-            
+
         }
         //private void SetPathDistance(int value)
         //{
@@ -87,7 +89,7 @@ namespace Editor.Unit.Movement
             //    value -= hasMoved;
 
             //    SetPathDistance(value);
-                
+
             //   // PathCalculator.RemainingDistance.Returns(value);
             //}
             protected void HasPath(bool hasPath)
@@ -125,7 +127,7 @@ namespace Editor.Unit.Movement
                 //Target.transform.position = new Vector3(1, 0, 0);
                 Vector3 startPosition = Vector3.zero;
                 Vector3 endPosition = Vector3.right;
-          
+
                 moveController.SetStartPosition(startPosition);
                 //moveController.SetDestination(endPosition);
                 unitMover.SetDestination(endPosition);

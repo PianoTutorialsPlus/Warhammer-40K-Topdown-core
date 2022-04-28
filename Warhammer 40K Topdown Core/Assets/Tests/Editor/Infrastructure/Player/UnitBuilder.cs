@@ -14,6 +14,7 @@ namespace Editor.Infrastructure.Player
         private UnityAction<IUnit> _onPointerExit;
         private UnityAction _onPointerEnter;
         private UnityAction<IUnit> _onTapDownAction;
+        private UnitSelector _unitSelector;
 
         public UnitBuilder()
         {
@@ -22,6 +23,11 @@ namespace Editor.Infrastructure.Player
         public UnitBuilder WithFraction(Fraction fraction)
         {
             _fraction = fraction;
+            return this;
+        }
+        public UnitBuilder WithUnitSelector(UnitSelector unitSelector)
+        {
+            _unitSelector = unitSelector;
             return this;
         }
         public UnitBuilder WithIsActivatedState(bool isActivated)
@@ -59,6 +65,7 @@ namespace Editor.Infrastructure.Player
             var unit = Substitute.For<IUnit>();
 
             unit.Fraction.Returns(_fraction);
+            unit.UnitSelector.Returns(_unitSelector);
             unit.IsDone.Returns(_isDone);
             unit.IsActivated.Returns(_isActivated);
             unit.OnPointerEnter.Returns(_onPointerEnter);

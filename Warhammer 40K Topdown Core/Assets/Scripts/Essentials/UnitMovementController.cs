@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace WH40K.Essentials
 {
@@ -31,6 +30,7 @@ namespace WH40K.Essentials
         {
             if (!IsAgentStopped)
             {
+                _movementRange.UpdateRange();
                 SetStartPosition(CurrentPosition);
                 SetEndPosition(position);
 

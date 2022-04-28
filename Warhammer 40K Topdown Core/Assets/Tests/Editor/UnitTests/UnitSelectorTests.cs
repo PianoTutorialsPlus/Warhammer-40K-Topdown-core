@@ -1,8 +1,9 @@
+using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
 using WH40K.Essentials;
 
-namespace Editor.Unit
+namespace Editor.Units
 {
     public class UnitSelectorTests
     {
@@ -20,7 +21,11 @@ namespace Editor.Unit
 
         public void SetUnitSelector(Fraction fraction)
         {
-            unitSelector = new UnitSelector(fraction, unit);
+            unitSelector = A.UnitSelector
+                .WithGameStats(A.GameStats
+                    .WithActivePlayer(A.Player.WithFraction(fraction)))
+                .WithUnit(A.Unit.Build());
+
             Target = unitSelector.GetUnit();
         }
 

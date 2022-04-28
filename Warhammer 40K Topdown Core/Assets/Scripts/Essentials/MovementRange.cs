@@ -29,7 +29,7 @@ namespace WH40K.Essentials
 
         public void UpdateRange()
         {
-            _deltaRange += MovedDistance;
+            _deltaRange += (_startPosition - _currentPosition).magnitude;
             _startPosition = _currentPosition;
         }
 

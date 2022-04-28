@@ -88,12 +88,12 @@ namespace WH40K.Essentials
             m_Agent = GetComponent<NavMeshAgent>();
             PathCalculator = new PathCalculator(m_Agent);
             UnitMover = GetComponent<UnitMover>();
-            UnitSelector = new UnitSelector(ActivePlayerFraction, this);
+            UnitSelector = new UnitSelector(_gameStats, this);
             //UnitMover.Initialize(PathCalculator, _unitSO);
             //unitMovementPhase.Initialize(this);
             //gameObject.AddComponent<UnitMovementPhase>();
             //unitMovementPhase = GetComponent<UnitMovementPhase>();
-            UnitMover.Initialize(PathCalculator, this);
+            //UnitMover.Initialize(PathCalculator, this);
             canMove = true;
         }
 

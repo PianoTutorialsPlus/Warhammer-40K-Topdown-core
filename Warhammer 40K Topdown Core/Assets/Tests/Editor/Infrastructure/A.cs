@@ -28,6 +28,8 @@ namespace Editor.Infrastructure
         public static PathCalculatorBuilder PathCalculator => new PathCalculatorBuilder();
         public static UnitMoverBuilder UnitMover => new UnitMoverBuilder();
         public static UnitMovementControllerBuilder UnitMovementController => new UnitMovementControllerBuilder();
+        public static PointerEventDataBuilder PointerEventData => new PointerEventDataBuilder();
+        public static UnitSelectorBuilder UnitSelector => new UnitSelectorBuilder();
     }
     public static class An
     {

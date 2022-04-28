@@ -41,7 +41,7 @@ namespace Editor.Infrastructure.Player
             unitMover.MaxDistance.Returns(_maxDistance);
             unitMover.CurrentPosition.Returns(_currentPosition);
             unitMover.PathCalculator.Returns(_pathCalculator ??= A.PathCalculator.Build());
-            unitMover.MovementRange = _movementRange ??= A.MovementRange.WithMaxRange(_maxDistance);
+            unitMover.MovementRange.Returns(_movementRange ??= A.MovementRange.WithMaxRange(_maxDistance));
             return unitMover;
         }
     }

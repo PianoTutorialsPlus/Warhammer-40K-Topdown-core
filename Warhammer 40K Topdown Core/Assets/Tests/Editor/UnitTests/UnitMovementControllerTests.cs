@@ -4,7 +4,7 @@ using NUnit.Framework;
 using UnityEngine;
 using WH40K.Essentials;
 
-namespace Editor.Unit.Movement
+namespace Editor.Units.Movement
 {
     public class UnitMovementControllerTests
     {

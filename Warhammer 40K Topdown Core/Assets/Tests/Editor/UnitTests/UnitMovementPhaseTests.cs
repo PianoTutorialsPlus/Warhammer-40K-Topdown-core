@@ -1,358 +1,361 @@
-//using Editor.Infrastructure;
-//using NSubstitute;
-//using NUnit.Framework;
-//using UnityEngine;
-//using UnityEngine.EventSystems;
+using Editor.Infrastructure;
+using NSubstitute;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.Events;
+using WH40K.Essentials;
+using static UnityEngine.EventSystems.PointerEventData;
 
-//namespace Editor
-//{
-//    public class UnitMovementPhaseTests
-//    {
-//        public IUnitStats ActiveUnit => Target._gameStats.activeUnitTest;
-//        public Fraction TargetFraction => ActiveUnit.Fraction;
-//        public IUnitStats EnemyUnit => Target._gameStats.enemyUnitTest;
-//        public Fraction EnemyFraction => EnemyUnit.Fraction;
+namespace Editor.Units
+{
+    public class UnitMovementPhaseTests
+    {
+        public UnityAction _pointerAction;
+        public UnityAction<IUnit> _action;
 
-//        protected GameStatsSO GameStats;
-//        protected UnitMovementPhase Target;
-//        protected IUnitStats unit;
-//        protected Unit targetUnit;
+        [SetUp]
+        public void BeforeEveryTest()
+        {
+            _pointerAction = null;
+            _action = null;
+        }
+        public IUnit GetUnit(Fraction playerFraction = Fraction.Necrons, bool isActivated = false, bool isDone = false)
+        {
+            return A.Unit
+                    .WithOnPointerEnterInfo(_action)
+                    .WithOnPointerEnter(_pointerAction)
+                    .WithOnTapdownAction(_action)
+                    .WithOnPointerExit(_action)
+                    .WithUnitSelector(A.UnitSelector)
+                    .WithFraction(playerFraction)
+                    .WithIsActivatedState(isActivated)
+                    .WithIsDoneState(isDone)
+                    .Build();
+        }
+        public UnitMovementPhase SetUnitMovementPhase(IUnit unit)
+        {
+            UnitMovementPhase target = new GameObject().AddComponent<UnitMovementPhase>();
+            target.SetPrivate(x => x.Unit, unit);
+            return target;
+        }
 
-//        [SetUp]
-//        public void BeforeEveryTest()
-//        {
-//            GameStats = ScriptableObject.CreateInstance<GameStatsSO>();
+        public void UnityActionFiller(IUnit unit)
+        {
+        }
 
-//            Target = new GameObject().AddComponent<UnitMovementPhase>();
-//            Target._gameStats = GameStats;
+        public void UnityActionFiller()
+        {
+        }
 
-//            unit = Substitute.For<IUnitStats>();
-//            unit.Fraction.Returns(Fraction.Necrons);
-//        }
+      
+        public class TheOnPointerClickMethod : UnitMovementPhaseTests
+        {
+            [Test]
+            public void When_onTapDownAction_Action_is_Null_Then_onTapDownAction_Action_Is_Not_Invoked()
+            {
+                //ARRANGE
+                var unit = GetUnit();
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//        public void SetUnitSelector(Fraction fraction)
-//        {
-//            var unitSelector = new UnitSelector(fraction, unit);
-//            Target.SetPrivate(u => u.UnitSelector, unitSelector);
-//        }
+                //ACT
+                unitMovementPhase.OnPointerClick(A.PointerEventData);
 
-//        public class UnitMovementPhaseTestsExtensions : UnitMovementPhaseTests
-//        {
-//            protected EventSystem eventSystem;
-//            protected PointerEventData eventData;
-//            protected string validationWithArgumentText;
-//            protected string validationText;
+                //ASSERT
+                unit.Received(1).OnTapDownAction(unit);
+            }
+            [Test]
+            public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Right_Then_onTapDownAction_Action_Is_Not_Invoked()
+            {
+                //ARRANGE
+                _action = UnityActionFiller;
+                var unit = GetUnit();
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//            [SetUp]
-//            public void AddToEveryTest()
-//            {
-//                eventSystem = new GameObject().AddComponent<EventSystem>();
-//                eventData = new PointerEventData(eventSystem);
-//                validationText = null;
-//                validationWithArgumentText = null;
-//            }
+                //ACT
+                unitMovementPhase.OnPointerClick(
+                    A.PointerEventData.WithButtonPressed(InputButton.Right));
 
-//            public void UnityActionFillerWithArgument(Unit unit)
-//            {
-//                targetUnit = unit;
-//                validationWithArgumentText = "Test passed";
-//            }
+                //ASSERT
+                unit.Received(1).OnTapDownAction(unit);
+            }
+            [Test]
+            public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Middle_Then_onTapDownAction_Action_Is_Not_Invoked()
+            {
+                //ARRANGE
+                var unit = GetUnit();
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//            public void UnityActionFiller()
-//            {
-//                validationText = "Test passed";
-//            }
-//        }
-//        public class TheSelectUnitMethod : UnitMovementPhaseTests
-//        {
-//            [Test]
-//            public void When_Unit_With_Fraction_Necrons_Is_Compared_To_Necrons_Then_Unit_With_Fraction_Necrons_Is_Returned()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.Necrons;
+                //ACT
+                unitMovementPhase.OnPointerClick(
+                    A.PointerEventData.WithButtonPressed(InputButton.Middle));
 
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.SelectUnit();
+                //ASSERT
+                unit.Received(1).OnTapDownAction(unit);
+            }
+            [Test]
+            public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_onTapDownAction_Action_Is_Invoked()
+            {
+                //ARRANGE
+                _action = UnityActionFiller;
+                IUnit unit = GetUnit();
 
-//                ASSERT
-//                Assert.AreEqual(Fraction.Necrons, TargetFraction);
-//            }
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//            [Test]
-//            public void When_Unit_With_Fraction_Space_Marines_Is_Compared_To_Necrons_Then_ActiveUnit_Is_Null()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.SpaceMarines;
+                //ACT
+                unitMovementPhase.OnPointerClick(
+                    A.PointerEventData.WithButtonPressed(InputButton.Left));
 
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.SelectUnit();
+                //ASSERT
+                unit.Received(2).OnTapDownAction(unit);
+            }
+            [Test]
+            public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_UnitSelector_SelectUnit_Is_Invoked()
+            {
+                //ARRANGE
+                _action = UnityActionFiller;
+                IUnit unit = GetUnit();
 
-//                ASSERT
-//                Assert.IsNull(ActiveUnit);
-//            }
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//        }
-//        public class TheSetIsSelectedMethod : UnitMovementPhaseTests
-//        {
-//            [Test]
-//            public void When_Unit_With_Fraction_Necrons_Is_Compared_To_Necrons_Then_Unit_Is_Selected()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.Necrons;
+                //ACT
+                unitMovementPhase.OnPointerClick(
+                    A.PointerEventData.WithButtonPressed(InputButton.Left));
 
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.SetIsSelected();
+                //ASSERT
+                unit.Received(1).UnitSelector.SelectUnit();
+            }
+        }
+        public class TheOnPointerEnterMethod : UnitMovementPhaseTests
+        {
+            [Test]
+            public void When_onPointerEnter_Action_is_Null_Then_onPointerEnter_Action_Is_Not_Invoked()
+            {
+                //ARRANGE
+                var unit = GetUnit();
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//                ASSERT
-//                Assert.IsTrue(Target.IsSelected);
-//            }
+                //ACT
+                unitMovementPhase.OnPointerEnter(A.PointerEventData);
 
-//            [Test]
-//            public void When_Unit_With_Fraction_Necrons_Is_Compared_To_Space_Marines_Then_Unit_Is_Not_Selected()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.SpaceMarines;
+                //ASSERT
+                unit.Received(1).OnPointerEnter();
+            }
+            [Test]
+            public void When_onPointerEnterInfo_Action_is_Null_Then_onPointerEnterInfo_Action_Is_Not_Invoked()
+            {
+                //ARRANGE
+                var unit = GetUnit();
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.SetIsSelected();
+                //ACT
+                unitMovementPhase.OnPointerEnter(A.PointerEventData);
 
-//                ASSERT
-//                Assert.IsFalse(Target.IsSelected);
-//            }
-//        }
-//        public class TheSetUnitAsEnemyClass : UnitMovementPhaseTests
-//        {
-//            [SetUp]
-//            public void AddToEveryTest()
-//            {
-//                GameStats.enemyPlayer = ScriptableObject.CreateInstance<PlayerSO>();
-//            }
+                //ASSERT
+                unit.Received(1).OnPointerEnterInfo(unit);
+            }
+            [Test]
+            public void When_onPointerEnter_Action_Has_Value_Then_onPointerEnter_Action_Is_Invoked()
+            {
+                //ARRANGE
+                _pointerAction = UnityActionFiller;
+                var unit = GetUnit();
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//            [Test]
-//            public void When_Enemy_Unit_With_Fraction_Necrons_Is_Compared_To_Necrons_Then_Necrons_Is_Returned()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.Necrons;
+                //ACT
+                unitMovementPhase.OnPointerEnter(A.PointerEventData);
 
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.SetUnitAsEnemy();
-
-//                ASSERT
-//                Assert.AreEqual(Fraction.Necrons, EnemyFraction);
-//            }
-
-//            [Test]
-//            public void When_Enemy_Unit_With_Fraction_Space_Marines_Is_Compared_To_Necrons_Then_Enemy_Unit_Is_Null()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.SpaceMarines;
-
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.SetUnitAsEnemy();
-
-//                ASSERT
-//                Assert.IsNull(EnemyUnit);
-//            }
-//        }
-//        public class TheOnPointerClickMethod : UnitMovementPhaseTestsExtensions
-//        {
-//            [Test]
-//            public void When_OnTapDownAction_Is_Set_Then_ActiveUnit_Is_Not_Null()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.Necrons;
-//                Target.onTapDownAction += UnityActionFillerWithArgument;
-
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.OnPointerClick(eventData);
-
-//                ASSERT
-//                Assert.IsNotNull(ActiveUnit);
-//            }
+                //ASSERT
+                unit.Received(2).OnPointerEnter();
+            }
+            [Test]
+            public void When_onPointerEnterInfo_Action_Has_Value_Then_onPointerEnterInfo_Action_Is_Invoked()
+            {
+                //ARRANGE
+                _action = UnityActionFiller;
+                var unit = GetUnit();
 
 
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//            [Test]
-//            public void When_OnTapDownAction_Is_Set_With_Left_Button_Clicked_Then_Validation_Text_Is_Returned()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.Necrons;
-//                Target.onTapDownAction += UnityActionFillerWithArgument;
+                //ACT
+                unitMovementPhase.OnPointerEnter(A.PointerEventData);
 
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.OnPointerClick(eventData);
+                //ASSERT
+                unit.Received(2).OnPointerEnterInfo(unit);
+            }
+        }
+        public class TheOnPointerExitMethod : UnitMovementPhaseTests
+        {
+            [Test]
+            public void When_onPointerExit_Action_is_Null_Then_onPointerExit_Action_Is_Not_Invoked()
+            {
+                //ARRANGE
+                var unit = GetUnit();
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//                ASSERT
-//                Assert.AreEqual("Test passed", validationWithArgumentText);
-//            }
+                //ACT
+                unitMovementPhase.OnPointerExit(A.PointerEventData);
 
-//            [Test]
-//            public void When_OnTapDownAction_Is_Not_Set_Then_ActiveUnit_Is_Null()
-//            {
-//                ACT
-//                Target.OnPointerClick(eventData);
+                //ASSERT
+                unit.Received(1).OnPointerExit(unit);
+            }
+            [Test]
+            public void When_onPointerExit_Action_Has_Value_Then_onPointerExit_Action_Is_Invoked()
+            {
+                //ARRANGE
+                _action = UnityActionFiller;
+                var unit = GetUnit();
+                var unitMovementPhase = SetUnitMovementPhase(unit);
 
-//                ASSERT
-//                Assert.IsNull(ActiveUnit);
-//            }
+                //ACT
+                unitMovementPhase.OnPointerExit(A.PointerEventData);
 
-//            [Test]
-//            public void When_Unit_With_Fraction_Necrons_Is_Clicked_With_Left_Button_Then_Necrons_Is_Returned()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.Necrons;
-//                Target.onTapDownAction += UnityActionFillerWithArgument;
+                //ASSERT
+                unit.Received(2).OnPointerExit(unit);
+            }
+        }
+        //public class TheOnPointerEnterUnityAction : UnitMovementPhaseTestsExtensions
+        //{
+        //    [Test]
+        //    public void When_OnPointerEnter_Is_Set_Then_Validation_Text_Is_Returned()
+        //    {
+        //        ARRANGE
+        //        Target.onPointerEnter += UnityActionFiller;
 
-//                eventData.button = PointerEventData.InputButton.Left;
+        //        ACT
+        //        Target.onPointerEnter();
 
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.OnPointerClick(eventData);
+        //        ASSERT
+        //        Assert.AreEqual("Test passed", validationText);
+        //    }
+        //}
+        //public class TheOnPointerEnterInfoUnityAction : UnitMovementPhaseTestsExtensions
+        //{
+        //    [Test]
+        //    public void When_OnPointerEnterInfo_Is_Set_With_A_Unit_Then_Unit_Is_Returned()
+        //    {
+        //        ARRANGE
+        //        Target.onPointerEnterInfo += UnityActionFillerWithArgument;
 
-//                ASSERT
-//                Assert.AreEqual(Fraction.Necrons, TargetFraction);
-//            }
+        //        ACT
+        //        Target.onPointerEnterInfo(Target);
 
-//            [Test]
-//            public void When_Unit_With_Fraction_Space_Marines_Is_Clicked_With_Left_Button_Then_ActiveUnit_Is_Null()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.SpaceMarines;
-//                Target.onTapDownAction += UnityActionFillerWithArgument;
+        //        ASSERT
+        //        Assert.AreEqual(Target, targetUnit);
+        //    }
+        //}
+        //public class TheOnPointerExitUnityAction : UnitMovementPhaseTestsExtensions
+        //{
+        //    [Test]
+        //    public void When_OnPointerExit_Is_Set_With_A_Unit_Then_Unit_Is_Returned()
+        //    {
+        //        ARRANGE
+        //        Target.onPointerExit += UnityActionFillerWithArgument;
 
-//                eventData.button = PointerEventData.InputButton.Left;
+        //        ACT
+        //        Target.onPointerExit(Target);
 
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.OnPointerClick(eventData);
+        //        ASSERT
+        //        Assert.AreEqual(Target, targetUnit);
+        //    }
+        //}
 
-//                ASSERT
-//                Assert.IsNull(ActiveUnit);
-//            }
+        //public class TheSelectUnitMethod : UnitMovementPhaseTests
+        //{
+        //    [Test]
+        //    public void When_Unit_With_Fraction_Necrons_Is_Compared_To_Necrons_Then_Unit_With_Fraction_Necrons_Is_Returned()
+        //    {
+        //        ARRANGE
+        //       var fraction = Fraction.Necrons;
 
-//            [Test]
-//            public void When_Unit_With_Fraction_Necrons_Is_Clicked_With_Right_Button_Then_ActiveUnit_Is_Null()
-//            {
-//                ARRANGE
-//               var fraction = Fraction.Necrons;
-//                Target.onTapDownAction += UnityActionFillerWithArgument;
+        //        ACT
+        //        SetUnitSelector(fraction);
+        //        Target.SelectUnit();
 
-//                eventData.button = PointerEventData.InputButton.Right;
+        //        ASSERT
+        //        Assert.AreEqual(Fraction.Necrons, TargetFraction);
+        //    }
 
-//                ACT
-//                SetUnitSelector(fraction);
-//                Target.OnPointerClick(eventData);
+        //    [Test]
+        //    public void When_Unit_With_Fraction_Space_Marines_Is_Compared_To_Necrons_Then_ActiveUnit_Is_Null()
+        //    {
+        //        ARRANGE
+        //       var fraction = Fraction.SpaceMarines;
 
-//                ASSERT
-//                Assert.IsNull(ActiveUnit);
-//            }
-//        }
-//        public class TheOnPointerEnterMethod : UnitMovementPhaseTestsExtensions
-//        {
-//            [Test]
-//            public void When_OnPointerEnterInfo_And_OnPointerEnter_Is_Not_Set_Then_Validation_Text_Is_Null()
-//            {
-//                ACT
-//                Target.OnPointerEnter(eventData);
+        //        ACT
+        //        SetUnitSelector(fraction);
+        //        Target.SelectUnit();
 
-//                ASSERT
-//                Assert.IsNull(validationText);
-//                Assert.IsNull(validationWithArgumentText);
-//            }
+        //        ASSERT
+        //        Assert.IsNull(ActiveUnit);
+        //    }
 
-//            [Test]
-//            public void When_OnPointerEnter_Is_Set_Then_Validation_Text_Is_Returned()
-//            {
-//                ARRANGE
-//                Target.onPointerEnter += UnityActionFiller;
+        //}
+        //public class TheSetIsSelectedMethod : UnitMovementPhaseTests
+        //{
+        //    [Test]
+        //    public void When_Unit_With_Fraction_Necrons_Is_Compared_To_Necrons_Then_Unit_Is_Selected()
+        //    {
+        //        ARRANGE
+        //       var fraction = Fraction.Necrons;
 
-//                ACT
-//                Target.OnPointerEnter(eventData);
+        //        ACT
+        //        SetUnitSelector(fraction);
+        //        Target.SetIsSelected();
 
-//                ASSERT
-//                Assert.AreEqual("Test passed", validationText);
-//            }
+        //        ASSERT
+        //        Assert.IsTrue(Target.IsSelected);
+        //    }
 
-//            [Test]
-//            public void When_OnPointerEnterInfo_Is_Set_Then_Validation_Text_Is_Returned()
-//            {
-//                ARRANGE
-//                Target.onPointerEnterInfo += UnityActionFillerWithArgument;
+        //    [Test]
+        //    public void When_Unit_With_Fraction_Necrons_Is_Compared_To_Space_Marines_Then_Unit_Is_Not_Selected()
+        //    {
+        //        ARRANGE
+        //       var fraction = Fraction.SpaceMarines;
 
-//                ACT
-//                Target.OnPointerEnter(eventData);
+        //        ACT
+        //        SetUnitSelector(fraction);
+        //        Target.SetIsSelected();
 
-//                ASSERT
-//                Assert.AreEqual("Test passed", validationWithArgumentText);
-//            }
-//        }
-//        public class TheOnTapDownActionUnityAction : UnitMovementPhaseTestsExtensions
-//        {
-//            [Test]
-//            public void When_OnTapDownAction_Is_Set_With_A_Unit_Then_Unit_Is_Returned()
-//            {
-//                ARRANGE
-//                Target.onTapDownAction += UnityActionFillerWithArgument;
+        //        ASSERT
+        //        Assert.IsFalse(Target.IsSelected);
+        //    }
+        //}
+        //public class TheSetUnitAsEnemyClass : UnitMovementPhaseTests
+        //{
+        //    [SetUp]
+        //    public void AddToEveryTest()
+        //    {
+        //        GameStats.enemyPlayer = ScriptableObject.CreateInstance<PlayerSO>();
+        //    }
 
-//                ACT
-//                Target.onTapDownAction(Target);
+        //    [Test]
+        //    public void When_Enemy_Unit_With_Fraction_Necrons_Is_Compared_To_Necrons_Then_Necrons_Is_Returned()
+        //    {
+        //        ARRANGE
+        //       var fraction = Fraction.Necrons;
 
-//                ASSERT
-//                Assert.AreEqual(Target, targetUnit);
-//            }
-//        }
-//        public class TheOnPointerEnterUnityAction : UnitMovementPhaseTestsExtensions
-//        {
-//            [Test]
-//            public void When_OnPointerEnter_Is_Set_Then_Validation_Text_Is_Returned()
-//            {
-//                ARRANGE
-//                Target.onPointerEnter += UnityActionFiller;
+        //        ACT
+        //        SetUnitSelector(fraction);
+        //        Target.SetUnitAsEnemy();
 
-//                ACT
-//                Target.onPointerEnter();
+        //        ASSERT
+        //        Assert.AreEqual(Fraction.Necrons, EnemyFraction);
+        //    }
 
-//                ASSERT
-//                Assert.AreEqual("Test passed", validationText);
-//            }
-//        }
-//        public class TheOnPointerEnterInfoUnityAction : UnitMovementPhaseTestsExtensions
-//        {
-//            [Test]
-//            public void When_OnPointerEnterInfo_Is_Set_With_A_Unit_Then_Unit_Is_Returned()
-//            {
-//                ARRANGE
-//                Target.onPointerEnterInfo += UnityActionFillerWithArgument;
+        //    [Test]
+        //    public void When_Enemy_Unit_With_Fraction_Space_Marines_Is_Compared_To_Necrons_Then_Enemy_Unit_Is_Null()
+        //    {
+        //        ARRANGE
+        //       var fraction = Fraction.SpaceMarines;
 
-//                ACT
-//                Target.onPointerEnterInfo(Target);
+        //        ACT
+        //        SetUnitSelector(fraction);
+        //        Target.SetUnitAsEnemy();
 
-//                ASSERT
-//                Assert.AreEqual(Target, targetUnit);
-//            }
-//        }
-//        public class TheOnPointerExitUnityAction : UnitMovementPhaseTestsExtensions
-//        {
-//            [Test]
-//            public void When_OnPointerExit_Is_Set_With_A_Unit_Then_Unit_Is_Returned()
-//            {
-//                ARRANGE
-//                Target.onPointerExit += UnityActionFillerWithArgument;
-
-//                ACT
-//                Target.onPointerExit(Target);
-
-//                ASSERT
-//                Assert.AreEqual(Target, targetUnit);
-//            }
-//        }
-//    }
-//}
+        //        ASSERT
+        //        Assert.IsNull(EnemyUnit);
+        //    }
+        //}
+    }
+}

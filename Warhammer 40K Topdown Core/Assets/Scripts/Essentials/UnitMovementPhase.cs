@@ -8,20 +8,21 @@ namespace WH40K.Essentials
     public class UnitMovementPhase : MonoBehaviour, IUnitActionPhase
     {
         private IUnit _unit;
-        private Unit unit;
-        private UnitSelector UnitSelector => _unit.UnitSelector;
-        private UnityAction<IUnit> onTapDownAction => _unit.OnTapDownAction;
-        private UnityAction onPointerEnter => _unit.OnPointerEnter;
-        private UnityAction<IUnit> onPointerEnterInfo => _unit.OnPointerEnterInfo;
-        private UnityAction<IUnit> onPointerExit => _unit.OnPointerExit;
-        private GameStatsSO _gameStats => _unit.GameStats;
+
+        private UnitSelector UnitSelector => Unit.UnitSelector;
+        private UnityAction<IUnit> onTapDownAction => Unit.OnTapDownAction;
+        private UnityAction onPointerEnter => Unit.OnPointerEnter;
+        private UnityAction<IUnit> onPointerEnterInfo => Unit.OnPointerEnterInfo;
+        private UnityAction<IUnit> onPointerExit => Unit.OnPointerExit;
+        private GameStatsSO _gameStats => Unit.GameStats;
         public bool IsSelected { get; set; }
-        public IUnit ActiveUnit { get => _gameStats.activeUnitTest; set => _gameStats.activeUnitTest = value; }
+        public IUnit ActiveUnit { get => _gameStats.ActiveUnit; set => _gameStats.ActiveUnit = value; }
+        public IUnit Unit { get => _unit; private set => _unit = value; }
 
         private void Awake()
         {
             _unit = GetComponent<IUnit>();
-            unit = GetComponent<Unit>();
+            //unit = GetComponent<Unit>();
         }
 
         private void OnEnable()
@@ -37,43 +38,24 @@ namespace WH40K.Essentials
         public void OnPointerEnter(PointerEventData pointerEvent)
         {
             if (onPointerEnter != null) onPointerEnter();
-            if (onPointerEnterInfo != null) onPointerEnterInfo(_unit);
-            //if (onPointerEnterInfo != null) onPointerEnterInfo(gameObject.GetComponent<Unit>());
+            if (onPointerEnterInfo != null) onPointerEnterInfo(Unit);
         }
 
         public void OnPointerExit(PointerEventData pointerEvent)
         {
             if (onPointerExit != null)
             {
-                onPointerExit(_unit);
-                //onPointerExit(gameObject.GetComponent<Unit>());
+                onPointerExit(Unit);
             }
         }
-
         public void OnPointerClick(PointerEventData pointerEvent)
         {
-            //if (onPointerEnter != null) onPointerEnter();
             if (onTapDownAction == null) return;
             if (pointerEvent.button == PointerEventData.InputButton.Left)
             {
-                SelectUnit();
-                Debug.Log("active Unit: " + ActiveUnit);
-                onTapDownAction(unit);
-                //onTapDownAction(gameObject.GetComponent<Unit>());
+                UnitSelector.SelectUnit();
+                onTapDownAction(Unit);
             }
-        }
-
-        public void SelectUnit()
-        {
-            //IUnitStats test = unitSelector.GetUnit();
-            //_gameStats.activeUnitTest = test;
-            ActiveUnit = UnitSelector.GetUnit();
-            SetIsSelected();
-        }
-
-        public void SetIsSelected()
-        {
-            IsSelected = UnitSelector.IsSelected;
         }
     }
 }

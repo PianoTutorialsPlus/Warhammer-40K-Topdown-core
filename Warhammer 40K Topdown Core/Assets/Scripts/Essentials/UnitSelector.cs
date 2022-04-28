@@ -4,15 +4,26 @@ namespace WH40K.Essentials
 {
     public class UnitSelector
     {
-        private Fraction _playerFraction;
+        private GameStatsSO _gameStats;
         private IUnit _unit;
 
         public bool IsSelected => UnitIsFromFraction();
-
-        public UnitSelector(Fraction fraction, IUnit unit)
+        private Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
+        private IUnit ActiveUnit
         {
-            _playerFraction = fraction;
+            get => _gameStats.ActiveUnit;
+            set => _gameStats.ActiveUnit = value;
+        }
+
+        public UnitSelector(GameStatsSO gameStats, IUnit unit)
+        {
+            //_playerFraction = gameStats
+            _gameStats = gameStats;
             _unit = unit;
+        }
+        public void SelectUnit()
+        {
+            ActiveUnit = GetUnit();
         }
 
         public IUnit GetUnit(Fraction enemyFraction = Fraction.None)

@@ -8,34 +8,24 @@ namespace WH40K.Essentials
     [RequireComponent(typeof(IPathCalculator))]
     public class UnitMover : MonoBehaviour, IUnitMover
     {
-        public IPathCalculator PathCalculator => Unit.PathCalculator;
+        private IUnit _unit;
+        private UnitMovementController _moveController;
+        private MovementRange _movementRange;
 
-        private IStats _unit;
-        public IUnit Unit { get; set; }
-        public UnitMovementController MoveController;
-        public MovementRange MovementRange { get; set; }
-
-        public float MaxDistance => _unit.Movement;
-
-        public float MoveDistance => MovementRange.MoveRange;
-        public float MovedDistance => MovementRange.MovedDistance;
-        public bool IsAgentStopped => PathCalculator.AgentIsStopped;
-        private bool LoopBreakConditions => MovementRange.IsMoveRangeZero;
         public Vector3 CurrentPosition => transform.position;
+        public IUnit Unit => _unit;
+        public float MaxDistance => _unit.Movement;
+        public IPathCalculator PathCalculator => _unit.PathCalculator;
+        public bool IsAgentStopped => PathCalculator.AgentIsStopped;
+        public MovementRange MovementRange => _movementRange;
+        public float MoveDistance => MovementRange.MoveRange;
+        public UnitMovementController MoveController => _moveController;
 
         public void Awake()
         {
-            //PathCalculator = GetComponent<IPathCalculator>();
-            Unit = GetComponent<Unit>();
-            _unit = Unit;
-            MoveController = new UnitMovementController(this);
-            MovementRange = new MovementRange(MaxDistance);
-            
-        }
-        public void Initialize(IPathCalculator pathCalculator, IStats unit)
-        {
-           //PathCalculator = pathCalculator;
-            //_unit = unit;
+            _unit = GetComponent<IUnit>();
+            _moveController = new UnitMovementController(this);
+            _movementRange = new MovementRange(MaxDistance);
         }
         public void SetDestination(Vector3 position)
         {
@@ -52,11 +42,6 @@ namespace WH40K.Essentials
                 MovementRange.UpdatePosition(CurrentPosition);
                 MoveController.FreezeUnitsWithZeroMoveDistance();
 
-                if (LoopBreakConditions)
-                {
-                    MovementRange.UpdateRange();
-                    break;
-                }
                 yield return null;
             }
         }
