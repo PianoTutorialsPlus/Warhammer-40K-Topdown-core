@@ -19,7 +19,10 @@ namespace Editor.GameMechanics
 
         public IGamePhase SetGamePhase()
         {
-            return A.GamePhase.Build();
+            return A.GamePhase
+                .WithGameStats(A.GameStats
+                    .WithActiveUnit(A.Unit.Build()))
+                .Build();
         }
         public void SetHandlePhase(IGamePhase gamePhase)
         {

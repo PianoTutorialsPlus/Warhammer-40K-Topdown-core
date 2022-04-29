@@ -97,7 +97,7 @@ namespace Editor.Units
             {
                 //ARRANGE
                 _action = UnityActionFiller;
-                IUnit unit = GetUnit();
+                var unit = GetUnit();
 
                 var unitMovementPhase = SetUnitMovementPhase(unit);
 

@@ -9,10 +9,15 @@ namespace WH40K.Essentials
 
         public bool IsSelected => UnitIsFromFraction();
         private Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
-        private IUnit ActiveUnit
+
+        //private IUnit GetActiveUnit()
+        //{
+        //    return _gameStats.ActiveUnit;
+        //}
+
+        private void SetActiveUnit(IUnit value)
         {
-            get => _gameStats.ActiveUnit;
-            set => _gameStats.ActiveUnit = value;
+            _gameStats.ActiveUnit = value;
         }
 
         public UnitSelector(GameStatsSO gameStats, IUnit unit)
@@ -23,7 +28,7 @@ namespace WH40K.Essentials
         }
         public void SelectUnit()
         {
-            ActiveUnit = GetUnit();
+            SetActiveUnit(GetUnit());
         }
 
         public IUnit GetUnit(Fraction enemyFraction = Fraction.None)

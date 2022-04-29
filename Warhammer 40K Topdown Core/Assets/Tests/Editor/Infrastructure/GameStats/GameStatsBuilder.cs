@@ -33,7 +33,7 @@ namespace Editor.Infrastructure.GameStats
         {
             var gameStats = ScriptableObject.CreateInstance<GameStatsSO>();
             gameStats.ActivePlayer = _activePlayer??= A.Player;
-            gameStats.ActiveUnit = _activeUnit ??= A.Unit.Build();
+            gameStats.ActiveUnit = _activeUnit;
             //gameStats.GameTable = _gameTable ??= A.GameTable;
             return gameStats;
         }
