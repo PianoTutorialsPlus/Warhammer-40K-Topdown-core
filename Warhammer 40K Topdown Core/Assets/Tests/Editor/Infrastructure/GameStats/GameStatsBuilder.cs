@@ -8,6 +8,7 @@ namespace Editor.Infrastructure.GameStats
         private PlayerSO _activePlayer;
         private IUnit _activeUnit;
         private GameTableSO _gameTable;
+        private PlayerSO _enemyPlayer;
 
         public GameStatsBuilder()
         {
@@ -16,6 +17,11 @@ namespace Editor.Infrastructure.GameStats
         public GameStatsBuilder WithActivePlayer(PlayerSO activePlayer)
         {
             _activePlayer = activePlayer;
+            return this;
+        }
+        public GameStatsBuilder WithEnemyPlayer(PlayerSO enemyPlayer)
+        {
+            _enemyPlayer = enemyPlayer;
             return this;
         }
         public GameStatsBuilder WithActiveUnit(IUnit unit)
@@ -33,8 +39,9 @@ namespace Editor.Infrastructure.GameStats
         {
             var gameStats = ScriptableObject.CreateInstance<GameStatsSO>();
             gameStats.ActivePlayer = _activePlayer??= A.Player;
+            gameStats.EnemyPlayer = _enemyPlayer ??= A.Player;
             gameStats.ActiveUnit = _activeUnit;
-            //gameStats.GameTable = _gameTable ??= A.GameTable;
+            gameStats.GameTable = _gameTable ??= A.GameTable;
             return gameStats;
         }
     }

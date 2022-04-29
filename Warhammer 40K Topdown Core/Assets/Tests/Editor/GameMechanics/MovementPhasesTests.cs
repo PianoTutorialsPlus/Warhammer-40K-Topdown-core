@@ -1,15 +1,8 @@
 ﻿using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 using WH40K.Essentials;
 using WH40K.GameMechanics;
-using WH40K.UI;
 
 namespace Editor.GameMechanics
 {
@@ -17,11 +10,12 @@ namespace Editor.GameMechanics
     {
         public int counter;
 
-        public IGamePhase SetGamePhase()
+        public IGamePhase GetGamePhase()
         {
             return A.GamePhase
                 .WithGameStats(A.GameStats
                     .WithActiveUnit(A.Unit.Build()))
+                .WithBattleroundEvent(An.IPhaseEvent.Build())
                 .Build();
         }
         public void SetHandlePhase(IGamePhase gamePhase)
@@ -53,7 +47,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Selection_Then_BattleRoundEvent_HandlePhase_Is_Raised()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                IGamePhase gamePhase = GetGamePhase();
                 SetHandlePhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
@@ -63,7 +57,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Move_Then_BattleRoundEvent_HandlePhase_Is_Raised()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                IGamePhase gamePhase = GetGamePhase();
                 SetHandlePhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
@@ -73,7 +67,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Next_Then_BattleRoundEvent_HandlePhase_Is_Not_Raised()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                IGamePhase gamePhase = GetGamePhase();
                 SetHandlePhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
@@ -86,7 +80,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Selection_Then_BattleRoundEvent_ClearPhase_Is_Raised()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
@@ -96,7 +90,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Move_Then_BattleRoundEvent_ClearPhase_Is_Raised()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                var gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
@@ -106,7 +100,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Next_Then_BattleRoundEvent_ClearPhase_Is_Raised()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
@@ -119,7 +113,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Selection_Then_Next_Is_False()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
                 
@@ -128,7 +122,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Move_Then_Next_Is_False()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
@@ -137,7 +131,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Move_And_Unit_Is_Done_Then_Next_Is_True()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                IGamePhase gamePhase = GetGamePhase();
                 gamePhase.GameStats.ActiveUnit.IsDone.Returns(true);
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
@@ -147,7 +141,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Next_Then_Next_Is_True()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
@@ -156,7 +150,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_MovementPhase_State_Is_Next_Then_ActiveUnit_Is_Null()
             {
-                IGamePhase gamePhase = SetGamePhase();
+                IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
                 MovementPhaseProcessor.Next(MovementPhase.Next);

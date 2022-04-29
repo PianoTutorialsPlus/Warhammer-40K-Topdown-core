@@ -1,11 +1,6 @@
 ﻿using Editor.Infrastructure;
 using Editor.UI;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WH40K.Essentials;
 using WH40K.GameMechanics;
 
@@ -19,7 +14,6 @@ namespace Editor.GameMechanics
             _action = null;
             _state = false;
         }
-
         public class TheConnectEventMethod : BattleRoundsEventsTests
         {
             [Test]

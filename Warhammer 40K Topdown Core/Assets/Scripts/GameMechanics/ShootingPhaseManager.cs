@@ -14,14 +14,14 @@ namespace WH40K.GameMechanics
     /// When the subphase "shooting" is enabled, it triggers the shooting sub phase processor.
     /// </summary>
 
-    public class ShootingPhaseManager : PhaseManagerBase, IResult
+    public class ShootingPhaseManager : PhaseManagerBase, IResult, IGamePhase
     {
         public ShootingPhaseManager() { }
 
         // Gameplay
         [SerializeField] private GameStatsSO _gameStats;
         [SerializeField] private InputReader _inputReader;
-        public GameStatsSO GameStats => _gameStats;
+
         //Events
         [SerializeField] private BattleroundEventChannelSO SetShootingPhaseEvent;
         [SerializeField] private BattleRoundsSO _battleroundEvents;
@@ -39,26 +39,32 @@ namespace WH40K.GameMechanics
 
         //Enums
         ShootingSubEvents shootingSubPhase;
-        ShootingPhase shootingPhase;
+        private Queue<ShootingPhase> shootingPhase = new Queue<ShootingPhase>();
+
 
         public override GamePhase SubEvents => GamePhase.ShootingPhase;
 
-
+        public IPhase BattleroundEvents { get => _battleroundEvents;/* set => _battleroundEvents = value;*/ }
+        public InputReader InputReader { get => _inputReader; /*set => _inputReader = value;*/ }
+        public GameStatsSO GameStats { get => _gameStats; set => _gameStats = value; }
 
         private void Awake()
         {
             enabled = false;
+            shootingPhase.Enqueue(ShootingPhase.Selection);
+            shootingPhase.Enqueue(ShootingPhase.Shoot);
+            shootingPhase.Enqueue(ShootingPhase.Next);
         }
 
         public void OnEnable()
         {
+            new ShootingPhaseProcessor(this);
             Debug.Log("Enable Shooting");
-            shootingPhase = ShootingPhase.Selection;
+            //shootingPhase = ShootingPhase.Selection;
             shootingSubPhase = ShootingSubEvents.SelectEnemy;
 
             if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += SetShootingPhase;
             if (diceRollingResult != null) diceRollingResult.OnEventRaised += ProcessResult;
-
         }
 
         public void OnDisable()
@@ -71,35 +77,33 @@ namespace WH40K.GameMechanics
         {
             ClearPhase();
 
-            bool selection = ShootingPhaseProcessor.HandlePhase(gameStats, _battleroundEvents, shootingPhase);
-            bool shooting = ShootingPhaseProcessor.HandlePhase(shootingPhase);
-            bool next = ShootingPhaseProcessor.Next(gameStats, shootingPhase);
+            ShootingPhaseProcessor.HandlePhase(shootingPhase.Peek());
+            bool shooting = ShootingPhaseProcessor.HandlePhase(shootingPhase.Peek());
 
-            if (selection) _inputReader.ActivateEvent += NextPhase;
+            if (gameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
 
             if (shooting)
             {
                 _inputReader.ActivateEvent += HandleShooting;
                 _inputReader.ExecuteEvent += Wait;
             }
-            if (next) NextPhase();
+            if (ShootingPhaseProcessor.Next(shootingPhase.Peek())) NextPhase();
         }
 
         public override void ClearPhase()
         {
-            foreach (Unit child in _gameStats.ActivePlayer.PlayerUnits) _battleroundEvents.ResetMethods(child);
-            foreach (Unit child in _gameStats.EnemyPlayer.PlayerUnits) _battleroundEvents.ResetMethods(child);
-
-            _inputReader.ActivateEvent -= NextPhase;
-            _inputReader.ActivateEvent -= HandleShooting;
-            _inputReader.ExecuteEvent -= Wait;
+            ShootingPhaseProcessor.ClearPhase(shootingPhase.Peek());
+            InputReader.ActivateEvent -= NextPhase;
+            InputReader.ActivateEvent -= HandleShooting;
+            InputReader.ExecuteEvent -= Wait;
         }
 
-        private void NextPhase()
+        public void NextPhase()
         {
-            shootingPhase = ShootingPhaseProcessor.SetPhase(shootingPhase);
-            SetShootingPhase(_gameStats);
+            shootingPhase.Enqueue(shootingPhase.Dequeue());
+            SetShootingPhase(GameStats);
         }
+
 
         private void HandleShooting()
         {

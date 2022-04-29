@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using WH40K.Essentials;
 using static UnityEngine.EventSystems.PointerEventData;
 
-namespace Editor.Units
+namespace Editor.UnitTests
 {
     public class UnitMovementPhaseTests
     {
@@ -47,7 +47,7 @@ namespace Editor.Units
         {
         }
 
-      
+
         public class TheOnPointerClickMethod : UnitMovementPhaseTests
         {
             [Test]

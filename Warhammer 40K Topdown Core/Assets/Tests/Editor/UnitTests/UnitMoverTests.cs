@@ -19,8 +19,8 @@ namespace Editor.Units.Movement
         private int movement;
         
 
-        protected float TargetDistance => unitMover.MoveDistance;
-        protected float TargetMoveDistance => Target.MoveDistance;
+        protected float TargetDistance => unitMover.Range;
+        protected float TargetMoveDistance => Target.Range;
 
         [SetUp]
         public void BeforeEveryTest()

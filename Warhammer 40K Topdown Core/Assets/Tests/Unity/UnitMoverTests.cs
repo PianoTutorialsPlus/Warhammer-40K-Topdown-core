@@ -19,7 +19,7 @@ namespace Unity
             protected IStats unit;
             private bool initialize;
             private NecronWarrior dut;
-            protected float TargetMoveDistance => Target.MoveDistance;
+            protected float TargetMoveDistance => Target.Range;
             public UnitMover Target { get; private set; }
 
             private GameTable table;

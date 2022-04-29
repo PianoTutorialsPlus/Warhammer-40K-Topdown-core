@@ -12,14 +12,24 @@ namespace WH40K.GameMechanics
     /// This script processes the communication between the shooting phase manager and the main shooting phases executables.
     /// </summary>
 
-    public static class ShootingPhaseProcessor
+    public class ShootingPhaseProcessor
     {
         // Variables
         private static Dictionary<ShootingPhase, ShootingPhases> _shootingPhases = new Dictionary<ShootingPhase, ShootingPhases>();
         public static bool _initialized;
+        private static IGamePhase _gamePhase;
+        
+        protected static GameStatsSO _gameStats => _gamePhase.GameStats;
+        public bool Initialized { get => _initialized; protected set => _initialized = value; }
+
+        public ShootingPhaseProcessor(IGamePhase gamePhase)
+        {
+            _gamePhase = gamePhase;
+        }
 
         private static void Initialize()
         {
+            if (_initialized) return;
             _shootingPhases.Clear();
 
             var allShootingPhases = Assembly.GetAssembly(typeof(ShootingPhases)).GetTypes()
@@ -27,43 +37,32 @@ namespace WH40K.GameMechanics
 
             foreach (var subphase in allShootingPhases)
             {
-                ShootingPhases shootingPhases = Activator.CreateInstance(subphase) as ShootingPhases;
+                ShootingPhases shootingPhases = Activator.CreateInstance(subphase, _gamePhase) as ShootingPhases;
                 _shootingPhases.Add(shootingPhases.SubEvents, shootingPhases);
             }
 
             _initialized = true;
         }
-
-        public static bool HandlePhase(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents, ShootingPhase subPhase)
-        {
-            if (!_initialized) Initialize();
-
-            var shootingPhase = _shootingPhases[subPhase];
-            return shootingPhase.HandlePhase(gameStats, _battleroundEvents);
-        }
-
         public static bool HandlePhase(ShootingPhase subPhase)
         {
-            if (!_initialized) Initialize();
+            Initialize();
 
             var shootingPhase = _shootingPhases[subPhase];
-            return shootingPhase.HandlePhase();
+            return shootingPhase.HandlePhase(_gameStats);
         }
-
-        public static ShootingPhase SetPhase(ShootingPhase subPhase)
+        public static bool Next(ShootingPhase subPhase)
         {
-            if (!_initialized) Initialize();
+            Initialize();
 
             var shootingPhase = _shootingPhases[subPhase];
-            return shootingPhase.SetPhase();
+            return shootingPhase.Next(_gameStats);
         }
-
-        internal static bool Next(GameStatsSO gameStats, ShootingPhase subPhase)
+        public static void ClearPhase(ShootingPhase subPhase)
         {
-            if (!_initialized) Initialize();
+            Initialize();
 
             var shootingPhase = _shootingPhases[subPhase];
-            return shootingPhase.Next(gameStats);
+            shootingPhase.ClearPhase(_gameStats);
         }
     }
 }

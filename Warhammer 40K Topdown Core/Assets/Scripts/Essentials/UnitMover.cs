@@ -18,7 +18,7 @@ namespace WH40K.Essentials
         public IPathCalculator PathCalculator => _unit.PathCalculator;
         public bool IsAgentStopped => PathCalculator.AgentIsStopped;
         public MovementRange MovementRange => _movementRange;
-        public float MoveDistance => MovementRange.MoveRange;
+        public float Range => MovementRange.MoveRange;
         public UnitMovementController MoveController => _moveController;
 
         public void Awake()

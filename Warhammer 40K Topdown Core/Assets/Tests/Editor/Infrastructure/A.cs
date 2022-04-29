@@ -30,6 +30,7 @@ namespace Editor.Infrastructure
         public static UnitMovementControllerBuilder UnitMovementController => new UnitMovementControllerBuilder();
         public static PointerEventDataBuilder PointerEventData => new PointerEventDataBuilder();
         public static UnitSelectorBuilder UnitSelector => new UnitSelectorBuilder();
+        public static GameTableBuilder GameTable => new GameTableBuilder();
     }
     public static class An
     {

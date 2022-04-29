@@ -21,6 +21,7 @@ namespace WH40K.Essentials
         public IUnit activeUnitTest;
         public IUnit enemyUnitTest;
         public IUnit ActiveUnit { get => activeUnitTest; set => activeUnitTest = value; }
+        public IUnit EnemyUnit { get => enemyUnitTest; set => enemyUnitTest = value; }
         public GameTableSO GameTable { get => gameTable; set => gameTable = value; }
     }
 }

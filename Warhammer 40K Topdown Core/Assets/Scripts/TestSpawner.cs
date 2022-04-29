@@ -21,7 +21,7 @@ public class TestSpawner : MonoBehaviour
         NecronWarrior dut = Instantiate(Resources.Load("Necron Warrior", (typeof(NecronWarrior)))) as NecronWarrior;
 
         UnitMover Target = (UnitMover)dut.UnitMover;
-        float TargetMoveDistance = Target.MoveDistance;
+        float TargetMoveDistance = Target.Range;
         Vector3 position = new Vector3(6, 0, 0);
 
         StartCoroutine(test());

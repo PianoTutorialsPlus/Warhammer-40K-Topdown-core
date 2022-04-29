@@ -10,8 +10,8 @@ namespace WH40K.GameMechanics
     public abstract class MovementPhases
     {
         private IGamePhase _gamePhase;
-        public GameStatsSO _gameStats => _gamePhase.GameStats;
-        public IPhase _phase => _gamePhase.BattleroundEvents;
+        protected GameStatsSO _gameStats => _gamePhase.GameStats;
+        protected IPhase _phase => _gamePhase.BattleroundEvents;
 
         public MovementPhases(IGamePhase gamePhase)
         {
@@ -26,7 +26,7 @@ namespace WH40K.GameMechanics
 
         public virtual void ClearPhase(GameStatsSO gamesStats)
         {
-            Debug.Log("Clear");
+            //Debug.Log("Clear");
             _phase.ClearPhase(gamesStats);
         }
     }

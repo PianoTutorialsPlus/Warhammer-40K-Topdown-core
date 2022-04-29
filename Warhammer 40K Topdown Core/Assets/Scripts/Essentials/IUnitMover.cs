@@ -8,7 +8,7 @@ namespace WH40K.Essentials
         IUnit Unit { get; }
         float MaxDistance { get; }
         Vector3 CurrentPosition { get; }
-        float MoveDistance { get; }
+        float Range { get; }
         MovementRange MovementRange { get; }
 
         void SetDestination(Vector3 position);
