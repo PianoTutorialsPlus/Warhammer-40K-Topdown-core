@@ -6,44 +6,38 @@ namespace WH40K.GameMechanics.Combat
 {
     public class CalculateHits : ICalculation
     {
-        private GameStatsSO _gameStats => _results.GameStats;
         private readonly IResult _results;
-        private Shots _shots;
-        private CombatResults _combatResults;
-
         private RollTheDiceSO DiceSubResult => _results.DiceSubResult;
         private RollTheDiceSO DiceAction => _results.DiceAction;
         private RollTheDiceSO DiceResult => _results.DiceResult;
-
-        private int ToHit => _gameStats.activeUnit._unitSO.BallisticSkill;
-        private int MaxShots => _gameStats.activeUnit._weaponSO.WeaponShots;
+       
+        private GameStatsSO _gameStats => _results.GameStats;
+        private int ToHit => _gameStats.ActiveUnit.BallisticSkill;
+        private int MaxShots => _gameStats.ActiveUnit.WeaponShots;
 
         public CalculateHits(IResult results)
         {
             _results = results;
-            _shots = new Shots(MaxShots);
             OnEnable();
         }
-
         private void OnEnable()
         {
             if (DiceSubResult != null) DiceSubResult.OnEventRaised += Result;
         }
-
         public void Action(List<int> action)
         {
-            DiceAction.RaiseEvent(ShootingSubEvents.Hit, _shots.GetShots());
+            var shots = new Shots(MaxShots);
+            DiceAction.RaiseEvent(ShootingSubEvents.Hit, shots.GetShots());
         }
-
         public void Result(ShootingSubEvents diceEvent, List<int> hitResult)
         {
             if (hitResult == null || hitResult.Count == 0) return;
             if (diceEvent != ShootingSubEvents.Hit) return;
 
             Debug.Log("CalculateHitsSO Result");
-            _combatResults = new CombatResults(ToHit, hitResult);
+            var combatResults = new CombatResults(ToHit, hitResult);
 
-            DiceResult.RaiseEvent(diceEvent, _combatResults.Hits);
+            DiceResult.RaiseEvent(diceEvent, combatResults.Hits);
         }
 
 

@@ -13,7 +13,7 @@ namespace Editor.Infrastructure.GameStats
         public override GameTableSO Build()
         {
             var gameTable = ScriptableObject.CreateInstance<GameTableSO>();
-            gameTable.gameTable = new GameTable();
+            gameTable.gameTable = new GameObject().AddComponent<GameTable>();
             return gameTable;
         }
     }

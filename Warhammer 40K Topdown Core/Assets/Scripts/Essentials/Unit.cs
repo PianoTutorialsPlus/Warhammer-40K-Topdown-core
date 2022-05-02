@@ -45,8 +45,8 @@ namespace WH40K.Essentials
         // public IUnit unit => (IUnit)gameObject.GetComponent<Unit>();
         public Fraction ActivePlayerFraction => _gameStats.ActivePlayer.Fraction;
         public Fraction EnemyFraction => _gameStats.EnemyPlayer.Fraction;
-        public IUnit EnemyUnit { get => _gameStats.enemyUnitTest; set => _gameStats.enemyUnitTest = value; }
-        public IUnit ActiveUnit { get => _gameStats.activeUnitTest; set => _gameStats.activeUnitTest = value; }
+        public IUnit EnemyUnit { get => _gameStats.EnemyUnit; set => _gameStats.EnemyUnit = value; }
+        public IUnit ActiveUnit { get => _gameStats.ActiveUnit; set => _gameStats.ActiveUnit = value; }
 
         public UnitMovementPhase unitMovementPhase;
         public UnitShootingPhase unitShootingPhase;
@@ -62,18 +62,16 @@ namespace WH40K.Essentials
         public GameStatsSO GameStats { get => _gameStats; set => _gameStats = value; }
 
         public int WeaponRange => _weaponSO.WeaponRange;
-
         public int WeaponShots => _weaponSO.WeaponShots;
-
         public int WeaponStrength => _weaponSO.WeaponStrength;
-
         public int WeaponArmourPen => _weaponSO.WeaponArmourPen;
-
         public int WeaponDamage => _weaponSO.WeaponDamage;
-
         public string WeaponName => _weaponSO.WeaponName;
-
         public int Movement => _unitSO.Movement;
+        public int BallisticSkill => _unitSO.BallisticSkill;
+        public int Toughness => _unitSO.Toughness;
+        public int ArmourSave => _unitSO.ArmourSave;
+        public int Wounds { get => _unitSO.Wounds; set => _unitSO.Wounds= value; }
 
 
 

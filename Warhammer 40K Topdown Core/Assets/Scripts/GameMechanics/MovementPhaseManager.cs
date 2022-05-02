@@ -56,7 +56,7 @@ namespace WH40K.GameMechanics
         public void SetMovementPhase(GameStatsSO gameStats)
         {
             ClearPhase();
-
+            Debug.Log("movementphase: " + movementPhase.Peek());
             MovementPhaseProcessor.HandlePhase(movementPhase.Peek());
 
             if (gameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;

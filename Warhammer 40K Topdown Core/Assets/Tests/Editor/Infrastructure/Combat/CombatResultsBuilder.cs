@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using WH40K.GameMechanics.Combat;
 
-namespace Editor.Infrastructure.GamePhases
+namespace Editor.Infrastructure.Combat
 {
     public class CombatResultsBuilder : TestDataBuilder<CombatResults>
     {

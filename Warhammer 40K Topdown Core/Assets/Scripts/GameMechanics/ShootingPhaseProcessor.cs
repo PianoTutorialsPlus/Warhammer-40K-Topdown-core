@@ -43,12 +43,12 @@ namespace WH40K.GameMechanics
 
             _initialized = true;
         }
-        public static bool HandlePhase(ShootingPhase subPhase)
+        public static void HandlePhase(ShootingPhase subPhase)
         {
             Initialize();
 
             var shootingPhase = _shootingPhases[subPhase];
-            return shootingPhase.HandlePhase(_gameStats);
+            shootingPhase.HandlePhase(_gameStats);
         }
         public static bool Next(ShootingPhase subPhase)
         {

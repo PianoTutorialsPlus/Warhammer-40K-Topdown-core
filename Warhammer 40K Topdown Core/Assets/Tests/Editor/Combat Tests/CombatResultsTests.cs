@@ -4,7 +4,7 @@ using Editor.Infrastructure;
 using NUnit.Framework;
 using WH40K.GameMechanics.Combat;
 
-namespace Editor.ShootingCalculations
+namespace Editor.CombatTests
 {
     public class CombatResultsTests
     {
@@ -36,7 +36,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_Results_Is_Empty_Then_Result_Count_Is_0()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToHit(1)).Hits;
 
                 Assert.AreEqual(0, result.Count);
@@ -44,7 +44,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_Results_With_1_Result_Is_Lower_Than_ToHit_Then_Result_Count_Is_0()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToHit(2)
                     .WithResult(1)).Hits;
 
@@ -53,7 +53,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_Results_With_1_Result_Is_Equal_To_ToHit_Then_Result_Count_Is_1()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToHit(1)
                     .WithResult(1)).Hits;
 
@@ -62,7 +62,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_Results_With_2_Results_Hits_Once_Then_Result_Count_Is_1()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToHit(3)
                     .WithResult(1)
                     .WithResult(6)).Hits;
@@ -72,7 +72,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_Results_With_2_Results_Hits_Twice_Then_Result_Count_Is_2()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToHit(1)
                     .WithResult(1)
                     .WithResult(6)).Hits;
@@ -85,7 +85,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_WoundResults_Is_Empty_Then_Result_Count_Is_0()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToWound(1)).Wounds;
 
                 Assert.AreEqual(0, result.Count);
@@ -93,7 +93,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_WoundResults_With_1_Result_Is_Lower_Than_ToWound_Then_Result_Count_Is_0()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToWound(2)
                     .WithResult(1)).Wounds;
 
@@ -102,7 +102,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_WoundResults_With_1_Result_Is_Equal_To_ToWound_Then_Result_Count_Is_1()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToWound(1)
                     .WithResult(1)).Wounds;
 
@@ -111,7 +111,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_WoundResults_With_1_Result_Is_Greater_Than_ToWound_Then_Result_Count_Is_1()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToWound(1)
                     .WithResult(1)).Wounds;
 
@@ -123,7 +123,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_SaveResults_Is_Empty_Then_Result_Count_Is_0()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToWound(1)).Wounds;
 
                 Assert.AreEqual(0, result.Count);
@@ -131,7 +131,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_SaveResults_With_1_Result_Is_Lower_Than_ToSave_Then_Result_Count_Is_1()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToSave(2)
                     .WithResult(1)).FailedSaves;
 
@@ -140,7 +140,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_SaveResults_With_1_Result_Is_Equal_To_ToSave_Then_Result_Count_Is_0()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToSave(1)
                     .WithResult(1)).FailedSaves;
 
@@ -149,7 +149,7 @@ namespace Editor.ShootingCalculations
             [Test]
             public void When_SaveResults_With_1_Result_Is_Greater_Than_ToSave_Then_Result_Count_Is_0()
             {
-                var result = ((CombatResults)A.DiceResult
+                var result = ((CombatResults)A.CombatResult
                     .WithToSave(1)
                     .WithResult(2)).FailedSaves;
 

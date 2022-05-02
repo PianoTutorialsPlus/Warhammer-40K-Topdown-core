@@ -53,7 +53,6 @@ namespace Editor.UI
             eventListener.OnEventRaised += FillWithStats;
             return eventListener;
         }
-        
         public IUnit GetUnit(Fraction playerFraction = Fraction.Necrons, bool isActivated = false, bool isDone = false)
         {
             return A.Unit

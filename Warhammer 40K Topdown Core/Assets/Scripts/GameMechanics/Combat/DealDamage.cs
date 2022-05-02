@@ -10,11 +10,11 @@ namespace WH40K.GameMechanics.Combat
         private readonly IResult _results;
 
         private Wounds _wounds;
-        private int Damage => _gameStats.activeUnit._weaponSO.WeaponDamage;
+        private int Damage => _gameStats.ActiveUnit.WeaponDamage;
         private int WoundsLeft
         {
-            get => _gameStats.enemyUnit._unitSO.Wounds;
-            set => _gameStats.enemyUnit._unitSO.Wounds = value;
+            get => _gameStats.EnemyUnit.Wounds;
+            set => _gameStats.EnemyUnit.Wounds = value;
         }
         private RollTheDiceSO DiceResult => _results.DiceResult;
 
@@ -30,7 +30,7 @@ namespace WH40K.GameMechanics.Combat
             WoundsLeft = _wounds.TakeDamage(Damage);
 
             if (WoundsLeft <= 0)
-                _gameStats.enemyUnit.Destroy();
+                _gameStats.EnemyUnit.Destroy();
 
             Result(ShootingSubEvents.Damage);
         }

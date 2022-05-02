@@ -9,102 +9,99 @@ namespace WH40K.GameMechanics
 {
     public abstract class ShootingSubPhases
     {
-        public ShootingSubPhases() { }
+        protected IResult _result;
+        protected List<int> _parameter => _result.Parameter;
+
+        public ShootingSubPhases(IResult result) 
+        {
+            _result = result;
+        }
         public abstract ShootingSubEvents SubEvents { get; } // gets the active subphase
-        public abstract ShootingSubEvents SetSubPhase(); // sets the next subphase
-        public abstract ICalculation SetCalculation(IResult calculations); // refers to the active calculation process
-        public abstract void HandleShooting(List<int> parameter, ICalculation calculateHits, GameStatsSO gameStats); // handles the subphases
+        public abstract void SetCalculation(IResult result); // refers to the active calculation process
+        public abstract void HandleShooting(); // handles the subphases
         public virtual List<int> ProcessResult(List<int> result) { return result; } // placeholder for results, may be removed
     }
 
     public class SelectEnemy : ShootingSubPhases
     {
         ICalculation calculation;
-        public SelectEnemy() { }
+        public SelectEnemy(IResult result) : base(result) {}
         public override ShootingSubEvents SubEvents => ShootingSubEvents.SelectEnemy;
-        public override ShootingSubEvents SetSubPhase() { return ShootingSubEvents.Hit; }
-        public override ICalculation SetCalculation(IResult calculations)// { return (ICalculation)calculations[0]; }
+        public override void SetCalculation(IResult result)
         {
-            return calculation ??= new SelectEnemies(calculations);
+            calculation ??= new SelectEnemies(result);
         }
 
-        public override void HandleShooting(List<int> parameter, ICalculation selectEnemy, GameStatsSO gameStats)
+        public override void HandleShooting()
         {
-            //selectEnemy.Action(gameStats);
-            selectEnemy.Action();
+            calculation.Action();
         }
 
     }
 
     public class Hit : ShootingSubPhases
     {
-        public Hit() { }
+        public Hit(IResult result) : base(result) { }
         ICalculation calculation;
 
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Hit;
-        public override ShootingSubEvents SetSubPhase() { return ShootingSubEvents.Wound; }
-        public override ICalculation SetCalculation(IResult calculations) //{ return (ICalculation)calculations[1]; }
+        public override void SetCalculation(IResult calculations)
         {
-            return calculation ??= new CalculateHits(calculations);
+            calculation ??= new CalculateHits(calculations);
         }
-
-        public override void HandleShooting(List<int> parameter, ICalculation calculateHits, GameStatsSO gameStats)
+        public override void HandleShooting()
         {
-            calculateHits.Action();
+            calculation.Action();
         }
     }
 
     public class Wound : ShootingSubPhases
     {
-        public Wound() { }
+        public Wound(IResult result) : base(result) { }
         ICalculation calculation;
 
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Wound;
-        public override ShootingSubEvents SetSubPhase() { return ShootingSubEvents.Save; }
-
-        public override ICalculation SetCalculation(IResult calculations) //{ return (ICalculation)calculations[2]; }
+        public override void SetCalculation(IResult calculations)
         {
-            return calculation ??= new CalculateWounds(calculations);
+            calculation ??= new CalculateWounds(calculations);
         }
 
-        public override void HandleShooting(List<int> parameter, ICalculation calculateWounds, GameStatsSO gameStats)
+        public override void HandleShooting()
         {
-            calculateWounds.Action(parameter);
+            calculation.Action(_parameter);
         }
     }
 
     public class Save : ShootingSubPhases
     {
-        public Save() { }
+        public Save(IResult result) : base(result) { }
         ICalculation calculation;
 
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Save;
-        public override ShootingSubEvents SetSubPhase() { return ShootingSubEvents.Damage; }
-        public override ICalculation SetCalculation(IResult calculations)// { return (ICalculation)calculations[3]; }
+        public override void SetCalculation(IResult calculations)// { return (ICalculation)calculations[3]; }
         {
-            return calculation ??= new CalculateSaveroles(calculations);
+            calculation ??= new CalculateSaveroles(calculations);
         }
 
-        public override void HandleShooting(List<int> parameter, ICalculation calculateSaves, GameStatsSO gameStats)
+        public override void HandleShooting()
         {
-            calculateSaves.Action(parameter);
+            calculation.Action(_parameter);
         }
     }
     public class Damage : ShootingSubPhases
     {
-        public Damage() { }
+        public Damage(IResult result) : base(result) { }
         ICalculation calculation;
 
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Damage;
-        public override ShootingSubEvents SetSubPhase() { return ShootingSubEvents.SelectEnemy; }
-        public override ICalculation SetCalculation(IResult calculations)// { return (ICalculation)calculations[4]; }
+        public override void SetCalculation(IResult calculations)
         {
-            return calculation ??= new DealDamage(calculations);
+            calculation ??= new DealDamage(calculations);
         }
 
-        public override void HandleShooting(List<int> parameter, ICalculation dealDamage, GameStatsSO gameStats)
+        public override void HandleShooting()
         {
-            dealDamage.Action(parameter);
+            calculation.Action(_parameter);
         }
     }
 }

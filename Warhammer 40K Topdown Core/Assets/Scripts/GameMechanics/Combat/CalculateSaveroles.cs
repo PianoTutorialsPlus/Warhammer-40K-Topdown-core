@@ -14,8 +14,8 @@ namespace WH40K.GameMechanics.Combat
         private RollTheDiceSO DiceAction => _results.DiceAction;
         private RollTheDiceSO DiceResult => _results.DiceResult;
 
-        private int Saves => _gameStats.enemyUnit._unitSO.ArmourSave;
-        private int Modifier => _gameStats.activeUnit._weaponSO.WeaponArmourPen;
+        private int Saves => _gameStats.EnemyUnit.ArmourSave;
+        private int Modifier => _gameStats.ActiveUnit.WeaponArmourPen;
         private int ModifiedSaves => Saves - Modifier;
 
         public CalculateSaveroles(IResult results)

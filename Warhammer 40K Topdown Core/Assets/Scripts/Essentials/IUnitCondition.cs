@@ -5,4 +5,5 @@
     public bool IsSelected { get; }
 
     void Activate();
+    void Destroy();
 }

@@ -5,8 +5,8 @@ namespace WH40K.GameMechanics.Combat
 {
     public class SelectEnemies : ICalculation
     {
-        private GameStatsSO _gameStats => _results.GameStats;
         private readonly IResult _results;
+        private GameStatsSO _gameStats => _results.GameStats;
         private RollTheDiceSO DiceResult => _results.DiceResult;
 
         public SelectEnemies(IResult results)
@@ -18,7 +18,7 @@ namespace WH40K.GameMechanics.Combat
         {
             List<int> item = new List<int>();
             item.Add(1);
-            _gameStats.enemyUnit = _gameStats.EnemyPlayer.PlayerUnits[0];
+            _gameStats.EnemyUnit = _gameStats.EnemyPlayer.PlayerUnits[0];
             Result(ShootingSubEvents.SelectEnemy, item);
         }
 

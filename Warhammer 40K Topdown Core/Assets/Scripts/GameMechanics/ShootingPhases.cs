@@ -18,13 +18,10 @@ namespace WH40K.GameMechanics
         }
 
         public abstract ShootingPhase SubEvents { get; } // gets the active subphase
-        public abstract ShootingPhase SetPhase(); // sets the next subphase
-        public virtual bool HandlePhase(GameStatsSO gameStats) { return false; } // handles the selection subphase
-        public virtual bool HandlePhase() { return false; } // handles the shooting subphase
+        public virtual void HandlePhase(GameStatsSO gameStats) { } // handles the selection subphase
         public virtual bool Next(GameStatsSO gameStats) { return false; } // disables the current unit for this game phase
         public virtual void ClearPhase(GameStatsSO gamesStats)
         {
-            //Debug.Log("Clear");
             _phase.ClearPhase(gamesStats);
         }
     }
@@ -33,12 +30,10 @@ namespace WH40K.GameMechanics
     {
         public S_Selection(IGamePhase gamePhase) : base(gamePhase) { }
         public override ShootingPhase SubEvents => ShootingPhase.Selection;
-        public override ShootingPhase SetPhase() { return ShootingPhase.Shoot; }
-        public override bool HandlePhase(GameStatsSO gameStats)
+        public override void HandlePhase(GameStatsSO gameStats)
         {
             _phase.HandlePhase(gameStats);
             //_gameStats.ActiveUnit.Activate();
-            return gameStats.activeUnit != null ? true : false;
         }
     }
 
@@ -46,19 +41,16 @@ namespace WH40K.GameMechanics
     {
         public S_Shoot(IGamePhase gamePhase) : base(gamePhase) { }
         public override ShootingPhase SubEvents => ShootingPhase.Shoot;
-        public override ShootingPhase SetPhase() { return ShootingPhase.Next; }
-        public override bool HandlePhase() { return true; }
-
+        public override void HandlePhase(GameStatsSO gameStats) { }
     }
 
     public class S_Next : ShootingPhases
     {
         public S_Next(IGamePhase gamePhase) : base(gamePhase) { }
         public override ShootingPhase SubEvents => ShootingPhase.Next;
-        public override ShootingPhase SetPhase() { return ShootingPhase.Selection; }
         public override bool Next(GameStatsSO gameStats)
         {
-            gameStats.activeUnit.Freeze();
+            gameStats.ActiveUnit.Freeze();
             _gameStats.ActiveUnit = null;
             return true;
         }

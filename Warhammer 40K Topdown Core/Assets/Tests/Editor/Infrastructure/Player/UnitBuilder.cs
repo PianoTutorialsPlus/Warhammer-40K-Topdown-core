@@ -15,6 +15,7 @@ namespace Editor.Infrastructure.Player
         private UnityAction _onPointerEnter;
         private UnityAction<IUnit> _onTapDownAction;
         private UnitSelector _unitSelector;
+        private int _intValue = 0;
 
         public UnitBuilder()
         {
@@ -60,18 +61,30 @@ namespace Editor.Infrastructure.Player
             _onTapDownAction = onTapDownAction;
             return this;
         }
+        public UnitBuilder WithInteger(int value)
+        {
+            _intValue = value;
+            return this;
+        }
+  
         public override IUnit Build()
         {
             var unit = Substitute.For<IUnit>();
 
             unit.Fraction.Returns(_fraction);
             unit.UnitSelector.Returns(_unitSelector);
+            // Condition
             unit.IsDone.Returns(_isDone);
             unit.IsActivated.Returns(_isActivated);
+            // Pointer
             unit.OnPointerEnter.Returns(_onPointerEnter);
             unit.OnPointerEnterInfo.Returns(_onPointerEnterInfo);
             unit.OnPointerExit.Returns(_onPointerExit);
             unit.OnTapDownAction.Returns(_onTapDownAction);
+            // Unit Stats
+            unit.BallisticSkill.Returns(_intValue); 
+            // Weapon Stats
+            unit.WeaponShots.Returns(_intValue);
 
             return unit;
         }

@@ -15,8 +15,8 @@ namespace WH40K.GameMechanics.Combat
         private RollTheDiceSO DiceAction => _results.DiceAction;
         private RollTheDiceSO DiceResult => _results.DiceResult;
 
-        private int Strength => _gameStats.activeUnit._weaponSO.WeaponStrength;
-        private int Toughness => _gameStats.enemyUnit._unitSO.Toughness;
+        private int Strength => _gameStats.ActiveUnit.WeaponStrength;
+        private int Toughness => _gameStats.EnemyUnit.Toughness;
 
         public CalculateWounds(IResult result)
         {
