@@ -82,9 +82,11 @@ namespace Editor.Infrastructure.Player
             unit.OnPointerExit.Returns(_onPointerExit);
             unit.OnTapDownAction.Returns(_onTapDownAction);
             // Unit Stats
-            unit.BallisticSkill.Returns(_intValue); 
+            unit.BallisticSkill.Returns(_intValue);
+            unit.Toughness.Returns(_intValue);
             // Weapon Stats
             unit.WeaponShots.Returns(_intValue);
+            unit.WeaponStrength.Returns(_intValue);
 
             return unit;
         }

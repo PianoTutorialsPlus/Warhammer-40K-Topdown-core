@@ -6,7 +6,7 @@ using WH40K.GameMechanics.Combat;
 
 namespace Editor.CombatTests
 {
-    public class CalculateHitsTests
+    public class CalculateWoundsTests
     {
         private ShootingSubEvents _diceEvent;
         private List<int> _result;
@@ -42,42 +42,66 @@ namespace Editor.CombatTests
         {
             return A.Unit.WithInteger(value).Build();
         }
-        private CalculateHits GetCalculateHits(IUnit unit, RollTheDiceSO diceResult, RollTheDiceSO diceSubResult = null)
+        private CalculateWounds GetCalculateHits(IUnit unit, RollTheDiceSO diceResult, RollTheDiceSO diceSubResult = null)
         {
-            return A.CalculateHits
+            return A.CalculateWounds
                 .WithIResult(An.IResultEvent
                     .WithDiceActionEventChannel(diceResult)
                     .WithDiceSubResultEventChannel(diceSubResult)
                     .WithDiceResultEventChannel(diceResult)
-                    .WithGameStats(A.GameStats.WithActiveUnit(unit))
+                    .WithGameStats(A.GameStats
+                        .WithActiveUnit(unit)
+                        .WithEnemyUnit(unit))
                     .Build());
         }
-        public class TheActionMethod : CalculateHitsTests
+        public class TheActionMethod : CalculateWoundsTests
         {
             [Test]
-            public void When_Unit_Has_1_Shot_Then_DiceAction_Event_Is_Raised_With_1_Shot()
+            public void When_Hits_Is_Null_Then_DiceAction_Event_Is_Not_Raised()
             {
                 var diceAction = GetRollTheDiceEventChannel();
                 var unit = GetUnit(1);
                 var calculateHits = GetCalculateHits(unit, diceAction);
-                
+
+                calculateHits.Action(null);
+
+                Assert.IsNull(_result);
+            }
+            [Test]
+            public void When_Action_Is_Called_With_0_Hits_Then_DiceAction_Event_Is_Not_Raised()
+            {
+                var diceAction = GetRollTheDiceEventChannel();
+                var unit = GetUnit(1);
+                var calculateHits = GetCalculateHits(unit, diceAction);
+
                 calculateHits.Action(new List<int>());
-                
+
+                Assert.IsNull(_result);
+            }
+            [Test]
+            public void When_Action_Is_Called_With_1_Hit_Then_DiceAction_Event_Is_Raised_With_1_Hit()
+            {
+                var diceAction = GetRollTheDiceEventChannel();
+                var unit = GetUnit(1);
+                var calculateHits = GetCalculateHits(unit, diceAction);
+
+                calculateHits.Action(new List<int>() { 2 });
+
                 Assert.AreEqual(1, _result.Count);
             }
             [Test]
-            public void When_Action_Is_Called_Then_DiceAction_Event_Is_Raised_With_State_Hit()
+            public void When_Action_Is_Called_Then_DiceAction_Event_Is_Raised_With_State_Wound()
             {
                 var diceAction = GetRollTheDiceEventChannel();
                 var unit = GetUnit(1);
                 var calculateHits = GetCalculateHits(unit, diceAction);
-                
-                calculateHits.Action(new List<int>());
-                
-                Assert.AreEqual(ShootingSubEvents.Hit, _diceEvent);
+
+                calculateHits.Action(new List<int>() { 2 });
+
+                Assert.AreEqual(ShootingSubEvents.Wound, _diceEvent);
             }
         }
-        public class TheResultMethod : CalculateHitsTests
+        public class TheResultMethod : CalculateWoundsTests
         {
             [Test]
             public void When_Hit_Result_Is_Null_Then_DiceResult_Event_Is_Not_Raised()
@@ -87,24 +111,24 @@ namespace Editor.CombatTests
                 var unit = GetUnit(2);
                 GetCalculateHits(unit, diceResult, diceSubResult);
 
-                diceSubResult.RaiseEvent(ShootingSubEvents.Hit, null);
-                
+                diceSubResult.RaiseEvent(ShootingSubEvents.Wound, null);
+
                 Assert.IsNull(_result);
             }
             [Test]
-            public void When_Hit_Result_Count_Is_Null_Then_DiceResult_Event_Is_Not_Raised()
+            public void When_Hit_Result_Count_Is_0_Then_DiceResult_Event_Is_Not_Raised()
             {
                 var diceResult = GetRollTheDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(2);
                 GetCalculateHits(unit, diceResult, diceSubResult);
 
-                diceSubResult.RaiseEvent(ShootingSubEvents.Hit, new List<int>());
-                
+                diceSubResult.RaiseEvent(ShootingSubEvents.Wound, new List<int>());
+
                 Assert.IsNull(_result);
             }
             [Test]
-            public void When_ShootingSubEvents_Not_Eqauls_Hit_Then_DiceResult_Event_Is_Not_Raised()
+            public void When_ShootingSubEvents_Not_Eqauls_Wound_Then_DiceResult_Event_Is_Not_Raised()
             {
                 var diceResult = GetRollTheDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
@@ -115,26 +139,37 @@ namespace Editor.CombatTests
                 Assert.IsNull(_result);
             }
             [Test]
-            public void When_ShootingSubEvents_Eqauls_Hit_Then_DiceResult_Event_Is_Raised_With_State_Hit()
-            {
-                var diceResult = GetRollTheDiceEventChannel();
-                var diceSubResult = GetDiceSubEventChannel();
-                var unit = GetUnit(2);
-                GetCalculateHits(unit,diceResult, diceSubResult);
-
-                diceSubResult.RaiseEvent(ShootingSubEvents.Hit, new List<int>() { 2 });
-                Assert.AreEqual(ShootingSubEvents.Hit, _diceEvent);
-            }
-            [Test]
-            public void When_1_HitResult_Has_A_Value_Of_2_And_ToHit_Is_2_Then_DiceResult_Event_Is_Raised_With_1_Hit()
+            public void When_ShootingSubEvents_Eqauls_Wound_Then_DiceResult_Event_Is_Raised_With_State_Wound()
             {
                 var diceResult = GetRollTheDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(2);
                 GetCalculateHits(unit, diceResult, diceSubResult);
 
-                diceSubResult.RaiseEvent(ShootingSubEvents.Hit, new List<int>() { 2 });
+                diceSubResult.RaiseEvent(ShootingSubEvents.Wound, new List<int>() { 2 });
+                Assert.AreEqual(ShootingSubEvents.Wound, _diceEvent);
+            }
+            [Test]
+            public void When_1_WoundResult_Passes_ToWound_Then_DiceResult_Event_Is_Raised_With_1_Wound()
+            {
+                var diceResult = GetRollTheDiceEventChannel();
+                var diceSubResult = GetDiceSubEventChannel();
+                var unit = GetUnit(2);
+                GetCalculateHits(unit, diceResult, diceSubResult);
+
+                diceSubResult.RaiseEvent(ShootingSubEvents.Wound, new List<int>() { 4 });
                 Assert.AreEqual(1, _result.Count);
+            }
+            [Test]
+            public void When_1_WoundResult_Failed_ToWound_Then_DiceResult_Event_Is_Raised_With_0_Wounds()
+            {
+                var diceResult = GetRollTheDiceEventChannel();
+                var diceSubResult = GetDiceSubEventChannel();
+                var unit = GetUnit(2);
+                GetCalculateHits(unit, diceResult, diceSubResult);
+
+                diceSubResult.RaiseEvent(ShootingSubEvents.Wound, new List<int>() { 3 });
+                Assert.AreEqual(0, _result.Count);
             }
         }
     }

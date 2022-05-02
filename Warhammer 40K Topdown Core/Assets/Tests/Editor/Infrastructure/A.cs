@@ -16,6 +16,7 @@ namespace Editor.Infrastructure
         public static ShotsBuilder Shot => new ShotsBuilder();
         public static WoundTableBuilder WoundTable => new WoundTableBuilder();
         public static CalculateHitsBuilder CalculateHits => new CalculateHitsBuilder();
+        public static CalculateWoundsBuilder CalculateWounds => new CalculateWoundsBuilder();
         public static RangeControllerBuilder RangeController => new RangeControllerBuilder();
         public static UIDisplayInfoEventBuilder UIDisplayInfoEvent => new UIDisplayInfoEventBuilder();
         public static InfoUIEventChannelBuilder InfoUIEventChannel => new InfoUIEventChannelBuilder();

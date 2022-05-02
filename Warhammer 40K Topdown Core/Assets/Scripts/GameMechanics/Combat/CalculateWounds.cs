@@ -6,21 +6,20 @@ namespace WH40K.GameMechanics.Combat
 {
     public class CalculateWounds : ICalculation
     {
-        private GameStatsSO _gameStats => _results.GameStats;
+        private WoundTable _woundTable;
         private readonly IResult _results;
-        private WoundTable woundTable;
-        private CombatResults _combatResults;
-
         private RollTheDiceSO DiceSubResult => _results.DiceSubResult;
         private RollTheDiceSO DiceAction => _results.DiceAction;
         private RollTheDiceSO DiceResult => _results.DiceResult;
 
+        private GameStatsSO _gameStats => _results.GameStats;
         private int Strength => _gameStats.ActiveUnit.WeaponStrength;
         private int Toughness => _gameStats.EnemyUnit.Toughness;
 
         public CalculateWounds(IResult result)
         {
             _results = result;
+            _woundTable = new WoundTable();
             OnEnable();
         }
         private void OnEnable()
@@ -30,10 +29,8 @@ namespace WH40K.GameMechanics.Combat
         public void Action(List<int> hits)
         {
             if (hits == null || hits.Count == 0) return;
-            woundTable = new WoundTable();
 
             Debug.Log("CalculateWoundsSO");
-
             DiceAction.RaiseEvent(ShootingSubEvents.Wound, hits);
         }
         public void Result(ShootingSubEvents diceEvent, List<int> woundResult)
@@ -43,9 +40,9 @@ namespace WH40K.GameMechanics.Combat
             if (diceEvent != ShootingSubEvents.Wound) return;
 
             Debug.Log("CalculateWoundsSO Result");
-            _combatResults = new CombatResults(woundTable.ToWound(Strength, Toughness), woundResult);
+            var combatResults = new CombatResults(_woundTable.ToWound(Strength, Toughness), woundResult);
 
-            DiceResult.RaiseEvent(diceEvent, _combatResults.Wounds);
+            DiceResult.RaiseEvent(diceEvent, combatResults.Wounds);
         }
 
 
