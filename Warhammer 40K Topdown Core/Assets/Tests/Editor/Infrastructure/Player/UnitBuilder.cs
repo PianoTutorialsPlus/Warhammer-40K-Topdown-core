@@ -84,6 +84,7 @@ namespace Editor.Infrastructure.Player
             // Unit Stats
             unit.BallisticSkill.Returns(_intValue);
             unit.Toughness.Returns(_intValue);
+            unit.ArmourSave.Returns(_intValue);
             // Weapon Stats
             unit.WeaponShots.Returns(_intValue);
             unit.WeaponStrength.Returns(_intValue);

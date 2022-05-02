@@ -6,14 +6,12 @@ namespace WH40K.GameMechanics.Combat
 {
     public class CalculateSaveroles : ICalculation
     {
-        private GameStatsSO _gameStats => _results.GameStats;
         private readonly IResult _results;
-        private CombatResults _combatResults;
-
         private RollTheDiceSO DiceSubResult => _results.DiceSubResult;
         private RollTheDiceSO DiceAction => _results.DiceAction;
         private RollTheDiceSO DiceResult => _results.DiceResult;
 
+        private GameStatsSO _gameStats => _results.GameStats;
         private int Saves => _gameStats.EnemyUnit.ArmourSave;
         private int Modifier => _gameStats.ActiveUnit.WeaponArmourPen;
         private int ModifiedSaves => Saves - Modifier;
@@ -40,9 +38,9 @@ namespace WH40K.GameMechanics.Combat
             if (diceEvent != ShootingSubEvents.Save) return;
 
             Debug.Log("CalculateSavesSO Result");
-            _combatResults = new CombatResults(ModifiedSaves, saveResult);
+            var combatResults = new CombatResults(ModifiedSaves, saveResult);
 
-            DiceResult.RaiseEvent(ShootingSubEvents.Save, _combatResults.FailedSaves);
+            DiceResult.RaiseEvent(ShootingSubEvents.Save, combatResults.FailedSaves);
         }
 
         //public override void Result(ShootingSubEvents diceEvent, List<int> SaveResult)
