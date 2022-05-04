@@ -1,5 +1,4 @@
-﻿using System;
-using WH40K.GameMechanics.Combat;
+﻿using WH40K.GameMechanics.Combat;
 
 namespace Editor.Infrastructure.Combat
 {

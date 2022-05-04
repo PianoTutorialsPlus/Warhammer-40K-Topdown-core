@@ -1,5 +1,4 @@
 ﻿using WH40K.Essentials;
-using WH40K.UI;
 
 namespace WH40K.GameMechanics
 {
@@ -12,7 +11,7 @@ namespace WH40K.GameMechanics
         protected GameStatsSO _gameStats => _gamePhase.GameStats;
         protected IPhase _phase => _gamePhase.BattleroundEvents;
 
-        public ShootingPhases(IGamePhase gamePhase) 
+        public ShootingPhases(IGamePhase gamePhase)
         {
             _gamePhase = gamePhase;
         }

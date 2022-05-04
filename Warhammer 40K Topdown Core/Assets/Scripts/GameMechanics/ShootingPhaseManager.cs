@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.Essentials;
-using WH40K.GameMechanics.Combat;
 using WH40K.UI;
 
 namespace WH40K.GameMechanics
@@ -15,48 +13,38 @@ namespace WH40K.GameMechanics
     /// When the subphase "shooting" is enabled, it triggers the shooting sub phase processor.
     /// </summary>
 
-    public class ShootingPhaseManager : PhaseManagerBase, IGamePhase, IResult
+    public class ShootingPhaseManager : PhaseManagerBase, IGamePhase
     {
         public ShootingPhaseManager() { }
 
         // Gameplay
         [SerializeField] private GameStatsSO _gameStats;
         [SerializeField] private InputReader _inputReader;
+        [SerializeField] private ShootingSubPhaseManager _shootingSubPhaseManager;
 
         //Events
         [SerializeField] private BattleroundEventChannelSO SetShootingPhaseEvent;
         [SerializeField] private BattleRoundsSO _battleroundEvents;
-        [SerializeField] private RollTheDiceSO diceRollingResult;
+
 
         // Lists
         //[SerializeField] private List<CalculationBaseSO> calculations = new List<CalculationBaseSO>();
-        [SerializeField] private List<int> _parameter = new List<int>();
-        [SerializeField] private RollTheDiceSO _diceAction;
-        [SerializeField] private RollTheDiceSO _diceSubResult;
-        [SerializeField] private RollTheDiceSO _diceResult;
-        public RollTheDiceSO DiceAction => _diceAction;
-        public RollTheDiceSO DiceSubResult => _diceSubResult;
-        public RollTheDiceSO DiceResult => _diceResult;
+        
 
         //Enums
         private Queue<ShootingPhase> shootingPhase = new Queue<ShootingPhase>();
-        private Queue<ShootingSubEvents> shootingSubPhase = new Queue<ShootingSubEvents>();
 
         public override GamePhase SubEvents => GamePhase.ShootingPhase;
 
         public IPhase BattleroundEvents { get => _battleroundEvents;/* set => _battleroundEvents = value;*/ }
         public InputReader InputReader { get => _inputReader; /*set => _inputReader = value;*/ }
         public GameStatsSO GameStats { get => _gameStats; set => _gameStats = value; }
-        public List<int> Parameter { get => _parameter; set => _parameter = value; }
 
         private void Awake()
         {
-            
             enabled = false;
             EnqueueShootingPhase();
-            EnqueueShootingSubPhase();
             new ShootingPhaseProcessor(this);
-            new ShootingSubPhaseProcessor(this);
         }
         private void EnqueueShootingPhase()
         {
@@ -64,17 +52,6 @@ namespace WH40K.GameMechanics
             shootingPhase.Enqueue(ShootingPhase.Shoot);
             shootingPhase.Enqueue(ShootingPhase.Next);
         }
-        private void EnqueueShootingSubPhase()
-        {
-            shootingSubPhase.Enqueue(ShootingSubEvents.SelectEnemy);
-            shootingSubPhase.Enqueue(ShootingSubEvents.Hit);
-            shootingSubPhase.Enqueue(ShootingSubEvents.Wound);
-            shootingSubPhase.Enqueue(ShootingSubEvents.Save);
-            shootingSubPhase.Enqueue(ShootingSubEvents.Damage);
-        }
-
-
-
         public void OnEnable()
         {
 
@@ -83,7 +60,7 @@ namespace WH40K.GameMechanics
             //shootingSubPhase = ShootingSubEvents.SelectEnemy;
 
             if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += SetShootingPhase;
-            if (diceRollingResult != null) diceRollingResult.OnEventRaised += ProcessResult;
+            
         }
 
         public void OnDisable()
@@ -98,10 +75,10 @@ namespace WH40K.GameMechanics
             ShootingPhaseProcessor.HandlePhase(shootingPhase.Peek());
 
             if (gameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
-          
+
             if (shootingPhase.Peek() == ShootingPhase.Shoot)
             {
-                _inputReader.ActivateEvent += HandleShooting;
+                //_inputReader.ActivateEvent += HandleShooting;
                 _inputReader.ExecuteEvent += Wait;
             }
             if (ShootingPhaseProcessor.Next(shootingPhase.Peek())) NextPhase();
@@ -111,7 +88,7 @@ namespace WH40K.GameMechanics
         {
             ShootingPhaseProcessor.ClearPhase(shootingPhase.Peek());
             InputReader.ActivateEvent -= NextPhase;
-            InputReader.ActivateEvent -= HandleShooting;
+            //InputReader.ActivateEvent -= HandleShooting;
             InputReader.ExecuteEvent -= Wait;
         }
         public void NextPhase()
@@ -119,24 +96,24 @@ namespace WH40K.GameMechanics
             shootingPhase.Enqueue(shootingPhase.Dequeue());
             SetShootingPhase(GameStats);
         }
-        private void HandleShooting()
-        {
-            Debug.Log(shootingSubPhase.Peek());
-            //CalculationBaseSO calculation = ShootingSubPhaseProcessor.SetCalculation(calculations, shootingSubPhase);
-            //ICalculation calculation = ShootingSubPhaseProcessor.SetCalculation(shootingSubPhase.Peek()); ;
-            ShootingSubPhaseProcessor.SetCalculation(shootingSubPhase.Peek());
-            
-            //if (calculation == nul89l) return;
-            ShootingSubPhaseProcessor.HandleShooting(shootingSubPhase.Peek());
-        }
-        private void ProcessResult(ShootingSubEvents diceEvent, List<int> result)
-        {
-            if(shootingSubPhase.Peek() == diceEvent) shootingSubPhase.Enqueue(shootingSubPhase.Dequeue());
+        //private void HandleShooting()
+        //{
+        //    Debug.Log(shootingSubPhase.Peek());
+        //    //CalculationBaseSO calculation = ShootingSubPhaseProcessor.SetCalculation(calculations, shootingSubPhase);
+        //    //ICalculation calculation = ShootingSubPhaseProcessor.SetCalculation(shootingSubPhase.Peek()); ;
+        //    ShootingSubPhaseProcessor.SetCalculation(shootingSubPhase.Peek());
 
-            if (Parameter != null) Debug.Log(shootingSubPhase.Peek());
+        //    //if (calculation == nul89l) return;
+        //    ShootingSubPhaseProcessor.HandleShooting(shootingSubPhase.Peek());
+        //}
+        //private void ProcessResult(ShootingSubEvents diceEvent, List<int> result)
+        //{
+        //    if (shootingSubPhase.Peek() == diceEvent) shootingSubPhase.Enqueue(shootingSubPhase.Dequeue());
 
-            CheckNullValues(result);
-        }
+        //    if (Parameter != null) Debug.Log(shootingSubPhase.Peek());
+
+        //    CheckNullValues(result);
+        //}
         private void CheckNullValues(List<int> values)
         {
             if (values == null || values.Count == 0)
@@ -152,7 +129,7 @@ namespace WH40K.GameMechanics
         {
             //Debug.Log("Waiting");
             yield return null;
-            HandleShooting();
+            //HandleShooting();
         }
     }
 }

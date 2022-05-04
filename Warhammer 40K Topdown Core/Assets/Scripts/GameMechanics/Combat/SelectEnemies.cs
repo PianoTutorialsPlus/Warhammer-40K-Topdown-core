@@ -16,17 +16,13 @@ namespace WH40K.GameMechanics.Combat
 
         public void Action(List<int> action)
         {
-            List<int> item = new List<int>();
-            item.Add(1);
-            _gameStats.EnemyUnit = _gameStats.EnemyPlayer.PlayerUnits[0];
+            List<int> item = new List<int>() { 1 };
+            //_gameStats.EnemyUnit = _gameStats.EnemyPlayer.PlayerUnits[0];
             Result(ShootingSubEvents.SelectEnemy, item);
         }
-
-
         public void Result(ShootingSubEvents diceEvent, List<int> result)
         {
             DiceResult.RaiseEvent(diceEvent, result);
         }
-
     }
 }

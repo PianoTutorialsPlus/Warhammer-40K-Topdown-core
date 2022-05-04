@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using WH40K.Essentials;
-using WH40K.UI;
 
 namespace WH40K.GameMechanics
 {
@@ -18,7 +17,7 @@ namespace WH40K.GameMechanics
         private static Dictionary<ShootingPhase, ShootingPhases> _shootingPhases = new Dictionary<ShootingPhase, ShootingPhases>();
         public static bool _initialized;
         private static IGamePhase _gamePhase;
-        
+
         protected static GameStatsSO _gameStats => _gamePhase.GameStats;
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
 

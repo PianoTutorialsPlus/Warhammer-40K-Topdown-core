@@ -5,10 +5,10 @@ using UnityEngine.Events;
 namespace WH40K.Essentials
 {
     public enum Fraction { None = 0, SpaceMarines, Necrons }
-    
+
     [RequireComponent(typeof(NavMeshAgent))]
     //[RequireComponent(typeof(NecronWarriorSO))]
-        
+
     public class Unit : MonoBehaviour, IUnit// INHARITANCE
     {
         public float speed = 3;
@@ -71,7 +71,7 @@ namespace WH40K.Essentials
         public int BallisticSkill => _unitSO.BallisticSkill;
         public int Toughness => _unitSO.Toughness;
         public int ArmourSave => _unitSO.ArmourSave;
-        public int Wounds { get => _unitSO.Wounds; set => _unitSO.Wounds= value; }
+        public int Wounds { get; set; }
 
 
 
@@ -80,7 +80,7 @@ namespace WH40K.Essentials
 
         protected void Awake()
         {
-
+            Wounds = _unitSO.Wounds;
             //_unitSelector = new UnitSelector(_gameStats, gameObject.GetComponent<Unit>());
             //UnitMover = new UnitMover();
             m_Agent = GetComponent<NavMeshAgent>();
@@ -98,7 +98,6 @@ namespace WH40K.Essentials
         // Start is called before the first frame update
         void Start()
         {
-            _unitSO.takenWounds = 0;
             //phase = "Movement Phase";
         }
 
@@ -263,6 +262,12 @@ namespace WH40K.Essentials
             //_gameStats.movementSubPhase = MovementPhase.Selection;
             //SetMovementPhaseEvent.RaiseEvent(_gameStats);
         }
+        public void TakeDamage(int damage)
+        {
+            Wounds -= damage;
+            if (Wounds <= 0) Destroy();
+        }
+
         public void Destroy()
         {
             Destroy(gameObject);

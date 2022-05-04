@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace WH40K.Essentials
+﻿namespace WH40K.Essentials
 {
     public class UnitSelector
     {

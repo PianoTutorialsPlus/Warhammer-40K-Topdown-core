@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using WH40K.Essentials;
 
 namespace WH40K.GameMechanics
@@ -21,7 +20,7 @@ namespace WH40K.GameMechanics
         public abstract MovementPhase SubEvents { get; } // gets the active subphase
         //public abstract MovementPhase SetNextPhase(); // sets the next subphase
         public virtual void HandlePhase(GameStatsSO gameStats) { } // handles the selection subphase
-                                                                                 //public virtual bool HandleMove(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents) { return false; } // handles the movement subphase
+                                                                   //public virtual bool HandleMove(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents) { return false; } // handles the movement subphase
         public virtual bool Next(GameStatsSO gameStats) { return false; } // disables the current unit for this game phase
 
         public virtual void ClearPhase(GameStatsSO gamesStats)

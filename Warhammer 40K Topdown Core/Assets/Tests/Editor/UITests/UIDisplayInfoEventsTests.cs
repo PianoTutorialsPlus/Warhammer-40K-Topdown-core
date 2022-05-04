@@ -56,7 +56,7 @@ namespace Editor.UI
             public void ExtendBeforeEveryTest()
             {
                 var gameStats = GetGameStats(Fraction.Necrons);
-                
+
                 _uIDisplayInfoEvents = A.UIDisplayInfoEvent
                     .WithUIEvents(
                         An.UIEvent
@@ -67,7 +67,7 @@ namespace Editor.UI
             [Test]
             public void When_Unit_Is_From_Player_Fraction_And_IsActivated_Then_OnPointerEnterInfo_IsNotNull()
             {
-                var child = GetUnit(isActivated : true);
+                var child = GetUnit(isActivated: true);
 
                 _uIDisplayInfoEvents.SetDisplayInfo(child);
 
@@ -96,7 +96,7 @@ namespace Editor.UI
             {
                 var eventListener = GetInfoEventListener();
                 var child = GetUnit();
-                var gameStats = GetGameStats(Fraction.Necrons,child);
+                var gameStats = GetGameStats(Fraction.Necrons, child);
 
                 ((UIDisplayInfoEvents)A.UIDisplayInfoEvent
                    .WithUIEvents(

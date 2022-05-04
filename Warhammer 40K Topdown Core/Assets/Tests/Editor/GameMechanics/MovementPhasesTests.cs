@@ -39,7 +39,7 @@ namespace Editor.GameMechanics
         [SetUp]
         public void BeforeEveryTest()
         {
-           counter = 0;
+            counter = 0;
         }
 
         public class TheHandlePhaseMethod : MovementPhasesTests
@@ -76,7 +76,7 @@ namespace Editor.GameMechanics
             }
         }
         public class TheClearPhaseMethod : MovementPhasesTests
-        { 
+        {
             [Test]
             public void When_MovementPhase_State_Is_Selection_Then_BattleRoundEvent_ClearPhase_Is_Raised()
             {
@@ -116,7 +116,7 @@ namespace Editor.GameMechanics
                 IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
-                
+
                 Assert.IsFalse(MovementPhaseProcessor.Next(MovementPhase.Selection));
             }
             [Test]

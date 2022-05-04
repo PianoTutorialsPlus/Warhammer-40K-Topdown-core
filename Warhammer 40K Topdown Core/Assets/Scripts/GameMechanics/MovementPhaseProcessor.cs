@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using WH40K.Essentials;
-using WH40K.UI;
 
 namespace WH40K.GameMechanics
 {
@@ -20,12 +19,12 @@ namespace WH40K.GameMechanics
         private static IGamePhase _gamePhase;
         private static GameStatsSO _gameStats => _gamePhase.GameStats;
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
-        
+
         public MovementPhaseProcessor(IGamePhase gamePhase)
         {
             _gamePhase = gamePhase;
         }
-        
+
         private static void Initialize()
         {
             if (_initialized) return;

@@ -23,7 +23,7 @@ namespace WH40K.UI
 
             float actionRadiusXZ = (range + _baseSize) * _scale;
             Vector3 actionArea = new Vector3(actionRadiusXZ, 1, actionRadiusXZ);
-            
+
             _rangeIndicator.LocalScale = actionArea;
         }
     }

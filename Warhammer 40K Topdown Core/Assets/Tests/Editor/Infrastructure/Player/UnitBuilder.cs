@@ -16,6 +16,7 @@ namespace Editor.Infrastructure.Player
         private UnityAction<IUnit> _onTapDownAction;
         private UnitSelector _unitSelector;
         private int _intValue = 0;
+        private int _wounds;
 
         public UnitBuilder()
         {
@@ -66,7 +67,11 @@ namespace Editor.Infrastructure.Player
             _intValue = value;
             return this;
         }
-  
+        public UnitBuilder WithWounds(int value)
+        {
+            _wounds = value;
+            return this;
+        }
         public override IUnit Build()
         {
             var unit = Substitute.For<IUnit>();
@@ -83,11 +88,13 @@ namespace Editor.Infrastructure.Player
             unit.OnTapDownAction.Returns(_onTapDownAction);
             // Unit Stats
             unit.BallisticSkill.Returns(_intValue);
+            unit.Wounds.Returns(_wounds);
             unit.Toughness.Returns(_intValue);
             unit.ArmourSave.Returns(_intValue);
             // Weapon Stats
             unit.WeaponShots.Returns(_intValue);
             unit.WeaponStrength.Returns(_intValue);
+            unit.WeaponDamage.Returns(_intValue);
 
             return unit;
         }

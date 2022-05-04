@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using WH40K.Essentials;
-using WH40K.GameMechanics.Combat;
 
 namespace WH40K.GameMechanics
 {
@@ -27,7 +25,7 @@ namespace WH40K.GameMechanics
         private static void Initialize()
         {
             if (_initialized) return;
-                _shootingSubPhase.Clear();
+            _shootingSubPhase.Clear();
 
             var allShootingSubPhases = Assembly.GetAssembly(typeof(ShootingSubPhases)).GetTypes()
                 .Where(t => typeof(ShootingSubPhases).IsAssignableFrom(t) && t.IsAbstract == false);

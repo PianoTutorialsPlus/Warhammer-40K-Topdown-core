@@ -21,7 +21,7 @@ namespace Editor.Infrastructure.Player
         {
             var pathCalculator = Substitute.For<IPathCalculator>();
             pathCalculator.GetEndPosition(Arg.Any<Vector3>()).Returns(_endPosition);
-            pathCalculator.GetEndPosition(Arg.Any<Vector3>(),Arg.Any<float>()).Returns(_endPosition);
+            pathCalculator.GetEndPosition(Arg.Any<Vector3>(), Arg.Any<float>()).Returns(_endPosition);
             return pathCalculator;
         }
     }

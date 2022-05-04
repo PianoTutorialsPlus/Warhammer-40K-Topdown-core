@@ -60,9 +60,9 @@ namespace Editor.CombatTests
                 var diceAction = GetRollTheDiceEventChannel();
                 var unit = GetUnit(1);
                 var calculateHits = GetCalculateHits(unit, diceAction);
-                
+
                 calculateHits.Action(new List<int>());
-                
+
                 Assert.AreEqual(1, _result.Count);
             }
             [Test]
@@ -71,9 +71,9 @@ namespace Editor.CombatTests
                 var diceAction = GetRollTheDiceEventChannel();
                 var unit = GetUnit(1);
                 var calculateHits = GetCalculateHits(unit, diceAction);
-                
+
                 calculateHits.Action(new List<int>());
-                
+
                 Assert.AreEqual(ShootingSubEvents.Hit, _diceEvent);
             }
         }
@@ -88,7 +88,7 @@ namespace Editor.CombatTests
                 GetCalculateHits(unit, diceResult, diceSubResult);
 
                 diceSubResult.RaiseEvent(ShootingSubEvents.Hit, null);
-                
+
                 Assert.IsNull(_result);
             }
             [Test]
@@ -100,7 +100,7 @@ namespace Editor.CombatTests
                 GetCalculateHits(unit, diceResult, diceSubResult);
 
                 diceSubResult.RaiseEvent(ShootingSubEvents.Hit, new List<int>());
-                
+
                 Assert.IsNull(_result);
             }
             [Test]
@@ -120,7 +120,7 @@ namespace Editor.CombatTests
                 var diceResult = GetRollTheDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(2);
-                GetCalculateHits(unit,diceResult, diceSubResult);
+                GetCalculateHits(unit, diceResult, diceSubResult);
 
                 diceSubResult.RaiseEvent(ShootingSubEvents.Hit, new List<int>() { 2 });
                 Assert.AreEqual(ShootingSubEvents.Hit, _diceEvent);

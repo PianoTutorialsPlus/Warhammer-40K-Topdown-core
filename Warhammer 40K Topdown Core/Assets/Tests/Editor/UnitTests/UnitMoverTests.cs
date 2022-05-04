@@ -1,4 +1,3 @@
-using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace Editor.Units.Movement
         private UnitMovementController moveController;
         private bool initialize;
         private int movement;
-        
+
 
         protected float TargetDistance => unitMover.Range;
         protected float TargetMoveDistance => Target.Range;

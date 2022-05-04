@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-using WH40K.Essentials;
+﻿using WH40K.Essentials;
 
 namespace WH40K.UI
 {
@@ -12,8 +10,8 @@ namespace WH40K.UI
         private IStats _activeUnit => _gameStats.activeUnitTest;
         public bool IsUnitActive(IStats child) => child == _activeUnit;
         private InteractionUIEventChannelSO _toggleInteractionUI => _uIEvents.InteractionUIEvent;
-        
-        public UIDisplayInteractionEvents(IManageUIEvents uIEvents,GameStatsSO gameStats)
+
+        public UIDisplayInteractionEvents(IManageUIEvents uIEvents, GameStatsSO gameStats)
         {
             _uIEvents = uIEvents;
             _gameStats = gameStats;

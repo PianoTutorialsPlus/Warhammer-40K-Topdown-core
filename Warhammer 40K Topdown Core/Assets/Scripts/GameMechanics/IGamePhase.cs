@@ -1,5 +1,4 @@
 ﻿using WH40K.Essentials;
-using WH40K.UI;
 
 namespace WH40K.GameMechanics
 {

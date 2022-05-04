@@ -7,6 +7,6 @@
         int BallisticSkill { get; }
         int Toughness { get; }
         int ArmourSave { get; }
-        int Wounds { get; set; }
+        int Wounds { get; }
     }
 }

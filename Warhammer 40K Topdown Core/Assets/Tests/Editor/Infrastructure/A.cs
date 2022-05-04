@@ -14,10 +14,12 @@ namespace Editor.Infrastructure
         public static UnitPropertiesBuilder UnitProperties => new UnitPropertiesBuilder();
         public static CombatResultsBuilder CombatResult => new CombatResultsBuilder();
         public static ShotsBuilder Shot => new ShotsBuilder();
+        public static WoundsBuilder Wound => new WoundsBuilder();
         public static WoundTableBuilder WoundTable => new WoundTableBuilder();
         public static CalculateHitsBuilder CalculateHits => new CalculateHitsBuilder();
         public static CalculateWoundsBuilder CalculateWounds => new CalculateWoundsBuilder();
         public static CalculateSaverolesBuilder CalculateSaves => new CalculateSaverolesBuilder();
+        public static DealDamageBuilder DamageDealer => new DealDamageBuilder();
         public static RangeControllerBuilder RangeController => new RangeControllerBuilder();
         public static UIDisplayInfoEventBuilder UIDisplayInfoEvent => new UIDisplayInfoEventBuilder();
         public static InfoUIEventChannelBuilder InfoUIEventChannel => new InfoUIEventChannelBuilder();
@@ -39,7 +41,7 @@ namespace Editor.Infrastructure
         public static PointerEventDataBuilder PointerEventData => new PointerEventDataBuilder();
         public static UnitSelectorBuilder UnitSelector => new UnitSelectorBuilder();
         public static GameTableBuilder GameTable => new GameTableBuilder();
-        
+
     }
     public static class An
     {
@@ -47,5 +49,6 @@ namespace Editor.Infrastructure
         public static BattleRoundEventBuilder BattleRoundEvent => new BattleRoundEventBuilder();
         public static IPhaseBuilder IPhaseEvent => new IPhaseBuilder();
         public static IResultsBuilder IResultEvent => new IResultsBuilder();
+        public static SelectEnemyBuilder EnemySelector => new SelectEnemyBuilder();
     }
 }

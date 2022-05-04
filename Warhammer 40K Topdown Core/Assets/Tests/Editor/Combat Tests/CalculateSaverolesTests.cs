@@ -42,7 +42,7 @@ namespace Editor.CombatTests
         {
             return A.Unit.WithInteger(value).Build();
         }
-        private CalculateSaveroles GetCalculateWounds(IUnit unit, RollTheDiceSO diceResult, RollTheDiceSO diceSubResult = null)
+        private CalculateSaveroles GetCalculateSaves(IUnit unit, RollTheDiceSO diceResult, RollTheDiceSO diceSubResult = null)
         {
             return A.CalculateSaves
                 .WithIResult(An.IResultEvent
@@ -61,9 +61,9 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetRollTheDiceEventChannel();
                 var unit = GetUnit(1);
-                var calculateHits = GetCalculateWounds(unit, diceAction);
+                var calculateSaves = GetCalculateSaves(unit, diceAction);
 
-                calculateHits.Action(new List<int>() { 2 });
+                calculateSaves.Action(new List<int>() { 2 });
 
                 Assert.AreEqual(1, _result.Count);
             }
@@ -72,9 +72,9 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetRollTheDiceEventChannel();
                 var unit = GetUnit(1);
-                var calculateHits = GetCalculateWounds(unit, diceAction);
+                var calculateSaves = GetCalculateSaves(unit, diceAction);
 
-                calculateHits.Action(new List<int>() { 2 });
+                calculateSaves.Action(new List<int>() { 2 });
 
                 Assert.AreEqual(ShootingSubEvents.Save, _diceEvent);
             }
@@ -88,7 +88,7 @@ namespace Editor.CombatTests
                 var diceResult = GetRollTheDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(2);
-                GetCalculateWounds(unit, diceResult, diceSubResult);
+                GetCalculateSaves(unit, diceResult, diceSubResult);
 
                 diceSubResult.RaiseEvent(ShootingSubEvents.Save, null);
 
@@ -100,7 +100,7 @@ namespace Editor.CombatTests
                 var diceResult = GetRollTheDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(2);
-                GetCalculateWounds(unit, diceResult, diceSubResult);
+                GetCalculateSaves(unit, diceResult, diceSubResult);
 
                 diceSubResult.RaiseEvent(ShootingSubEvents.Save, new List<int>());
 
@@ -112,7 +112,7 @@ namespace Editor.CombatTests
                 var diceResult = GetRollTheDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(2);
-                GetCalculateWounds(unit, diceResult, diceSubResult);
+                GetCalculateSaves(unit, diceResult, diceSubResult);
 
                 diceSubResult.RaiseEvent(ShootingSubEvents.None, new List<int>() { 2 });
                 Assert.IsNull(_result);
@@ -123,7 +123,7 @@ namespace Editor.CombatTests
                 var diceResult = GetRollTheDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(2);
-                GetCalculateWounds(unit, diceResult, diceSubResult);
+                GetCalculateSaves(unit, diceResult, diceSubResult);
 
                 diceSubResult.RaiseEvent(ShootingSubEvents.Save, new List<int>() { 2 });
                 Assert.AreEqual(ShootingSubEvents.Save, _diceEvent);
@@ -134,7 +134,7 @@ namespace Editor.CombatTests
                 var diceResult = GetRollTheDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(2);
-                GetCalculateWounds(unit, diceResult, diceSubResult);
+                GetCalculateSaves(unit, diceResult, diceSubResult);
 
                 diceSubResult.RaiseEvent(ShootingSubEvents.Save, new List<int>() { 1 });
                 Assert.AreEqual(1, _result.Count);
@@ -145,7 +145,7 @@ namespace Editor.CombatTests
                 var diceResult = GetRollTheDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(2);
-                GetCalculateWounds(unit, diceResult, diceSubResult);
+                GetCalculateSaves(unit, diceResult, diceSubResult);
 
                 diceSubResult.RaiseEvent(ShootingSubEvents.Save, new List<int>() { 3 });
                 Assert.AreEqual(0, _result.Count);

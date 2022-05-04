@@ -5,7 +5,7 @@ using WH40K.UI;
 
 namespace Editor.UI
 {
-    public class UIDisplayInteractionEventsTests: UIDisplayEventsTestsBase
+    public class UIDisplayInteractionEventsTests : UIDisplayEventsTestsBase
     {
         [SetUp]
         public void BeforeEveryTest()
@@ -42,7 +42,7 @@ namespace Editor.UI
                 ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
                     .WithUIEvents(An.UIEvent.Build())
                     .WithGameStats(gameStats)).SetDisplayInteraction(child);
-                
+
                 Assert.IsNotNull(child.OnPointerEnter);
             }
             [Test]
@@ -172,7 +172,7 @@ namespace Editor.UI
             {
                 var child = GetUnit();
 
-                var uIDisplayInteractionEvents = 
+                var uIDisplayInteractionEvents =
                     (UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
                         .WithUIEvents(An.UIEvent.Build());
 
@@ -189,7 +189,7 @@ namespace Editor.UI
             {
                 var child = GetUnit();
 
-                var uIDisplayInteractionEvents = 
+                var uIDisplayInteractionEvents =
                     (UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
                         .WithUIEvents(An.UIEvent.Build());
 

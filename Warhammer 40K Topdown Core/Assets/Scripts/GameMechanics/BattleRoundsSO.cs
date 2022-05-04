@@ -24,9 +24,9 @@ namespace WH40K.UI
         private IPlayer _enemyPlayer => _gameStats.EnemyPlayer;
 
         public InteractionUIEventChannelSO InteractionUIEvent => _toggleInteractionUI;
-        public InfoUIEventChannelSO InfoUIEvent  => _toggleInfoUI;
+        public InfoUIEventChannelSO InfoUIEvent => _toggleInfoUI;
         public InfoUIEventChannelSO EnemyInfoUIEvent => _toggleEnemyInfoUI;
-        public IndicatorUIEventChannelSO IndicatorConnectionUIEvent => _toggleIndicatorConnectionUI; 
+        public IndicatorUIEventChannelSO IndicatorConnectionUIEvent => _toggleIndicatorConnectionUI;
         public BattleroundEventChannelSO SetPhaseEvent => _setPhaseEvent;
 
         public void OnEnable()

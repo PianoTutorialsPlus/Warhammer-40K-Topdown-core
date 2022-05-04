@@ -6,4 +6,5 @@
 
     void Activate();
     void Destroy();
+    void TakeDamage(int damage);
 }

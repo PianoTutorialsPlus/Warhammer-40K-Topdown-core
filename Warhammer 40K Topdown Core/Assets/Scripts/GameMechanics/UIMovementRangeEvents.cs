@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using WH40K.Essentials;
+﻿using WH40K.Essentials;
 
 namespace WH40K.UI
 {
@@ -10,7 +9,7 @@ namespace WH40K.UI
 
         public BattleroundEventChannelSO _setPhaseEvent => _uIMovementRange.SetPhaseEvent;
         public IndicatorUIEventChannelSO _toggleIndicatorConnectionUI => _uIMovementRange.IndicatorConnectionUIEvent;
-        public Fraction _playerFraction=> _gameStats.ActivePlayer.Fraction;
+        public Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
         //public bool IsUnitDone(Unit child) => child.IsDone;
         //public bool IsUnitActivated(Unit child) => child.IsActivated;
 

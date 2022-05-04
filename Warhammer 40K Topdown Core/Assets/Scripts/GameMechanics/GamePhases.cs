@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using WH40K.Essentials;
+﻿using WH40K.Essentials;
 using WH40K.GameMechanics;
 
 namespace WH40K.GamePhaseHandling

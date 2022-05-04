@@ -22,7 +22,7 @@ namespace Editor.Infrastructure.Player
         }
         public override UnitSelector Build()
         {
-            var unitSelector = new UnitSelector(_gameStats ??= A.GameStats, _unit??= A.Unit.Build());
+            var unitSelector = new UnitSelector(_gameStats ??= A.GameStats, _unit ??= A.Unit.Build());
             return unitSelector;
         }
     }

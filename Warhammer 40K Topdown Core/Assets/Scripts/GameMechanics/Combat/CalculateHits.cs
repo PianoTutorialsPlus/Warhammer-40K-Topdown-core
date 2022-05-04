@@ -10,7 +10,7 @@ namespace WH40K.GameMechanics.Combat
         private RollTheDiceSO DiceSubResult => _results.DiceSubResult;
         private RollTheDiceSO DiceAction => _results.DiceAction;
         private RollTheDiceSO DiceResult => _results.DiceResult;
-       
+
         private GameStatsSO _gameStats => _results.GameStats;
         private int ToHit => _gameStats.ActiveUnit.BallisticSkill;
         private int MaxShots => _gameStats.ActiveUnit.WeaponShots;

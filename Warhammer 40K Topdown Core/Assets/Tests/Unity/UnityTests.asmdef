@@ -6,8 +6,8 @@
         "UnityEditor.TestRunner",
         "NavMeshComponents",
         "NavMeshComponentsEditor",
-        "Scripts",
-        "EditorTests"
+        "EditorTests",
+        "Scripts"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

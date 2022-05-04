@@ -70,7 +70,7 @@ namespace Editor.Units.Movement
             {
                 var count = 0;
                 var pathCalculator = A.PathCalculator.Build();
-        
+
                 pathCalculator
                     .When(x => x.SetDestination(Arg.Any<Vector3>()))
                     .Do(x => count++);
@@ -116,7 +116,7 @@ namespace Editor.Units.Movement
                 pathCalculator
                     .When(x => x.FreezeAgent())
                     .Do(x => count++);
-                
+
                 var unit = (UnitMovementController)A.UnitMovementController
                     .WithUnitMover(A.UnitMover
                         .WithMovementRange(A.MovementRange.WithMaxRange(0))

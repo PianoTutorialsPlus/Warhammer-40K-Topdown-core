@@ -1,7 +1,7 @@
-using System;
 using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
+using System;
 using UnityEngine;
 using WH40K.UI;
 
@@ -18,7 +18,7 @@ namespace Editor.UI
                 var rangeController = (RangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator)
                         .WithPosition(Vector3.zero);
-                
+
                 Assert.AreEqual(0, rangeIndicator.Position.x);
             }
             [Test]
@@ -61,7 +61,7 @@ namespace Editor.UI
                 IRangeIndicator rangeIndicator = Substitute.For<IRangeIndicator>();
                 var rangeController = (RangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator);
-                
+
                 Assert.Throws<ArgumentOutOfRangeException>(() => rangeController.ScaleRange(-1));
             }
             [Test]
@@ -82,7 +82,7 @@ namespace Editor.UI
                 var rangeController = (RangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator);
                 rangeController.ScaleRange(5);
-                Assert.AreEqual(5* _baseScale, rangeIndicator.LocalScale.x);
+                Assert.AreEqual(5 * _baseScale, rangeIndicator.LocalScale.x);
             }
             [Test]
             public void When_Range_Is_5_And_BaseSize_Is_1_Then_LocalScale_X_Is_6_Times_BaseScale()

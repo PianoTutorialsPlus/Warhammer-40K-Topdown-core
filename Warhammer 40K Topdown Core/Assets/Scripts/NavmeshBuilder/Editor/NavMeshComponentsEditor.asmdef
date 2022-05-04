@@ -1,9 +1,9 @@
 {
     "name": "NavMeshComponentsEditor",
+    "rootNamespace": "",
     "references": [
-        "NavMeshComponents"
+        "GUID:6b6e82f1ded062848adc11712cd38a74"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [
         "Editor"
     ],
@@ -12,5 +12,7 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

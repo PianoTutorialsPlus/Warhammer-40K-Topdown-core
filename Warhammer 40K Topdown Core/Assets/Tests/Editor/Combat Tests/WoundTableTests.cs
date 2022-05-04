@@ -1,6 +1,6 @@
-using System;
 using Editor.Infrastructure;
 using NUnit.Framework;
+using System;
 using WH40K.GameMechanics.Combat;
 
 namespace Editor.CombatTests
@@ -27,7 +27,7 @@ namespace Editor.CombatTests
             [Test]
             public void When_Strength_Is_Double_The_Value_Of_Toughness_Then_ToWound_Is_2()
             {
-                var WoundTable = GetWoundTable(); 
+                var WoundTable = GetWoundTable();
                 var toWound = WoundTable.ToWound(2, 1);
                 Assert.AreEqual(2, toWound);
             }

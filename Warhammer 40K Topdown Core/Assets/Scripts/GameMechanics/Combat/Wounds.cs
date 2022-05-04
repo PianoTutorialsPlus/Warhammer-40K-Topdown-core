@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace WH40K.GameMechanics.Combat
 {
@@ -17,7 +16,7 @@ namespace WH40K.GameMechanics.Combat
             int wounds = 0;
             foreach (int save in _notSaved)
             {
-                wounds += damage;
+                if (save != 0) wounds += damage;
             }
             return wounds;
         }

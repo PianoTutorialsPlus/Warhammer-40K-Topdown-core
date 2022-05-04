@@ -34,7 +34,7 @@ namespace Editor.Units
                 // ARRANGE
                 var fraction = Fraction.SpaceMarines;
                 var gameStats = SetGameStats(fraction);
-          
+
                 // ACT
                 var unitSelector = SetUnitSelector(gameStats);
                 unitSelector.SelectUnit();

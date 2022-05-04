@@ -26,12 +26,12 @@ namespace WH40K.Essentials
 
         private void OnEnable()
         {
-          //  Debug.Log("enable");
+            //  Debug.Log("enable");
         }
 
         private void OnDisable()
         {
-          //  Debug.Log("disable");
+            //  Debug.Log("disable");
         }
 
         public void OnPointerEnter(PointerEventData pointerEvent)

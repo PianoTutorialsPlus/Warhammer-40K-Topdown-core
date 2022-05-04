@@ -51,7 +51,7 @@ namespace WH40K.Essentials
                 UnitSelector.SelectUnit();
                 onTapDownAction(Unit);
             }
-            else if (pointerEvent.button == PointerEventData.InputButton.Right)// && _gameStats.activePlayer._playerUnits[0].tag == gameObject.tag)
+            else if (pointerEvent.button == PointerEventData.InputButton.Right && _gameStats.ActiveUnit != null)
             {
                 UnitSelector.SelectEnemyUnit();
             }

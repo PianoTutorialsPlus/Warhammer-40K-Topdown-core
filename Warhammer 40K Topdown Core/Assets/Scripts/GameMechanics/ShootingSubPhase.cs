@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WH40K.Essentials;
 using WH40K.GameMechanics.Combat;
 
 /// <summary>
@@ -12,7 +11,7 @@ namespace WH40K.GameMechanics
         protected IResult _result;
         protected List<int> _parameter => _result.Parameter;
 
-        public ShootingSubPhases(IResult result) 
+        public ShootingSubPhases(IResult result)
         {
             _result = result;
         }
@@ -25,7 +24,7 @@ namespace WH40K.GameMechanics
     public class SelectEnemy : ShootingSubPhases
     {
         ICalculation calculation;
-        public SelectEnemy(IResult result) : base(result) {}
+        public SelectEnemy(IResult result) : base(result) { }
         public override ShootingSubEvents SubEvents => ShootingSubEvents.SelectEnemy;
         public override void SetCalculation(IResult result)
         {

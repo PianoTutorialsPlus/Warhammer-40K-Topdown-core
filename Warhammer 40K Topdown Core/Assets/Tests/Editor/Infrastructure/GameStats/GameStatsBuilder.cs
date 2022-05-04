@@ -44,7 +44,7 @@ namespace Editor.Infrastructure.GameStats
         public override GameStatsSO Build()
         {
             var gameStats = ScriptableObject.CreateInstance<GameStatsSO>();
-            gameStats.ActivePlayer = _activePlayer??= A.Player;
+            gameStats.ActivePlayer = _activePlayer ??= A.Player;
             gameStats.EnemyPlayer = _enemyPlayer ??= A.Player;
             gameStats.ActiveUnit = _activeUnit;
             gameStats.EnemyUnit = _enemyUnit;

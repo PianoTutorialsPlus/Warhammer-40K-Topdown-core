@@ -9,17 +9,17 @@ namespace WH40K.UI
         private float _baseSize = 0.5f;
         private RangeController _rangeController;
 
-        public float BaseSize 
-        { 
-            get => _baseSize; 
-            set => _baseSize = value; 
+        public float BaseSize
+        {
+            get => _baseSize;
+            set => _baseSize = value;
         }
         public Vector3 LocalScale
         {
             get => transform.localScale;
             set => transform.localScale = value;
         }
-        public Vector3 Position 
+        public Vector3 Position
         {
             get => transform.position;
             set => transform.position = value;
