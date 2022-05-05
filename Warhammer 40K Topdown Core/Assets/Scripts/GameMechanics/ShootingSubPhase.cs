@@ -9,16 +9,13 @@ namespace WH40K.GameMechanics
     public abstract class ShootingSubPhases
     {
         protected IResult _result;
-        protected List<int> _parameter => _result.Parameter;
 
         public ShootingSubPhases(IResult result)
         {
             _result = result;
         }
         public abstract ShootingSubEvents SubEvents { get; } // gets the active subphase
-        public abstract void SetCalculation(IResult result); // refers to the active calculation process
-        public abstract void HandleShooting(); // handles the subphases
-        public virtual List<int> ProcessResult(List<int> result) { return result; } // placeholder for results, may be removed
+        public abstract void HandleShooting(List<int> parameter); // handles the subphases
     }
 
     public class SelectEnemy : ShootingSubPhases
@@ -26,16 +23,15 @@ namespace WH40K.GameMechanics
         ICalculation calculation;
         public SelectEnemy(IResult result) : base(result) { }
         public override ShootingSubEvents SubEvents => ShootingSubEvents.SelectEnemy;
-        public override void SetCalculation(IResult result)
+        private void SetCalculation()
         {
-            calculation ??= new SelectEnemies(result);
+            calculation ??= new SelectEnemies(_result);
         }
-
-        public override void HandleShooting()
+        public override void HandleShooting(List<int> parameter)
         {
+            SetCalculation();
             calculation.Action();
         }
-
     }
 
     public class Hit : ShootingSubPhases
@@ -44,12 +40,13 @@ namespace WH40K.GameMechanics
         ICalculation calculation;
 
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Hit;
-        public override void SetCalculation(IResult calculations)
+        private void SetCalculation()
         {
-            calculation ??= new CalculateHits(calculations);
+            calculation ??= new CalculateHits(_result);
         }
-        public override void HandleShooting()
+        public override void HandleShooting(List<int> parameter)
         {
+            SetCalculation();
             calculation.Action();
         }
     }
@@ -60,14 +57,14 @@ namespace WH40K.GameMechanics
         ICalculation calculation;
 
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Wound;
-        public override void SetCalculation(IResult calculations)
+        private void SetCalculation()
         {
-            calculation ??= new CalculateWounds(calculations);
+            calculation ??= new CalculateWounds(_result);
         }
-
-        public override void HandleShooting()
+        public override void HandleShooting(List<int> parameter)
         {
-            calculation.Action(_parameter);
+            SetCalculation();
+            calculation.Action(parameter);
         }
     }
 
@@ -77,14 +74,15 @@ namespace WH40K.GameMechanics
         ICalculation calculation;
 
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Save;
-        public override void SetCalculation(IResult calculations)// { return (ICalculation)calculations[3]; }
+        private void SetCalculation()
         {
-            calculation ??= new CalculateSaveroles(calculations);
+            calculation ??= new CalculateSaveroles(_result);
         }
 
-        public override void HandleShooting()
+        public override void HandleShooting(List<int> parameter)
         {
-            calculation.Action(_parameter);
+            SetCalculation();
+            calculation.Action(parameter);
         }
     }
     public class Damage : ShootingSubPhases
@@ -93,14 +91,14 @@ namespace WH40K.GameMechanics
         ICalculation calculation;
 
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Damage;
-        public override void SetCalculation(IResult calculations)
+        private void SetCalculation()
         {
-            calculation ??= new DealDamage(calculations);
+            calculation ??= new DealDamage(_result);
         }
-
-        public override void HandleShooting()
+        public override void HandleShooting(List<int> parameter)
         {
-            calculation.Action(_parameter);
+            SetCalculation();
+            calculation.Action(parameter);
         }
     }
 }

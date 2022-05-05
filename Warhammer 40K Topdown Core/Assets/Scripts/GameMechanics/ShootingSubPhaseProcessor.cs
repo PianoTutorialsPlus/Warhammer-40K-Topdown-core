@@ -17,6 +17,8 @@ namespace WH40K.GameMechanics
         public static bool _initialized;
         private static IResult _result;
 
+        public bool Initialized { get => _initialized; protected set => _initialized = value; }
+
         public ShootingSubPhaseProcessor(IResult result)
         {
             _result = result;
@@ -38,19 +40,12 @@ namespace WH40K.GameMechanics
 
             _initialized = true;
         }
-        public static void SetCalculation(ShootingSubEvents subPhase)
+        public static void HandleShooting(ShootingSubEvents subPhase, List<int> parameter)
         {
             Initialize();
 
             var shootingSubPhase = _shootingSubPhase[subPhase];
-            shootingSubPhase.SetCalculation(_result);
-        }
-        public static void HandleShooting(ShootingSubEvents subPhase)
-        {
-            Initialize();
-
-            var shootingSubPhase = _shootingSubPhase[subPhase];
-            shootingSubPhase.HandleShooting();
+            shootingSubPhase.HandleShooting(parameter);
         }
     }
 }

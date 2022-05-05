@@ -11,7 +11,6 @@ namespace Editor.Infrastructure.Combat
         private RollTheDiceSO _diceSubResult;
         private RollTheDiceSO _diceResult;
         private GameStatsSO _gameStats;
-        private List<int> _parameter;
 
         public IResultsBuilder()
         {
@@ -36,11 +35,7 @@ namespace Editor.Infrastructure.Combat
             _gameStats = gameStats;
             return this;
         }
-        public IResultsBuilder WithListOfParameter(List<int> parameter)
-        {
-            _parameter = parameter;
-            return this;
-        }
+
         public override IResult Build()
         {
             var result = Substitute.For<IResult>();
@@ -48,7 +43,6 @@ namespace Editor.Infrastructure.Combat
             result.DiceSubResult.Returns(_diceSubResult ??= A.RollTheDiceEventChannel);
             result.DiceResult.Returns(_diceResult ??= A.RollTheDiceEventChannel);
             result.GameStats.Returns(_gameStats ??= A.GameStats);
-            result.Parameter.Returns(_parameter ??= new List<int>());
             return result;
         }
     }

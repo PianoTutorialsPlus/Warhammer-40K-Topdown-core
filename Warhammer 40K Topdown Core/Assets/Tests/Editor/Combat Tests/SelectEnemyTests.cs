@@ -15,6 +15,7 @@ namespace Editor.CombatTests
         public void BeforeEveryTest()
         {
             _result = null;
+            
             _diceEvent = ShootingSubEvents.None;
         }
 

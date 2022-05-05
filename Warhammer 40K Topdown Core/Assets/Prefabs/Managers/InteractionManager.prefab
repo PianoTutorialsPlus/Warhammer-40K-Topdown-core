@@ -197,7 +197,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameStats: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33, type: 2}
+  _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
   diceRollingResult: {fileID: 11400000, guid: f31b0541c9c601441867066a326a70ae, type: 2}
+  _shootingPhase: {fileID: 120229190216357853}
   _diceAction: {fileID: 11400000, guid: 813266957258e7b44886c3ec5242cd3e, type: 2}
   _diceSubResult: {fileID: 11400000, guid: 898753be13cf34042823ad734f12c5bc, type: 2}
   _diceResult: {fileID: 11400000, guid: f31b0541c9c601441867066a326a70ae, type: 2}

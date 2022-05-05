@@ -9,6 +9,5 @@ namespace WH40K.GameMechanics
         RollTheDiceSO DiceSubResult { get; }
         RollTheDiceSO DiceResult { get; }
         GameStatsSO GameStats { get; set; }
-        List<int> Parameter { get; set; }
     }
 }

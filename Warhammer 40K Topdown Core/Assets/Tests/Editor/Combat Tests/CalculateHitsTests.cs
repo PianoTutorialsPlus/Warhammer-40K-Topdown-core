@@ -28,13 +28,13 @@ namespace Editor.CombatTests
         }
         public RollTheDiceSO GetRollTheDiceEventChannel()
         {
-            RollTheDiceSO eventChannel = A.RollTheDiceEventChannel; ;
+            RollTheDiceSO eventChannel = A.RollTheDiceEventChannel;
             eventChannel.OnEventRaised += Filler;
             return eventChannel;
         }
         public RollTheDiceSO GetDiceSubEventChannel()
         {
-            RollTheDiceSO eventChannel = A.RollTheDiceEventChannel; ;
+            RollTheDiceSO eventChannel = A.RollTheDiceEventChannel;
             eventChannel.OnEventRaised += FillerDummy;
             return eventChannel;
         }
