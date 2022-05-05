@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using GameMechanics.Combat;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.Essentials;
@@ -31,6 +32,7 @@ namespace WH40K.GameMechanics
             enabled = false;
             EnqueueShootingSubPhase();
             new ShootingSubPhaseProcessor(this);
+            new CombatProcessor(this);
         }
         private void EnqueueShootingSubPhase()
         {

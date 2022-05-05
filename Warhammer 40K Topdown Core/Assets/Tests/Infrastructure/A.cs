@@ -36,6 +36,7 @@ namespace Editor.Infrastructure
         public static MovementPhaseProcessorBuilder MovementPhaseProcessor => new MovementPhaseProcessorBuilder();
         public static ShootingPhaseProcessorBuilder ShootingPhaseProcessor => new ShootingPhaseProcessorBuilder();
         public static ShootingSubPhaseProcessorBuilder ShootingSubPhaseProcessor => new ShootingSubPhaseProcessorBuilder();
+        public static CombatProcessorBuilder CombatProcessor => new CombatProcessorBuilder();
         public static PathCalculatorBuilder PathCalculator => new PathCalculatorBuilder();
         public static UnitMoverBuilder UnitMover => new UnitMoverBuilder();
         public static UnitMovementControllerBuilder UnitMovementController => new UnitMovementControllerBuilder();

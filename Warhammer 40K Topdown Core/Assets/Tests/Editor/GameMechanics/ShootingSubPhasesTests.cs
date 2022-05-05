@@ -1,4 +1,5 @@
 ﻿using Editor.Infrastructure;
+using GameMechanics.Combat;
 using NUnit.Framework;
 using System.Collections.Generic;
 using WH40K.Essentials;
@@ -57,7 +58,14 @@ namespace Editor.GameMechanics
         {
             ShootingSubPhaseProcessor processor = A.ShootingSubPhaseProcessor.WithIResult(result);
             processor.SetPrivate(x => x.Initialized, false);
+            SetCombatProcessor(result);
         }
+        public void SetCombatProcessor(IResult result)
+        {
+            CombatProcessor processor = A.CombatProcessor.WithIResult(result);
+            processor.SetPrivate(x => x.Initialized, false);
+        }
+
         public class TheHandleShootingMethod : ShootingSubPhasesTests
         {
             [Test]

@@ -1,23 +1,16 @@
 using System.Collections.Generic;
-using WH40K.Essentials;
 
 namespace WH40K.GameMechanics.Combat
 {
-    public class DealDamage : ICalculation
+    public class DealDamage : CombatPhases, ICalculation
     {
+        public override ShootingSubEvents SubEvents => ShootingSubEvents.Damage;
 
-        private readonly IResult _results;
-        private RollTheDiceSO DiceResult => _results.DiceResult;
-
-        private GameStatsSO _gameStats => _results.GameStats;
         private int Damage => _gameStats.ActiveUnit.WeaponDamage;
 
-        public DealDamage(IResult results)
-        {
-            _results = results;
-        }
+        public DealDamage(IResult results) : base(results) { }
 
-        public void Action(List<int> notSaved)
+        public override void Action(List<int> notSaved)
         {
             var wounds = new Wounds(notSaved);
             var damage = wounds.TakeDamage(Damage);
@@ -25,8 +18,9 @@ namespace WH40K.GameMechanics.Combat
 
             Result(ShootingSubEvents.Damage);
         }
-        public void Result(ShootingSubEvents diceEvent, List<int> result = null)
+        public override void Result(ShootingSubEvents diceEvent, List<int> result = null)
         {
+            if (diceEvent != ShootingSubEvents.Damage) return;
             DiceResult.RaiseEvent(diceEvent, result);
         }
     }

@@ -1,39 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
-using WH40K.Essentials;
 
 namespace WH40K.GameMechanics.Combat
 {
-    public class CalculateWounds : ICalculation
+    public class CalculateWounds : CombatPhases, ICalculation
     {
+        public override ShootingSubEvents SubEvents => ShootingSubEvents.Wound;
         private WoundTable _woundTable;
-        private readonly IResult _results;
-        private RollTheDiceSO DiceSubResult => _results.DiceSubResult;
-        private RollTheDiceSO DiceAction => _results.DiceAction;
-        private RollTheDiceSO DiceResult => _results.DiceResult;
 
-        private GameStatsSO _gameStats => _results.GameStats;
         private int Strength => _gameStats.ActiveUnit.WeaponStrength;
         private int Toughness => _gameStats.EnemyUnit.Toughness;
 
-        public CalculateWounds(IResult result)
-        {
-            _results = result;
-            _woundTable = new WoundTable();
-            OnEnable();
-        }
-        private void OnEnable()
-        {
-            if (DiceSubResult != null) DiceSubResult.OnEventRaised += Result;
-        }
-        public void Action(List<int> hits)
+        public CalculateWounds(IResult results) : base(results) { _woundTable = new WoundTable(); }
+
+        public override void Action(List<int> hits)
         {
             if (hits == null || hits.Count == 0) return;
 
             Debug.Log("CalculateWoundsSO");
             DiceAction.RaiseEvent(ShootingSubEvents.Wound, hits);
         }
-        public void Result(ShootingSubEvents diceEvent, List<int> woundResult)
+        public override void Result(ShootingSubEvents diceEvent, List<int> woundResult)
         {
 
             if (woundResult == null || woundResult.Count == 0) return;
@@ -44,52 +31,5 @@ namespace WH40K.GameMechanics.Combat
 
             DiceResult.RaiseEvent(diceEvent, combatResults.Wounds);
         }
-
-
-
-        //public override void Result(ShootingSubEvents diceEvent, List<int> woundResult)
-        //{
-        //    List<int> wounds = new List<int>();
-
-        //    Debug.Log("CalculateWoundsSO Result");
-
-        //    if (woundResult == null) return;
-
-        //    if (diceEvent == ShootingSubEvents.Wound)
-        //    {
-        //        if (woundResult != null)
-        //        {
-
-        //            foreach (int result in woundResult)
-        //            {
-        //                Debug.Log("Wounds: " + result);
-        //                if (result >= toWound)
-        //                {
-        //                    Debug.Log("toWounds: " + toWound);
-        //                    wounds.Add(result);
-        //                }
-        //            }
-        //            rollDiceResult.RaiseEvent(ShootingSubEvents.Wound, wounds);
-
-        //        }
-        //    }
-        //}
-        //public List<int> HandleToWound(List<int> hits, GameStatsSO gameStats)
-        //{
-        //    List<int> wounds = new List<int>();
-        //    List<int> woundResult = new List<int>();
-
-        //    int toWound = dataTable.WoundTable(gameStats.activeUnit._weaponSO.Strength, gameStats.enemyUnit._unitSO.Toughness);
-
-        //    woundResult = rollDices.RollTheDice(hits);
-
-        //    foreach (int result in woundResult)
-        //    {
-        //        Debug.Log("Wounds: " + result);
-        //        if (result >= toWound)
-        //            wounds.Add(result);
-        //    }
-        //    return wounds;
-        //}
     }
 }

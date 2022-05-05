@@ -1,27 +1,26 @@
 using System.Collections.Generic;
-using WH40K.Essentials;
 
 namespace WH40K.GameMechanics.Combat
 {
-    public class SelectEnemies : ICalculation
+    public class SelectEnemies : CombatPhases, ICalculation
     {
-        private readonly IResult _results;
-        private GameStatsSO _gameStats => _results.GameStats;
-        private RollTheDiceSO DiceResult => _results.DiceResult;
+        public override ShootingSubEvents SubEvents => ShootingSubEvents.SelectEnemy;
 
-        public SelectEnemies(IResult results)
-        {
-            _results = results;
-        }
+        public SelectEnemies(IResult results) : base(results) { }
+        //{
+        //    _results = results;
+        //}
 
-        public void Action(List<int> action)
+        public override void Action(List<int> action)
         {
             List<int> item = new List<int>() { 1 };
             //_gameStats.EnemyUnit = _gameStats.EnemyPlayer.PlayerUnits[0];
             Result(ShootingSubEvents.SelectEnemy, item);
         }
-        public void Result(ShootingSubEvents diceEvent, List<int> result)
+        public override void Result(ShootingSubEvents diceEvent, List<int> result)
         {
+            if (diceEvent != ShootingSubEvents.SelectEnemy) return;
+
             DiceResult.RaiseEvent(diceEvent, result);
         }
     }

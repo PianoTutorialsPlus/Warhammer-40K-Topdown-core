@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GameMechanics.Combat;
+using System.Collections.Generic;
 using WH40K.GameMechanics.Combat;
 
 /// <summary>
@@ -29,8 +30,9 @@ namespace WH40K.GameMechanics
         }
         public override void HandleShooting(List<int> parameter)
         {
-            SetCalculation();
-            calculation.Action();
+            //SetCalculation();
+            //calculation.Action();
+            CombatProcessor.Action(SubEvents, parameter);
         }
     }
 
@@ -46,8 +48,9 @@ namespace WH40K.GameMechanics
         }
         public override void HandleShooting(List<int> parameter)
         {
-            SetCalculation();
-            calculation.Action();
+            //SetCalculation();
+            //calculation.Action();
+            CombatProcessor.Action(SubEvents, parameter);
         }
     }
 
@@ -63,8 +66,9 @@ namespace WH40K.GameMechanics
         }
         public override void HandleShooting(List<int> parameter)
         {
-            SetCalculation();
-            calculation.Action(parameter);
+            //SetCalculation();
+            //calculation.Action(parameter);
+            CombatProcessor.Action(SubEvents, parameter);
         }
     }
 
@@ -81,8 +85,9 @@ namespace WH40K.GameMechanics
 
         public override void HandleShooting(List<int> parameter)
         {
-            SetCalculation();
-            calculation.Action(parameter);
+            //SetCalculation();
+            //calculation.Action(parameter);
+            CombatProcessor.Action(SubEvents, parameter);
         }
     }
     public class Damage : ShootingSubPhases
@@ -97,8 +102,9 @@ namespace WH40K.GameMechanics
         }
         public override void HandleShooting(List<int> parameter)
         {
-            SetCalculation();
-            calculation.Action(parameter);
+            //SetCalculation();
+            //calculation.Action(parameter);
+            CombatProcessor.Action(SubEvents, parameter);
         }
     }
 }

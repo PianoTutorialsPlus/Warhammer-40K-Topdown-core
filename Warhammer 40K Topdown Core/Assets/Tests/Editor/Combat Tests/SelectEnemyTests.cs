@@ -52,7 +52,7 @@ namespace Editor.CombatTests
         public class TheActionMethod : SelectEnemyTests
         {
             [Test]
-            public void When_Action_Is_Called_Then_DiceResult_Event_Is_Raised_With_State_Damage()
+            public void When_Action_Is_Called_Then_DiceResult_Event_Is_Raised_With_State_SelectEnemy()
             {
                 var diceAction = GetRollTheDiceEventChannel();
                 var unit = GetUnit(1, 2);
