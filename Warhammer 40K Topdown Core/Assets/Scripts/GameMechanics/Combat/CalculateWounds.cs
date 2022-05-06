@@ -16,20 +16,19 @@ namespace WH40K.GameMechanics.Combat
         public override void Action(List<int> hits)
         {
             if (hits == null || hits.Count == 0) return;
-
+            OnEnable();
             Debug.Log("CalculateWoundsSO");
-            DiceAction.RaiseEvent(ShootingSubEvents.Wound, hits);
+            DiceAction.RaiseEvent(hits);
         }
-        public override void Result(ShootingSubEvents diceEvent, List<int> woundResult)
+        public override void Result(List<int> woundResult)
         {
-
             if (woundResult == null || woundResult.Count == 0) return;
-            if (diceEvent != ShootingSubEvents.Wound) return;
+            //if (diceEvent != ShootingSubEvents.Wound) return;
 
             Debug.Log("CalculateWoundsSO Result");
             var combatResults = new CombatResults(_woundTable.ToWound(Strength, Toughness), woundResult);
 
-            DiceResult.RaiseEvent(diceEvent, combatResults.Wounds);
+            DiceResult.RaiseEvent(combatResults.Wounds);
         }
     }
 }

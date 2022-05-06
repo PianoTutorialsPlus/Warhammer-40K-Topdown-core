@@ -7,7 +7,7 @@ using Editor.Infrastructure.Player;
 
 namespace Editor.Infrastructure
 {
-    public static class A
+    public static partial class A
     {
         public static MovementRangeBuilder MovementRange => new MovementRangeBuilder();
         public static NavMeshPathPositionBuilder PathPosition => new NavMeshPathPositionBuilder();
@@ -45,7 +45,7 @@ namespace Editor.Infrastructure
         public static GameTableBuilder GameTable => new GameTableBuilder();
 
     }
-    public static class An
+    public static partial class An
     {
         public static UIEventBuilder UIEvent => new UIEventBuilder();
         public static BattleRoundEventBuilder BattleRoundEvent => new BattleRoundEventBuilder();

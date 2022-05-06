@@ -17,6 +17,7 @@ namespace WH40K.GameMechanics
         }
         public abstract ShootingSubEvents SubEvents { get; } // gets the active subphase
         public abstract void HandleShooting(List<int> parameter); // handles the subphases
+        public void Next() { CombatProcessor.Next(SubEvents); }
     }
 
     public class SelectEnemy : ShootingSubPhases

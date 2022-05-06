@@ -37,12 +37,19 @@ namespace GameMechanics.Combat
 
             _initialized = true;
         }
-        public static void Action(ShootingSubEvents subPhase, List<int> parameter)
+        public static void Action(ShootingSubEvents subPhase, List<int> parameter = null)
         {
             Initialize();
 
             var combatPhase = _combatPhase[subPhase];
             combatPhase.Action(parameter);
+        }
+        public static void Next(ShootingSubEvents subPhase)
+        {
+            Initialize();
+
+            var combatPhase = _combatPhase[subPhase];
+            combatPhase.Next();
         }
     }
 }

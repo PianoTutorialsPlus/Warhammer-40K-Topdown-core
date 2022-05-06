@@ -47,5 +47,12 @@ namespace WH40K.GameMechanics
             var shootingSubPhase = _shootingSubPhase[subPhase];
             shootingSubPhase.HandleShooting(parameter);
         }
+        public static void Next(ShootingSubEvents subPhase)
+        {
+            Initialize();
+
+            var shootingSubPhase = _shootingSubPhase[subPhase];
+            shootingSubPhase.Next();
+        }
     }
 }

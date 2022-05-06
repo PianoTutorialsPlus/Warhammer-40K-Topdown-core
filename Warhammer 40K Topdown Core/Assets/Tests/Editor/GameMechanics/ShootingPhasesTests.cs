@@ -30,7 +30,7 @@ namespace Editor.GameMechanics
                 .When(x => x.ClearPhase(Arg.Any<GameStatsSO>()))
                 .Do(x => counter++);
         }
-        public void SetShootinPhaseProcessor(IGamePhase gamePhase)
+        public void SetShootingPhaseProcessor(IGamePhase gamePhase)
         {
             ShootingPhaseProcessor processor = A.ShootingPhaseProcessor.WithGamePhase(gamePhase);
             processor.SetPrivate(x => x.Initialized, false);
@@ -47,7 +47,7 @@ namespace Editor.GameMechanics
             {
                 IGamePhase gamePhase = GetGamePhase();
                 SetHandlePhase(gamePhase);
-                SetShootinPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase);
 
                 ShootingPhaseProcessor.HandlePhase(ShootingPhase.Selection);
                 Assert.AreEqual(1, counter);
@@ -57,7 +57,7 @@ namespace Editor.GameMechanics
             {
                 IGamePhase gamePhase = GetGamePhase();
                 SetHandlePhase(gamePhase);
-                SetShootinPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase);
 
                 ShootingPhaseProcessor.HandlePhase(ShootingPhase.Shoot);
                 Assert.AreEqual(0, counter);
@@ -67,7 +67,7 @@ namespace Editor.GameMechanics
             {
                 IGamePhase gamePhase = GetGamePhase();
                 SetHandlePhase(gamePhase);
-                SetShootinPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase);
 
                 ShootingPhaseProcessor.HandlePhase(ShootingPhase.Next);
                 Assert.AreEqual(0, counter);
@@ -80,7 +80,7 @@ namespace Editor.GameMechanics
             {
                 IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
-                SetShootinPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase);
 
                 ShootingPhaseProcessor.ClearPhase(ShootingPhase.Selection);
                 Assert.AreEqual(1, counter);
@@ -90,7 +90,7 @@ namespace Editor.GameMechanics
             {
                 var gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
-                SetShootinPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase);
 
                 ShootingPhaseProcessor.ClearPhase(ShootingPhase.Shoot);
                 Assert.AreEqual(1, counter);
@@ -100,7 +100,7 @@ namespace Editor.GameMechanics
             {
                 IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
-                SetShootinPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase);
 
                 ShootingPhaseProcessor.ClearPhase(ShootingPhase.Next);
                 Assert.AreEqual(1, counter);
@@ -113,7 +113,7 @@ namespace Editor.GameMechanics
             {
                 IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
-                SetShootinPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase);
 
                 Assert.IsFalse(ShootingPhaseProcessor.Next(ShootingPhase.Selection));
             }
@@ -122,7 +122,7 @@ namespace Editor.GameMechanics
             {
                 IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
-                SetShootinPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase);
 
                 Assert.IsFalse(ShootingPhaseProcessor.Next(ShootingPhase.Shoot));
             }
@@ -131,7 +131,7 @@ namespace Editor.GameMechanics
             {
                 IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
-                SetShootinPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase);
 
                 Assert.IsTrue(ShootingPhaseProcessor.Next(ShootingPhase.Next));
             }
@@ -140,7 +140,7 @@ namespace Editor.GameMechanics
             {
                 IGamePhase gamePhase = GetGamePhase();
                 SetClearPhase(gamePhase);
-                SetShootinPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase);
                 ShootingPhaseProcessor.Next(ShootingPhase.Next);
 
                 Assert.IsNull(gamePhase.GameStats.ActiveUnit);

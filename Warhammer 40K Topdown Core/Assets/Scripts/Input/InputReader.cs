@@ -52,8 +52,11 @@ public class InputReader : ScriptableObject, GameInput.IGameplayActions
     public void OnExecute(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Performed)
+        {
+            ExecuteEvent.Invoke();
             Debug.Log("Execute");
-        ExecuteEvent.Invoke();
+        }
+        
     }
 
     public void EnableGameplayInput()

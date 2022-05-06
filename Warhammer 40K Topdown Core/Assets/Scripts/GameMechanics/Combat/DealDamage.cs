@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace WH40K.GameMechanics.Combat
 {
@@ -12,16 +13,19 @@ namespace WH40K.GameMechanics.Combat
 
         public override void Action(List<int> notSaved)
         {
+            if (notSaved == null || notSaved.Count == 0) return;
+            OnEnable();
             var wounds = new Wounds(notSaved);
             var damage = wounds.TakeDamage(Damage);
             _gameStats.EnemyUnit.TakeDamage(damage);
 
-            Result(ShootingSubEvents.Damage);
+            Result();
         }
-        public override void Result(ShootingSubEvents diceEvent, List<int> result = null)
+        public override void Result(List<int> result = null)
         {
-            if (diceEvent != ShootingSubEvents.Damage) return;
-            DiceResult.RaiseEvent(diceEvent, result);
+            //if (diceEvent != ShootingSubEvents.Damage) return;
+            Debug.Log("DealDamage Result");
+            DiceResult.RaiseEvent(result);
         }
     }
 }

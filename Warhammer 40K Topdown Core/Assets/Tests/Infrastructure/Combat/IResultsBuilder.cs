@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using WH40K.Essentials;
 using WH40K.GameMechanics;
+using Editor.Infrastructure;
 
 namespace Editor.Infrastructure.Combat
 {

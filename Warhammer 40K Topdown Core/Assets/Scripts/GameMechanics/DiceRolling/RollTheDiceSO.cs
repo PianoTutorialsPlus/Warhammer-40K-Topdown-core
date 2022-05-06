@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class RollTheDiceSO : ScriptableObject
 {
     public InputReader inputReader;
-    public UnityAction<ShootingSubEvents, List<int>> OnEventRaised;
+    public UnityAction<List<int>> OnEventRaised;
 
     //public List<int> RollTheDice(List<int> values)
     //{
@@ -22,10 +22,10 @@ public class RollTheDiceSO : ScriptableObject
     //    return result;
     //}
 
-    public void RaiseEvent(ShootingSubEvents diceEvent, List<int> values)
+    public void RaiseEvent(List<int> values)
     {
         Debug.Log("Roll The Dice SO");
         if (OnEventRaised != null)
-            OnEventRaised.Invoke(diceEvent, values);
+            OnEventRaised.Invoke(values);
     }
 }

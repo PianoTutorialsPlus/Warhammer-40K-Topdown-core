@@ -14,18 +14,19 @@ namespace WH40K.GameMechanics.Combat
 
         public override void Action(List<int> action)
         {
+            OnEnable();
             var shots = new Shots(MaxShots);
-            DiceAction.RaiseEvent(ShootingSubEvents.Hit, shots.GetShots());
+            DiceAction.RaiseEvent(shots.GetShots());
         }
-        public override void Result(ShootingSubEvents diceEvent, List<int> hitResult)
+        public override void Result(List<int> hitResult)
         {
             if (hitResult == null || hitResult.Count == 0) return;
-            if (diceEvent != ShootingSubEvents.Hit) return;
+            //if (diceEvent != ShootingSubEvents.Hit) return;
 
             Debug.Log("CalculateHitsSO Result");
             var combatResults = new CombatResults(ToHit, hitResult);
 
-            DiceResult.RaiseEvent(diceEvent, combatResults.Hits);
+            DiceResult.RaiseEvent(combatResults.Hits);
         }
     }
 }

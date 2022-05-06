@@ -9,7 +9,6 @@ public class RollTheDice : MonoBehaviour
 
     private string galleryDie = "d6-red";
     Vector3 spawnPoint;
-    ShootingSubEvents diceRollType;
     List<int> Values = new List<int>();
     // Start is called before the first frame update
     void Start()
@@ -56,17 +55,15 @@ public class RollTheDice : MonoBehaviour
         // right mouse button clicked so roll 8 dice of dieType 'gallery die'
         Dice.Clear();
         string[] a = galleryDie.Split('-');
-        Dice.Roll(diceRollType, Values, galleryDie, spawnPoint, Force());
-        Debug.Log(diceRollType);
+        Dice.Roll(Values, galleryDie, spawnPoint, Force());
 
 
 
         //}
     }
 
-    public void Activate(ShootingSubEvents diceEvent, List<int> values)
+    public void Activate(List<int> values)
     {
-        diceRollType = diceEvent;
         Values = values;
         camRoll.gameObject.SetActive(true);
         canvas.gameObject.SetActive(true);

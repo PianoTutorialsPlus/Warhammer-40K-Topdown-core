@@ -19,12 +19,12 @@ namespace Editor.GameMechanics
             _diceEvent = ShootingSubEvents.None;
         }
 
-        public void Filler(ShootingSubEvents diceEvent, List<int> hitResult)
+        public void Filler(List<int> hitResult)
         {
-            _diceEvent = diceEvent;
+            //_diceEvent = diceEvent;
             _result = hitResult;
         }
-        public void FillerDummy(ShootingSubEvents diceEvent, List<int> hitResult)
+        public void FillerDummy(List<int> hitResult)
         {
         }
         public RollTheDiceSO GetRollTheDiceEventChannel()
@@ -39,9 +39,12 @@ namespace Editor.GameMechanics
             eventChannel.OnEventRaised += FillerDummy;
             return eventChannel;
         }
-        public IUnit GetUnit(int value)
+        public IUnit GetUnit(int value,int wounds = 0)
         {
-            return A.Unit.WithInteger(value).Build();
+            return A.Unit
+                .WithInteger(value)
+                .WithWounds(wounds)
+                .Build();
         }
         public IResult GetIResult(IUnit unit, RollTheDiceSO diceAction, RollTheDiceSO subResult = null)
         {
@@ -78,7 +81,7 @@ namespace Editor.GameMechanics
                 SetShootingSubPhaseProcessor(result);
                 ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.SelectEnemy, new List<int>());
 
-                Assert.AreEqual(ShootingSubEvents.SelectEnemy, _diceEvent);
+                Assert.AreEqual(1, _result.Count);
             }
 
             [Test]
@@ -89,9 +92,9 @@ namespace Editor.GameMechanics
                 var result = GetIResult(unit, diceAction);
 
                 SetShootingSubPhaseProcessor(result);
-                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Hit, new List<int>());
+                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Hit, new List<int>() { 1 });
 
-                Assert.AreEqual(ShootingSubEvents.Hit, _diceEvent);
+                Assert.AreEqual(1, _result.Count);
             }
             [Test]
             public void When_ShootingSubPhase_State_Is_Wound_Then_DiceAction_Event_Is_Raised_With_State_Wound()
@@ -103,7 +106,7 @@ namespace Editor.GameMechanics
                 SetShootingSubPhaseProcessor(result);
                 ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Wound, new List<int>() { 1 });
 
-                Assert.AreEqual(ShootingSubEvents.Wound, _diceEvent);
+                Assert.AreEqual(1, _result.Count);
             }
             [Test]
             public void When_ShootingSubPhase_State_Is_Save_Then_DiceAction_Event_Is_Raised_With_State_Save()
@@ -113,21 +116,21 @@ namespace Editor.GameMechanics
                 var result = GetIResult(unit, diceAction);
 
                 SetShootingSubPhaseProcessor(result);
-                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Save, new List<int>());
+                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Save, new List<int>() { 1 });
 
-                Assert.AreEqual(ShootingSubEvents.Save, _diceEvent);
+                Assert.AreEqual(1, _result.Count);
             }
             [Test]
             public void When_ShootingSubPhase_State_Is_Damage_Then_DiceAction_Event_Is_Raised_With_State_Damage()
             {
                 var diceAction = GetRollTheDiceEventChannel();
-                var unit = GetUnit(1);
+                var unit = GetUnit(1,2);
                 var result = GetIResult(unit, diceAction);
 
                 SetShootingSubPhaseProcessor(result);
-                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Damage, new List<int>());
+                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Damage, new List<int>() { 4 });
 
-                Assert.AreEqual(ShootingSubEvents.Damage, _diceEvent);
+                Assert.IsNull(_result);
             }
         }
     }

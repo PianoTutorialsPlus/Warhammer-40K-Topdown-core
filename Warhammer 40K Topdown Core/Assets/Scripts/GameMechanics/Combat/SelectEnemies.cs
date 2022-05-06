@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace WH40K.GameMechanics.Combat
 {
@@ -7,21 +8,19 @@ namespace WH40K.GameMechanics.Combat
         public override ShootingSubEvents SubEvents => ShootingSubEvents.SelectEnemy;
 
         public SelectEnemies(IResult results) : base(results) { }
-        //{
-        //    _results = results;
-        //}
 
         public override void Action(List<int> action)
         {
+            OnEnable();
             List<int> item = new List<int>() { 1 };
             //_gameStats.EnemyUnit = _gameStats.EnemyPlayer.PlayerUnits[0];
-            Result(ShootingSubEvents.SelectEnemy, item);
+            Result(item);
         }
-        public override void Result(ShootingSubEvents diceEvent, List<int> result)
+        public override void Result(List<int> result)
         {
-            if (diceEvent != ShootingSubEvents.SelectEnemy) return;
-
-            DiceResult.RaiseEvent(diceEvent, result);
+            //if (diceEvent != ShootingSubEvents.SelectEnemy) return;
+            Debug.Log("SelectEnemies Result");
+            DiceResult.RaiseEvent(result);
         }
     }
 }

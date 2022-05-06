@@ -63,7 +63,7 @@ namespace WH40K.GameMechanics
         {
             ClearPhase();
             ShootingPhaseProcessor.HandlePhase(shootingPhase.Peek());
-
+            Debug.Log("ShootingPhaseManager");
             if (gameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
             if (shootingPhase.Peek() == ShootingPhase.Shoot) _shootingSubPhaseManager.enabled = true;
             if (ShootingPhaseProcessor.Next(shootingPhase.Peek())) NextPhase();
