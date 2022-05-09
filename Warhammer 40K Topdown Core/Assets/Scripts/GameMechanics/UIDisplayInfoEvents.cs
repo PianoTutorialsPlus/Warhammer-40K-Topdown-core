@@ -16,6 +16,7 @@ namespace WH40K.UI
             _uIEvents = uIEvents;
             _gameStats = gameStats;
         }
+
         public void SetDisplayInfo(IUnit child)
         {
             if (DisplayInfo(child)) child.OnPointerEnterInfo += DisplayInfoUI;

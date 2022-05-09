@@ -4,20 +4,20 @@ using WH40K.GameMechanics;
 
 namespace Editor.Infrastructure.GamePhases
 {
-    public class GamePhaseBuilder : TestDataBuilder<IGamePhase>
+    public class IGamePhaseBuilder : TestDataBuilder<IGamePhase>
     {
         private GameStatsSO _gameStats;
         private IPhase _battleRoundEvents;
 
-        public GamePhaseBuilder()
+        public IGamePhaseBuilder()
         {
         }
-        public GamePhaseBuilder WithGameStats(GameStatsSO gameStats)
+        public IGamePhaseBuilder WithGameStats(GameStatsSO gameStats)
         {
             _gameStats = gameStats;
             return this;
         }
-        public GamePhaseBuilder WithBattleroundEvent(IPhase battleroundEvent)
+        public IGamePhaseBuilder WithBattleroundEvent(IPhase battleroundEvent)
         {
             _battleRoundEvents = battleroundEvent;
             return this;

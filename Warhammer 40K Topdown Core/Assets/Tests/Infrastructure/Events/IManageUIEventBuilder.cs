@@ -3,7 +3,7 @@ using WH40K.UI;
 
 namespace Editor.Infrastructure.Events
 {
-    public class UIEventBuilder : TestDataBuilder<IManageUIEvents>
+    public class IManageUIEventBuilder : TestDataBuilder<IManageUIEvents>
     {
         private InfoUIEventChannelSO _playerEventListener;
         private InfoUIEventChannelSO _enemyEventListener;
@@ -11,31 +11,31 @@ namespace Editor.Infrastructure.Events
         private IndicatorUIEventChannelSO _indicatorEventListener;
         private BattleroundEventChannelSO _battleRoundEventListener;
 
-        public UIEventBuilder()
+        public IManageUIEventBuilder()
         {
 
         }
-        public UIEventBuilder WithPlayerEventListener(InfoUIEventChannelSO eventListener)
+        public IManageUIEventBuilder WithPlayerEventListener(InfoUIEventChannelSO eventListener)
         {
             _playerEventListener = eventListener;
             return this;
         }
-        public UIEventBuilder WithEnemyEventListener(InfoUIEventChannelSO eventListener)
+        public IManageUIEventBuilder WithEnemyEventListener(InfoUIEventChannelSO eventListener)
         {
             _enemyEventListener = eventListener;
             return this;
         }
-        public UIEventBuilder WithInteractionEventListener(InteractionUIEventChannelSO eventListener)
+        public IManageUIEventBuilder WithInteractionEventListener(InteractionUIEventChannelSO eventListener)
         {
             _interactionEventListener = eventListener;
             return this;
         }
-        public UIEventBuilder WithMoveRangeIndicatorEventListener(IndicatorUIEventChannelSO eventListener)
+        public IManageUIEventBuilder WithMoveRangeIndicatorEventListener(IndicatorUIEventChannelSO eventListener)
         {
             _indicatorEventListener = eventListener;
             return this;
         }
-        public UIEventBuilder WithPhaseEventListener(BattleroundEventChannelSO eventListener)
+        public IManageUIEventBuilder WithPhaseEventListener(BattleroundEventChannelSO eventListener)
         {
             _battleRoundEventListener = eventListener;
             return this;

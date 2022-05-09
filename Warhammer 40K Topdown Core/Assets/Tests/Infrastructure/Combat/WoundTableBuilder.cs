@@ -9,8 +9,7 @@ namespace Editor.Infrastructure.Combat
         }
         public override WoundTable Build()
         {
-            var woundTable = new WoundTable();
-            return woundTable;
+            return new WoundTable();
         }
     }
 }

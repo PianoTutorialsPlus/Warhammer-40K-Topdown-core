@@ -22,7 +22,7 @@ namespace Editor.GameMechanics
                 var eventListener = GetBattleRoundEventListener();
                 var child = GetUnit();
 
-                ((BattleRoundEvents)An.BattleRoundEvent
+                ((BattleRoundEvents)A.BattleRoundEvent
                     .WithUIEvents(
                         An.UIEvent
                             .WithPhaseEventListener(eventListener)
@@ -39,7 +39,7 @@ namespace Editor.GameMechanics
                 var child = GetUnit(isActivated: true);
                 var gameStats = GetGameStats(Fraction.Necrons);
 
-                ((BattleRoundEvents)(An.BattleRoundEvent
+                ((BattleRoundEvents)(A.BattleRoundEvent
                     .WithUIEvents(An.UIEvent.Build())
                     .WithGameStats(gameStats))).SetPhaseEvent(child);
 
@@ -51,7 +51,7 @@ namespace Editor.GameMechanics
                 var child = GetUnit(isActivated: false);
                 var gameStats = GetGameStats(Fraction.Necrons);
 
-                ((BattleRoundEvents)(An.BattleRoundEvent
+                ((BattleRoundEvents)(A.BattleRoundEvent
                     .WithUIEvents(An.UIEvent.Build())
                     .WithGameStats(gameStats))).SetPhaseEvent(child);
 
@@ -63,7 +63,7 @@ namespace Editor.GameMechanics
                 var child = GetUnit(playerFraction: Fraction.SpaceMarines);
                 var gameStats = GetGameStats(Fraction.Necrons);
 
-                ((BattleRoundEvents)(An.BattleRoundEvent
+                ((BattleRoundEvents)(A.BattleRoundEvent
                     .WithUIEvents(An.UIEvent.Build())
                     .WithGameStats(gameStats))).SetPhaseEvent(child);
 
@@ -75,7 +75,7 @@ namespace Editor.GameMechanics
                 var child = GetUnit(isDone: true);
                 var gameStats = GetGameStats(Fraction.Necrons);
 
-                ((BattleRoundEvents)(An.BattleRoundEvent
+                ((BattleRoundEvents)(A.BattleRoundEvent
                     .WithUIEvents(An.UIEvent.Build())
                     .WithGameStats(gameStats))).SetPhaseEvent(child);
 
@@ -88,7 +88,7 @@ namespace Editor.GameMechanics
                 var child = GetUnit();
                 var gameStats = GetGameStats(Fraction.Necrons, child);
 
-                ((BattleRoundEvents)An.BattleRoundEvent
+                ((BattleRoundEvents)A.BattleRoundEvent
                    .WithUIEvents(
                        An.UIEvent
                            .WithPhaseEventListener(eventListener)
@@ -107,7 +107,7 @@ namespace Editor.GameMechanics
             {
                 var child = GetUnit();
 
-                var phaseEvents = (BattleRoundEvents)An.BattleRoundEvent
+                var phaseEvents = (BattleRoundEvents)A.BattleRoundEvent
                    .WithUIEvents(An.UIEvent.Build());
 
                 child.OnPointerEnterInfo += phaseEvents.ConnectEvent;
