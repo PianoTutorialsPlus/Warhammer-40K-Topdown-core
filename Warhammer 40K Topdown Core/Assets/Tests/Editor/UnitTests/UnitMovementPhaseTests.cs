@@ -1,17 +1,17 @@
 using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.Events;
 using WH40K.Essentials;
 using static UnityEngine.EventSystems.PointerEventData;
 
 namespace Editor.UnitTests
 {
-    public class UnitMovementPhaseTests
+    public class UnitMovementPhaseTests : UnitPhasesTestsBase
     {
-        public UnityAction _pointerAction;
-        public UnityAction<IUnit> _action;
+        public UnitMovementPhase SetUnitMovementPhase(IUnit unit)
+        {
+            return SetUnitPhase<UnitMovementPhase>(unit);
+        }
 
         [SetUp]
         public void BeforeEveryTest()
@@ -19,35 +19,7 @@ namespace Editor.UnitTests
             _pointerAction = null;
             _action = null;
         }
-        public IUnit GetUnit(Fraction playerFraction = Fraction.Necrons, bool isActivated = false, bool isDone = false)
-        {
-            return A.Unit
-                    .WithOnPointerEnterInfo(_action)
-                    .WithOnPointerEnter(_pointerAction)
-                    .WithOnTapdownAction(_action)
-                    .WithOnPointerExit(_action)
-                    .WithUnitSelector(A.UnitSelector)
-                    .WithFraction(playerFraction)
-                    .WithIsActivatedState(isActivated)
-                    .WithIsDoneState(isDone)
-                    .Build();
-        }
-        public UnitMovementPhase SetUnitMovementPhase(IUnit unit)
-        {
-            UnitMovementPhase target = new GameObject().AddComponent<UnitMovementPhase>();
-            target.SetPrivate(x => x.Unit, unit);
-            return target;
-        }
-
-        public void UnityActionFiller(IUnit unit)
-        {
-        }
-
-        public void UnityActionFiller()
-        {
-        }
-
-
+  
         public class TheOnPointerClickMethod : UnitMovementPhaseTests
         {
             [Test]

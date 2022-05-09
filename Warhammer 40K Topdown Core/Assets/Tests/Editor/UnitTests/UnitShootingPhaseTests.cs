@@ -1,17 +1,17 @@
 ﻿using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
-using UnityEngine;
-using UnityEngine.Events;
 using WH40K.Essentials;
 using static UnityEngine.EventSystems.PointerEventData;
 
 namespace Editor.UnitTests
 {
-    public class UnitShootingPhaseTests
+    public class UnitShootingPhaseTests : UnitPhasesTestsBase
     {
-        public UnityAction _pointerAction;
-        public UnityAction<IUnit> _action;
+        public UnitShootingPhase SetUnitShootingPhase(IUnit unit)
+        {
+            return SetUnitPhase<UnitShootingPhase>(unit);
+        }
 
         [SetUp]
         public void BeforeEveryTest()
@@ -19,33 +19,7 @@ namespace Editor.UnitTests
             _pointerAction = null;
             _action = null;
         }
-        public IUnit GetUnit(Fraction playerFraction = Fraction.Necrons, bool isActivated = false, bool isDone = false)
-        {
-            return A.Unit
-                    .WithOnPointerEnterInfo(_action)
-                    .WithOnPointerEnter(_pointerAction)
-                    .WithOnTapdownAction(_action)
-                    .WithOnPointerExit(_action)
-                    .WithUnitSelector(A.UnitSelector)
-                    .WithFraction(playerFraction)
-                    .WithIsActivatedState(isActivated)
-                    .WithIsDoneState(isDone)
-                    .Build();
-        }
-        public UnitMovementPhase SetUnitMovementPhase(IUnit unit)
-        {
-            UnitMovementPhase target = new GameObject().AddComponent<UnitMovementPhase>();
-            target.SetPrivate(x => x.Unit, unit);
-            return target;
-        }
-
-        public void UnityActionFiller(IUnit unit)
-        {
-        }
-
-        public void UnityActionFiller()
-        {
-        }
+      
         public class TheOnPointerClickMethod : UnitShootingPhaseTests
         {
             [Test]
@@ -53,7 +27,7 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 var unit = GetUnit();
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerClick(A.PointerEventData);
@@ -67,7 +41,7 @@ namespace Editor.UnitTests
                 //ARRANGE
                 _action = UnityActionFiller;
                 var unit = GetUnit();
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerClick(
@@ -81,7 +55,7 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 var unit = GetUnit();
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerClick(
@@ -97,7 +71,7 @@ namespace Editor.UnitTests
                 _action = UnityActionFiller;
                 var unit = GetUnit();
 
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerClick(
@@ -113,7 +87,7 @@ namespace Editor.UnitTests
                 _action = UnityActionFiller;
                 IUnit unit = GetUnit();
 
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerClick(
@@ -129,7 +103,7 @@ namespace Editor.UnitTests
                 _action = UnityActionFiller;
                 IUnit unit = GetUnit();
 
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerClick(
@@ -146,7 +120,7 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 var unit = GetUnit();
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerEnter(A.PointerEventData);
@@ -159,7 +133,7 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 var unit = GetUnit();
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerEnter(A.PointerEventData);
@@ -173,7 +147,7 @@ namespace Editor.UnitTests
                 //ARRANGE
                 _pointerAction = UnityActionFiller;
                 var unit = GetUnit();
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerEnter(A.PointerEventData);
@@ -189,7 +163,7 @@ namespace Editor.UnitTests
                 var unit = GetUnit();
 
 
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerEnter(A.PointerEventData);
@@ -205,7 +179,7 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 var unit = GetUnit();
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerExit(A.PointerEventData);
@@ -219,7 +193,7 @@ namespace Editor.UnitTests
                 //ARRANGE
                 _action = UnityActionFiller;
                 var unit = GetUnit();
-                var unitShootingPhase = SetUnitMovementPhase(unit);
+                var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerExit(A.PointerEventData);

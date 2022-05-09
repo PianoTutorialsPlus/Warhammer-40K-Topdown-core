@@ -4,22 +4,11 @@ using UnityEngine.EventSystems;
 
 namespace WH40K.Essentials
 {
-    public class UnitShootingPhase : MonoBehaviour, IUnitActionPhase
+    public class UnitShootingPhase : UnitPhasesBase, IUnitActionPhase
     {
-        private IUnit _unit;
-        private UnitSelector UnitSelector => Unit.UnitSelector;
-        private UnityAction<IUnit> onTapDownAction => Unit.OnTapDownAction;
-        private UnityAction onPointerEnter => Unit.OnPointerEnter;
-        private UnityAction<IUnit> onPointerEnterInfo => Unit.OnPointerEnterInfo;
-        private UnityAction<IUnit> onPointerExit => Unit.OnPointerExit;
-        private GameStatsSO _gameStats => Unit.GameStats;
-        public IUnit ActiveUnit { get => _gameStats.ActiveUnit; set => _gameStats.ActiveUnit = value; }
-        public IUnit Unit { get => _unit; private set => _unit = value; }
-
         private void Awake()
         {
             _unit = GetComponent<IUnit>();
-            //unit = GetComponent<Unit>();
         }
 
         private void OnEnable()
@@ -44,14 +33,13 @@ namespace WH40K.Essentials
         }
         public void OnPointerClick(PointerEventData pointerEvent)
         {
-            //if (onPointerEnter != null) onPointerEnter();
             if (onTapDownAction == null) return;
             if (pointerEvent.button == PointerEventData.InputButton.Left)
             {
                 UnitSelector.SelectUnit();
                 onTapDownAction(Unit);
             }
-            else if (pointerEvent.button == PointerEventData.InputButton.Right && _gameStats.ActiveUnit != null)
+            else if (pointerEvent.button == PointerEventData.InputButton.Right/* && _gameStats.ActiveUnit != null*/)
             {
                 UnitSelector.SelectEnemyUnit();
             }

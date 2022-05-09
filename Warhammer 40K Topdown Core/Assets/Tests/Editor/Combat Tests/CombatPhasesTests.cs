@@ -1,18 +1,13 @@
-﻿using Editor.Infrastructure;
+﻿using Editor.GameMechanics;
 using GameMechanics.Combat;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
-using WH40K.Essentials;
-using WH40K.GameMechanics;
 
 namespace Editor.CombatTests
 {
-    public class CombatPhasesTests
+    public class CombatPhasesTests : SubPhasesTestsBase
     {
-        private List<int> _action;
-        private List<int> _result;
-
         [SetUp]
         public void BeforeEveryTest()
         {
@@ -20,58 +15,6 @@ namespace Editor.CombatTests
             _result = null;
         }
 
-        public void ActionFiller(List<int> hitResult)
-        {
-            _action = hitResult;
-        }
-        public void ResultFiller(List<int> hitResult)
-        {
-            _result = hitResult;
-        }
-        public void FillerDummy(List<int> hitResult)
-        {
-        }
-        public RollTheDiceSO GetActionDiceEventChannel()
-        {
-            RollTheDiceSO eventChannel = A.RollTheDiceEventChannel;
-            eventChannel.OnEventRaised += ActionFiller;
-            return eventChannel;
-        }
-        public RollTheDiceSO GetResultDiceEventChannel()
-        {
-            RollTheDiceSO eventChannel = A.RollTheDiceEventChannel;
-            eventChannel.OnEventRaised += ResultFiller;
-            return eventChannel;
-        }
-        public RollTheDiceSO GetDiceSubEventChannel()
-        {
-            RollTheDiceSO eventChannel = A.RollTheDiceEventChannel;
-            eventChannel.OnEventRaised += FillerDummy;
-            return eventChannel;
-        }
-        public IUnit GetUnit(int value, int wounds = 0)
-        {
-            return A.Unit
-                .WithInteger(value)
-                .WithWounds(wounds)
-                .Build();
-        }
-        public IResult GetIResult(IUnit unit, RollTheDiceSO diceAction = null, RollTheDiceSO diceResult = null, RollTheDiceSO subResult = null)
-        {
-            return An.IResultEvent
-                        .WithDiceActionEventChannel(diceAction)
-                        .WithDiceResultEventChannel(diceResult)
-                        .WithDiceSubResultEventChannel(subResult)
-                        .WithGameStats(A.GameStats
-                            .WithActiveUnit(unit)
-                            .WithEnemyUnit(unit))
-                        .Build();
-        }
-        public void SetCombatProcessor(IResult result)
-        {
-            CombatProcessor processor = A.CombatProcessor.WithIResult(result);
-            processor.SetPrivate(x => x.Initialized, false);
-        }
         public class TheActionMethod : CombatPhasesTests
         {
             [Test]
