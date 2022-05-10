@@ -6,59 +6,44 @@ using WH40K.Essentials;
 
 namespace WH40K.GameMechanics
 {
-    public class ShootingSubPhaseManager : MonoBehaviour, IResult
+    public class ShootingSubPhaseManager : MonoBehaviour
     {
-        [SerializeField] private GameStatsSO _gameStats;
         [SerializeField] private InputReader _inputReader;
         [SerializeField] private RollTheDiceSO diceRollingResult;
         [SerializeField] private ShootingPhaseManager _shootingPhase;
 
-        [SerializeField] private RollTheDiceSO _diceAction;
-        [SerializeField] private RollTheDiceSO _diceSubResult;
-        [SerializeField] private RollTheDiceSO _diceResult;
-
-        public RollTheDiceSO DiceAction => _diceAction;
-        public RollTheDiceSO DiceSubResult => _diceSubResult;
-        public RollTheDiceSO DiceResult => _diceResult;
-
         [SerializeField] private List<int> _parameter = new List<int>();
-        public GameStatsSO GameStats { get => _gameStats; set => _gameStats = value; }
-        public InputReader InputReader { get => _inputReader; /*set => _inputReader = value;*/ }
+        public InputReader InputReader { get => _inputReader; }
 
         private Queue<ShootingSubEvents> shootingSubPhase = new Queue<ShootingSubEvents>();
 
         private void Awake()
         {
             enabled = false;
+
             EnqueueShootingSubPhase();
-            new ShootingSubPhaseProcessor(this);
-            new CombatProcessor(this);
         }
         private void EnqueueShootingSubPhase()
         {
-            shootingSubPhase.Enqueue(ShootingSubEvents.SelectEnemy);
-            shootingSubPhase.Enqueue(ShootingSubEvents.Hit);
-            shootingSubPhase.Enqueue(ShootingSubEvents.Wound);
-            shootingSubPhase.Enqueue(ShootingSubEvents.Save);
-            shootingSubPhase.Enqueue(ShootingSubEvents.Damage);
+            foreach (ShootingSubEvents phase in ShootingSubPhaseProcessor.GetAbilityByName())
+            {
+                shootingSubPhase.Enqueue(phase);
+            }
         }
         private void OnEnable()
         {
             Debug.Log("Enable ShootingSubPhaseManager");
             if (diceRollingResult != null) diceRollingResult.OnEventRaised += ProcessResult;
-            //_inputReader.ActivateEvent += SetShootingSubPhase;
             _inputReader.ExecuteEvent += Wait;
         }
         private void OnDisable()
         {
             if (diceRollingResult != null) diceRollingResult.OnEventRaised -= ProcessResult;
-            //_inputReader.ActivateEvent -= SetShootingSubPhase;
             _inputReader.ExecuteEvent -= Wait;
         }
         private void SetShootingSubPhase()
         {
             Debug.Log(shootingSubPhase.Peek());
-            //ICalculation calculation = ShootingSubPhaseProcessor.SetCalculation(shootingSubPhase.Peek()); ;
             ShootingSubPhaseProcessor.HandleShooting(shootingSubPhase.Peek(), _parameter);
         }
         private void ProcessResult(List<int> result)
@@ -75,19 +60,19 @@ namespace WH40K.GameMechanics
         {
             if (values == null || values.Count == 0)
             {
-                Debug.Log("Empty");
+                //Debug.Log("Empty");
                 _shootingPhase.NextPhase();
             }
         }
         private void Wait()
         {
-            Debug.Log("Wait");
+            //Debug.Log("Wait");
             StartCoroutine(WaitForButtonCoroutine());
         }
         public IEnumerator WaitForButtonCoroutine()
         {
             yield return null;
-            Debug.Log("Waiting");
+            //Debug.Log("Waiting");
             SetShootingSubPhase();
         }
     }

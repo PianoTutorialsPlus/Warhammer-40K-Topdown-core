@@ -13,13 +13,6 @@ namespace WH40K.Essentials
         //public GameStatsSO _gameStats;
         public NavMeshSurface Surface;
 
-
-        /* Nicht gemergte Änderung aus Projekt "Assembly-CSharp"
-        Vor:
-                public UnityAction<Vector3> onTapDownAction;
-        Nach:
-                private UnityAction<Vector3> onTapDownAction;
-        */
         private UnityAction<Vector3> onTapDownAction;
 
         public UnityAction<Vector3> OnTapDownAction { get => onTapDownAction; set => onTapDownAction = value; }

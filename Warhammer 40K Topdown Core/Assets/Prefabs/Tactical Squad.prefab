@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 4266572808521110748}
   - component: {fileID: 4399383224918124258}
   - component: {fileID: -7591664159776872842}
-  - component: {fileID: 1150811761068781755}
   m_Layer: 0
   m_Name: Tactical Squad
   m_TagString: Space Marines
@@ -147,8 +146,8 @@ MonoBehaviour:
   _unitSO: {fileID: 11400000, guid: fa1d5cbd72c003643a43243307e9c2af, type: 2}
   _gameStats: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33, type: 2}
   _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
-  unitMovementPhase: {fileID: 1150811761068781755}
-  UnitMover: {fileID: -7591664159776872842}
+  unitMovementPhase: {fileID: 0}
+  unitShootingPhase: {fileID: 0}
 --- !u!114 &-7591664159776872842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,17 +158,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68bb342616dcd0d48a14c0c03d749efd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1150811761068781755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4266572808521110751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58114bdc0536511499b991a33aae0a3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

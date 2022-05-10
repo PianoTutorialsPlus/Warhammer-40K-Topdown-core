@@ -9,11 +9,21 @@ using WH40K.GamePhaseHandling;
 /// <summary>
 /// This script processes the communication between the interaction manager and the main game phases executables.
 /// </summary>
-public static class GamePhaseProcessor
+public class GamePhaseProcessor
 {
     // Variables
     private static Dictionary<GamePhase, GamePhases> _gamePhases = new Dictionary<GamePhase, GamePhases>();
-    public static bool _initialized;
+    private static Dictionary<GamePhase, PhaseManagerBase> _gamePhaseManagers => _interactionManager.GamePhaseManagers;
+
+    private static bool _initialized;
+    private static IInteractionManager _interactionManager;
+
+    public bool Initialized { get => _initialized; protected set => _initialized = value; }
+
+    public GamePhaseProcessor(IInteractionManager interactionManager)
+    {
+        _interactionManager = interactionManager;
+    }
 
     private static void Initialize()
     {
@@ -32,22 +42,22 @@ public static class GamePhaseProcessor
         _initialized = true;
     }
 
-    public static void EnableNextPhase(Dictionary<GamePhase, PhaseManagerBase> gamePhaseManagers, GamePhase subPhase)
+    public static void EnableNextPhase(GamePhase subPhase)
     {
         Initialize();
 
         var gamePhase = _gamePhases[subPhase];
-        var gamePhaseManager = gamePhaseManagers[subPhase];
+        var gamePhaseManager = _gamePhaseManagers[subPhase];
 
         gamePhase.EnableNextPhase(gamePhaseManager);
     }
 
-    public static void ResetPreviousPhase(Dictionary<GamePhase, PhaseManagerBase> gamePhaseManagers, GamePhase subPhase)
+    public static void ResetPreviousPhase(GamePhase subPhase)
     {
         Initialize();
 
         var gamePhase = _gamePhases[subPhase];
-        var gamePhaseManager = gamePhaseManagers[subPhase];
+        var gamePhaseManager = _gamePhaseManagers[subPhase];
 
         gamePhase.ResetPreviousPhase(gamePhaseManager);
     }
@@ -73,13 +83,5 @@ public static class GamePhaseProcessor
         Initialize();
 
         return _gamePhases.Keys;
-    }
-
-    public static GamePhase SetNextPhaseToActive(GamePhase subPhase)
-    {
-        Initialize();
-
-        var gamePhase = _gamePhases[subPhase];
-        return gamePhase.SetNextPhaseToActive();
     }
 }

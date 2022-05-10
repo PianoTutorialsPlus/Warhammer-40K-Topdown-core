@@ -13,7 +13,7 @@ namespace WH40K.GameMechanics
     /// When the subphase "shooting" is enabled, it triggers the shooting sub phase processor.
     /// </summary>
 
-    public class ShootingPhaseManager : PhaseManagerBase, IGamePhase
+    public class ShootingPhaseManager : PhaseManagerBase
     {
         public ShootingPhaseManager() { }
 
@@ -24,30 +24,26 @@ namespace WH40K.GameMechanics
 
         //Events
         [SerializeField] private BattleroundEventChannelSO SetShootingPhaseEvent;
-        [SerializeField] private BattleRoundsSO _battleroundEvents;    
 
         //Enums
         private Queue<ShootingPhase> shootingPhase = new Queue<ShootingPhase>();
-
         public override GamePhase SubEvents => GamePhase.ShootingPhase;
-
-        public IPhase BattleroundEvents { get => _battleroundEvents; }
         public InputReader InputReader { get => _inputReader; }
-        public GameStatsSO GameStats { get => _gameStats; set => _gameStats = value; }
 
         private void Awake()
         {
             enabled = false;
             EnqueueShootingPhase();
-            new ShootingPhaseProcessor(this);
         }
         private void EnqueueShootingPhase()
         {
-            shootingPhase.Enqueue(ShootingPhase.Selection);
-            shootingPhase.Enqueue(ShootingPhase.Shoot);
-            shootingPhase.Enqueue(ShootingPhase.Next);
+            foreach (ShootingPhase phase in ShootingPhaseProcessor.GetAbilityByName())
+            {
+                shootingPhase.Enqueue(phase);
+            }
         }
-        public void OnEnable()
+
+    public void OnEnable()
         {
             Debug.Log("Enable Shooting");
             if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += SetShootingPhase;
@@ -63,7 +59,7 @@ namespace WH40K.GameMechanics
         {
             ClearPhase();
             ShootingPhaseProcessor.HandlePhase(shootingPhase.Peek());
-            Debug.Log("ShootingPhaseManager");
+            //Debug.Log("ShootingPhaseManager");
             if (gameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
             if (shootingPhase.Peek() == ShootingPhase.Shoot) _shootingSubPhaseManager.enabled = true;
             if (ShootingPhaseProcessor.Next(shootingPhase.Peek())) NextPhase();
@@ -77,7 +73,7 @@ namespace WH40K.GameMechanics
         public void NextPhase()
         {
             shootingPhase.Enqueue(shootingPhase.Dequeue());
-            SetShootingPhase(GameStats);
+            SetShootingPhase(_gameStats);
         }
     }
 }

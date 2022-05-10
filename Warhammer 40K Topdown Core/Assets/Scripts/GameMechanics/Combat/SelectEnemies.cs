@@ -13,12 +13,11 @@ namespace WH40K.GameMechanics.Combat
         {
             OnEnable();
             List<int> item = new List<int>() { 1 };
-            //_gameStats.EnemyUnit = _gameStats.EnemyPlayer.PlayerUnits[0];
+            _gameStats.EnemyUnit = _gameStats.EnemyPlayer.PlayerUnits[0];
             Result(item);
         }
         public override void Result(List<int> result)
         {
-            //if (diceEvent != ShootingSubEvents.SelectEnemy) return;
             Debug.Log("SelectEnemies Result");
             DiceResult.RaiseEvent(result);
         }

@@ -63,5 +63,11 @@ namespace WH40K.GameMechanics
             var shootingPhase = _shootingPhases[subPhase];
             shootingPhase.ClearPhase(_gameStats);
         }
+        internal static IEnumerable<ShootingPhase> GetAbilityByName()
+        {
+            Initialize();
+
+            return _shootingPhases.Keys;
+        }
     }
 }

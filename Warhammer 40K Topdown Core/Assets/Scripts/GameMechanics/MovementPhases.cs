@@ -18,7 +18,6 @@ namespace WH40K.GameMechanics
         }
 
         public abstract MovementPhase SubEvents { get; } // gets the active subphase
-        //public abstract MovementPhase SetNextPhase(); // sets the next subphase
         public virtual void HandlePhase(GameStatsSO gameStats) { } // handles the selection subphase
                                                                    //public virtual bool HandleMove(GameStatsSO gameStats, BattleRoundsSO _battleroundEvents) { return false; } // handles the movement subphase
         public virtual bool Next(GameStatsSO gameStats) { return false; } // disables the current unit for this game phase
@@ -35,7 +34,6 @@ namespace WH40K.GameMechanics
         public M_Selection(IGamePhase gamePhase) : base(gamePhase) { }
 
         public override MovementPhase SubEvents => MovementPhase.Selection;
-        //public override MovementPhase SetNextPhase() {  return MovementPhase.Move; }
         public override void HandlePhase(GameStatsSO gameStats)
         {
             _phase.HandlePhase(gameStats);
@@ -47,7 +45,6 @@ namespace WH40K.GameMechanics
         public Move(IGamePhase gamePhase) : base(gamePhase) { }
 
         public override MovementPhase SubEvents => MovementPhase.Move;
-        //public override MovementPhase SetNextPhase() { return MovementPhase.Next; }
 
         public override void HandlePhase(GameStatsSO gameStats)
         {
@@ -75,7 +72,6 @@ namespace WH40K.GameMechanics
     {
         public MNext(IGamePhase gamePhase) : base(gamePhase) { }
         public override MovementPhase SubEvents => MovementPhase.Next;
-        //public override MovementPhase SetNextPhase() { return MovementPhase.Selection; }
 
         public override bool Next(GameStatsSO gameStats)
         {

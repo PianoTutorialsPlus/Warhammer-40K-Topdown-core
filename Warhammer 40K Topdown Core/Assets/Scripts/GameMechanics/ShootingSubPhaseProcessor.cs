@@ -54,5 +54,11 @@ namespace WH40K.GameMechanics
             var shootingSubPhase = _shootingSubPhase[subPhase];
             shootingSubPhase.Next();
         }
+        internal static IEnumerable<ShootingSubEvents> GetAbilityByName()
+        {
+            Initialize();
+
+            return _shootingSubPhase.Keys;
+        }
     }
 }

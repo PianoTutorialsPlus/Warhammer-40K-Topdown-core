@@ -64,58 +64,11 @@ namespace WH40K.GameMechanics
             var movementPhase = _movementPhases[subPhase];
             movementPhase.ClearPhase(_gameStats);
         }
+        internal static IEnumerable<MovementPhase> GetAbilityByName()
+        {
+            Initialize();
 
-        //internal static bool HandleMovement(MovementPhase subPhase)
-        //{
-        //    Initialize();
-
-        //    var movementPhase = _movementPhases[subPhase];
-        //    return movementPhase.HandlePhase(_gamesStats);
-        //}
-
-        //public static MovementPhase SetNextPhase(MovementPhase subPhase)
-        //{
-        //    Initialize();
-
-        //    var movementPhase = _movementPhases[subPhase];
-        //    return movementPhase.SetNextPhase();
-        //}
-        //public static void InjectParamers(GameStatsSO gameStats, BattleRoundsSO battleroundEvents, InputReader inputReader)
-        //{
-        //    _gamesStats = gameStats;
-        //    _battleroundEvents = battleroundEvents;
-        //    _inputReader = inputReader;
-        //}
-        //public static bool HandleSelection(GameStatsSO gameStats, BattleRoundsSO battleroundEvents, MovementPhase subPhase)
-        //{
-        //    Initialize();
-
-        //    var movementPhase = _movementPhases[subPhase];
-        //    return movementPhase.HandlePhase(gameStats, battleroundEvents);
-        //}
-
-        //internal static bool HandleMovement(GameStatsSO gameStats, BattleRoundsSO battleroundEvents, MovementPhase subPhase)
-        //{
-        //    Initialize();
-
-        //    var movementPhase = _movementPhases[subPhase];
-        //    return movementPhase.HandleMove(gameStats, battleroundEvents);
-        //}
-
-        //public static MovementPhase SetPhase(MovementPhase subPhase)
-        //{
-        //    Initialize();
-
-        //    var movementPhase = _movementPhases[subPhase];
-        //    return movementPhase.SetPhase();
-        //}
-
-        //public static bool Next(GameStatsSO gameStats, MovementPhase subPhase)
-        //{
-        //    Initialize();
-
-        //    var movementPhase = _movementPhases[subPhase];
-        //    return movementPhase.Next(gameStats);
-        //}
+            return _movementPhases.Keys;
+        }
     }
 }

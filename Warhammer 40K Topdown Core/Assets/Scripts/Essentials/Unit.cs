@@ -7,7 +7,6 @@ namespace WH40K.Essentials
     public enum Fraction { None = 0, SpaceMarines, Necrons }
 
     [RequireComponent(typeof(NavMeshAgent))]
-    //[RequireComponent(typeof(NecronWarriorSO))]
 
     public class Unit : MonoBehaviour, IUnit// INHARITANCE
     {
@@ -72,11 +71,6 @@ namespace WH40K.Essentials
         public int Toughness => _unitSO.Toughness;
         public int ArmourSave => _unitSO.ArmourSave;
         public int Wounds { get; set; }
-
-
-
-        //public ActiveUnitSO activeUnit;
-        //public  GameObject distanceIndicator;
 
         protected void Awake()
         {

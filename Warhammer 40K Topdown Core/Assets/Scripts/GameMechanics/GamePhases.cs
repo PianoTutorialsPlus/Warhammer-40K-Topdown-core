@@ -1,4 +1,7 @@
-﻿using WH40K.Essentials;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+using WH40K.Essentials;
 using WH40K.GameMechanics;
 
 namespace WH40K.GamePhaseHandling
@@ -10,9 +13,9 @@ namespace WH40K.GamePhaseHandling
     /// </summary>
     public abstract class GamePhases
     {
-        public abstract GamePhase SubEvents { get; } // gets the active game phase
-        public abstract GamePhase SetNextPhaseToActive(); // sets the next game phase
+        private static bool _initialized = false;
 
+        public abstract GamePhase SubEvents { get; } // gets the active game phase
         //public abstract void ResetPreviousPhase(PhaseManagerBase gamePhaseManager); // clears all dependencies of the game phase
         public abstract void ResetActivePlayerUnits(GameStatsSO gameStats); // clears all dependencies of the game phase
 
@@ -28,7 +31,44 @@ namespace WH40K.GamePhaseHandling
             gamePhaseManager.ClearPhase();
             gamePhaseManager.enabled = false;
         }
+        protected void AddUnitPhases(GameStatsSO gameStats)
+        {
+            if (_initialized != false) return;
+            foreach (Unit child in gameStats.ActivePlayer.PlayerUnits)
+            {
+                child.gameObject.AddComponent<UnitMovementPhase>();
+                child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
+                
+                child.gameObject.AddComponent<UnitShootingPhase>();
+                child.unitShootingPhase = child.GetComponent<UnitShootingPhase>();
+            }
+            foreach (Unit child in gameStats.EnemyPlayer.PlayerUnits)
+            {
+                child.gameObject.AddComponent<UnitMovementPhase>();
+                child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
 
+                child.gameObject.AddComponent<UnitShootingPhase>();
+                child.unitShootingPhase = child.GetComponent<UnitShootingPhase>();
+            }
+
+            _initialized = true;
+        }
+        protected void ResetUnitPhases(GameStatsSO gameStats)
+        {
+            gameStats.ActiveUnit = null;
+            gameStats.EnemyUnit = null;
+
+            foreach (Unit child in gameStats.ActivePlayer.PlayerUnits)
+            {
+                child.unitMovementPhase.enabled = false;
+                child.unitShootingPhase.enabled = false;
+            }
+            foreach (Unit child in gameStats.EnemyPlayer.PlayerUnits)
+            {
+                child.unitMovementPhase.enabled = false;
+                child.unitShootingPhase.enabled = false;
+            }
+        }
     }
 
     public class MovementPhaseBase : GamePhases
@@ -36,35 +76,13 @@ namespace WH40K.GamePhaseHandling
         public MovementPhaseBase() { }
         public override GamePhase SubEvents => GamePhase.MovementPhase;
 
-        public override GamePhase SetNextPhaseToActive()
-        {
-            return GamePhase.ShootingPhase;
-        }
-
-        //public override void EnableNextPhase(PhaseManagerBase gamePhaseManager)
-        //{
-        //    gamePhaseManager.enabled = true;
-        //    //foreach (PhaseManagerBase phase in gamePhases)
-        //    //{
-        //    //    if (phase.GetComponent<MovementPhaseManager>() ? phase.enabled = true : phase.enabled = false) { }
-        //    //}
-        //}
-
-        //public override void ResetPreviousPhase(PhaseManagerBase gamePhaseManager)
-        //{
-        //    //MovementPhaseManager movementPhase = (MovementPhaseManager)gamePhases[0];
-        //    gamePhaseManager.ClearPhase();
-        //    gamePhaseManager.enabled = false;
-        //}
-
         public override void ResetActivePlayerUnits(GameStatsSO gameStats)
         {
-            gameStats.activeUnit = null;
+            AddUnitPhases(gameStats);
+            ResetUnitPhases(gameStats);
 
             foreach (Unit child in gameStats.ActivePlayer.PlayerUnits)
             {
-                child.gameObject.AddComponent<UnitMovementPhase>();
-                child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
                 child.unitMovementPhase.enabled = true;
 
                 //child.ResetData();
@@ -78,39 +96,13 @@ namespace WH40K.GamePhaseHandling
         public ShootingPhaseBase() { }
         public override GamePhase SubEvents => GamePhase.ShootingPhase;
 
-        public override GamePhase SetNextPhaseToActive()
-        {
-            return GamePhase.MovementPhase;
-        }
-
-        //public override void EnableNextPhase(PhaseManagerBase gamePhaseManager)
-        //{
-        //    gamePhaseManager.enabled = true;
-        //    //foreach (PhaseManagerBase phase in gamePhases)
-        //    //{
-        //    //    if (phase.GetComponent<ShootingPhaseManager>() ? phase.enabled = true : phase.enabled = false) { }
-        //    //}
-        // }
-
-        //public override void ResetPreviousPhase(PhaseManagerBase gamePhaseManager)
-        //{
-        //    //ShootingPhaseManager shootingPhase = (ShootingPhaseManager)gamePhases[1];  
-        //    gamePhaseManager.ClearPhase();
-        //    gamePhaseManager.enabled = false;
-        //}
-
         public override void ResetActivePlayerUnits(GameStatsSO gameStats)
         {
-            gameStats.activeUnit = null;
-            gameStats.enemyUnit = null;
+            AddUnitPhases(gameStats);
+            ResetUnitPhases(gameStats);
 
             foreach (Unit child in gameStats.EnemyPlayer.PlayerUnits)
             {
-                //var test = new GameObject().AddComponent<UnitMovementPhase>();
-
-                child.gameObject.AddComponent<UnitShootingPhase>();
-                child.unitShootingPhase = child.GetComponent<UnitShootingPhase>();
-                //child.unitMovementPhase.enabled = false;
                 child.unitShootingPhase.enabled = true;
 
                 //child.ResetData();
