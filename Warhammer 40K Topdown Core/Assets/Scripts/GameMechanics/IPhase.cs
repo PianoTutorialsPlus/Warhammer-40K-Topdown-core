@@ -4,9 +4,9 @@ namespace WH40K.GameMechanics
 {
     public interface IPhase
     {
-        public void ClearPhase(GameStatsSO gameStats);
+        public void ClearPhase();
 
         //public MovementPhase SubEvents { get; }
-        public void HandlePhase(GameStatsSO gameStats);
+        public void HandlePhase();
     }
 }

@@ -11,7 +11,6 @@ namespace Editor.Infrastructure.Combat
         private RollTheDiceSO _diceAction;
         private RollTheDiceSO _diceSubResult;
         private RollTheDiceSO _diceResult;
-        private GameStatsSO _gameStats;
 
         public IResultsBuilder()
         {
@@ -31,11 +30,6 @@ namespace Editor.Infrastructure.Combat
             _diceResult = diceResult;
             return this;
         }
-        public IResultsBuilder WithGameStats(GameStatsSO gameStats)
-        {
-            _gameStats = gameStats;
-            return this;
-        }
 
         public override IResult Build()
         {
@@ -43,7 +37,6 @@ namespace Editor.Infrastructure.Combat
             result.DiceAction.Returns(_diceAction ??= A.RollTheDiceEventChannel);
             result.DiceSubResult.Returns(_diceSubResult ??= A.RollTheDiceEventChannel);
             result.DiceResult.Returns(_diceResult ??= A.RollTheDiceEventChannel);
-            result.GameStats.Returns(_gameStats ??= A.GameStats);
             return result;
         }
     }

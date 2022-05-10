@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using WH40K.Essentials;
 
-namespace Editor.Infrastructure.GameStats
+namespace Editor.Infrastructure.GameStatss
 {
     public class GameTableBuilder : TestDataBuilder<GameTableSO>
     {

@@ -18,7 +18,6 @@ namespace WH40K.GameMechanics
         public ShootingPhaseManager() { }
 
         // Gameplay
-        [SerializeField] private GameStatsSO _gameStats;
         [SerializeField] private InputReader _inputReader;
         [SerializeField] private ShootingSubPhaseManager _shootingSubPhaseManager;
 
@@ -55,12 +54,12 @@ namespace WH40K.GameMechanics
             if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised -= SetShootingPhase;
         }
 
-        public void SetShootingPhase(GameStatsSO gameStats)
+        public void SetShootingPhase()
         {
             ClearPhase();
             ShootingPhaseProcessor.HandlePhase(shootingPhase.Peek());
             //Debug.Log("ShootingPhaseManager");
-            if (gameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
+            if (GameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
             if (shootingPhase.Peek() == ShootingPhase.Shoot) _shootingSubPhaseManager.enabled = true;
             if (ShootingPhaseProcessor.Next(shootingPhase.Peek())) NextPhase();
         }
@@ -73,7 +72,7 @@ namespace WH40K.GameMechanics
         public void NextPhase()
         {
             shootingPhase.Enqueue(shootingPhase.Dequeue());
-            SetShootingPhase(_gameStats);
+            SetShootingPhase();
         }
     }
 }

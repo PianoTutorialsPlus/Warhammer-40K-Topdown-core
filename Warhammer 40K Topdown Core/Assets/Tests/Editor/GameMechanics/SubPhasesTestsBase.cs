@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using WH40K.Essentials;
 using WH40K.GameMechanics;
 
@@ -53,15 +54,22 @@ namespace Editor.GameMechanics
         }
         public IResult GetIResult(IUnit unit, RollTheDiceSO diceAction = null, RollTheDiceSO diceResult = null, RollTheDiceSO subResult = null)
         {
+            GetGameStats(unit);
             return An.IResultEvent
                         .WithDiceActionEventChannel(diceAction)
                         .WithDiceResultEventChannel(diceResult)
                         .WithDiceSubResultEventChannel(subResult)
-                        .WithGameStats(A.GameStats
-                            .WithActiveUnit(unit)
-                            .WithEnemyUnit(unit))
                         .Build();
         }
+
+        private void GetGameStats(IUnit unit)
+        {
+            A.GameStats
+                .WithActiveUnit(unit)
+                .WithEnemyUnit(unit)
+                .Build();
+        }
+
         public void SetShootingSubPhaseProcessor(IResult result)
         {
             ShootingSubPhaseProcessor processor = A.ShootingSubPhaseProcessor.WithIResult(result);

@@ -2,15 +2,13 @@
 {
     public class UnitSelector
     {
-        private GameStatsSO _gameStats;
         private IUnit _unit;
 
-        private Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
-        private Fraction _enemyFraction => _gameStats.EnemyPlayer.Fraction;
+        private Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
+        private Fraction _enemyFraction => GameStats.EnemyPlayer.Fraction;
 
-        public UnitSelector(GameStatsSO gameStats, IUnit unit)
+        public UnitSelector(IUnit unit)
         {
-            _gameStats = gameStats;
             _unit = unit;
         }
         public void SelectUnit()
@@ -20,7 +18,7 @@
 
         private void SetActiveUnit(IUnit unit)
         {
-            _gameStats.ActiveUnit = unit;
+            GameStats.ActiveUnit = unit;
         }
         public void SelectEnemyUnit()
         {
@@ -28,7 +26,7 @@
         }
         private void SetEnemyUnit(IUnit unit)
         {
-            _gameStats.EnemyUnit = unit;
+            GameStats.EnemyUnit = unit;
         }
         public IUnit GetUnit(Fraction enemyFraction = Fraction.None)
         {

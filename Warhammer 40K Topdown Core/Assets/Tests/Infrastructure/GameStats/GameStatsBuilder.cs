@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using WH40K.Essentials;
 
-namespace Editor.Infrastructure.GameStats
+namespace Editor.Infrastructure.GameStatss
 {
-    public class GameStatsBuilder : TestDataBuilder<GameStatsSO>
+    public class GameStatsBuilder
     {
         private PlayerSO _activePlayer;
         private IUnit _activeUnit;
@@ -41,15 +41,13 @@ namespace Editor.Infrastructure.GameStats
             return this;
         }
 
-        public override GameStatsSO Build()
+        public void Build()
         {
-            var gameStats = ScriptableObject.CreateInstance<GameStatsSO>();
-            gameStats.ActivePlayer = _activePlayer ??= A.Player;
-            gameStats.EnemyPlayer = _enemyPlayer ??= A.Player;
-            gameStats.ActiveUnit = _activeUnit;
-            gameStats.EnemyUnit = _enemyUnit;
-            gameStats.GameTable = _gameTable ??= A.GameTable;
-            return gameStats;
+            GameStats.ActivePlayer = _activePlayer ??= A.Player;
+            GameStats.EnemyPlayer = _enemyPlayer ??= A.Player;
+            GameStats.ActiveUnit = _activeUnit;
+            GameStats.EnemyUnit = _enemyUnit;
+            GameStats.GameTable = _gameTable ??= A.GameTable;
         }
     }
 }

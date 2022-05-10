@@ -21,7 +21,6 @@ public class InteractionManager : MonoBehaviour//, IInteractionManager
     // Gameplay
     [SerializeField] private PlayerSO _player1;
     [SerializeField] private PlayerSO _player2;
-    [SerializeField] public GameStatsSO _gameStats;
 
     // Events
     [SerializeField] private GameStatsEventChannelSO SetPhaseEvent = default;
@@ -38,7 +37,7 @@ public class InteractionManager : MonoBehaviour//, IInteractionManager
 
     private void Start()
     {
-        _toggleBattleRounds.RaiseEvent(_gameStats); //Initialization    
+        _toggleBattleRounds.RaiseEvent(); //Initialization    
 
     }
 
@@ -52,7 +51,7 @@ public class InteractionManager : MonoBehaviour//, IInteractionManager
 
         if (SetPhaseEvent != null) SetPhaseEvent.OnEventRaised += SetPhase;
 
-        _toggleGameinfoUI.RaiseEvent(true, _gameStats);
+        _toggleGameinfoUI.RaiseEvent(true);
 
     }
     private void EnqueueGamePhase()
@@ -63,30 +62,30 @@ public class InteractionManager : MonoBehaviour//, IInteractionManager
         }
     }
 
-    public void SetPhase(GameStatsSO gameStats)
+    public void SetPhase()
     {
-        ResetPreviousPhase(gameStats);
-        SetNextPhaseToActive(gameStats);
+        ResetPreviousPhase();
+        SetNextPhaseToActive();
         GamePhaseProcessor.EnableNextPhase(_gamePhase.Peek());
 
         if (IsEndOfPlayerTurn(_gamePhase.Peek()))
         {
-            TogglePlayers(gameStats);
-            SetNextBattleRound(gameStats);
+            TogglePlayers();
+            SetNextBattleRound();
         }
-        ToggleBattleRoundsAndUI(gameStats);
+        ToggleBattleRoundsAndUI();
     }
 
-    private void ResetPreviousPhase(GameStatsSO gameStats)
+    private void ResetPreviousPhase()
     {
         GamePhaseProcessor.ResetPreviousPhase(_gamePhase.Peek());
-        GamePhaseProcessor.ResetActivePlayerUnits(gameStats, _gamePhase.Peek());
+        GamePhaseProcessor.ResetActivePlayerUnits(_gamePhase.Peek());
     }
 
-    private void SetNextPhaseToActive(GameStatsSO gameStats)
+    private void SetNextPhaseToActive()
     {
         _gamePhase.Enqueue(_gamePhase.Dequeue());
-        gameStats.phase = _gamePhase.Peek();
+        GameStats.Phase = _gamePhase.Peek();
     }
 
     private bool IsEndOfPlayerTurn(GamePhase gamePhases)
@@ -94,28 +93,28 @@ public class InteractionManager : MonoBehaviour//, IInteractionManager
         return GamePhaseProcessor.IsEndOfPlayerTurn(gamePhases);
     }
 
-    public void TogglePlayers(GameStatsSO gameStats)
+    public void TogglePlayers()
     {
-        if (gameStats.ActivePlayer == _player1)
+        if (GameStats.ActivePlayer == _player1)
         {
-            gameStats.ActivePlayer = _player2;
-            gameStats.EnemyPlayer = _player1;
+            GameStats.ActivePlayer = _player2;
+            GameStats.EnemyPlayer = _player1;
         }
         else
         {
-            gameStats.ActivePlayer = _player1;
-            gameStats.EnemyPlayer = _player2;
+            GameStats.ActivePlayer = _player1;
+            GameStats.EnemyPlayer = _player2;
         }
     }
 
-    private void SetNextBattleRound(GameStatsSO gameStats)
+    private void SetNextBattleRound()
     {
-        if (gameStats.ActivePlayer == _player1) gameStats.turn += 1;
+        if (GameStats.ActivePlayer == _player1) GameStats.Turn += 1;
     }
 
-    private void ToggleBattleRoundsAndUI(GameStatsSO gameStats)
+    private void ToggleBattleRoundsAndUI()
     {
-        _toggleGameinfoUI.RaiseEvent(true, gameStats);
-        _toggleBattleRounds.RaiseEvent(gameStats);
+        _toggleGameinfoUI.RaiseEvent(true);
+        _toggleBattleRounds.RaiseEvent();
     }
 }

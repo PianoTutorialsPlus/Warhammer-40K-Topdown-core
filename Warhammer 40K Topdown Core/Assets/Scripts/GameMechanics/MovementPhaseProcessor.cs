@@ -17,7 +17,6 @@ namespace WH40K.GameMechanics
         private static Dictionary<MovementPhase, MovementPhases> _movementPhases = new Dictionary<MovementPhase, MovementPhases>();
         private static bool _initialized;
         private static IGamePhase _gamePhase;
-        private static GameStatsSO _gameStats => _gamePhase.GameStats;
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
 
         public MovementPhaseProcessor(IGamePhase gamePhase)
@@ -47,14 +46,14 @@ namespace WH40K.GameMechanics
             Initialize();
 
             var movementPhase = _movementPhases[subPhase];
-            movementPhase.HandlePhase(_gameStats);
+            movementPhase.HandlePhase();
         }
         public static bool Next(MovementPhase subPhase)
         {
             Initialize();
 
             var movementPhase = _movementPhases[subPhase];
-            return movementPhase.Next(_gameStats);
+            return movementPhase.Next();
         }
 
         public static void ClearPhase(MovementPhase subPhase)
@@ -62,7 +61,7 @@ namespace WH40K.GameMechanics
             Initialize();
 
             var movementPhase = _movementPhases[subPhase];
-            movementPhase.ClearPhase(_gameStats);
+            movementPhase.ClearPhase();
         }
         internal static IEnumerable<MovementPhase> GetAbilityByName()
         {

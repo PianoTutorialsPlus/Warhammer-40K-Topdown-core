@@ -28,7 +28,6 @@ namespace WH40K.Essentials
         [SerializeField] public WeaponSO _weaponSO;
         [SerializeField] public UnitSO _unitSO;
         //[SerializeField] public IUnitStats _unitSOTest;
-        [SerializeField] private GameStatsSO _gameStats;
 
         public InputReader _inputReader;
 
@@ -42,10 +41,10 @@ namespace WH40K.Essentials
         public Transform Transform => gameObject.transform;
         public Vector3 CurrentPosition => gameObject.transform.position;
         // public IUnit unit => (IUnit)gameObject.GetComponent<Unit>();
-        public Fraction ActivePlayerFraction => _gameStats.ActivePlayer.Fraction;
-        public Fraction EnemyFraction => _gameStats.EnemyPlayer.Fraction;
-        public IUnit EnemyUnit { get => _gameStats.EnemyUnit; set => _gameStats.EnemyUnit = value; }
-        public IUnit ActiveUnit { get => _gameStats.ActiveUnit; set => _gameStats.ActiveUnit = value; }
+        public Fraction ActivePlayerFraction => GameStats.ActivePlayer.Fraction;
+        public Fraction EnemyFraction => GameStats.EnemyPlayer.Fraction;
+        public IUnit EnemyUnit { get => GameStats.EnemyUnit; set => GameStats.EnemyUnit = value; }
+        public IUnit ActiveUnit { get => GameStats.ActiveUnit; set => GameStats.ActiveUnit = value; }
 
         public UnitMovementPhase unitMovementPhase;
         public UnitShootingPhase unitShootingPhase;
@@ -58,7 +57,6 @@ namespace WH40K.Essentials
         public UnityAction OnPointerEnter { get => onPointerEnter; set => onPointerEnter = value; }
         public UnityAction<IUnit> OnPointerEnterInfo { get => onPointerEnterInfo; set => onPointerEnterInfo = value; }
         public UnityAction<IUnit> OnPointerExit { get => onPointerExit; set => onPointerExit = value; }
-        public GameStatsSO GameStats { get => _gameStats; set => _gameStats = value; }
 
         public int WeaponRange => _weaponSO.WeaponRange;
         public int WeaponShots => _weaponSO.WeaponShots;
@@ -80,7 +78,7 @@ namespace WH40K.Essentials
             m_Agent = GetComponent<NavMeshAgent>();
             PathCalculator = new PathCalculator(m_Agent);
             UnitMover = GetComponent<UnitMover>();
-            UnitSelector = new UnitSelector(_gameStats, this);
+            UnitSelector = new UnitSelector(this);
             //UnitMover.Initialize(PathCalculator, _unitSO);
             //unitMovementPhase.Initialize(this);
             //gameObject.AddComponent<UnitMovementPhase>();

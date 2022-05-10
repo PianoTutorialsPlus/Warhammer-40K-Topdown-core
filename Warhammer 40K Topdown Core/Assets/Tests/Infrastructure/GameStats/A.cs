@@ -1,4 +1,4 @@
-using Editor.Infrastructure.GameStats;
+using Editor.Infrastructure.GameStatss;
 
 namespace Editor.Infrastructure
 {

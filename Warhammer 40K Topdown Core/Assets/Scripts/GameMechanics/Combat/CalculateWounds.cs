@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.Essentials;
 
 namespace WH40K.GameMechanics.Combat
 {
@@ -8,8 +9,8 @@ namespace WH40K.GameMechanics.Combat
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Wound;
         private WoundTable _woundTable;
 
-        private int Strength => _gameStats.ActiveUnit.WeaponStrength;
-        private int Toughness => _gameStats.EnemyUnit.Toughness;
+        private int Strength => GameStats.ActiveUnit.WeaponStrength;
+        private int Toughness => GameStats.EnemyUnit.Toughness;
 
         public CalculateWounds(IResult results) : base(results) { _woundTable = new WoundTable(); }
 

@@ -15,7 +15,8 @@ namespace WH40K.Initialize
 
         [SerializeField] private PlayerSO _player1;
         [SerializeField] private PlayerSO _player2;
-        [SerializeField] public GameStatsSO _gameStats;
+        [SerializeField] private GameTableSO _gameTable;
+
         [SerializeField] private BattleRoundsSO _battleroundEvents;
         [SerializeField] private RollTheDiceSO _diceAction;
         [SerializeField] private RollTheDiceSO _diceSubResult;
@@ -23,7 +24,7 @@ namespace WH40K.Initialize
         public RollTheDiceSO DiceAction => _diceAction;
         public RollTheDiceSO DiceSubResult => _diceSubResult;
         public RollTheDiceSO DiceResult => _diceResult;
-        public GameStatsSO GameStats { get => _gameStats; set => _gameStats = value; }
+       
         // Dictionaries
         private static Dictionary<GamePhase, PhaseManagerBase> _gamePhaseManagers = new Dictionary<GamePhase, PhaseManagerBase>();
         public Dictionary<GamePhase, PhaseManagerBase> GamePhaseManagers { get => _gamePhaseManagers; }
@@ -47,11 +48,12 @@ namespace WH40K.Initialize
 
         private void Initialize()
         {
-            _gameStats.turn = 1;
-            _gameStats.ActiveUnit = null;
-            _gameStats.EnemyUnit = null;
-            _gameStats.ActivePlayer = _player1;
-            _gameStats.EnemyPlayer = _player2;
+            GameStats.Turn = 1;
+            GameStats.ActiveUnit = null;
+            GameStats.EnemyUnit = null;
+            GameStats.ActivePlayer = _player1;
+            GameStats.EnemyPlayer = _player2;
+            GameStats.GameTable = _gameTable;
         }
         private void InitializeManager()
         {

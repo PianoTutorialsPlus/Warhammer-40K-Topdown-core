@@ -1,5 +1,6 @@
 using Editor.Infrastructure;
 using NUnit.Framework;
+using System;
 using WH40K.Essentials;
 
 namespace Editor.Units
@@ -8,21 +9,26 @@ namespace Editor.Units
     {
         public UnitSelector SetUnitSelector(Fraction fraction)
         {
+            GetGameStats(fraction);
             return A.UnitSelector
-                .WithGameStats(A.GameStats
-                    .WithActivePlayer(A.Player.WithFraction(fraction))
-                    .WithEnemyPlayer(A.Player.WithFraction(fraction)))
                 .WithUnit(A.Unit.Build());
         }
-        public UnitSelector SetUnitSelector(GameStatsSO gameStats)
+
+        private void GetGameStats(Fraction fraction)
+        {
+            A.GameStats
+                .WithActivePlayer(A.Player.WithFraction(fraction))
+                .WithEnemyPlayer(A.Player.WithFraction(fraction));
+        }
+
+        public UnitSelector SetUnitSelector()
         {
             return A.UnitSelector
-                .WithGameStats(gameStats)
                 .WithUnit(A.Unit.Build());
         }
-        public GameStatsSO SetGameStats(Fraction fraction)
+        public void SetGameStats(Fraction fraction)
         {
-            return A.GameStats
+            A.GameStats
                 .WithActivePlayer(A.Player.WithFraction(fraction));
         }
 
@@ -33,28 +39,28 @@ namespace Editor.Units
             {
                 // ARRANGE
                 var fraction = Fraction.SpaceMarines;
-                var gameStats = SetGameStats(fraction);
+                SetGameStats(fraction);
 
                 // ACT
-                var unitSelector = SetUnitSelector(gameStats);
+                var unitSelector = SetUnitSelector();
                 unitSelector.SelectUnit();
 
                 // ASSERT
-                Assert.IsNull(gameStats.ActiveUnit);
+                Assert.IsNull(GameStats.ActiveUnit);
             }
             [Test]
             public void When_Unit_Is_From_Player_Fraction_Then_Active_Unit_Has_Value()
             {
                 // ARRANGE
                 var fraction = Fraction.Necrons;
-                var gameStats = SetGameStats(fraction);
+                SetGameStats(fraction);
 
                 // ACT
-                var unitSelector = SetUnitSelector(gameStats);
+                var unitSelector = SetUnitSelector();
                 unitSelector.SelectUnit();
 
                 // ASSERT
-                Assert.IsNotNull(gameStats.ActiveUnit);
+                Assert.IsNotNull(GameStats.ActiveUnit);
             }
         }
         public class TheSelectEnemyUnitMethod : UnitSelectorTests
@@ -64,28 +70,28 @@ namespace Editor.Units
             {
                 // ARRANGE
                 var fraction = Fraction.SpaceMarines;
-                var gameStats = SetGameStats(fraction);
+                SetGameStats(fraction);
 
                 // ACT
-                var unitSelector = SetUnitSelector(gameStats);
+                var unitSelector = SetUnitSelector();
                 unitSelector.SelectEnemyUnit();
 
                 // ASSERT
-                Assert.IsNull(gameStats.EnemyUnit);
+                Assert.IsNull(GameStats.EnemyUnit);
             }
             [Test]
             public void When_Unit_Is_From_Enemy_Fraction_Then_Enemy_Unit_Has_Value()
             {
                 // ARRANGE
                 var fraction = Fraction.Necrons;
-                var gameStats = SetGameStats(fraction);
+                SetGameStats(fraction);
 
                 // ACT
-                var unitSelector = SetUnitSelector(gameStats);
+                var unitSelector = SetUnitSelector();
                 unitSelector.SelectEnemyUnit();
 
                 // ASSERT
-                Assert.IsNotNull(gameStats.EnemyUnit);
+                Assert.IsNotNull(GameStats.EnemyUnit);
             }
         }
         public class TheGetUnitMethod : UnitSelectorTests

@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
+using WH40K.Essentials;
 using WH40K.GameMechanics;
 
 namespace Editor.GameMechanics
@@ -102,7 +103,7 @@ namespace Editor.GameMechanics
             public void When_MovementPhase_State_Is_Move_And_Unit_Is_Done_Then_Next_Is_True()
             {
                 var gamePhase = GetGamePhase();
-                gamePhase.GameStats.ActiveUnit.IsDone.Returns(true);
+                GameStats.ActiveUnit.IsDone.Returns(true);
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
@@ -125,7 +126,7 @@ namespace Editor.GameMechanics
                 SetMovementPhaseProcessor(gamePhase);
                 MovementPhaseProcessor.Next(MovementPhase.Next);
 
-                Assert.IsNull(gamePhase.GameStats.ActiveUnit);
+                Assert.IsNull(GameStats.ActiveUnit);
             }
         }
     }

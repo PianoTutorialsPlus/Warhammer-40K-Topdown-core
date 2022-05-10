@@ -7,7 +7,6 @@ namespace WH40K.UI
     [CreateAssetMenu(menuName = "Game/Battleround Events")]
     public class BattleRoundsSO : ScriptableObject, IPhase, IManageUIEvents, IUIMovementRange
     {
-        [SerializeField] private GameStatsSO _gameStats;
         [SerializeField] private BattleroundEventChannelSO _setPhaseEvent;
 
         //UI event
@@ -20,8 +19,8 @@ namespace WH40K.UI
         private UIDisplayInfoEvents _uIDisplayInfoEvents;
         private UIMovementRangeEvents _uIMovementRange;
         private BattleRoundEvents _battleRoundEvents;
-        private IPlayer _activePlayer => _gameStats.ActivePlayer;
-        private IPlayer _enemyPlayer => _gameStats.EnemyPlayer;
+        private IPlayer _activePlayer => GameStats.ActivePlayer;
+        private IPlayer _enemyPlayer => GameStats.EnemyPlayer;
 
         public InteractionUIEventChannelSO InteractionUIEvent => _toggleInteractionUI;
         public InfoUIEventChannelSO InfoUIEvent => _toggleInfoUI;
@@ -31,17 +30,17 @@ namespace WH40K.UI
 
         public void OnEnable()
         {
-            _uIDisplayInteractionEvents = new UIDisplayInteractionEvents(this, _gameStats);
-            _uIDisplayInfoEvents = new UIDisplayInfoEvents(this, _gameStats);
-            _uIMovementRange = new UIMovementRangeEvents(this, _gameStats);
-            _battleRoundEvents = new BattleRoundEvents(this, _gameStats);
+            _uIDisplayInteractionEvents = new UIDisplayInteractionEvents(this);
+            _uIDisplayInfoEvents = new UIDisplayInfoEvents(this);
+            _uIMovementRange = new UIMovementRangeEvents(this);
+            _battleRoundEvents = new BattleRoundEvents(this);
         }
-        public void HandlePhase(GameStatsSO gameStats)
+        public void HandlePhase()
         {
             foreach (Unit child in _activePlayer.PlayerUnits) FillMethods(child);
             foreach (Unit child in _enemyPlayer.PlayerUnits) FillMethods(child);
         }
-        public void ClearPhase(GameStatsSO gameStats)
+        public void ClearPhase()
         {
             foreach (Unit child in _activePlayer.PlayerUnits) ResetMethods(child);
             foreach (Unit child in _enemyPlayer.PlayerUnits) ResetMethods(child);

@@ -5,16 +5,14 @@ namespace WH40K.UI
     public class UIDisplayInteractionEvents
     {
         private IManageUIEvents _uIEvents;
-        private GameStatsSO _gameStats;
-        private Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
-        private IStats _activeUnit => _gameStats.activeUnitTest;
+        private Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
+        private IStats _activeUnit => GameStats.ActiveUnit;
         public bool IsUnitActive(IStats child) => child == _activeUnit;
         private InteractionUIEventChannelSO _toggleInteractionUI => _uIEvents.InteractionUIEvent;
 
-        public UIDisplayInteractionEvents(IManageUIEvents uIEvents, GameStatsSO gameStats)
+        public UIDisplayInteractionEvents(IManageUIEvents uIEvents)
         {
             _uIEvents = uIEvents;
-            _gameStats = gameStats;
         }
 
         public void SetDisplayInteraction(IUnit child)

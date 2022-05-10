@@ -10,11 +10,11 @@ using WH40K.Essentials;
 [CreateAssetMenu(menuName = "Events/Switch gamestats")]
 public class GameStatsEventChannelSO : ScriptableObject
 {
-    public UnityAction<GameStatsSO> OnEventRaised;
+    public UnityAction OnEventRaised;
 
-    public void RaiseEvent(GameStatsSO gameStats)
+    public void RaiseEvent()
     {
         if (OnEventRaised != null)
-            OnEventRaised.Invoke(gameStats);
+            OnEventRaised.Invoke();
     }
 }

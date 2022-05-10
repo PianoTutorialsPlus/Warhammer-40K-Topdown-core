@@ -62,12 +62,12 @@ public class GamePhaseProcessor
         gamePhase.ResetPreviousPhase(gamePhaseManager);
     }
 
-    public static void ResetActivePlayerUnits(GameStatsSO gameStats, GamePhase subPhase)
+    public static void ResetActivePlayerUnits(GamePhase subPhase)
     {
         Initialize();
 
         var gamePhase = _gamePhases[subPhase];
-        gamePhase.ResetActivePlayerUnits(gameStats);
+        gamePhase.ResetActivePlayerUnits();
     }
 
     public static bool IsEndOfPlayerTurn(GamePhase subPhase)

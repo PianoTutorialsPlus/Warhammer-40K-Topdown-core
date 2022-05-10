@@ -77,11 +77,11 @@ public class UIManager : MonoBehaviour
         distanceIndicator.gameObject.SetActive(isOpenEvent);
     }
 
-    public void SetGameinfoPanel(bool isOpenEvent, GameStatsSO gameStats)
+    public void SetGameinfoPanel(bool isOpenEvent)
     {
         if (isOpenEvent)
         {
-            gameinfoPanel.FillInfoPanel(gameStats);
+            gameinfoPanel.FillInfoPanel();
         }
 
         gameinfoPanel.gameObject.SetActive(isOpenEvent);

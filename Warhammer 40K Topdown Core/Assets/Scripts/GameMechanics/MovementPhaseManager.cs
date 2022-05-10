@@ -15,7 +15,6 @@ namespace WH40K.GameMechanics
     public class MovementPhaseManager : PhaseManagerBase
     {
         // Gameplay
-        [SerializeField] private GameStatsSO _gameStats;
         [SerializeField] private InputReader _inputReader;
 
         // Events
@@ -58,13 +57,13 @@ namespace WH40K.GameMechanics
             if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised -= SetMovementPhase;
         }
 
-        public void SetMovementPhase(GameStatsSO gameStats)
+        public void SetMovementPhase()
         {
             ClearPhase();
             Debug.Log("movementphase: " + movementPhase.Peek());
             MovementPhaseProcessor.HandlePhase(movementPhase.Peek());
 
-            if (gameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
+            if (GameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
             if (MovementPhaseProcessor.Next(movementPhase.Peek())) NextPhase();
         }
 
@@ -77,7 +76,7 @@ namespace WH40K.GameMechanics
         public void NextPhase()
         {
             movementPhase.Enqueue(movementPhase.Dequeue());
-            SetMovementPhase(_gameStats);
+            SetMovementPhase();
         }
     }
 }

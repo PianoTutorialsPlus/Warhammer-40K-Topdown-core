@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.Essentials;
 
 namespace WH40K.GameMechanics.Combat
 {
     public class CalculateSaveroles : CombatPhases, ICalculation
     {
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Save;
-        private int Saves => _gameStats.EnemyUnit.ArmourSave;
-        private int Modifier => _gameStats.ActiveUnit.WeaponArmourPen;
+        private int Saves => GameStats.EnemyUnit.ArmourSave;
+        private int Modifier => GameStats.ActiveUnit.WeaponArmourPen;
         private int ModifiedSaves => Saves - Modifier;
 
         public CalculateSaveroles(IResult results) : base(results) { }

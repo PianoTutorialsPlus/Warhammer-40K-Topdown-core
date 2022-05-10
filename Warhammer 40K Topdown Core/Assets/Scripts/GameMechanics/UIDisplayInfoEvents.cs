@@ -5,16 +5,14 @@ namespace WH40K.UI
     public class UIDisplayInfoEvents
     {
         private IManageUIEvents _uIEvents;
-        private GameStatsSO _gameStats;
 
-        private Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
+        private Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
         private InfoUIEventChannelSO _toggleInfoUI => _uIEvents.InfoUIEvent;
         private InfoUIEventChannelSO _toggleEnemyInfoUI => _uIEvents.EnemyInfoUIEvent;
 
-        public UIDisplayInfoEvents(IManageUIEvents uIEvents, GameStatsSO gameStats)
+        public UIDisplayInfoEvents(IManageUIEvents uIEvents)
         {
             _uIEvents = uIEvents;
-            _gameStats = gameStats;
         }
 
         public void SetDisplayInfo(IUnit child)

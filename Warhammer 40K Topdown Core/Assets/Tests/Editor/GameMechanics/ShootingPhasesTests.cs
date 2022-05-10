@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using WH40K.Essentials;
 using WH40K.GameMechanics;
 
 namespace Editor.GameMechanics
@@ -113,7 +114,7 @@ namespace Editor.GameMechanics
                 SetShootingPhaseProcessor(gamePhase);
                 ShootingPhaseProcessor.Next(ShootingPhase.Next);
 
-                Assert.IsNull(gamePhase.GameStats.ActiveUnit);
+                Assert.IsNull(GameStats.ActiveUnit);
             }
         }
     }

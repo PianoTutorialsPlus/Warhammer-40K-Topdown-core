@@ -11,7 +11,6 @@ namespace WH40K.GameMechanics.Combat
         protected RollTheDiceSO DiceSubResult => _results.DiceSubResult;
         protected RollTheDiceSO DiceAction => _results.DiceAction;
         protected RollTheDiceSO DiceResult => _results.DiceResult;
-        protected GameStatsSO _gameStats => _results.GameStats;
         protected CombatPhases(IResult results)
         {
             _results = results;

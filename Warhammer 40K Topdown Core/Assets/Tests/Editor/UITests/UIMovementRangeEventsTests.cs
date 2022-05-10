@@ -37,11 +37,11 @@ namespace Editor.UI
             public void When_Unit_Is_From_Player_Fraction_And_IsActivated_Then_OnTapDownAction_IsNull()
             {
                 var child = GetUnit(isActivated: true);
-                var gameStats = GetGameStats(Fraction.Necrons);
+                GetGameStats(Fraction.Necrons);
 
                 ((UIMovementRangeEvents)(A.UIMovementRangeEvent
-                    .WithUIEvents(An.UIEvent.Build())
-                    .WithGameStats(gameStats))).SetIndicatorConnection(child);
+                    .WithUIEvents(An.UIEvent.Build())))
+                    .SetIndicatorConnection(child);
 
                 Assert.IsNull(child.OnTapDownAction);
             }
@@ -49,11 +49,11 @@ namespace Editor.UI
             public void When_Unit_Is_From_Player_Fraction_And_Is_Not_Activated_Then_OnTapDownAction_IsNotNull()
             {
                 var child = GetUnit(isActivated: false);
-                var gameStats = GetGameStats(Fraction.Necrons);
+                GetGameStats(Fraction.Necrons);
 
                 ((UIMovementRangeEvents)(A.UIMovementRangeEvent
-                    .WithUIEvents(An.UIEvent.Build())
-                    .WithGameStats(gameStats))).SetIndicatorConnection(child);
+                    .WithUIEvents(An.UIEvent.Build())))
+                    .SetIndicatorConnection(child);
 
                 Assert.IsNotNull(child.OnTapDownAction);
             }
@@ -61,11 +61,11 @@ namespace Editor.UI
             public void When_Unit_Is_From_Enemy_Fraction_Then_OnTapDownAction_IsNull()
             {
                 var child = GetUnit(playerFraction: Fraction.SpaceMarines);
-                var gameStats = GetGameStats(Fraction.Necrons);
+                GetGameStats(Fraction.Necrons);
 
                 ((UIMovementRangeEvents)(A.UIMovementRangeEvent
-                    .WithUIEvents(An.UIEvent.Build())
-                    .WithGameStats(gameStats))).SetIndicatorConnection(child);
+                    .WithUIEvents(An.UIEvent.Build())))
+                    .SetIndicatorConnection(child);
 
                 Assert.IsNull(child.OnTapDownAction);
             }
@@ -73,11 +73,11 @@ namespace Editor.UI
             public void When_Unit_Is_From_Player_Fraction_And_IsDone_Then_OnTapDownAction_IsNull()
             {
                 var child = GetUnit(isDone: true);
-                var gameStats = GetGameStats(Fraction.Necrons);
+                GetGameStats(Fraction.Necrons);
 
                 ((UIMovementRangeEvents)(A.UIMovementRangeEvent
-                    .WithUIEvents(An.UIEvent.Build())
-                    .WithGameStats(gameStats))).SetIndicatorConnection(child);
+                    .WithUIEvents(An.UIEvent.Build())))
+                    .SetIndicatorConnection(child);
 
                 Assert.IsNull(child.OnTapDownAction);
             }
@@ -86,14 +86,14 @@ namespace Editor.UI
             {
                 var eventListener = GetIndicatorEventListener();
                 var child = GetUnit();
-                var gameStats = GetGameStats(Fraction.Necrons, child);
+                GetGameStats(Fraction.Necrons, child);
 
                 ((UIMovementRangeEvents)A.UIMovementRangeEvent
                    .WithUIEvents(
                        An.UIEvent
                            .WithMoveRangeIndicatorEventListener(eventListener)
-                           .Build())
-                   .WithGameStats(gameStats)).SetIndicatorConnection(child);
+                           .Build()))
+                    .SetIndicatorConnection(child);
 
                 child.OnTapDownAction(child);
 

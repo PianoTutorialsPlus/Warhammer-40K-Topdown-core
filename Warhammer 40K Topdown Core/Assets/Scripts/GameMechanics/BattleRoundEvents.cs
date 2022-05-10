@@ -5,16 +5,14 @@ namespace WH40K.GameMechanics
 {
     public class BattleRoundEvents
     {
-        private GameStatsSO _gameStats;
         private IUIMovementRange _uIMovementRange;
 
         public BattleroundEventChannelSO _setPhaseEvent => _uIMovementRange.SetPhaseEvent;
-        public Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
+        public Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
 
-        public BattleRoundEvents(IUIMovementRange uIMovementRange, GameStatsSO gameStats)
+        public BattleRoundEvents(IUIMovementRange uIMovementRange)
         {
             _uIMovementRange = uIMovementRange;
-            _gameStats = gameStats;
         }
         public void SetPhaseEvent(IUnit child)
         {
@@ -28,7 +26,7 @@ namespace WH40K.GameMechanics
         }
         public void ConnectEvent(IUnit unit)
         {
-            _setPhaseEvent.RaiseEvent(_gameStats);
+            _setPhaseEvent.RaiseEvent();
         }
         public void ResetOnTapDownAction(IUnit child)
         {

@@ -14,11 +14,11 @@ public class UIGameInfoFiller : MonoBehaviour
     //    infoPhase.text = phase.phase.ToString();
     //    infoTurn.text = "Turn: " + turn.turn.ToString();
     //}
-    public void FillInfoPanel(GameStatsSO gameStats)
+    public void FillInfoPanel()
     {
-        infoUnitName.text = gameStats.ActivePlayer.PlayerUnits[0].tag;
-        infoPhase.text = gameStats.phase.ToString();
-        infoTurn.text = "Turn: " + gameStats.turn.ToString();
+        infoUnitName.text = GameStats.ActivePlayer.PlayerUnits[0].tag;
+        infoPhase.text = GameStats.Phase.ToString();
+        infoTurn.text = "Turn: " + GameStats.Turn.ToString();
     }
 
 }

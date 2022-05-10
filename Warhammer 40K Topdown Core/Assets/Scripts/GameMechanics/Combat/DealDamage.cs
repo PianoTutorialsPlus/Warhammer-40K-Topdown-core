@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.Essentials;
 
 namespace WH40K.GameMechanics.Combat
 {
@@ -7,7 +8,7 @@ namespace WH40K.GameMechanics.Combat
     {
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Damage;
 
-        private int Damage => _gameStats.ActiveUnit.WeaponDamage;
+        private int Damage => GameStats.ActiveUnit.WeaponDamage;
 
         public DealDamage(IResult results) : base(results) { }
 
@@ -17,7 +18,7 @@ namespace WH40K.GameMechanics.Combat
             OnEnable();
             var wounds = new Wounds(notSaved);
             var damage = wounds.TakeDamage(Damage);
-            _gameStats.EnemyUnit.TakeDamage(damage);
+            GameStats.EnemyUnit.TakeDamage(damage);
 
             Result();
         }

@@ -10,7 +10,6 @@ namespace WH40K.Essentials
     public class GameTable : MonoBehaviour, IPointerClickHandler, IGameTable
     {
         //public BattleroundEventChannelSO SetMovementPhaseEvent;
-        //public GameStatsSO _gameStats;
         public NavMeshSurface Surface;
 
         private UnityAction<Vector3> onTapDownAction;

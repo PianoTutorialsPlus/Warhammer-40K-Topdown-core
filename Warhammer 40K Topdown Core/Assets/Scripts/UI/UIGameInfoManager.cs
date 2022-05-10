@@ -10,8 +10,8 @@ public class UIGameInfoManager : MonoBehaviour
     //    infoItem.FillInfoPanel(unit,phase,turn);
     //}
 
-    public void FillInfoPanel(GameStatsSO gameStats)
+    public void FillInfoPanel()
     {
-        infoItem.FillInfoPanel(gameStats);
+        infoItem.FillInfoPanel();
     }
 }

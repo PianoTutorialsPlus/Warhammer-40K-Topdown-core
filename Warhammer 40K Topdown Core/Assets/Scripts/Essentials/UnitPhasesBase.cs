@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace WH40K.Essentials
@@ -17,8 +12,7 @@ namespace WH40K.Essentials
         protected UnityAction onPointerEnter => Unit.OnPointerEnter;
         protected UnityAction<IUnit> onPointerEnterInfo => Unit.OnPointerEnterInfo;
         protected UnityAction<IUnit> onPointerExit => Unit.OnPointerExit;
-        protected GameStatsSO _gameStats => Unit.GameStats;
-        public IUnit ActiveUnit { get => _gameStats.ActiveUnit; set => _gameStats.ActiveUnit = value; }
+        public IUnit ActiveUnit { get => GameStats.ActiveUnit; set => GameStats.ActiveUnit = value; }
         public IUnit Unit { get => _unit; protected set => _unit = value; }
     }
 }

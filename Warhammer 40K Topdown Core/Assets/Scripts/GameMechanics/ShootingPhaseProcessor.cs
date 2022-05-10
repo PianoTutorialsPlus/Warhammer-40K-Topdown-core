@@ -18,7 +18,6 @@ namespace WH40K.GameMechanics
         public static bool _initialized;
         private static IGamePhase _gamePhase;
 
-        protected static GameStatsSO _gameStats => _gamePhase.GameStats;
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
 
         public ShootingPhaseProcessor(IGamePhase gamePhase)
@@ -47,21 +46,21 @@ namespace WH40K.GameMechanics
             Initialize();
 
             var shootingPhase = _shootingPhases[subPhase];
-            shootingPhase.HandlePhase(_gameStats);
+            shootingPhase.HandlePhase();
         }
         public static bool Next(ShootingPhase subPhase)
         {
             Initialize();
 
             var shootingPhase = _shootingPhases[subPhase];
-            return shootingPhase.Next(_gameStats);
+            return shootingPhase.Next();
         }
         public static void ClearPhase(ShootingPhase subPhase)
         {
             Initialize();
 
             var shootingPhase = _shootingPhases[subPhase];
-            shootingPhase.ClearPhase(_gameStats);
+            shootingPhase.ClearPhase();
         }
         internal static IEnumerable<ShootingPhase> GetAbilityByName()
         {

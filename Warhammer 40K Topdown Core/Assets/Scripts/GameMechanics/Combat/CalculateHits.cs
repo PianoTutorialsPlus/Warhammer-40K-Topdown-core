@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.Essentials;
 
 namespace WH40K.GameMechanics.Combat
 {
@@ -7,8 +8,8 @@ namespace WH40K.GameMechanics.Combat
     {
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Hit;
 
-        private int ToHit => _gameStats.ActiveUnit.BallisticSkill;
-        private int MaxShots => _gameStats.ActiveUnit.WeaponShots;
+        private int ToHit => GameStats.ActiveUnit.BallisticSkill;
+        private int MaxShots => GameStats.ActiveUnit.WeaponShots;
 
         public CalculateHits(IResult results) : base(results) { }
 
@@ -21,7 +22,6 @@ namespace WH40K.GameMechanics.Combat
         public override void Result(List<int> hitResult)
         {
             if (hitResult == null || hitResult.Count == 0) return;
-            //if (diceEvent != ShootingSubEvents.Hit) return;
 
             Debug.Log("CalculateHitsSO Result");
             var combatResults = new CombatResults(ToHit, hitResult);

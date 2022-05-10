@@ -18,16 +18,17 @@ namespace Editor.UI
         {
             _state = state;
         }
-        public void FillWithStats(GameStatsSO gameStats)
+        public void FillWithStats()
         {
             _state = true;
         }
 
-        public GameStatsSO GetGameStats(Fraction playerFraction = Fraction.Necrons, IUnit activeUnit = null)
+        public void GetGameStats(Fraction playerFraction = Fraction.Necrons, IUnit activeUnit = null)
         {
-            return A.GameStats
+            A.GameStats
                 .WithActiveUnit(activeUnit)
-                .WithActivePlayer(A.Player.WithFraction(playerFraction));
+                .WithActivePlayer(A.Player.WithFraction(playerFraction))
+                .Build();
         }
         public InfoUIEventChannelSO GetInfoEventListener()
         {

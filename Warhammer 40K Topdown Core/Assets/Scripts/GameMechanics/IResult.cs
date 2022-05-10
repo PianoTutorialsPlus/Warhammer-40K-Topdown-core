@@ -8,6 +8,5 @@ namespace WH40K.GameMechanics
         RollTheDiceSO DiceAction { get; }
         RollTheDiceSO DiceSubResult { get; }
         RollTheDiceSO DiceResult { get; }
-        GameStatsSO GameStats { get; set; }
     }
 }
