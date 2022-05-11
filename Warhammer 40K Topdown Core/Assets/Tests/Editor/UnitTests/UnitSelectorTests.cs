@@ -1,6 +1,5 @@
 using Editor.Infrastructure;
 using NUnit.Framework;
-using System;
 using WH40K.Essentials;
 
 namespace Editor.Units
@@ -18,7 +17,8 @@ namespace Editor.Units
         {
             A.GameStats
                 .WithActivePlayer(A.Player.WithFraction(fraction))
-                .WithEnemyPlayer(A.Player.WithFraction(fraction));
+                .WithEnemyPlayer(A.Player.WithFraction(fraction))
+                .Build();
         }
 
         public UnitSelector SetUnitSelector()
@@ -29,7 +29,7 @@ namespace Editor.Units
         public void SetGameStats(Fraction fraction)
         {
             A.GameStats
-                .WithActivePlayer(A.Player.WithFraction(fraction));
+                .WithActivePlayer(A.Player.WithFraction(fraction)).Build();
         }
 
         public class TheSelectUnitMethod : UnitSelectorTests
@@ -152,7 +152,6 @@ namespace Editor.Units
                 Assert.AreEqual(Fraction.Necrons, unit.Fraction);
             }
         }
-
         public class TheUnitIsFromFractionMethod : UnitSelectorTests
         {
             [Test]

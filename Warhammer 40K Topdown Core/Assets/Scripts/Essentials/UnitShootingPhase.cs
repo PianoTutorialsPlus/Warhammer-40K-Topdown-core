@@ -9,6 +9,7 @@ namespace WH40K.Essentials
         private void Awake()
         {
             _unit = GetComponent<IUnit>();
+            enabled = false;
         }
 
         private void OnEnable()

@@ -838,8 +838,7 @@ MonoBehaviour:
   _table: {fileID: 11400000, guid: ce27887eadea6be40af3669d3ecd1558, type: 2}
   player: []
   userControl: {fileID: 0}
-  gameTable: {fileID: 1999985780}
-  _gameStats: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33, type: 2}
+  _gameTable: {fileID: 1999985780}
 --- !u!4 &729138429
 Transform:
   m_ObjectHideFlags: 0

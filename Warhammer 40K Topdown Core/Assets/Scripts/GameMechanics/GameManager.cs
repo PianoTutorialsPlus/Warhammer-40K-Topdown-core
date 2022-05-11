@@ -20,7 +20,7 @@ namespace WH40K
         public Unit[] player;
         public GameObject userControl;
         //public string phase;
-        public GameTable gameTable;
+        public GameTable _gameTable;
         //private UnitManager unitManager;
         
         // Start is called before the first frame update
@@ -29,7 +29,9 @@ namespace WH40K
             //unitManager = GetComponent<UnitManager>();
             //unitManager.Load();
 
-            _table.gameTable = gameTable;
+            //_table.gameTable = gameTable;
+            GameStats.GameTable = _table;
+            GameStats.GameTable.gameTable = _gameTable;
             _player1.PlayerUnits.Clear();
             _player2.PlayerUnits.Clear();
 

@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using WH40K.Essentials;
 using WH40K.GameMechanics;
 
 namespace Editor.GameMechanics

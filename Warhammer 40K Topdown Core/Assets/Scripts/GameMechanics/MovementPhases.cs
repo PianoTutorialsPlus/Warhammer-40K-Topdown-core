@@ -10,6 +10,7 @@ namespace WH40K.GameMechanics
     {
         private IGamePhase _gamePhase;
         protected IPhase _phase => _gamePhase.BattleroundEvents;
+        protected GameTable _gameTable => GameStats.GameTable.gameTable;
 
         public MovementPhases(IGamePhase gamePhase)
         {
@@ -48,7 +49,7 @@ namespace WH40K.GameMechanics
         {
             _phase.HandlePhase();
             GameStats.ActiveUnit.Activate();
-            GameStats.GameTable.gameTable.OnTapDownAction += MoveUnit;
+            _gameTable.onTapDownAction += MoveUnit;
         }
 
         public override bool Next()
@@ -58,7 +59,7 @@ namespace WH40K.GameMechanics
         public override void ClearPhase()
         {
             _phase.ClearPhase();
-            GameStats.GameTable.gameTable.OnTapDownAction -= MoveUnit;
+            _gameTable.onTapDownAction -= MoveUnit;
         }
         public void MoveUnit(Vector3 position)
         {

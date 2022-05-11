@@ -11,11 +11,11 @@ namespace WH40K.Initialize
 {
     public class Initializer : MonoBehaviour, IInteractionManager, IGamePhase, IResult
     {
-        public static bool _initializedManager = false;
+        public static bool _initialized = false;
 
         [SerializeField] private PlayerSO _player1;
         [SerializeField] private PlayerSO _player2;
-        [SerializeField] private GameTableSO _gameTable;
+        //[SerializeField] private GameTableSO _gameTable;
 
         [SerializeField] private BattleRoundsSO _battleroundEvents;
         [SerializeField] private RollTheDiceSO _diceAction;
@@ -35,6 +35,9 @@ namespace WH40K.Initialize
             Initialize();
             InitializeManager();
             InitializeProcessors();
+            AddUnitPhases();
+
+            _initialized = true;
         }
 
         private void InitializeProcessors()
@@ -53,11 +56,31 @@ namespace WH40K.Initialize
             GameStats.EnemyUnit = null;
             GameStats.ActivePlayer = _player1;
             GameStats.EnemyPlayer = _player2;
-            GameStats.GameTable = _gameTable;
+            //GameStats.GameTable = _gameTable;
+        }
+        protected void AddUnitPhases()
+        {
+            if (_initialized != false) return;
+            foreach (Unit child in GameStats.ActivePlayer.PlayerUnits)
+            {
+                child.gameObject.AddComponent<UnitMovementPhase>();
+                child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
+
+                child.gameObject.AddComponent<UnitShootingPhase>();
+                child.unitShootingPhase = child.GetComponent<UnitShootingPhase>();
+            }
+            foreach (Unit child in GameStats.EnemyPlayer.PlayerUnits)
+            {
+                child.gameObject.AddComponent<UnitMovementPhase>();
+                child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
+
+                child.gameObject.AddComponent<UnitShootingPhase>();
+                child.unitShootingPhase = child.GetComponent<UnitShootingPhase>();
+            }
         }
         private void InitializeManager()
         {
-            if (_initializedManager) return;
+            if (_initialized) return;
             _gamePhaseManagers.Clear();
 
             var allPhases = Assembly.GetAssembly(typeof(PhaseManagerBase)).GetTypes()
@@ -69,8 +92,6 @@ namespace WH40K.Initialize
                 _gamePhaseManagers.Add(instance.SubEvents, instance);
             }
             //_gamePhaseManagers = _gamePhases.ToDictionary(key => key.SubEvents, value => value);
-
-            _initializedManager = true;
         }
     }
 }

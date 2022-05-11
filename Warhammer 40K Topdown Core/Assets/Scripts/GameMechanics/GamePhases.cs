@@ -10,8 +10,6 @@ namespace WH40K.GamePhaseHandling
     /// </summary>
     public abstract class GamePhases
     {
-        private static bool _initialized = false;
-
         public abstract GamePhase SubEvents { get; } // gets the active game phase
         //public abstract void ResetPreviousPhase(PhaseManagerBase gamePhaseManager); // clears all dependencies of the game phase
         public abstract void ResetActivePlayerUnits(); // clears all dependencies of the game phase
@@ -28,28 +26,7 @@ namespace WH40K.GamePhaseHandling
             gamePhaseManager.ClearPhase();
             gamePhaseManager.enabled = false;
         }
-        protected void AddUnitPhases()
-        {
-            if (_initialized != false) return;
-            foreach (Unit child in GameStats.ActivePlayer.PlayerUnits)
-            {
-                child.gameObject.AddComponent<UnitMovementPhase>();
-                child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
-                
-                child.gameObject.AddComponent<UnitShootingPhase>();
-                child.unitShootingPhase = child.GetComponent<UnitShootingPhase>();
-            }
-            foreach (Unit child in GameStats.EnemyPlayer.PlayerUnits)
-            {
-                child.gameObject.AddComponent<UnitMovementPhase>();
-                child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
 
-                child.gameObject.AddComponent<UnitShootingPhase>();
-                child.unitShootingPhase = child.GetComponent<UnitShootingPhase>();
-            }
-
-            _initialized = true;
-        }
         protected void ResetUnitPhases()
         {
             GameStats.ActiveUnit = null;
@@ -75,7 +52,6 @@ namespace WH40K.GamePhaseHandling
 
         public override void ResetActivePlayerUnits()
         {
-            AddUnitPhases();
             ResetUnitPhases();
 
             foreach (Unit child in GameStats.ActivePlayer.PlayerUnits)
@@ -95,7 +71,6 @@ namespace WH40K.GamePhaseHandling
 
         public override void ResetActivePlayerUnits()
         {
-            AddUnitPhases();
             ResetUnitPhases();
 
             foreach (Unit child in GameStats.EnemyPlayer.PlayerUnits)

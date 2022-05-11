@@ -1,4 +1,6 @@
-﻿namespace WH40K.Essentials
+﻿using UnityEngine;
+
+namespace WH40K.Essentials
 {
     public class UnitSelector
     {
@@ -36,7 +38,8 @@
         }
         public bool UnitIsFromFraction(Fraction enemyFraction = Fraction.None)
         {
-            //Debug.Log("player Fraction: "+ _playerFraction);
+            Debug.Log("player Fraction: "+ _playerFraction);
+            Debug.Log("Unit Fraction: " + _unit.Fraction);
             return enemyFraction == Fraction.None
                 ? _unit.Fraction == _playerFraction
                 : _unit.Fraction == enemyFraction;

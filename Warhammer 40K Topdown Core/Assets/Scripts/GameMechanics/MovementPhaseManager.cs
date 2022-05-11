@@ -47,13 +47,13 @@ namespace WH40K.GameMechanics
 
         public void OnEnable()
         {
-            //Debug.Log("Enable Movement");
+            Debug.Log("Enable Movement");
             if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += SetMovementPhase;
         }
 
         public void OnDisable()
         {
-            //Debug.Log("Disable Movement");
+            Debug.Log("Disable Movement");
             if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised -= SetMovementPhase;
         }
 

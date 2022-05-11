@@ -12,17 +12,21 @@ namespace WH40K.Essentials
         //public BattleroundEventChannelSO SetMovementPhaseEvent;
         public NavMeshSurface Surface;
 
-        private UnityAction<Vector3> onTapDownAction;
+        public UnityAction<Vector3> onTapDownAction;
 
         public UnityAction<Vector3> OnTapDownAction { get => onTapDownAction; set => onTapDownAction = value; }
 
         public void OnPointerClick(PointerEventData pointerEvent)
         {
+            Debug.Log("Table");
             if (pointerEvent.button == PointerEventData.InputButton.Right)
             {
-                if (OnTapDownAction != null)
+                Debug.Log("Table OnTap " + (onTapDownAction != null));
+
+                if (onTapDownAction != null)
                 {
-                    OnTapDownAction.Invoke(pointerEvent.pointerCurrentRaycast.worldPosition);
+                    Debug.Log("Table");
+                    onTapDownAction.Invoke(pointerEvent.pointerCurrentRaycast.worldPosition);
                 }
             }
         }
