@@ -1,8 +1,8 @@
 ﻿using Editor.GameMechanics;
-using GameMechanics.Combat;
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
+using WH40K.GamePhaseEvents;
 
 namespace Editor.CombatTests
 {
@@ -61,7 +61,7 @@ namespace Editor.CombatTests
                 var result = GetIResult(unit, diceAction);
 
                 SetCombatProcessor(result);
-                CombatProcessor.Action(ShootingSubEvents.Wound,new List<int>());
+                CombatProcessor.Action(ShootingSubEvents.Wound, new List<int>());
 
                 Assert.IsNull(_action);
             }
@@ -215,7 +215,7 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(2);
-                var result = GetIResult(unit, diceResult: diceResult,subResult: diceSubResult);
+                var result = GetIResult(unit, diceResult: diceResult, subResult: diceSubResult);
 
                 SetCombatProcessor(result);
                 CombatProcessor.Action(ShootingSubEvents.Hit);

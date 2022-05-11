@@ -1,21 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
+using WH40K.GamePhaseEvents;
 
-public class UIInteractionManager : MonoBehaviour
+namespace
+    WH40K.UI
 {
-    [SerializeField] private List<InteractionSO> listInteractions;
-
-    [SerializeField] private UIInteractionItemFiller interactionItem;
-
-    public void FillInteractionPanel(InteractionType interactionType)
+    public class UIInteractionManager : MonoBehaviour
     {
-        if ((listInteractions != null) && (interactionItem != null))
+        [SerializeField] private List<InteractionSO> listInteractions;
+
+        [SerializeField] private UIInteractionItemFiller interactionItem;
+
+        public void FillInteractionPanel(InteractionType interactionType)
         {
-            if (listInteractions.Exists(o => o.InteractionType == interactionType))
+            if (listInteractions != null && interactionItem != null)
             {
-                interactionItem.FillInteractionPanel(listInteractions.Find(o => o.InteractionType == interactionType));
+                if (listInteractions.Exists(o => o.InteractionType == interactionType))
+                {
+                    interactionItem.FillInteractionPanel(listInteractions.Find(o => o.InteractionType == interactionType));
+                }
             }
         }
-    }
 
+    }
 }

@@ -3,16 +3,16 @@ using WH40K.UI;
 
 namespace Editor.Infrastructure.Player
 {
-    public class RangeControllerBuilder : TestDataBuilder<RangeController>
+    public class RangeControllerBuilder : TestDataBuilder<UIRangeController>
     {
-        private IRangeIndicator _rangeIndicator;
+        private IUIRangeIndicator _rangeIndicator;
         private Vector3 _position;
 
         public RangeControllerBuilder()
         {
         }
 
-        public RangeControllerBuilder WithRangeIndicator(IRangeIndicator range)
+        public RangeControllerBuilder WithRangeIndicator(IUIRangeIndicator range)
         {
             _rangeIndicator = range;
             return this;
@@ -23,9 +23,9 @@ namespace Editor.Infrastructure.Player
             return this;
         }
 
-        public override RangeController Build()
+        public override UIRangeController Build()
         {
-            var rangeController = new RangeController(_rangeIndicator);
+            var rangeController = new UIRangeController(_rangeIndicator);
             rangeController.SetPosition(_position);
             return rangeController;
         }

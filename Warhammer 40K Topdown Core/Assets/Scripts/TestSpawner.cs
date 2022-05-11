@@ -1,7 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using WH40K.Essentials;
+using WH40K.Core;
+using WH40K.PlayerEvents;
 
 //[RequireComponent(typeof(GameTable))]
 public class TestSpawner : MonoBehaviour

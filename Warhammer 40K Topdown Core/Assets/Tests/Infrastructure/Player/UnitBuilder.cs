@@ -1,6 +1,6 @@
 ﻿using NSubstitute;
 using UnityEngine.Events;
-using WH40K.Essentials;
+using WH40K.PlayerEvents;
 
 namespace Editor.Infrastructure.Player
 {

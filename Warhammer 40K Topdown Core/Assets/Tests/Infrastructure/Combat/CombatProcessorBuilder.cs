@@ -1,5 +1,5 @@
-﻿using GameMechanics.Combat;
-using WH40K.GameMechanics;
+﻿using WH40K.EventChannels;
+using WH40K.GamePhaseEvents;
 
 namespace Editor.Infrastructure.Combat
 {

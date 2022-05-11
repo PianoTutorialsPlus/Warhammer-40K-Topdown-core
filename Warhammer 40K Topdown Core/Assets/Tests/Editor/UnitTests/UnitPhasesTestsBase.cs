@@ -1,7 +1,7 @@
 ﻿using Editor.Infrastructure;
 using UnityEngine;
 using UnityEngine.Events;
-using WH40K.Essentials;
+using WH40K.PlayerEvents;
 
 namespace Editor.UnitTests
 {
@@ -22,7 +22,7 @@ namespace Editor.UnitTests
                     .WithIsDoneState(isDone)
                     .Build();
         }
-        public T SetUnitPhase<T>(IUnit unit) where T: UnitPhasesBase
+        public T SetUnitPhase<T>(IUnit unit) where T : UnitPhasesBase
         {
             T target = new GameObject().AddComponent<T>();
             target.SetPrivate(x => x.Unit, unit);

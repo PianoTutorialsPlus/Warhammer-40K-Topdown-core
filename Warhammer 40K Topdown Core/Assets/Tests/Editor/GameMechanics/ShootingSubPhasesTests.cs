@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
-using WH40K.Essentials;
-using WH40K.GameMechanics;
+using WH40K.GamePhaseEvents;
 
 namespace Editor.GameMechanics
 {
@@ -69,7 +68,7 @@ namespace Editor.GameMechanics
             public void When_ShootingSubPhase_State_Is_Damage_Then_DiceResult_Event_Is_Raised()
             {
                 var diceResult = GetResultDiceEventChannel();
-                var unit = GetUnit(1,2);
+                var unit = GetUnit(1, 2);
                 var result = GetIResult(unit, diceResult: diceResult);
 
                 SetShootingSubPhaseProcessor(result);

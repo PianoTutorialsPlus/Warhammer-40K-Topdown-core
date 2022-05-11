@@ -1,8 +1,8 @@
 ﻿using Editor.Infrastructure;
 using Editor.UI;
 using NUnit.Framework;
-using WH40K.Essentials;
-using WH40K.GameMechanics;
+using WH40K.Events;
+using WH40K.PlayerEvents;
 
 namespace Editor.GameMechanics
 {

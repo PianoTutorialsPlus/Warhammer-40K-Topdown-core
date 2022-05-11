@@ -1,23 +1,26 @@
 using UnityEngine;
-using WH40K.Essentials;
+using WH40K.PlayerEvents;
 
-public class UIInfoManager : MonoBehaviour
+namespace WH40K.UI
 {
-    //[SerializeField] private List<InteractionSO> listInteractions;
-
-    [SerializeField] private UIInfoUnitStatsFiller infoItem;
-
-    public void FillInfoPanel(IStats interactionType)
+    public class UIInfoManager : MonoBehaviour
     {
-        infoItem.FillInfoPanel(interactionType);
-        //if ((listInteractions != null) && (infoItem != null))
-        //{
-        //    if (listInteractions.Exists(o => o.InteractionType == interactionType))
-        //    {
+        //[SerializeField] private List<InteractionSO> listInteractions;
 
-        //        infoItem.FillInfoPanel(listInteractions.Find(o => o.InteractionType == interactionType));
-        //    }
+        [SerializeField] private UIInfoUnitStatsFiller infoItem;
 
-        //}
+        public void FillInfoPanel(IStats interactionType)
+        {
+            infoItem.FillInfoPanel(interactionType);
+            //if ((listInteractions != null) && (infoItem != null))
+            //{
+            //    if (listInteractions.Exists(o => o.InteractionType == interactionType))
+            //    {
+
+            //        infoItem.FillInfoPanel(listInteractions.Find(o => o.InteractionType == interactionType));
+            //    }
+
+            //}
+        }
     }
 }

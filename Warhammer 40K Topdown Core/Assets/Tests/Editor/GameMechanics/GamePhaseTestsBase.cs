@@ -1,6 +1,7 @@
 ﻿using Editor.Infrastructure;
 using NSubstitute;
-using WH40K.GameMechanics;
+using WH40K.Events;
+using WH40K.GamePhaseEvents;
 
 namespace Editor.GameMechanics
 {

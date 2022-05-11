@@ -1,6 +1,6 @@
 ﻿using NSubstitute;
 using UnityEngine;
-using WH40K.Essentials;
+using WH40K.NavMesh;
 
 namespace Editor.Infrastructure.Player
 {

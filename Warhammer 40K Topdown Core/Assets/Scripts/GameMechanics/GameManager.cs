@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
-using WH40K.Essentials;
-using WH40K.GameMechanics;
+using WH40K.Core;
+using WH40K.PlayerEvents;
 
 namespace WH40K
 {
@@ -22,7 +19,7 @@ namespace WH40K
         //public string phase;
         public GameTable _gameTable;
         //private UnitManager unitManager;
-        
+
         // Start is called before the first frame update
         void Start()
         {

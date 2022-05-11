@@ -1,8 +1,8 @@
 ﻿using Editor.Infrastructure;
-using GameMechanics.Combat;
 using System.Collections.Generic;
-using WH40K.Essentials;
-using WH40K.GameMechanics;
+using WH40K.EventChannels;
+using WH40K.GamePhaseEvents;
+using WH40K.PlayerEvents;
 
 namespace Editor.GameMechanics
 {
@@ -22,21 +22,21 @@ namespace Editor.GameMechanics
         public void FillerDummy(List<int> hitResult)
         {
         }
-        public RollTheDiceSO GetActionDiceEventChannel()
+        public RollTheDiceEventChannelSO GetActionDiceEventChannel()
         {
-            RollTheDiceSO eventChannel = A.RollTheDiceEventChannel;
+            RollTheDiceEventChannelSO eventChannel = A.RollTheDiceEventChannel;
             eventChannel.OnEventRaised += ActionFiller;
             return eventChannel;
         }
-        public RollTheDiceSO GetResultDiceEventChannel()
+        public RollTheDiceEventChannelSO GetResultDiceEventChannel()
         {
-            RollTheDiceSO eventChannel = A.RollTheDiceEventChannel;
+            RollTheDiceEventChannelSO eventChannel = A.RollTheDiceEventChannel;
             eventChannel.OnEventRaised += ResultFiller;
             return eventChannel;
         }
-        public RollTheDiceSO GetDiceSubEventChannel()
+        public RollTheDiceEventChannelSO GetDiceSubEventChannel()
         {
-            RollTheDiceSO eventChannel = A.RollTheDiceEventChannel;
+            RollTheDiceEventChannelSO eventChannel = A.RollTheDiceEventChannel;
             eventChannel.OnEventRaised += FillerDummy;
             return eventChannel;
         }
@@ -47,7 +47,7 @@ namespace Editor.GameMechanics
                 .WithWounds(wounds)
                 .Build();
         }
-        public IResult GetIResult(IUnit unit, RollTheDiceSO diceAction = null, RollTheDiceSO diceResult = null, RollTheDiceSO subResult = null)
+        public IResult GetIResult(IUnit unit, RollTheDiceEventChannelSO diceAction = null, RollTheDiceEventChannelSO diceResult = null, RollTheDiceEventChannelSO subResult = null)
         {
             GetGameStats(unit);
             return An.IResultEvent

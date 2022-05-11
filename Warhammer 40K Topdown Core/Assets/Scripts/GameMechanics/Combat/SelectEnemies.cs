@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using WH40K.Essentials;
+using WH40K.Core;
+using WH40K.EventChannels;
+using WH40K.GamePhaseEvents;
 
 namespace WH40K.GameMechanics.Combat
 {

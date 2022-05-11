@@ -1,5 +1,5 @@
 ﻿using Infrastructure.EventChannels;
-using WH40K.UI;
+using WH40K.EventChannels;
 
 namespace Editor.Infrastructure
 {
@@ -7,7 +7,7 @@ namespace Editor.Infrastructure
     {
         public static EventChannelBuilder<InfoUIEventChannelSO> InfoUIEventChannel => new EventChannelBuilder<InfoUIEventChannelSO>();
         public static EventChannelBuilder<InteractionUIEventChannelSO> InteractionUIEventChannel => new EventChannelBuilder<InteractionUIEventChannelSO>();
-        public static EventChannelBuilder<RollTheDiceSO> RollTheDiceEventChannel => new EventChannelBuilder<RollTheDiceSO>();
+        public static EventChannelBuilder<RollTheDiceEventChannelSO> RollTheDiceEventChannel => new EventChannelBuilder<RollTheDiceEventChannelSO>();
         public static EventChannelBuilder<IndicatorUIEventChannelSO> IndicatorUIEventChannel => new EventChannelBuilder<IndicatorUIEventChannelSO>();
         public static EventChannelBuilder<BattleroundEventChannelSO> BattleRoundEventChannel => new EventChannelBuilder<BattleroundEventChannelSO>();
 

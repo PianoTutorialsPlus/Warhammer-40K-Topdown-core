@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using WH40K.Essentials;
+using WH40K.Core;
 
 namespace Editor.Infrastructure.GameStatss
 {

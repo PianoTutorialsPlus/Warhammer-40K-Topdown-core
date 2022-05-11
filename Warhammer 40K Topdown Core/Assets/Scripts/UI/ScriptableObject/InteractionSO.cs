@@ -1,4 +1,5 @@
 using UnityEngine;
+using WH40K.GamePhaseEvents;
 
 [CreateAssetMenu(fileName = "Interaction", menuName = "UI/Interaction")]
 public class InteractionSO : ScriptableObject

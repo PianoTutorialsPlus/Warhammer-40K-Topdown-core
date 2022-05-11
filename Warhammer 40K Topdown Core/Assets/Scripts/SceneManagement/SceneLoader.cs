@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using WH40K.EventChannels;
 /// <summary>
 /// This class manages the scene loading and unloading.
 /// </summary>

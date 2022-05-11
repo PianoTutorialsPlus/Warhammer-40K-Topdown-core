@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using WH40K.EventChannels;
 
 public abstract class CalculationBaseSO : ScriptableObject
 {
-    public RollTheDiceSO rollDices;
-    public RollTheDiceSO rollSubResult;
-    public RollTheDiceSO rollDiceResult;
+    public RollTheDiceEventChannelSO rollDices;
+    public RollTheDiceEventChannelSO rollSubResult;
+    public RollTheDiceEventChannelSO rollDiceResult;
 }

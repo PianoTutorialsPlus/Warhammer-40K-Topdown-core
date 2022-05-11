@@ -1,31 +1,28 @@
 ﻿using NSubstitute;
-using System.Collections.Generic;
-using WH40K.Essentials;
-using WH40K.GameMechanics;
-using Editor.Infrastructure;
+using WH40K.EventChannels;
 
 namespace Editor.Infrastructure.Combat
 {
     public class IResultsBuilder : TestDataBuilder<IResult>
     {
-        private RollTheDiceSO _diceAction;
-        private RollTheDiceSO _diceSubResult;
-        private RollTheDiceSO _diceResult;
+        private RollTheDiceEventChannelSO _diceAction;
+        private RollTheDiceEventChannelSO _diceSubResult;
+        private RollTheDiceEventChannelSO _diceResult;
 
         public IResultsBuilder()
         {
         }
-        public IResultsBuilder WithDiceActionEventChannel(RollTheDiceSO diceAction)
+        public IResultsBuilder WithDiceActionEventChannel(RollTheDiceEventChannelSO diceAction)
         {
             _diceAction = diceAction;
             return this;
         }
-        public IResultsBuilder WithDiceSubResultEventChannel(RollTheDiceSO diceSubResult)
+        public IResultsBuilder WithDiceSubResultEventChannel(RollTheDiceEventChannelSO diceSubResult)
         {
             _diceSubResult = diceSubResult;
             return this;
         }
-        public IResultsBuilder WithDiceResultEventChannel(RollTheDiceSO diceResult)
+        public IResultsBuilder WithDiceResultEventChannel(RollTheDiceEventChannelSO diceResult)
         {
             _diceResult = diceResult;
             return this;

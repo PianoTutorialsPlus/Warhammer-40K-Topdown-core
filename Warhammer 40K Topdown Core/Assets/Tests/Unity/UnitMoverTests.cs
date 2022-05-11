@@ -3,7 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.TestTools;
-using WH40K.Essentials;
+using WH40K.Core;
+using WH40K.NavMesh;
+using WH40K.PlayerEvents;
 
 namespace Unity
 {

@@ -1,7 +1,8 @@
 ﻿using Editor.Infrastructure;
 using UnityEngine.Events;
-using WH40K.Essentials;
-using WH40K.UI;
+using WH40K.EventChannels;
+using WH40K.GamePhaseEvents;
+using WH40K.PlayerEvents;
 
 namespace Editor.UI
 {

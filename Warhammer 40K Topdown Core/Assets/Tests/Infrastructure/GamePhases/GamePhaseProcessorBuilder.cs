@@ -1,9 +1,9 @@
 ﻿using System;
-using WH40K.GameMechanics;
+using WH40K.Events;
 
 namespace Editor.Infrastructure.GamePhases
 {
-    public class GamePhaseProcessorBuilder<T> : TestDataBuilder<T> where T: class
+    public class GamePhaseProcessorBuilder<T> : TestDataBuilder<T> where T : class
     {
         private IGamePhase _gamePhase;
 

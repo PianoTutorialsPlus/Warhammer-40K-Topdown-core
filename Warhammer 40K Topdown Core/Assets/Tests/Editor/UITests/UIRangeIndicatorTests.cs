@@ -14,8 +14,8 @@ namespace Editor.UI
             [Test]
             public void When_Current_Position_X_Is_0_Then_Position_X_Is_0()
             {
-                IRangeIndicator rangeIndicator = Substitute.For<IRangeIndicator>();
-                var rangeController = (RangeController)A.RangeController
+                IUIRangeIndicator rangeIndicator = Substitute.For<IUIRangeIndicator>();
+                var rangeController = (UIRangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator)
                         .WithPosition(Vector3.zero);
 
@@ -24,8 +24,8 @@ namespace Editor.UI
             [Test]
             public void When_Current_Position_Z_Is_0_Then_Position_Z_Is_0()
             {
-                IRangeIndicator rangeIndicator = Substitute.For<IRangeIndicator>();
-                var rangeController = (RangeController)A.RangeController
+                IUIRangeIndicator rangeIndicator = Substitute.For<IUIRangeIndicator>();
+                var rangeController = (UIRangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator)
                         .WithPosition(Vector3.zero);
 
@@ -34,8 +34,8 @@ namespace Editor.UI
             [Test]
             public void When_Current_Position_X_Is_1_Then_Position_X_Is_1()
             {
-                IRangeIndicator rangeIndicator = Substitute.For<IRangeIndicator>();
-                var rangeController = (RangeController)A.RangeController
+                IUIRangeIndicator rangeIndicator = Substitute.For<IUIRangeIndicator>();
+                var rangeController = (UIRangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator)
                         .WithPosition(Vector3.right);
 
@@ -44,8 +44,8 @@ namespace Editor.UI
             [Test]
             public void When_Current_Position_Z_Is_1_Then_Position_Z_Is_1()
             {
-                IRangeIndicator rangeIndicator = Substitute.For<IRangeIndicator>();
-                var rangeController = (RangeController)A.RangeController
+                IUIRangeIndicator rangeIndicator = Substitute.For<IUIRangeIndicator>();
+                var rangeController = (UIRangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator)
                         .WithPosition(Vector3.forward);
 
@@ -58,8 +58,8 @@ namespace Editor.UI
             [Test]
             public void When_Range_Is_Negative_Then_ArgumentOutOfRange_Exception_Is_Thrown()
             {
-                IRangeIndicator rangeIndicator = Substitute.For<IRangeIndicator>();
-                var rangeController = (RangeController)A.RangeController
+                IUIRangeIndicator rangeIndicator = Substitute.For<IUIRangeIndicator>();
+                var rangeController = (UIRangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator);
 
                 Assert.Throws<ArgumentOutOfRangeException>(() => rangeController.ScaleRange(-1));
@@ -67,9 +67,9 @@ namespace Editor.UI
             [Test]
             public void When_Range_Is_0_And_BaseSize_Is_0_Then_LocalScale_X_Is_0()
             {
-                IRangeIndicator rangeIndicator = Substitute.For<IRangeIndicator>();
+                IUIRangeIndicator rangeIndicator = Substitute.For<IUIRangeIndicator>();
                 rangeIndicator.BaseSize.Returns(0);
-                var rangeController = (RangeController)A.RangeController
+                var rangeController = (UIRangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator);
                 rangeController.ScaleRange(0);
                 Assert.AreEqual(0 * _baseScale, rangeIndicator.LocalScale.x);
@@ -77,9 +77,9 @@ namespace Editor.UI
             [Test]
             public void When_Range_Is_5_And_BaseSize_Is_0_Then_LocalScale_X_Is_5_Times_BaseScale()
             {
-                IRangeIndicator rangeIndicator = Substitute.For<IRangeIndicator>();
+                IUIRangeIndicator rangeIndicator = Substitute.For<IUIRangeIndicator>();
                 rangeIndicator.BaseSize.Returns(0);
-                var rangeController = (RangeController)A.RangeController
+                var rangeController = (UIRangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator);
                 rangeController.ScaleRange(5);
                 Assert.AreEqual(5 * _baseScale, rangeIndicator.LocalScale.x);
@@ -87,9 +87,9 @@ namespace Editor.UI
             [Test]
             public void When_Range_Is_5_And_BaseSize_Is_1_Then_LocalScale_X_Is_6_Times_BaseScale()
             {
-                IRangeIndicator rangeIndicator = Substitute.For<IRangeIndicator>();
+                IUIRangeIndicator rangeIndicator = Substitute.For<IUIRangeIndicator>();
                 rangeIndicator.BaseSize.Returns(1);
-                var rangeController = (RangeController)A.RangeController
+                var rangeController = (UIRangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator);
                 rangeController.ScaleRange(5);
                 Assert.AreEqual(6 * _baseScale, rangeIndicator.LocalScale.x);
@@ -97,9 +97,9 @@ namespace Editor.UI
             [Test]
             public void When_Range_Is_0_And_BaseSize_Is_1_Then_LocalScale_X_Is_1_Times_BaseScale()
             {
-                IRangeIndicator rangeIndicator = Substitute.For<IRangeIndicator>();
+                IUIRangeIndicator rangeIndicator = Substitute.For<IUIRangeIndicator>();
                 rangeIndicator.BaseSize.Returns(1);
-                var rangeController = (RangeController)A.RangeController
+                var rangeController = (UIRangeController)A.RangeController
                         .WithRangeIndicator(rangeIndicator);
                 rangeController.ScaleRange(0);
                 Assert.AreEqual(1 * _baseScale, rangeIndicator.LocalScale.x);

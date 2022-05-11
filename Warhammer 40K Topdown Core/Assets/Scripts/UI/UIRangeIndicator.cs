@@ -1,13 +1,13 @@
 using System.Collections;
 using UnityEngine;
-using WH40K.Essentials;
+using WH40K.PlayerEvents;
 
 namespace WH40K.UI
 {
-    public class UIRangeIndicator : MonoBehaviour, IRangeIndicator
+    public class UIRangeIndicator : MonoBehaviour, IUIRangeIndicator
     {
         private float _baseSize = 0.5f;
-        private RangeController _rangeController;
+        private UIRangeController _rangeController;
 
         public float BaseSize
         {
@@ -26,7 +26,7 @@ namespace WH40K.UI
         }
         private void Awake()
         {
-            _rangeController = new RangeController(this);
+            _rangeController = new UIRangeController(this);
         }
         public void ConnectIndicator(IUnit unit)
         {

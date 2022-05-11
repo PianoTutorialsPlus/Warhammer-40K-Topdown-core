@@ -1,5 +1,3 @@
-using UnityEngine.AI;
-
 namespace UnityEditor.AI
 {
     [CanEditMultipleObjects]

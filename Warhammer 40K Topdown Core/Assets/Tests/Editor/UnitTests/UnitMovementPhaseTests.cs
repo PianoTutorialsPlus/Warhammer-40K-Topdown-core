@@ -1,7 +1,7 @@
 using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
-using WH40K.Essentials;
+using WH40K.PlayerEvents;
 using static UnityEngine.EventSystems.PointerEventData;
 
 namespace Editor.UnitTests
@@ -19,7 +19,7 @@ namespace Editor.UnitTests
             _pointerAction = null;
             _action = null;
         }
-  
+
         public class TheOnPointerClickMethod : UnitMovementPhaseTests
         {
             [Test]

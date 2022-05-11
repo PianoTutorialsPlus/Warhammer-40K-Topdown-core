@@ -1,5 +1,5 @@
 ﻿using System;
-using WH40K.UI;
+using WH40K.EventChannels;
 
 namespace Editor.Infrastructure.Events
 {
