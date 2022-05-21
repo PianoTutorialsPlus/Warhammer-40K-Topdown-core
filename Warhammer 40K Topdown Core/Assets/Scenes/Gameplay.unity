@@ -213,6 +213,18 @@ PrefabInstance:
     - {fileID: 120229190216357853, guid: f236ff4f5317d8341865b231e238112a, type: 3}
     - {fileID: 5220237767532186891, guid: f236ff4f5317d8341865b231e238112a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f236ff4f5317d8341865b231e238112a, type: 3}
+--- !u!114 &754875509 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2566659385717572253, guid: 253a70c796f031c4ea408ea630dcabe7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2566659386399851040}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd1337ebb146114a8fb691c246a3fef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1177558882
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,6 +469,86 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88a275e477eb50e4c8657d596ae2096c, type: 3}
+--- !u!1 &1288765944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1288765947}
+  - component: {fileID: 1288765946}
+  - component: {fileID: 1288765945}
+  m_Layer: 0
+  m_Name: SceneContext
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1288765945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288765944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c3fc8c87b58e84d9211509f217c5d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings:
+    _diceAction: {fileID: 11400000, guid: 813266957258e7b44886c3ec5242cd3e, type: 2}
+    _diceSubResult: {fileID: 11400000, guid: 898753be13cf34042823ad734f12c5bc, type: 2}
+    _diceResult: {fileID: 11400000, guid: f31b0541c9c601441867066a326a70ae, type: 2}
+--- !u!114 &1288765946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288765944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 1288765945}
+  _installerPrefabs: []
+  _autoRun: 1
+  OnPreInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPreResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  _parentNewObjectsUnderSceneContext: 0
+  _contractNames: []
+  _parentContractNames: []
+--- !u!4 &1288765947
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288765944}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1444388909
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,6 +647,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 866622423384009045, guid: 253a70c796f031c4ea408ea630dcabe7,
+        type: 3}
+      propertyPath: _context
+      value: 
+      objectReference: {fileID: 1288765946}
+    - target: {fileID: 866622423384009045, guid: 253a70c796f031c4ea408ea630dcabe7,
+        type: 3}
+      propertyPath: _bindType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 866622423384009045, guid: 253a70c796f031c4ea408ea630dcabe7,
+        type: 3}
+      propertyPath: _components.Array.data[0]
+      value: 
+      objectReference: {fileID: 754875509}
     - target: {fileID: 2566659385717572252, guid: 253a70c796f031c4ea408ea630dcabe7,
         type: 3}
       propertyPath: m_Name

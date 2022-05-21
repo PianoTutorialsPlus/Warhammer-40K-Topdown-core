@@ -1,6 +1,7 @@
 using UnityEditor.IMGUI.Controls;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace UnityEditor.AI
 {

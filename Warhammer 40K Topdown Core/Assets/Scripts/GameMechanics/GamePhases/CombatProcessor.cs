@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
 using WH40K.EventChannels;
 
 namespace WH40K.GamePhaseEvents
@@ -17,6 +18,7 @@ namespace WH40K.GamePhaseEvents
 
         public CombatProcessor(IResult result)
         {
+            Debug.Log("Do I get Here");
             _result = result;
         }
 

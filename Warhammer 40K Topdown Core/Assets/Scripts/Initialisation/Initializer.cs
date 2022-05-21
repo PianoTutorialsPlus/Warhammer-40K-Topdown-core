@@ -35,19 +35,9 @@ namespace WH40K
         {
             Initialize();
             InitializeManager();
-            InitializeProcessors();
             AddUnitPhases();
 
             _initialized = true;
-        }
-
-        private void InitializeProcessors()
-        {
-            new GamePhaseProcessor(this);
-            new MovementPhaseProcessor(this);
-            new ShootingPhaseProcessor(this);
-            new ShootingSubPhaseProcessor(this);
-            new CombatProcessor(this);
         }
 
         private void Initialize()

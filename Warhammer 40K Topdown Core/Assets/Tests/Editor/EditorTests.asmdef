@@ -4,8 +4,9 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
+        "Infrastructure",
         "Scripts",
-        "Infrastructure"
+        "NavMeshPosition"
     ],
     "includePlatforms": [
         "Editor"

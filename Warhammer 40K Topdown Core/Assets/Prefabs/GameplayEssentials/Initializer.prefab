@@ -151,6 +151,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2566659385717572254}
   - component: {fileID: 2566659385717572253}
+  - component: {fileID: 866622423384009045}
   m_Layer: 0
   m_Name: Initializer
   m_TagString: Untagged
@@ -188,8 +189,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
   _player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
-  _gameTable: {fileID: 11400000, guid: ce27887eadea6be40af3669d3ecd1558, type: 2}
   _battleroundEvents: {fileID: 11400000, guid: 7248952e7b75bf64d909eb4792c09df2, type: 2}
   _diceAction: {fileID: 11400000, guid: 813266957258e7b44886c3ec5242cd3e, type: 2}
   _diceSubResult: {fileID: 11400000, guid: 898753be13cf34042823ad734f12c5bc, type: 2}
   _diceResult: {fileID: 11400000, guid: f31b0541c9c601441867066a326a70ae, type: 2}
+--- !u!114 &866622423384009045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2566659385717572252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 2566659385717572253}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 0

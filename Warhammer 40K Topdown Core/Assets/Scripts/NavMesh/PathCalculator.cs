@@ -1,33 +1,43 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
+using WH40K.PlayerEvents;
 
 namespace WH40K.NavMesh
 {
     public class PathCalculator : IPathCalculator
     //: MonoBehaviour
     {
-        public NavMeshAgent m_Agent;
-        public NavMeshPath path;
-        public NavMeshPathPosition endPosition;
+        private readonly NavMeshAgent m_Agent;
+        private readonly Settings _settings;
+        private readonly NavMeshPath _path;
+        private NavMeshPathPosition endPosition;
 
         public float speed = 20;
 
-        public PathCalculator(NavMeshAgent agent)
+        public PathCalculator(
+            UnitModel model,
+            Settings settings,
+            NavMeshPath path)
         {
-            m_Agent = agent;
+            m_Agent = model.Agent;
+            _settings = settings;
+            _path = path;
 
-            path = new NavMeshPath();
+            SetAgent();
+        }
 
-            m_Agent.speed = speed;
-            m_Agent.acceleration = 999;
-            m_Agent.angularSpeed = 999;
-            m_Agent.isStopped = false;
+        private void SetAgent()
+        {
+            m_Agent.speed = _settings.Speed;
+            m_Agent.acceleration = _settings.Acceleration;
+            m_Agent.angularSpeed = _settings.AngularSpeed;
+            m_Agent.isStopped = _settings.IsStopped;
         }
 
         public void SetEndPosition(Vector3 position)
         {
-            m_Agent.CalculatePath(position, path);
+            m_Agent.CalculatePath(position, _path);
         }
         public void SetDestination(Vector3 position)
         {
@@ -39,9 +49,9 @@ namespace WH40K.NavMesh
         {
             SetEndPosition(position);
 
-            if (path.status == NavMeshPathStatus.PathInvalid) return position;
+            if (_path.status == NavMeshPathStatus.PathInvalid) return position;
 
-            endPosition = new NavMeshPathPosition(path.corners, range)
+            endPosition = new NavMeshPathPosition(_path.corners, range)
             {
                 EndPosition = position
             };
@@ -68,6 +78,15 @@ namespace WH40K.NavMesh
         public Vector3 GetEndPosition(Vector3 position)
         {
             throw new NotImplementedException();
+        }
+
+        [Serializable]
+        public class Settings
+        {
+            public float Speed;
+            public float Acceleration;
+            public float AngularSpeed;
+            public bool IsStopped;
         }
     }
 }

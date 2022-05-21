@@ -3,7 +3,6 @@ using UnityEngine.Events;
 
 namespace WH40K.EventChannels
 {
-
     /// <summary>
     /// This class is used for Events to switch the gamestats.
     /// Example: Switch from movement phase to shooting phase

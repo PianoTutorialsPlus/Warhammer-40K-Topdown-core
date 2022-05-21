@@ -5,6 +5,7 @@ using WH40K.Core;
 using WH40K.EventChannels;
 using WH40K.InputEvents;
 using WH40K.NavMesh;
+using Zenject;
 
 namespace WH40K.PlayerEvents
 {
@@ -21,8 +22,9 @@ namespace WH40K.PlayerEvents
         public bool IsSelected { get; set; }
         public bool done = false;
 
-        public NavMeshAgent m_Agent;     // Moving behaviour
-                                         //private NavMeshPath path;
+        //public NavMeshAgent m_Agent;     // Moving behaviour
+        private UnitModel _model;
+
         public int weaponRange;
 
         public Fraction Fraction => _unitSO.Fraction;
@@ -79,8 +81,8 @@ namespace WH40K.PlayerEvents
             Wounds = _unitSO.Wounds;
             //_unitSelector = new UnitSelector(_gameStats, gameObject.GetComponent<Unit>());
             //UnitMover = new UnitMover();
-            m_Agent = GetComponent<NavMeshAgent>();
-            PathCalculator = new PathCalculator(m_Agent);
+            //m_Agent = GetComponent<NavMeshAgent>();
+            //PathCalculator = new PathCalculator(m_Agent);
             UnitMover = GetComponent<UnitMover>();
             UnitSelector = new UnitSelector(this);
             //UnitMover.Initialize(PathCalculator, _unitSO);
@@ -89,6 +91,16 @@ namespace WH40K.PlayerEvents
             //unitMovementPhase = GetComponent<UnitMovementPhase>();
             //UnitMover.Initialize(PathCalculator, this);
             canMove = true;
+        }
+
+        [Inject]
+        public void Construct(
+            PathCalculator pathCalculator, 
+            UnitModel model)
+        {
+            _model = model;
+            PathCalculator = pathCalculator;
+            //UnitSelector = unitSelector;
         }
 
         // Start is called before the first frame update
@@ -245,7 +257,7 @@ namespace WH40K.PlayerEvents
         public void PrepareShootingPhase()
         {
             //Debug.Log("ResetShooting");
-            m_Agent.isStopped = true;
+            //m_Agent.isStopped = true;
             //restDistance = weaponRange;
         }
         public virtual void Freeze()
