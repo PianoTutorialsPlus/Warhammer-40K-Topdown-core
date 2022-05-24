@@ -7,6 +7,7 @@ using WH40K.EventChannels;
 using WH40K.Events;
 using WH40K.GamePhaseEvents;
 using WH40K.PlayerEvents;
+using Zenject;
 
 namespace WH40K
 {
@@ -18,7 +19,7 @@ namespace WH40K
         [SerializeField] private PlayerSO _player2;
         //[SerializeField] private GameTableSO _gameTable;
 
-        [SerializeField] private BattleRoundsSO _battleroundEvents;
+        //[SerializeField] private BattleRoundsSO _battleroundEvents;
         [SerializeField] private RollTheDiceEventChannelSO _diceAction;
         [SerializeField] private RollTheDiceEventChannelSO _diceSubResult;
         [SerializeField] private RollTheDiceEventChannelSO _diceResult;
@@ -30,13 +31,19 @@ namespace WH40K
         private static Dictionary<GamePhase, PhaseManagerBase> _gamePhaseManagers = new Dictionary<GamePhase, PhaseManagerBase>();
         public Dictionary<GamePhase, PhaseManagerBase> GamePhaseManagers { get => _gamePhaseManagers; }
 
-        public IPhase BattleroundEvents { get => _battleroundEvents; }
+        public IPhase BattleroundEvents { get; set; }/* => _battleroundEvents; }*/
         private void Awake()
         {
             Initialize();
             InitializeManager();
 
             _initialized = true;
+        }
+       
+        [Inject]
+        public void Construct(IPhase battleroundEvents)
+        {
+            BattleroundEvents = battleroundEvents;
         }
 
         private void Initialize()

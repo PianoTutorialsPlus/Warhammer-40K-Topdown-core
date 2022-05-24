@@ -5,7 +5,7 @@ using WH40K.NavMesh;
 using WH40K.PlayerEvents;
 using Zenject;
 
-namespace WH40K
+namespace WH40K.Installers
 {
     public class PlayerInstaller : MonoInstaller
     {

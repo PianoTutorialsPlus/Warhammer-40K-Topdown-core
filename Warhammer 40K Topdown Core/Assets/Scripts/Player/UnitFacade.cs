@@ -46,10 +46,10 @@ namespace WH40K.PlayerEvents
         public Transform Transform => gameObject.transform;
         public Vector3 CurrentPosition => _model.Position;
         // public IUnit unit => (IUnit)gameObject.GetComponent<Unit>();
-        public Fraction ActivePlayerFraction => GameStats.ActivePlayer.Fraction;
-        public Fraction EnemyFraction => GameStats.EnemyPlayer.Fraction;
-        public IUnit EnemyUnit { get => GameStats.EnemyUnit; set => GameStats.EnemyUnit = value; }
-        public IUnit ActiveUnit { get => GameStats.ActiveUnit; set => GameStats.ActiveUnit = value; }
+        //public Fraction ActivePlayerFraction => GameStats.ActivePlayer.Fraction;
+        //public Fraction EnemyFraction => GameStats.EnemyPlayer.Fraction;
+        //public IUnit EnemyUnit { get => GameStats.EnemyUnit; set => GameStats.EnemyUnit = value; }
+        //public IUnit ActiveUnit { get => GameStats.ActiveUnit; set => GameStats.ActiveUnit = value; }
 
         public UnitMovementPhase UnitMovementPhase;
         public UnitShootingPhase UnitShootingPhase;
@@ -109,8 +109,6 @@ namespace WH40K.PlayerEvents
             PathCalculator = pathCalculator;
             UnitSelector = unitSelector;
         }
-
-
 
         // Start is called before the first frame update
         void Start()

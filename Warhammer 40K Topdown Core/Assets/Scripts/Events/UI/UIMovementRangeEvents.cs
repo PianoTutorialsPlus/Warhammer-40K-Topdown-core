@@ -8,13 +8,16 @@ namespace WH40K.Events
     {
         private IUIMovementRange _uIMovementRange;
 
-        public BattleroundEventChannelSO _setPhaseEvent => _uIMovementRange.SetPhaseEvent;
-        public IndicatorUIEventChannelSO _toggleIndicatorConnectionUI => _uIMovementRange.IndicatorConnectionUIEvent;
+        public BattleroundEventChannelSO _setPhaseEvent;/* => _uIMovementRange.SetPhaseEvent;*/
+        public IndicatorUIEventChannelSO _toggleIndicatorConnectionUI;/* => _uIMovementRange.IndicatorConnectionUIEvent;*/
         public Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
 
-        public UIMovementRangeEvents(IUIMovementRange uIMovementRange)
+        public UIMovementRangeEvents(
+            BattleroundEventChannelSO phaseEvent,
+            IndicatorUIEventChannelSO indicatorConnectionUIEvent)
         {
-            _uIMovementRange = uIMovementRange;
+            _setPhaseEvent = phaseEvent;
+            _toggleIndicatorConnectionUI = indicatorConnectionUIEvent;
         }
         public void SetIndicatorConnection(IUnit child)
         {

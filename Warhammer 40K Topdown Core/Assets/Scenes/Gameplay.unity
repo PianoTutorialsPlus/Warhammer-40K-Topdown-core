@@ -156,7 +156,7 @@ PrefabInstance:
     - target: {fileID: 2800503590118200941, guid: f236ff4f5317d8341865b231e238112a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2800503590118200941, guid: f236ff4f5317d8341865b231e238112a,
         type: 3}
@@ -318,7 +318,7 @@ RectTransform:
   m_Children:
   - {fileID: 3982312300512632723}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -415,7 +415,7 @@ PrefabInstance:
     - target: {fileID: 8747351081570417769, guid: 88a275e477eb50e4c8657d596ae2096c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8747351081570417769, guid: 88a275e477eb50e4c8657d596ae2096c,
         type: 3}
@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 1288765947}
   - component: {fileID: 1288765946}
   - component: {fileID: 1288765945}
+  - component: {fileID: 1288765948}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -518,6 +519,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1288765945}
+  - {fileID: 1288765948}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -547,8 +549,28 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1288765948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288765944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f950065a8673424aa1329bd814aef5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _settings:
+    InteractionUIEvent: {fileID: 11400000, guid: e5da9e2f3b87fb743a963127ed2a21ce,
+      type: 2}
+    InfoUIEvent: {fileID: 11400000, guid: 837cc3995138cc8408cc46a8c282b3c9, type: 2}
+    EnemyInfoUIEvent: {fileID: 11400000, guid: 13cb68d56be8305479f9eeb418a3ffc7, type: 2}
+    PhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793, type: 2}
+    IndicatorConnectionUIEvent: {fileID: 11400000, guid: fcbe9388afa2a184a9990bb0b499981a,
+      type: 2}
 --- !u!1 &1444388909
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,7 +648,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1600968440 stripped
 MonoBehaviour:
@@ -694,7 +716,7 @@ PrefabInstance:
     - target: {fileID: 2566659385717572254, guid: 253a70c796f031c4ea408ea630dcabe7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2566659385717572254, guid: 253a70c796f031c4ea408ea630dcabe7,
         type: 3}
@@ -843,6 +865,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7770716566528296497, guid: f14df0e68b1b78c448a87e2efa997aaf,
+        type: 3}
+      propertyPath: _components.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7770716566528296497, guid: f14df0e68b1b78c448a87e2efa997aaf,
+        type: 3}
+      propertyPath: _components.Array.data[0]
+      value: 
+      objectReference: {fileID: 3982312300512632726}
     - target: {fileID: 8305916645532461124, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}
       propertyPath: m_IsActive

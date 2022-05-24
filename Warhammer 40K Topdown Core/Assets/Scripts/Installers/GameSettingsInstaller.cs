@@ -2,7 +2,7 @@
 using WH40K.NavMesh;
 using Zenject;
 
-namespace WH40K
+namespace WH40K.Installers
 {
     // Uncomment if you want to add alternative game settings
     //[CreateAssetMenu(menuName = "Game Settings")]

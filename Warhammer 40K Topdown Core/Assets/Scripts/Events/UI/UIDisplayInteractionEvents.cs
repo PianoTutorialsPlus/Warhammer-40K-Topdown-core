@@ -11,11 +11,11 @@ namespace WH40K.Events
         private Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
         private IStats _activeUnit => GameStats.ActiveUnit;
         public bool IsUnitActive(IStats child) => child == _activeUnit;
-        private InteractionUIEventChannelSO _toggleInteractionUI => _uIEvents.InteractionUIEvent;
+        private InteractionUIEventChannelSO _toggleInteractionUI;/* => _uIEvents.InteractionUIEvent;*/
 
-        public UIDisplayInteractionEvents(IManageUIEvents uIEvents)
+        public UIDisplayInteractionEvents(InteractionUIEventChannelSO interactionUIEvent)
         {
-            _uIEvents = uIEvents;
+            _toggleInteractionUI = interactionUIEvent;
         }
 
         public void SetDisplayInteraction(IUnit child)

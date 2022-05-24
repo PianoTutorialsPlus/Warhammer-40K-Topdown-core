@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using WH40K.PlayerEvents;
+using Zenject;
 
 namespace WH40K.UI
 {
@@ -26,8 +27,14 @@ namespace WH40K.UI
         }
         private void Awake()
         {
-            _rangeController = new UIRangeController(this);
+            //_rangeController = new UIRangeController(this);
         }
+        [Inject]
+        public void Construct(UIRangeController rangeController)
+        {
+            _rangeController = rangeController;
+        }
+
         public void ConnectIndicator(IUnit unit)
         {
             transform.SetParent(unit.Transform);

@@ -8,12 +8,12 @@ namespace WH40K.Events
     {
         private IUIMovementRange _uIMovementRange;
 
-        public BattleroundEventChannelSO _setPhaseEvent => _uIMovementRange.SetPhaseEvent;
+        public BattleroundEventChannelSO _setPhaseEvent;/* => _uIMovementRange.SetPhaseEvent;*/
         public Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
 
-        public BattleRoundEvents(IUIMovementRange uIMovementRange)
+        public BattleRoundEvents(BattleroundEventChannelSO phaseEvent)
         {
-            _uIMovementRange = uIMovementRange;
+            _setPhaseEvent = phaseEvent;
         }
         public void SetPhaseEvent(IUnit child)
         {
