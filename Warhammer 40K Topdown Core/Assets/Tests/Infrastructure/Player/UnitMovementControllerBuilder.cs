@@ -16,7 +16,7 @@ namespace Editor.Infrastructure.Player
         }
         public override UnitMovementController Build()
         {
-            return new UnitMovementController(_unitMover ??= A.UnitMover.Build());
+            return null;//new UnitMovementController(_unitMover ??= A.UnitMover.Build());
         }
     }
 }

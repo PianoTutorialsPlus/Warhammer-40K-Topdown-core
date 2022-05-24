@@ -1,4 +1,5 @@
 ﻿using UnityEngine.EventSystems;
+using Zenject;
 
 namespace WH40K.PlayerEvents
 
@@ -7,7 +8,7 @@ namespace WH40K.PlayerEvents
     {
         private void Awake()
         {
-            _unit = GetComponent<IUnit>();
+            //_unit = GetComponent<IUnit>();
         }
 
         private void OnEnable()
@@ -18,6 +19,12 @@ namespace WH40K.PlayerEvents
         private void OnDisable()
         {
             //  Debug.Log("disable");
+        }
+
+        [Inject]
+        public void Construct(IUnit unit)
+        {
+            _unit = unit;
         }
 
         public void OnPointerEnter(PointerEventData pointerEvent)

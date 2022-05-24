@@ -26,7 +26,7 @@ namespace Editor.Units.Movement
         public void BeforeEveryTest()
         {
             Target = new GameObject().AddComponent<UnitMover>();
-            Target.gameObject.AddComponent<Unit>();
+            Target.gameObject.AddComponent<UnitFacade>();
             Target.Awake();
             pathCalculator = Substitute.For<IPathCalculator>();
             //Target.Unit.SetPrivate(t => t.PathCalculator, PathCalculator);
@@ -37,7 +37,7 @@ namespace Editor.Units.Movement
 
             //unitMoverTest._moveController = new UnitMovementController(unitMover);
 
-            moveController = new UnitMovementController(unitMover);
+            //moveController = new UnitMovementController(unitMover);
             //unitMoverTest.Initialize(pathCalculator, unit);
             position = Vector3.zero;
             initialize = false;

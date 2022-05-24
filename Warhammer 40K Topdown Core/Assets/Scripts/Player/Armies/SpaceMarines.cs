@@ -1,6 +1,6 @@
 namespace WH40K.PlayerEvents
 {
-    public class SpaceMarines : Unit
+    public class SpaceMarines : UnitFacade
     {
         //// Start is called before the first frame update
         //void Start()

@@ -11,12 +11,14 @@ GameObject:
   - component: {fileID: 4266572808521110737}
   - component: {fileID: 4266572808521110736}
   - component: {fileID: 4266572808521110739}
+  - component: {fileID: 4162850282281866536}
   - component: {fileID: 4266572808521110738}
   - component: {fileID: 4266572808521110748}
   - component: {fileID: 2725442419637580037}
   - component: {fileID: 8590569047915893891}
   - component: {fileID: 4766925599742435513}
   - component: {fileID: 9120440415018810188}
+  - component: {fileID: 1855929350111563641}
   m_Layer: 0
   m_Name: Necron Warrior
   m_TagString: Necrons
@@ -88,6 +90,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &4162850282281866536
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4266572808521110751}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!136 &4266572808521110738
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -136,12 +154,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 532231d56fb73ae4eac20b0289639339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
   canMove: 0
   activated: 0
   canShoot: 1
   done: 0
-  m_Agent: {fileID: 0}
   weaponRange: 0
   SetMovementPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
     type: 2}
@@ -198,6 +214,24 @@ MonoBehaviour:
   _useSceneContext: 0
   _context: {fileID: 0}
   _bindType: 2
+--- !u!114 &1855929350111563641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4266572808521110751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _components:
+  - {fileID: 8590569047915893891}
+  _identifier: 
+  _useSceneContext: 0
+  _context: {fileID: 0}
+  _bindType: 2
 --- !u!1 &6526473942834916754
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +276,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings:
-    Rigidbody: {fileID: 0}
     MeshRenderer: {fileID: 4266572808521110739}
+    Rigidbody: {fileID: 4162850282281866536}
     Agent: {fileID: 4266572808521110748}
+    Unit: {fileID: 4266572808521110751}
+    UnitSO: {fileID: 11400000, guid: 0aeb3a06a60bc0640b83970366d185ee, type: 2}
+    WeaponSO: {fileID: 11400000, guid: 4a5aec3aa3d661c4b8fc25a0ab48c5df, type: 2}

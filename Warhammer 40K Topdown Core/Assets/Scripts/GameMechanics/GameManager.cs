@@ -6,15 +6,15 @@ namespace WH40K
 {
     public class GameManager : MonoBehaviour
     {
-        public Unit[] player1;
-        public Unit[] player2;
+        public UnitFacade[] player1;
+        public UnitFacade[] player2;
         //public Text turnText;
         //public Text[] infoPanel;
         public PlayerSO _player1;
         public PlayerSO _player2;
         public GameTableSO _table;
 
-        public Unit[] player;
+        public UnitFacade[] player;
         public GameObject userControl;
         //public string phase;
         public GameTable _gameTable;
@@ -32,12 +32,12 @@ namespace WH40K
             _player1.PlayerUnits.Clear();
             _player2.PlayerUnits.Clear();
 
-            foreach (Unit unit in player1)
+            foreach (UnitFacade unit in player1)
             {
                 _player1.PlayerUnits.Add(unit);
             }
 
-            foreach (Unit unit in player2)
+            foreach (UnitFacade unit in player2)
             {
                 _player2.PlayerUnits.Add(unit);
             }

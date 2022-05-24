@@ -5,7 +5,7 @@ namespace WH40K.PlayerEvents
 {
     public interface IUnit : IStats, IUnitPointer
     {
-        Unit unit { get; }
+        UnitFacade unit { get; }
         UnitSelector UnitSelector { get; }
         Transform Transform { get; }
         Vector3 CurrentPosition { get; }

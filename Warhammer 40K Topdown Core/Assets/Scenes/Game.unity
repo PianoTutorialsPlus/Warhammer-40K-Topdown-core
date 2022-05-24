@@ -130,6 +130,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 705905023}
     m_Modifications:
+    - target: {fileID: 1855929350111563641, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _context
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1855929350111563641, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _useSceneContext
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1855929350111563641, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _components.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1855929350111563641, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _components.Array.data[1]
+      value: 
+      objectReference: {fileID: 473169979}
     - target: {fileID: 4266572808521110737, guid: ec8177448963f604aa4621ce4fc4e57a,
         type: 3}
       propertyPath: m_RootOrder
@@ -199,12 +219,22 @@ PrefabInstance:
         type: 3}
       propertyPath: _context
       value: 
-      objectReference: {fileID: 1778398985}
+      objectReference: {fileID: 0}
     - target: {fileID: 9120440415018810188, guid: ec8177448963f604aa4621ce4fc4e57a,
         type: 3}
       propertyPath: _bindType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 9120440415018810188, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _components.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120440415018810188, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _components.Array.data[1]
+      value: 
+      objectReference: {fileID: 473169979}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec8177448963f604aa4621ce4fc4e57a, type: 3}
 --- !u!1 &132518132
@@ -718,7 +748,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _context
       value: 
-      objectReference: {fileID: 1778398985}
+      objectReference: {fileID: 0}
     - target: {fileID: 1058758213263890511, guid: c23b96e0d876a1b489cebf841ce6eb56,
         type: 3}
       propertyPath: _bindType
@@ -789,6 +819,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tactical Squad
       objectReference: {fileID: 0}
+    - target: {fileID: 8097244832758606007, guid: c23b96e0d876a1b489cebf841ce6eb56,
+        type: 3}
+      propertyPath: _context
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097244832758606007, guid: c23b96e0d876a1b489cebf841ce6eb56,
+        type: 3}
+      propertyPath: _components.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097244832758606007, guid: c23b96e0d876a1b489cebf841ce6eb56,
+        type: 3}
+      propertyPath: _components.Array.data[1]
+      value: 
+      objectReference: {fileID: 471910423}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c23b96e0d876a1b489cebf841ce6eb56, type: 3}
 --- !u!1 &705905022
@@ -1583,6 +1628,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 705905023}
     m_Modifications:
+    - target: {fileID: 1855929350111563641, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _context
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4266572808521110737, guid: ec8177448963f604aa4621ce4fc4e57a,
         type: 3}
       propertyPath: m_RootOrder
@@ -1658,12 +1708,22 @@ PrefabInstance:
         type: 3}
       propertyPath: _context
       value: 
-      objectReference: {fileID: 1778398985}
+      objectReference: {fileID: 0}
     - target: {fileID: 9120440415018810188, guid: ec8177448963f604aa4621ce4fc4e57a,
         type: 3}
       propertyPath: _bindType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 9120440415018810188, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _components.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120440415018810188, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _components.Array.data[1]
+      value: 
+      objectReference: {fileID: 1504291346}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec8177448963f604aa4621ce4fc4e57a, type: 3}
 --- !u!1 &1778398984

@@ -32,15 +32,15 @@ namespace WH40K.GamePhaseEvents
             GameStats.ActiveUnit = null;
             GameStats.EnemyUnit = null;
 
-            foreach (Unit child in GameStats.ActivePlayer.PlayerUnits)
+            foreach (UnitFacade child in GameStats.ActivePlayer.PlayerUnits)
             {
-                child.unitMovementPhase.enabled = false;
-                child.unitShootingPhase.enabled = false;
+                child.UnitMovementPhase.enabled = false;
+                child.UnitShootingPhase.enabled = false;
             }
-            foreach (Unit child in GameStats.EnemyPlayer.PlayerUnits)
+            foreach (UnitFacade child in GameStats.EnemyPlayer.PlayerUnits)
             {
-                child.unitMovementPhase.enabled = false;
-                child.unitShootingPhase.enabled = false;
+                child.UnitMovementPhase.enabled = false;
+                child.UnitShootingPhase.enabled = false;
             }
         }
     }
@@ -54,9 +54,9 @@ namespace WH40K.GamePhaseEvents
         {
             ResetUnitPhases();
 
-            foreach (Unit child in GameStats.ActivePlayer.PlayerUnits)
+            foreach (UnitFacade child in GameStats.ActivePlayer.PlayerUnits)
             {
-                child.unitMovementPhase.enabled = true;
+                child.UnitMovementPhase.enabled = true;
 
                 //child.ResetData();
                 //child.PrepareShootingPhase();
@@ -73,9 +73,9 @@ namespace WH40K.GamePhaseEvents
         {
             ResetUnitPhases();
 
-            foreach (Unit child in GameStats.EnemyPlayer.PlayerUnits)
+            foreach (UnitFacade child in GameStats.EnemyPlayer.PlayerUnits)
             {
-                child.unitShootingPhase.enabled = true;
+                child.UnitShootingPhase.enabled = true;
 
                 //child.ResetData();
                 //child.PrepareMovementPhase();

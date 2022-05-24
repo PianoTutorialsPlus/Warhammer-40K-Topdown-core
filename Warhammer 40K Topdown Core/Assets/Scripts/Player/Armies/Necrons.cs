@@ -1,6 +1,6 @@
 namespace WH40K.PlayerEvents
 {
-    public class Necrons : Unit
+    public class Necrons : UnitFacade
     {
         //// Start is called before the first frame update
         //void Start()

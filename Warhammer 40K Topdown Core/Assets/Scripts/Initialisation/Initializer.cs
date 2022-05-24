@@ -35,7 +35,6 @@ namespace WH40K
         {
             Initialize();
             InitializeManager();
-            AddUnitPhases();
 
             _initialized = true;
         }
@@ -49,26 +48,7 @@ namespace WH40K
             GameStats.EnemyPlayer = _player2;
             //GameStats.GameTable = _gameTable;
         }
-        protected void AddUnitPhases()
-        {
-            if (_initialized != false) return;
-            foreach (Unit child in GameStats.ActivePlayer.PlayerUnits)
-            {
-                child.gameObject.AddComponent<UnitMovementPhase>();
-                child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
 
-                child.gameObject.AddComponent<UnitShootingPhase>();
-                child.unitShootingPhase = child.GetComponent<UnitShootingPhase>();
-            }
-            foreach (Unit child in GameStats.EnemyPlayer.PlayerUnits)
-            {
-                child.gameObject.AddComponent<UnitMovementPhase>();
-                child.unitMovementPhase = child.GetComponent<UnitMovementPhase>();
-
-                child.gameObject.AddComponent<UnitShootingPhase>();
-                child.unitShootingPhase = child.GetComponent<UnitShootingPhase>();
-            }
-        }
         private void InitializeManager()
         {
             if (_initialized) return;

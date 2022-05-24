@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using WH40K.NavMesh;
+using Zenject;
 
 namespace WH40K.PlayerEvents
 {
@@ -13,6 +14,8 @@ namespace WH40K.PlayerEvents
 
         public Vector3 CurrentPosition => transform.position;
         public IUnit Unit => _unit;
+        //[Inject] IUnit unit { get; set; }
+
         public float MaxDistance => _unit.Movement;
         public IPathCalculator PathCalculator => _unit.PathCalculator;
         public bool IsAgentStopped => PathCalculator.AgentIsStopped;
@@ -22,10 +25,23 @@ namespace WH40K.PlayerEvents
 
         public void Awake()
         {
-            _unit = GetComponent<IUnit>();
-            _moveController = new UnitMovementController(this);
-            _movementRange = new MovementRange(MaxDistance);
+            //_unit = GetComponent<IUnit>();
+            //_moveController = new UnitMovementController(this, _movementRange, PathCalculator);
+            //_movementRange = new MovementRange(MaxDistance);
         }
+
+        [Inject]
+        public void Construct(
+            MovementRange movementRange,
+            //UnitFacade unit,
+            IUnit unit,
+            UnitMovementController moveController)
+        {
+            _unit = unit;
+            _movementRange = movementRange;
+            _moveController = moveController;
+        }
+
         public void SetDestination(Vector3 position)
         {
             if (!IsAgentStopped)

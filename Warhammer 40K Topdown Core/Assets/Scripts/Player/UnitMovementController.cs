@@ -6,22 +6,26 @@ namespace WH40K.PlayerEvents
     public class UnitMovementController
     {
 
-        private IUnitMover _unitMover;
-        private MovementRange _movementRange => _unitMover.MovementRange;
+        private MovementRange _movementRange;/* => _unitMover.MovementRange;*/
         public float MoveDistance => _movementRange.MoveRange;
         public float MovedDistance => _movementRange.MovedDistance;
 
-        private IPathCalculator PathCalculator => _unitMover.PathCalculator;
-        public bool IsAgentStopped => PathCalculator.AgentIsStopped;
-        public IUnit Unit => _unitMover.Unit;
+        private IPathCalculator _pathCalculator;/* => _unitMover.PathCalculator;*/
+        public bool IsAgentStopped => _pathCalculator.AgentIsStopped;
+        public IUnit _unit;
         public bool IsMoveDistanceZero => _movementRange.IsMoveRangeZero;
-        public Vector3 CurrentPosition => _unitMover.CurrentPosition;
+        public Vector3 CurrentPosition => _unit.CurrentPosition;
 
         public Vector3 EndPosition { get; private set; }
 
-        public UnitMovementController(IUnitMover unitMover)
+        public UnitMovementController(
+            IUnit unit,
+            MovementRange movementRange,
+            PathCalculator pathCalculator)
         {
-            _unitMover = unitMover;
+            _unit = unit;
+            _movementRange = movementRange;
+            _pathCalculator = pathCalculator;
         }
         public void SetStartPosition(Vector3 position)
         {
@@ -43,7 +47,7 @@ namespace WH40K.PlayerEvents
             //PathCalculator.SetMoveDistance(MoveDistance);
             //PathCalculator.SetEndPosition(position);
 
-            EndPosition = PathCalculator.GetEndPosition(position, MoveDistance);
+            EndPosition = _pathCalculator.GetEndPosition(position, MoveDistance);
         }
 
         // Can Be Deleted
@@ -53,15 +57,15 @@ namespace WH40K.PlayerEvents
         }
         private void SetNavMeshDestination()
         {
-            PathCalculator.SetDestination(EndPosition);
+            _pathCalculator.SetDestination(EndPosition);
         }
 
         public void FreezeUnitsWithZeroMoveDistance()
         {
             if (IsMoveDistanceZero)
             {
-                PathCalculator.FreezeAgent();
-                Unit.Freeze();
+                _pathCalculator.FreezeAgent();
+                _unit.Freeze();
             }
         }
     }

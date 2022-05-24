@@ -6,7 +6,6 @@ using WH40K.PlayerEvents;
 namespace WH40K.NavMesh
 {
     public class PathCalculator : IPathCalculator
-    //: MonoBehaviour
     {
         private readonly NavMeshAgent m_Agent;
         private readonly Settings _settings;
@@ -24,10 +23,10 @@ namespace WH40K.NavMesh
             _settings = settings;
             _path = path;
 
-            SetAgent();
+            SetAgentSettings();
         }
 
-        private void SetAgent()
+        private void SetAgentSettings()
         {
             m_Agent.speed = _settings.Speed;
             m_Agent.acceleration = _settings.Acceleration;

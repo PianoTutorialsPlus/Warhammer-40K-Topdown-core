@@ -38,15 +38,15 @@ namespace WH40K.Events
         }
         public void HandlePhase()
         {
-            foreach (Unit child in _activePlayer.PlayerUnits) FillMethods(child);
-            foreach (Unit child in _enemyPlayer.PlayerUnits) FillMethods(child);
+            foreach (UnitFacade child in _activePlayer.PlayerUnits) FillMethods(child);
+            foreach (UnitFacade child in _enemyPlayer.PlayerUnits) FillMethods(child);
         }
         public void ClearPhase()
         {
-            foreach (Unit child in _activePlayer.PlayerUnits) ResetMethods(child);
-            foreach (Unit child in _enemyPlayer.PlayerUnits) ResetMethods(child);
+            foreach (UnitFacade child in _activePlayer.PlayerUnits) ResetMethods(child);
+            foreach (UnitFacade child in _enemyPlayer.PlayerUnits) ResetMethods(child);
         }
-        public void FillMethods(Unit child)
+        public void FillMethods(UnitFacade child)
         {
             _uIDisplayInteractionEvents.SetResetInteraction(child);
             _uIDisplayInfoEvents.SetResetInteraction(child);
@@ -56,7 +56,7 @@ namespace WH40K.Events
             _uIMovementRange.SetIndicatorConnection(child);
             _battleRoundEvents.SetPhaseEvent(child);
         }
-        public void ResetMethods(Unit child)
+        public void ResetMethods(UnitFacade child)
         {
             _uIDisplayInfoEvents.ResetOnPointerExit(child);
             _uIDisplayInteractionEvents.ResetOnPointerExit(child);

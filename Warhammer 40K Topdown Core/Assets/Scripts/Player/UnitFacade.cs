@@ -13,9 +13,8 @@ namespace WH40K.PlayerEvents
 
     [RequireComponent(typeof(NavMeshAgent))]
 
-    public class Unit : MonoBehaviour, IUnit// INHARITANCE
+    public class UnitFacade : MonoBehaviour, IUnit// INHARITANCE
     {
-        public float speed = 3;
         public bool canMove = true;
         public bool activated = false;
         public bool canShoot = true;
@@ -45,19 +44,20 @@ namespace WH40K.PlayerEvents
         public bool IsDone => done;
         public bool IsActivated { get => activated; set => activated = value; }
         public Transform Transform => gameObject.transform;
-        public Vector3 CurrentPosition => gameObject.transform.position;
+        public Vector3 CurrentPosition => _model.Position;
         // public IUnit unit => (IUnit)gameObject.GetComponent<Unit>();
         public Fraction ActivePlayerFraction => GameStats.ActivePlayer.Fraction;
         public Fraction EnemyFraction => GameStats.EnemyPlayer.Fraction;
         public IUnit EnemyUnit { get => GameStats.EnemyUnit; set => GameStats.EnemyUnit = value; }
         public IUnit ActiveUnit { get => GameStats.ActiveUnit; set => GameStats.ActiveUnit = value; }
 
-        public UnitMovementPhase unitMovementPhase;
-        public UnitShootingPhase unitShootingPhase;
+        public UnitMovementPhase UnitMovementPhase;
+        public UnitShootingPhase UnitShootingPhase;
         public UnitSelector UnitSelector { get; protected set; }
         public IUnitMover UnitMover { get; protected set; }
+
         internal float restDistance;
-        public Unit unit => this;//gameObject.GetComponent<Unit>();
+        public UnitFacade unit => this;//gameObject.GetComponent<Unit>();
         public IPathCalculator PathCalculator { get; protected set; }
         public UnityAction<IUnit> OnTapDownAction { get => onTapDownAction; set => onTapDownAction = value; }
         public UnityAction OnPointerEnter { get => onPointerEnter; set => onPointerEnter = value; }
@@ -83,8 +83,8 @@ namespace WH40K.PlayerEvents
             //UnitMover = new UnitMover();
             //m_Agent = GetComponent<NavMeshAgent>();
             //PathCalculator = new PathCalculator(m_Agent);
-            UnitMover = GetComponent<UnitMover>();
-            UnitSelector = new UnitSelector(this);
+            //UnitMover = GetComponent<UnitMover>();
+            //UnitSelector = new UnitSelector(this);
             //UnitMover.Initialize(PathCalculator, _unitSO);
             //unitMovementPhase.Initialize(this);
             //gameObject.AddComponent<UnitMovementPhase>();
@@ -95,13 +95,22 @@ namespace WH40K.PlayerEvents
 
         [Inject]
         public void Construct(
-            PathCalculator pathCalculator, 
+            PathCalculator pathCalculator,
+            UnitMover unitMover,
+            UnitSelector unitSelector,
+            UnitMovementPhase unitMovementPhase,
+            UnitShootingPhase unitShootingPhase,
             UnitModel model)
         {
             _model = model;
+            UnitMover = unitMover;
+            UnitMovementPhase = unitMovementPhase;
+            UnitShootingPhase = unitShootingPhase;
             PathCalculator = pathCalculator;
-            //UnitSelector = unitSelector;
+            UnitSelector = unitSelector;
         }
+
+
 
         // Start is called before the first frame update
         void Start()
