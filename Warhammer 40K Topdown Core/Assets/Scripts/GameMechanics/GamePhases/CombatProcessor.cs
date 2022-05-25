@@ -27,10 +27,10 @@ namespace WH40K.GamePhaseEvents
             if (_initialized) return;
             _combatPhase.Clear();
 
-            var allShootingSubPhases = Assembly.GetAssembly(typeof(CombatPhases)).GetTypes()
+            var allCombatSubPhases = Assembly.GetAssembly(typeof(CombatPhases)).GetTypes()
                 .Where(t => typeof(CombatPhases).IsAssignableFrom(t) && t.IsAbstract == false);
 
-            foreach (var subphase in allShootingSubPhases)
+            foreach (var subphase in allCombatSubPhases)
             {
                 CombatPhases combatPhase = Activator.CreateInstance(subphase, _result) as CombatPhases;
                 _combatPhase.Add(combatPhase.SubEvents, combatPhase);

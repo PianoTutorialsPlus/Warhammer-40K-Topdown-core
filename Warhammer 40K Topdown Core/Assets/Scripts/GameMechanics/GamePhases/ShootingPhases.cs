@@ -9,11 +9,11 @@ namespace WH40K.GamePhaseEvents
     public abstract class ShootingPhases
     {
         private IGamePhase _gamePhase;
-        protected IPhase _phase => _gamePhase.BattleroundEvents;
+        protected IPhase _phase;/* => _gamePhase.BattleroundEvents;*/
 
-        public ShootingPhases(IGamePhase gamePhase)
+        public ShootingPhases(IPhase gamePhase)
         {
-            _gamePhase = gamePhase;
+            _phase = gamePhase;
         }
 
         public abstract ShootingPhase SubEvents { get; } // gets the active subphase
@@ -27,7 +27,7 @@ namespace WH40K.GamePhaseEvents
 
     public class S_Selection : ShootingPhases
     {
-        public S_Selection(IGamePhase gamePhase) : base(gamePhase) { }
+        public S_Selection(IPhase gamePhase) : base(gamePhase) { }
         public override ShootingPhase SubEvents => ShootingPhase.Selection;
         public override void HandlePhase()
         {
@@ -38,14 +38,14 @@ namespace WH40K.GamePhaseEvents
 
     public class S_Shoot : ShootingPhases
     {
-        public S_Shoot(IGamePhase gamePhase) : base(gamePhase) { }
+        public S_Shoot(IPhase gamePhase) : base(gamePhase) { }
         public override ShootingPhase SubEvents => ShootingPhase.Shoot;
         public override void HandlePhase() { }
     }
 
     public class S_Next : ShootingPhases
     {
-        public S_Next(IGamePhase gamePhase) : base(gamePhase) { }
+        public S_Next(IPhase gamePhase) : base(gamePhase) { }
         public override ShootingPhase SubEvents => ShootingPhase.Next;
         public override bool Next()
         {

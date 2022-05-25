@@ -28,7 +28,7 @@ namespace WH40K.GameMechanics.Combat
         {
             //if (diceEvent != ShootingSubEvents.Damage) return;
             Debug.Log("DealDamage Result");
-            DiceResult.RaiseEvent(result);
+            _diceResult.RaiseEvent(result);
         }
     }
 }

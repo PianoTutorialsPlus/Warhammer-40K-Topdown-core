@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using WH40K.EventChannels;
 using WH40K.GamePhaseEvents;
+using WH40K.PlayerEvents;
 using WH40K.UI;
 using Zenject;
 
@@ -24,7 +25,7 @@ namespace WH40K.Installers
             Container.Bind<MovementPhaseProcessor>().AsSingle().NonLazy();
             Container.Bind<ShootingPhaseProcessor>().AsSingle().NonLazy();
             Container.Bind<ShootingSubPhaseProcessor>().AsSingle().NonLazy();
-            Container.Bind<CombatProcessor>().AsSingle().NonLazy();
+            
 
             Container.Bind<UIRangeController>().AsSingle();
 
@@ -33,9 +34,8 @@ namespace WH40K.Installers
         [Serializable]
         public class Settings
         {
-            public RollTheDiceEventChannelSO _diceAction;
-            public RollTheDiceEventChannelSO _diceSubResult;
-            public RollTheDiceEventChannelSO _diceResult;
+            public PlayerSO _player1;
+            public PlayerSO _player2;
         }
     }
 }

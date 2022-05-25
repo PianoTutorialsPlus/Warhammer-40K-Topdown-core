@@ -16,10 +16,10 @@ namespace WH40K.GamePhaseEvents
         // Variables
         private static Dictionary<MovementPhase, MovementPhases> _movementPhases = new Dictionary<MovementPhase, MovementPhases>();
         private static bool _initialized;
-        private static IGamePhase _gamePhase;
+        private static IPhase _gamePhase;
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
 
-        public MovementPhaseProcessor(IGamePhase gamePhase)
+        public MovementPhaseProcessor(IPhase gamePhase)
         {
             _gamePhase = gamePhase;
         }

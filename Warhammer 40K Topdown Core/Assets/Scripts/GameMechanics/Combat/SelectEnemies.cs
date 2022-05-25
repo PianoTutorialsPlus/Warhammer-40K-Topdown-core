@@ -22,7 +22,7 @@ namespace WH40K.GameMechanics.Combat
         public override void Result(List<int> result)
         {
             Debug.Log("SelectEnemies Result");
-            DiceResult.RaiseEvent(result);
+            _diceResult.RaiseEvent(result);
         }
     }
 }

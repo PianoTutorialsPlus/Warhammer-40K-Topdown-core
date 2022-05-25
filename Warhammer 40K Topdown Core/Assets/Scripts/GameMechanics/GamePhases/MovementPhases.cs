@@ -10,12 +10,12 @@ namespace WH40K.GamePhaseEvents
     public abstract class MovementPhases
     {
         private IGamePhase _gamePhase;
-        protected IPhase _phase => _gamePhase.BattleroundEvents;
+        protected IPhase _phase;/* => _gamePhase.BattleroundEvents;*/
         protected GameTable _gameTable => GameStats.GameTable.gameTable;
 
-        public MovementPhases(IGamePhase gamePhase)
+        public MovementPhases(IPhase gamePhase)
         {
-            _gamePhase = gamePhase;
+            _phase = gamePhase;
         }
 
         public abstract MovementPhase SubEvents { get; } // gets the active subphase
@@ -31,7 +31,7 @@ namespace WH40K.GamePhaseEvents
 
     public class M_Selection : MovementPhases
     {
-        public M_Selection(IGamePhase gamePhase) : base(gamePhase) { }
+        public M_Selection(IPhase gamePhase) : base(gamePhase) { }
 
         public override MovementPhase SubEvents => MovementPhase.Selection;
         public override void HandlePhase()
@@ -42,7 +42,7 @@ namespace WH40K.GamePhaseEvents
 
     public class Move : MovementPhases
     {
-        public Move(IGamePhase gamePhase) : base(gamePhase) { }
+        public Move(IPhase gamePhase) : base(gamePhase) { }
 
         public override MovementPhase SubEvents => MovementPhase.Move;
 
@@ -70,7 +70,7 @@ namespace WH40K.GamePhaseEvents
 
     public class MNext : MovementPhases
     {
-        public MNext(IGamePhase gamePhase) : base(gamePhase) { }
+        public MNext(IPhase gamePhase) : base(gamePhase) { }
         public override MovementPhase SubEvents => MovementPhase.Next;
 
         public override bool Next()

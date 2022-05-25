@@ -13,8 +13,6 @@ namespace WH40K.GamePhaseEvents
         [SerializeField] private ShootingPhaseManager _shootingPhase;
 
         [SerializeField] private List<int> _parameter = new List<int>();
-        public InputReader InputReader { get => _inputReader; }
-
         private Queue<ShootingSubEvents> shootingSubPhase = new Queue<ShootingSubEvents>();
 
         private void Awake()

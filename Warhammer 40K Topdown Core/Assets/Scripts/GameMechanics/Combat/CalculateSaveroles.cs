@@ -19,7 +19,7 @@ namespace WH40K.GameMechanics.Combat
         {
             if (wounds == null || wounds.Count == 0) return;
             OnEnable();
-            DiceAction.RaiseEvent(wounds);
+            _diceAction.RaiseEvent(wounds);
         }
 
         public override void Result(List<int> saveResult)
@@ -30,7 +30,7 @@ namespace WH40K.GameMechanics.Combat
             Debug.Log("CalculateSavesSO Result");
             var combatResults = new CombatResults(ModifiedSaves, saveResult);
 
-            DiceResult.RaiseEvent(combatResults.FailedSaves);
+            _diceResult.RaiseEvent(combatResults.FailedSaves);
         }
     }
 }

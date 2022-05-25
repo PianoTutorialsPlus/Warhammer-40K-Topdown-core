@@ -21,7 +21,7 @@ namespace WH40K.GameMechanics.Combat
             if (hits == null || hits.Count == 0) return;
             OnEnable();
             Debug.Log("CalculateWoundsSO");
-            DiceAction.RaiseEvent(hits);
+            _diceAction.RaiseEvent(hits);
         }
         public override void Result(List<int> woundResult)
         {
@@ -31,7 +31,7 @@ namespace WH40K.GameMechanics.Combat
             Debug.Log("CalculateWoundsSO Result");
             var combatResults = new CombatResults(_woundTable.ToWound(Strength, Toughness), woundResult);
 
-            DiceResult.RaiseEvent(combatResults.Wounds);
+            _diceResult.RaiseEvent(combatResults.Wounds);
         }
     }
 }

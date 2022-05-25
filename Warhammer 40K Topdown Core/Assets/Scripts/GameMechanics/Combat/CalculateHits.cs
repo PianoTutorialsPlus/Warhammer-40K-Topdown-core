@@ -19,7 +19,7 @@ namespace WH40K.GameMechanics.Combat
         {
             OnEnable();
             var shots = new Shots(MaxShots);
-            DiceAction.RaiseEvent(shots.GetShots());
+            _diceAction.RaiseEvent(shots.GetShots());
         }
         public override void Result(List<int> hitResult)
         {
@@ -28,7 +28,7 @@ namespace WH40K.GameMechanics.Combat
             Debug.Log("CalculateHitsSO Result");
             var combatResults = new CombatResults(ToHit, hitResult);
 
-            DiceResult.RaiseEvent(combatResults.Hits);
+            _diceResult.RaiseEvent(combatResults.Hits);
         }
     }
 }

@@ -11,7 +11,7 @@ using Zenject;
 
 namespace WH40K
 {
-    public class Initializer : MonoBehaviour, IInteractionManager, IGamePhase, IResult
+    public class Initializer : MonoBehaviour, IInteractionManager, IGamePhase/*, IResult*/
     {
         public static bool _initialized = false;
 
@@ -20,12 +20,12 @@ namespace WH40K
         //[SerializeField] private GameTableSO _gameTable;
 
         //[SerializeField] private BattleRoundsSO _battleroundEvents;
-        [SerializeField] private RollTheDiceEventChannelSO _diceAction;
-        [SerializeField] private RollTheDiceEventChannelSO _diceSubResult;
-        [SerializeField] private RollTheDiceEventChannelSO _diceResult;
-        public RollTheDiceEventChannelSO DiceAction => _diceAction;
-        public RollTheDiceEventChannelSO DiceSubResult => _diceSubResult;
-        public RollTheDiceEventChannelSO DiceResult => _diceResult;
+        //[SerializeField] private RollTheDiceEventChannelSO _diceAction;
+        //[SerializeField] private RollTheDiceEventChannelSO _diceSubResult;
+        //[SerializeField] private RollTheDiceEventChannelSO _diceResult;
+        //public RollTheDiceEventChannelSO DiceAction => _diceAction;
+        //public RollTheDiceEventChannelSO DiceSubResult => _diceSubResult;
+        //public RollTheDiceEventChannelSO DiceResult => _diceResult;
 
         // Dictionaries
         private static Dictionary<GamePhase, PhaseManagerBase> _gamePhaseManagers = new Dictionary<GamePhase, PhaseManagerBase>();
