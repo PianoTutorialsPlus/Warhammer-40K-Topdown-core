@@ -3,6 +3,7 @@ using UnityEngine;
 using WH40K.Core;
 using WH40K.EventChannels;
 using WH40K.InputEvents;
+using Zenject;
 
 namespace WH40K.GamePhaseEvents
 {
@@ -16,23 +17,29 @@ namespace WH40K.GamePhaseEvents
     public class MovementPhaseManager : PhaseManagerBase
     {
         // Gameplay
-        [SerializeField] private InputReader _inputReader;
+        private InputReader _inputReader;
 
         // Events
-        [SerializeField] private BattleroundEventChannelSO SetMovementPhaseEvent;
+        private BattleroundEventChannelSO _setMovementPhaseEvent;
 
         // Enums
         private Queue<MovementPhase> movementPhase = new Queue<MovementPhase>();
 
         public override GamePhase SubEvents => GamePhase.MovementPhase;
-        public InputReader InputReader { get => _inputReader; }
 
+        [Inject]
+        public void Construct(
+            BattleroundEventChannelSO battleroundEventChannel,
+            InputReader inputReader)
+        {
+            _setMovementPhaseEvent = battleroundEventChannel;
+            _inputReader = inputReader;
+        }
 
         private void Awake()
         {
-            enabled = false;
-
             EnqueueMovementPhase();
+            enabled = false;
         }
 
         private void EnqueueMovementPhase()
@@ -46,13 +53,13 @@ namespace WH40K.GamePhaseEvents
         public void OnEnable()
         {
             Debug.Log("Enable Movement");
-            if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised += SetMovementPhase;
+            if (_setMovementPhaseEvent != null) _setMovementPhaseEvent.OnEventRaised += SetMovementPhase;
         }
 
         public void OnDisable()
         {
             Debug.Log("Disable Movement");
-            if (SetMovementPhaseEvent != null) SetMovementPhaseEvent.OnEventRaised -= SetMovementPhase;
+            if (_setMovementPhaseEvent != null) _setMovementPhaseEvent.OnEventRaised -= SetMovementPhase;
         }
 
         public void SetMovementPhase()
@@ -61,14 +68,14 @@ namespace WH40K.GamePhaseEvents
             Debug.Log("movementphase: " + movementPhase.Peek());
             MovementPhaseProcessor.HandlePhase(movementPhase.Peek());
 
-            if (GameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
+            if (GameStats.ActiveUnit != null) _inputReader.ActivateEvent += NextPhase;
             if (MovementPhaseProcessor.Next(movementPhase.Peek())) NextPhase();
         }
 
         public override void ClearPhase()
         {
             MovementPhaseProcessor.ClearPhase(movementPhase.Peek());
-            InputReader.ActivateEvent -= NextPhase;
+            _inputReader.ActivateEvent -= NextPhase;
         }
 
         public void NextPhase()

@@ -6,10 +6,8 @@ namespace WH40K.Events
 {
     public class UIMovementRangeEvents
     {
-        private IUIMovementRange _uIMovementRange;
-
-        public BattleroundEventChannelSO _setPhaseEvent;/* => _uIMovementRange.SetPhaseEvent;*/
-        public IndicatorUIEventChannelSO _toggleIndicatorConnectionUI;/* => _uIMovementRange.IndicatorConnectionUIEvent;*/
+        public BattleroundEventChannelSO _setPhaseEvent;
+        public IndicatorUIEventChannelSO _toggleIndicatorConnectionUI;
         public Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
 
         public UIMovementRangeEvents(

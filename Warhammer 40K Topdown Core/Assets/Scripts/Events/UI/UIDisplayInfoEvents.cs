@@ -6,11 +6,9 @@ namespace WH40K.Events
 {
     public class UIDisplayInfoEvents
     {
-        //private IManageUIEvents _uIEvents;
-
         private Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
-        private InfoUIEventChannelSO _toggleInfoUI;/* => _uIEvents.InfoUIEvent;*/
-        private InfoUIEventChannelSO _toggleEnemyInfoUI;/* => _uIEvents.EnemyInfoUIEvent;*/
+        private InfoUIEventChannelSO _toggleInfoUI;
+        private InfoUIEventChannelSO _toggleEnemyInfoUI;
 
         public UIDisplayInfoEvents(
             InfoUIEventChannelSO infoUIEvent,

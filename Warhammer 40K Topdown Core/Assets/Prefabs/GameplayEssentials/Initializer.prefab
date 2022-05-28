@@ -44,56 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300cd540d20a7dc449216d15065ae58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
   _shootingSubPhaseManager: {fileID: 2566659385398334323}
-  SetShootingPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
-    type: 2}
---- !u!1 &2566659384649549922
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2566659384649549923}
-  - component: {fileID: 2566659384649549924}
-  m_Layer: 0
-  m_Name: MovementPhaseManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2566659384649549923
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2566659384649549922}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2566659385717572254}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2566659384649549924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2566659384649549922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e331178428f274040861a4abf6b593aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
-  SetMovementPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
-    type: 2}
 --- !u!1 &2566659385398334321
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2566659385717572254}
   - component: {fileID: 2566659385717572253}
-  - component: {fileID: 866622423384009045}
+  - component: {fileID: 8925389868395586263}
   m_Layer: 0
   m_Name: Initializer
   m_TagString: Untagged
@@ -170,7 +121,7 @@ Transform:
   m_LocalPosition: {x: 2.4293427, y: 0.81257915, z: 1.1913321}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2566659384649549923}
+  - {fileID: 1553506133555762591}
   - {fileID: 2566659384556170908}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -187,13 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd1337ebb146114a8fb691c246a3fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
-  _player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
-  _battleroundEvents: {fileID: 11400000, guid: 7248952e7b75bf64d909eb4792c09df2, type: 2}
-  _diceAction: {fileID: 11400000, guid: 813266957258e7b44886c3ec5242cd3e, type: 2}
-  _diceSubResult: {fileID: 11400000, guid: 898753be13cf34042823ad734f12c5bc, type: 2}
-  _diceResult: {fileID: 11400000, guid: f31b0541c9c601441867066a326a70ae, type: 2}
---- !u!114 &866622423384009045
+--- !u!114 &8925389868395586263
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,4 +155,47 @@ MonoBehaviour:
   _identifier: 
   _useSceneContext: 0
   _context: {fileID: 0}
-  _bindType: 0
+  _bindType: 2
+--- !u!1 &8433795159087038326
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1553506133555762591}
+  - component: {fileID: 8581198087794176213}
+  m_Layer: 0
+  m_Name: MovementPhaseManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1553506133555762591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8433795159087038326}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2566659385717572254}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8581198087794176213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8433795159087038326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e331178428f274040861a4abf6b593aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

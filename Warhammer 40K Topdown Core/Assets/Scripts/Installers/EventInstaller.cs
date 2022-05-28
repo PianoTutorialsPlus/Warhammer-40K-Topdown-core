@@ -2,6 +2,8 @@
 using UnityEngine;
 using WH40K.EventChannels;
 using WH40K.Events;
+using WH40K.GamePhaseEvents;
+using WH40K.InputEvents;
 using Zenject;
 
 namespace WH40K.Installers
@@ -13,16 +15,21 @@ namespace WH40K.Installers
 
         public override void InstallBindings()
         {
+            Container.BindInstance(_settings.InteractionUIEvent).AsSingle();
+            Container.BindInstance(_settings.PhaseEvent).AsSingle();
+            Container.BindInstance(_settings.IndicatorConnectionUIEvent).AsSingle();
+
+            Debug.Log("EventInstaller");
+
             Container.Bind<UIDisplayInfoEvents>().AsSingle()
-                .WithArguments(_settings.InfoUIEvent,_settings.EnemyInfoUIEvent);
-            Container.Bind<UIDisplayInteractionEvents>().AsSingle()
-                .WithArguments(_settings.InteractionUIEvent);
-            Container.Bind<UIMovementRangeEvents>().AsSingle()
-                .WithArguments(_settings.PhaseEvent, _settings.IndicatorConnectionUIEvent);
-            Container.Bind<BattleRoundEvents>().AsSingle()
-                .WithArguments(_settings.PhaseEvent);
+                .WithArguments(_settings.InfoUIEvent, _settings.EnemyInfoUIEvent);
+            
+            Container.Bind<UIDisplayInteractionEvents>().AsSingle();
+            Container.Bind<UIMovementRangeEvents>().AsSingle();
+            Container.Bind<BattleRoundEvents>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<BattleRoundsSO>().AsSingle();
+
         }
 
         [Serializable]

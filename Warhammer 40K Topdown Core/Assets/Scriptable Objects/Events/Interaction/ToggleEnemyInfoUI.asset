@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5675f786d1b59b4082a6e991288c657, type: 3}
   m_Name: ToggleEnemyInfoUI
   m_EditorClassIdentifier: 
+  InfoChannel: 1

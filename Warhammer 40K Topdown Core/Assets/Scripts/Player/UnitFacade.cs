@@ -21,7 +21,6 @@ namespace WH40K.PlayerEvents
         public bool IsSelected { get; set; }
         public bool done = false;
 
-        //public NavMeshAgent m_Agent;     // Moving behaviour
         private UnitModel _model;
 
         public int weaponRange;
@@ -32,7 +31,6 @@ namespace WH40K.PlayerEvents
 
         [SerializeField] public WeaponSO _weaponSO;
         [SerializeField] public UnitSO _unitSO;
-        //[SerializeField] public IUnitStats _unitSOTest;
 
         public InputReader _inputReader;
 

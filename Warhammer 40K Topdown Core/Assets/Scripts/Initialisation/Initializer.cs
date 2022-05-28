@@ -15,8 +15,8 @@ namespace WH40K
     {
         public static bool _initialized = false;
 
-        [SerializeField] private PlayerSO _player1;
-        [SerializeField] private PlayerSO _player2;
+        private PlayerSO _player1;
+        private PlayerSO _player2;
         //[SerializeField] private GameTableSO _gameTable;
 
         //[SerializeField] private BattleRoundsSO _battleroundEvents;
@@ -39,11 +39,16 @@ namespace WH40K
 
             _initialized = true;
         }
-       
+
         [Inject]
-        public void Construct(IPhase battleroundEvents)
+        public void Construct(
+
+            List<PlayerSO> players)
         {
-            BattleroundEvents = battleroundEvents;
+            _player1 = players[0];
+            _player2 = players[1];
+            Debug.Log(_player1.name);
+            Debug.Log(_player2.name);
         }
 
         private void Initialize()
@@ -53,6 +58,7 @@ namespace WH40K
             GameStats.EnemyUnit = null;
             GameStats.ActivePlayer = _player1;
             GameStats.EnemyPlayer = _player2;
+            Debug.Log(GameStats.EnemyPlayer);
             //GameStats.GameTable = _gameTable;
         }
 

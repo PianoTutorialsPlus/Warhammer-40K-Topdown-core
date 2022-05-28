@@ -12,8 +12,6 @@ namespace WH40K.NavMesh
         private readonly NavMeshPath _path;
         private NavMeshPathPosition endPosition;
 
-        public float speed = 20;
-
         public PathCalculator(
             UnitModel model,
             Settings settings,

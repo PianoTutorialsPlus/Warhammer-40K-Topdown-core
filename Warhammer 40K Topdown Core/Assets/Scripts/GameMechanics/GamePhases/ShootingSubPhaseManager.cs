@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using WH40K.EventChannels;
 using WH40K.InputEvents;
+using Zenject;
 
 namespace WH40K.GamePhaseEvents
 {
     public class ShootingSubPhaseManager : MonoBehaviour
     {
-        [SerializeField] private InputReader _inputReader;
-        [SerializeField] private RollTheDiceEventChannelSO diceRollingResult;
-        [SerializeField] private ShootingPhaseManager _shootingPhase;
+        private InputReader _inputReader;
+        private RollTheDiceEventChannelSO _diceResult;
+        private ShootingPhaseManager _shootingPhase;
 
-        [SerializeField] private List<int> _parameter = new List<int>();
+        private List<int> _parameter = new List<int>();
         private Queue<ShootingSubEvents> shootingSubPhase = new Queue<ShootingSubEvents>();
 
         private void Awake()
@@ -20,6 +21,16 @@ namespace WH40K.GamePhaseEvents
             enabled = false;
 
             EnqueueShootingSubPhase();
+        }
+        [Inject]
+        public void Construct(
+            RollTheDiceEventChannelSO diceResult,
+            ShootingPhaseManager shootingPhaseManager,
+            InputReader inputReader)
+        {
+            _diceResult = diceResult;
+            _shootingPhase = shootingPhaseManager;
+            _inputReader = inputReader;
         }
         private void EnqueueShootingSubPhase()
         {
@@ -31,12 +42,12 @@ namespace WH40K.GamePhaseEvents
         private void OnEnable()
         {
             Debug.Log("Enable ShootingSubPhaseManager");
-            if (diceRollingResult != null) diceRollingResult.OnEventRaised += ProcessResult;
+            if (_diceResult != null) _diceResult.OnEventRaised += ProcessResult;
             _inputReader.ExecuteEvent += Wait;
         }
         private void OnDisable()
         {
-            if (diceRollingResult != null) diceRollingResult.OnEventRaised -= ProcessResult;
+            if (_diceResult != null) _diceResult.OnEventRaised -= ProcessResult;
             _inputReader.ExecuteEvent -= Wait;
         }
         private void SetShootingSubPhase()

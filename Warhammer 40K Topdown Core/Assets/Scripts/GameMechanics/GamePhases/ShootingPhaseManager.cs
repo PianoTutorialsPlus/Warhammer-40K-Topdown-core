@@ -3,6 +3,7 @@ using UnityEngine;
 using WH40K.Core;
 using WH40K.EventChannels;
 using WH40K.InputEvents;
+using Zenject;
 
 namespace WH40K.GamePhaseEvents
 {
@@ -18,11 +19,11 @@ namespace WH40K.GamePhaseEvents
         public ShootingPhaseManager() { }
 
         // Gameplay
-        [SerializeField] private InputReader _inputReader;
-        [SerializeField] private ShootingSubPhaseManager _shootingSubPhaseManager;
+        private InputReader _inputReader;
+        private ShootingSubPhaseManager _shootingSubPhaseManager;
 
         //Events
-        [SerializeField] private BattleroundEventChannelSO SetShootingPhaseEvent;
+        private BattleroundEventChannelSO _setShootingPhaseEvent;
 
         //Enums
         private Queue<ShootingPhase> shootingPhase = new Queue<ShootingPhase>();
@@ -34,6 +35,17 @@ namespace WH40K.GamePhaseEvents
             enabled = false;
             EnqueueShootingPhase();
         }
+        [Inject]
+        public void Construct(
+            BattleroundEventChannelSO battleroundEventChannel,
+            ShootingSubPhaseManager shootingSubPhaseManager,
+            InputReader inputReader)
+        {
+            _setShootingPhaseEvent = battleroundEventChannel;
+            _shootingSubPhaseManager = shootingSubPhaseManager;
+            _inputReader = inputReader;
+        }
+
         private void EnqueueShootingPhase()
         {
             foreach (ShootingPhase phase in ShootingPhaseProcessor.GetAbilityByName())
@@ -45,13 +57,13 @@ namespace WH40K.GamePhaseEvents
         public void OnEnable()
         {
             Debug.Log("Enable Shooting");
-            if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised += SetShootingPhase;
+            if (_setShootingPhaseEvent != null) _setShootingPhaseEvent.OnEventRaised += SetShootingPhase;
 
         }
         public void OnDisable()
         {
             Debug.Log("Disable Shooting");
-            if (SetShootingPhaseEvent != null) SetShootingPhaseEvent.OnEventRaised -= SetShootingPhase;
+            if (_setShootingPhaseEvent != null) _setShootingPhaseEvent.OnEventRaised -= SetShootingPhase;
         }
 
         public void SetShootingPhase()

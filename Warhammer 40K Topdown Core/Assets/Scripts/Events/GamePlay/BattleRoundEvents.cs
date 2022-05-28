@@ -6,9 +6,7 @@ namespace WH40K.Events
 {
     public class BattleRoundEvents
     {
-        private IUIMovementRange _uIMovementRange;
-
-        public BattleroundEventChannelSO _setPhaseEvent;/* => _uIMovementRange.SetPhaseEvent;*/
+        public BattleroundEventChannelSO _setPhaseEvent;
         public Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
 
         public BattleRoundEvents(BattleroundEventChannelSO phaseEvent)

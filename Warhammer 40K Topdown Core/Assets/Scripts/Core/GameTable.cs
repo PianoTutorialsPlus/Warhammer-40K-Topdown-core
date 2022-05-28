@@ -9,12 +9,8 @@ namespace WH40K.Core
     [RequireComponent(typeof(NavMeshSurface))]
     public class GameTable : MonoBehaviour, IPointerClickHandler
     {
-        //public BattleroundEventChannelSO SetMovementPhaseEvent;
         public NavMeshSurface Surface;
-
         public UnityAction<Vector3> onTapDownAction;
-
-        public UnityAction<Vector3> OnTapDownAction { get => onTapDownAction; set => onTapDownAction = value; }
 
         public void OnPointerClick(PointerEventData pointerEvent)
         {

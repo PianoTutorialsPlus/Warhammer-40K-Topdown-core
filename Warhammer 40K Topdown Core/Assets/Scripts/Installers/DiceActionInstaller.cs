@@ -10,9 +10,11 @@ public class DiceActionInstaller : MonoInstaller
     Settings _settings = null;
     public override void InstallBindings()
     {
+        Debug.Log("DiceInstaller");
         Container.Bind<IResult>().To<Settings>().AsSingle().NonLazy();
 
         Container.Bind<CombatProcessor>().AsSingle().WithArguments(_settings).NonLazy();
+        Container.BindInstance(_settings.DiceResult);
     }
 
     [Serializable]
