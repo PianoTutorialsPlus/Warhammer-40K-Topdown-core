@@ -5,8 +5,7 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Infrastructure",
-        "Scripts",
-        "NavMeshPosition"
+        "Scripts"
     ],
     "includePlatforms": [
         "Editor"

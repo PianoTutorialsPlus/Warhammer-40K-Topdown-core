@@ -1,5 +1,6 @@
 ﻿using System;
 using WH40K.NavMesh;
+using WH40K.PlayerEvents;
 using Zenject;
 
 namespace WH40K.Installers
@@ -14,7 +15,9 @@ namespace WH40K.Installers
         [Serializable]
         public class PlayerSettings
         {
-
+            public UnitStats.Settings UnitStatsHandler;
+            public UnitMovementPhase.Settings MovementPhaseHandler;
+            public UnitShootingPhase.Settings ShootingPhaseHandler; 
         }
         [Serializable]
         public class NavMeshSettings
@@ -24,6 +27,10 @@ namespace WH40K.Installers
 
         public override void InstallBindings()
         {
+            Container.BindInstance(Player.UnitStatsHandler).IfNotBound();
+            Container.BindInstance(Player.MovementPhaseHandler).IfNotBound();
+            Container.BindInstance(Player.ShootingPhaseHandler).IfNotBound();
+
             Container.BindInstance(NavMesh.PathCalculatorHandler).IfNotBound();
         }
     }

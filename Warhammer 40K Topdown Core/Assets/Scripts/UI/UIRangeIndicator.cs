@@ -38,7 +38,7 @@ namespace WH40K.UI
         public void ConnectIndicator(IUnit unit)
         {
             transform.SetParent(unit.Transform);
-            _rangeController.SetPosition(unit.Transform.position);
+            _rangeController.SetPosition(unit.CurrentPosition);
             StartCoroutine(SetActionRadiusCoroutine(unit));
         }
         public IEnumerator SetActionRadiusCoroutine(IUnit unit)

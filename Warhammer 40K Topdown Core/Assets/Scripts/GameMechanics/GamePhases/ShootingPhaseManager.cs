@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.Core;
@@ -21,6 +22,7 @@ namespace WH40K.GamePhaseEvents
         // Gameplay
         private InputReader _inputReader;
         private ShootingSubPhaseManager _shootingSubPhaseManager;
+        private Settings _settings;
 
         //Events
         private BattleroundEventChannelSO _setShootingPhaseEvent;
@@ -32,15 +34,21 @@ namespace WH40K.GamePhaseEvents
 
         private void Awake()
         {
-            enabled = false;
             EnqueueShootingPhase();
         }
+        private void Start()
+        {
+            enabled = _settings.Enabled;
+        }
+
         [Inject]
         public void Construct(
+            Settings settings,
             BattleroundEventChannelSO battleroundEventChannel,
             ShootingSubPhaseManager shootingSubPhaseManager,
             InputReader inputReader)
         {
+            _settings = settings;
             _setShootingPhaseEvent = battleroundEventChannel;
             _shootingSubPhaseManager = shootingSubPhaseManager;
             _inputReader = inputReader;
@@ -85,6 +93,12 @@ namespace WH40K.GamePhaseEvents
         {
             shootingPhase.Enqueue(shootingPhase.Dequeue());
             SetShootingPhase();
+        }
+
+        [Serializable]
+        public class Settings
+        {
+            public bool Enabled;
         }
     }
 }

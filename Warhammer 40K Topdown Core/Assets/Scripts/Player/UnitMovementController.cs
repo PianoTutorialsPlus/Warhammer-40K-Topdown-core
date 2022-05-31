@@ -5,12 +5,11 @@ namespace WH40K.PlayerEvents
 {
     public class UnitMovementController
     {
-
-        private MovementRange _movementRange;/* => _unitMover.MovementRange;*/
+        private MovementRange _movementRange;
         public float MoveDistance => _movementRange.MoveRange;
         public float MovedDistance => _movementRange.MovedDistance;
 
-        private IPathCalculator _pathCalculator;/* => _unitMover.PathCalculator;*/
+        private IPathCalculator _pathCalculator;
         public bool IsAgentStopped => _pathCalculator.AgentIsStopped;
         public IUnit _unit;
         public bool IsMoveDistanceZero => _movementRange.IsMoveRangeZero;

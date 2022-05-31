@@ -1,4 +1,6 @@
-﻿using UnityEngine.EventSystems;
+﻿using System;
+using UnityEngine.EventSystems;
+using WH40K.NavMesh;
 using Zenject;
 
 namespace WH40K.PlayerEvents
@@ -6,25 +8,39 @@ namespace WH40K.PlayerEvents
 {
     public class UnitMovementPhase : UnitPhasesBase, IUnitActionPhase
     {
-        private void Awake()
+        private Settings _settings;
+        private PathCalculator _pathCalculator;
+
+        private void Start()
         {
             //_unit = GetComponent<IUnit>();
+            enabled = _settings.Enabled;
         }
 
         private void OnEnable()
         {
             //  Debug.Log("enable");
+            if (_unit != null)
+            {
+                _unit.ResetData();
+                _pathCalculator.ResetAgent();
+            }
         }
 
         private void OnDisable()
         {
+            //_unit.ResetData();
+            //_unit.PathCalculator.FreezeAgent();
             //  Debug.Log("disable");
         }
 
         [Inject]
-        public void Construct(IUnit unit)
+        public void Construct(
+            Settings settings,
+            PathCalculator pathCalculator)
         {
-            _unit = unit;
+            _settings = settings;
+            _pathCalculator = pathCalculator;
         }
 
         public void OnPointerEnter(PointerEventData pointerEvent)
@@ -48,6 +64,11 @@ namespace WH40K.PlayerEvents
                 UnitSelector.SelectUnit();
                 onTapDownAction(Unit);
             }
+        }
+        [Serializable]
+        public class Settings
+        {
+            public bool Enabled;
         }
     }
 }

@@ -36,5 +36,9 @@ namespace WH40K.PlayerEvents
         {
             _currentPosition = currentPosition;
         }
+        public void ResetRange()
+        {
+            _deltaRange = 0;
+        }
     }
 }

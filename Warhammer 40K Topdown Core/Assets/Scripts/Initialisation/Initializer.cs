@@ -47,7 +47,6 @@ namespace WH40K
         {
             _player1 = players[0];
             _player2 = players[1];
-            Debug.Log(_player1.name);
             Debug.Log(_player2.name);
         }
 

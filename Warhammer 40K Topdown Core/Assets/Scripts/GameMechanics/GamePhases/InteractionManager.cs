@@ -3,6 +3,7 @@ using UnityEngine;
 using WH40K.Core;
 using WH40K.EventChannels;
 using WH40K.PlayerEvents;
+using Zenject;
 
 namespace WH40K.GamePhaseEvents
 {
@@ -23,13 +24,13 @@ namespace WH40K.GamePhaseEvents
     {
         //Initialization
         // Gameplay
-        [SerializeField] private PlayerSO _player1;
-        [SerializeField] private PlayerSO _player2;
+        private PlayerSO _player1;
+        private PlayerSO _player2;
 
         // Events
-        [SerializeField] private GameStatsEventChannelSO SetPhaseEvent = default;
-        [SerializeField] private GameinfoUIEventChannelSO _toggleGameinfoUI = default;
-        [SerializeField] private BattleroundEventChannelSO _toggleBattleRounds = default;
+        private GameStatsEventChannelSO _setPhaseEvent = default;
+        private GameinfoUIEventChannelSO _toggleGameinfoUI = default;
+        private BattleroundEventChannelSO _toggleBattleRounds = default;
 
         //Queues
         private Queue<GamePhase> _gamePhase = new Queue<GamePhase>();
@@ -47,17 +48,26 @@ namespace WH40K.GamePhaseEvents
 
         private void OnEnable()
         {
-            //Initialization
-            //Initialize();
             Debug.Log("interActionManager");
-
-            GamePhaseProcessor.EnableNextPhase(_gamePhase.Peek());
-
-            if (SetPhaseEvent != null) SetPhaseEvent.OnEventRaised += SetPhase;
+            if (_setPhaseEvent != null) _setPhaseEvent.OnEventRaised += SetPhase;
 
             _toggleGameinfoUI.RaiseEvent(true);
 
         }
+        [Inject]
+        public void Construct(
+            List<PlayerSO> players,
+            BattleroundEventChannelSO battleroundEventChannel,
+            GameinfoUIEventChannelSO gameinfoUIEventChannel,
+            GameStatsEventChannelSO gameStatsEventChannel)
+        {
+            _player1 = players[0];
+            _player2 = players[1];
+            _toggleBattleRounds = battleroundEventChannel;
+            _toggleGameinfoUI = gameinfoUIEventChannel;
+            _setPhaseEvent = gameStatsEventChannel;
+        }
+
         private void EnqueueGamePhase()
         {
             foreach (GamePhase phase in GamePhaseProcessor.GetAbilityByName())
@@ -83,13 +93,13 @@ namespace WH40K.GamePhaseEvents
         private void ResetPreviousPhase()
         {
             GamePhaseProcessor.ResetPreviousPhase(_gamePhase.Peek());
-            GamePhaseProcessor.ResetActivePlayerUnits(_gamePhase.Peek());
         }
 
         private void SetNextPhaseToActive()
         {
             _gamePhase.Enqueue(_gamePhase.Dequeue());
             GameStats.Phase = _gamePhase.Peek();
+            GamePhaseProcessor.SetActivePlayerUnits(_gamePhase.Peek());
         }
 
         private bool IsEndOfPlayerTurn(GamePhase gamePhases)

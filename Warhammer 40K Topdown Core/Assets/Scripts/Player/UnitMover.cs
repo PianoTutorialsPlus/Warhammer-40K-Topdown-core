@@ -5,39 +5,26 @@ using Zenject;
 
 namespace WH40K.PlayerEvents
 {
-    [RequireComponent(typeof(IPathCalculator))]
-    public class UnitMover : MonoBehaviour, IUnitMover
+    //[RequireComponent(typeof(IPathCalculator))]
+    public class UnitMover : MonoBehaviour//, IUnitMover
     {
-        private IUnit _unit;
+        private PathCalculator _pathCalculator;
         private UnitMovementController _moveController;
         private MovementRange _movementRange;
 
         public Vector3 CurrentPosition => transform.position;
-        public IUnit Unit => _unit;
-        //[Inject] IUnit unit { get; set; }
-
-        public float MaxDistance => _unit.Movement;
-        public IPathCalculator PathCalculator => _unit.PathCalculator;
-        public bool IsAgentStopped => PathCalculator.AgentIsStopped;
+        public bool IsAgentStopped => _pathCalculator.AgentIsStopped;
         public MovementRange MovementRange => _movementRange;
         public float Range => MovementRange.MoveRange;
         public UnitMovementController MoveController => _moveController;
 
-        public void Awake()
-        {
-            //_unit = GetComponent<IUnit>();
-            //_moveController = new UnitMovementController(this, _movementRange, PathCalculator);
-            //_movementRange = new MovementRange(MaxDistance);
-        }
-
         [Inject]
         public void Construct(
             MovementRange movementRange,
-            //UnitFacade unit,
-            IUnit unit,
+            PathCalculator pathCalculator,
             UnitMovementController moveController)
         {
-            _unit = unit;
+            _pathCalculator = pathCalculator;
             _movementRange = movementRange;
             _moveController = moveController;
         }

@@ -80,22 +80,22 @@ namespace Editor.UnitTests
                 //ASSERT
                 unit.Received(2).OnTapDownAction(unit);
             }
-            [Test]
-            public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_UnitSelector_SelectUnit_Is_Invoked()
-            {
-                //ARRANGE
-                _action = UnityActionFiller;
-                IUnit unit = GetUnit();
+            //[Test]
+            //public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_UnitSelector_SelectUnit_Is_Invoked()
+            //{
+            //    //ARRANGE
+            //    _action = UnityActionFiller;
+            //    IUnit unit = GetUnit();
 
-                var unitMovementPhase = SetUnitMovementPhase(unit);
+            //    var unitMovementPhase = SetUnitMovementPhase(unit);
 
-                //ACT
-                unitMovementPhase.OnPointerClick(
-                    A.PointerEventData.WithButtonPressed(InputButton.Left));
+            //    //ACT
+            //    unitMovementPhase.OnPointerClick(
+            //        A.PointerEventData.WithButtonPressed(InputButton.Left));
 
-                //ASSERT
-                unit.Received(1).UnitSelector.SelectUnit();
-            }
+            //    //ASSERT
+            //    unit.Received(1).UnitSelector.SelectUnit();
+            //}
         }
         public class TheOnPointerEnterMethod : UnitMovementPhaseTests
         {

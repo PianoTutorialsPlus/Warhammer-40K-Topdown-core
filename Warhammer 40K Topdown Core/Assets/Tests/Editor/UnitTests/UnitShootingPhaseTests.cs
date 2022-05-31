@@ -80,38 +80,38 @@ namespace Editor.UnitTests
                 //ASSERT
                 unit.Received(2).OnTapDownAction(unit);
             }
-            [Test]
-            public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_UnitSelector_SelectUnit_Is_Invoked()
-            {
-                //ARRANGE
-                _action = UnityActionFiller;
-                IUnit unit = GetUnit();
+            //[Test]
+            //public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_UnitSelector_SelectUnit_Is_Invoked()
+            //{
+            //    //ARRANGE
+            //    _action = UnityActionFiller;
+            //    IUnit unit = GetUnit();
 
-                var unitShootingPhase = SetUnitShootingPhase(unit);
+            //    var unitShootingPhase = SetUnitShootingPhase(unit);
 
-                //ACT
-                unitShootingPhase.OnPointerClick(
-                    A.PointerEventData.WithButtonPressed(InputButton.Left));
+            //    //ACT
+            //    unitShootingPhase.OnPointerClick(
+            //        A.PointerEventData.WithButtonPressed(InputButton.Left));
 
-                //ASSERT
-                unit.Received(1).UnitSelector.SelectUnit();
-            }
-            [Test]
-            public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Right_Then_UnitSelector_SelectEnemyUnit_Is_Invoked()
-            {
-                //ARRANGE
-                _action = UnityActionFiller;
-                IUnit unit = GetUnit();
+            //    //ASSERT
+            //    unit.Received(1).UnitSelector.SelectUnit();
+            //}
+            //[Test]
+            //public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Right_Then_UnitSelector_SelectEnemyUnit_Is_Invoked()
+            //{
+            //    //ARRANGE
+            //    _action = UnityActionFiller;
+            //    IUnit unit = GetUnit();
 
-                var unitShootingPhase = SetUnitShootingPhase(unit);
+            //    var unitShootingPhase = SetUnitShootingPhase(unit);
 
-                //ACT
-                unitShootingPhase.OnPointerClick(
-                    A.PointerEventData.WithButtonPressed(InputButton.Right));
+            //    //ACT
+            //    unitShootingPhase.OnPointerClick(
+            //        A.PointerEventData.WithButtonPressed(InputButton.Right));
 
-                //ASSERT
-                unit.Received(1).UnitSelector.SelectEnemyUnit();
-            }
+            //    //ASSERT
+            //    unit.Received(1).UnitSelector.SelectEnemyUnit();
+            //}
         }
         public class TheOnPointerEnterMethod : UnitShootingPhaseTests
         {

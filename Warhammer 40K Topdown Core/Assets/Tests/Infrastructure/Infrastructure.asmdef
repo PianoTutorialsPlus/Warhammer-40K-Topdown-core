@@ -2,8 +2,7 @@
     "name": "Infrastructure",
     "rootNamespace": "",
     "references": [
-        "GUID:d1521f685bfaaae479335733433f594e",
-        "GUID:335f1c604001e0c46bc7b83ad06a1f88"
+        "GUID:d1521f685bfaaae479335733433f594e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -215,6 +215,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6258980208684287321, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _settings.WeaponSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f6d2e801aef2e642b692633b1aa6774,
+        type: 2}
     - target: {fileID: 9120440415018810188, guid: ec8177448963f604aa4621ce4fc4e57a,
         type: 3}
       propertyPath: _context
@@ -1698,6 +1704,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6258980208684287321, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      propertyPath: _settings.WeaponSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f6d2e801aef2e642b692633b1aa6774,
+        type: 2}
     - target: {fileID: 8590569047915893891, guid: ec8177448963f604aa4621ce4fc4e57a,
         type: 3}
       propertyPath: _gameStats

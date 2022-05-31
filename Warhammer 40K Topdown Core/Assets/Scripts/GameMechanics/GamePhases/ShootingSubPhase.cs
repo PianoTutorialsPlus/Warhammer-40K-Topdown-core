@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using WH40K.EventChannels;
 
 /// <summary>
 /// This script executes the calls from the shooting phase manager in the specific state.
@@ -8,12 +7,8 @@ namespace WH40K.GamePhaseEvents
 {
     public abstract class ShootingSubPhases
     {
-        protected IResult _result;
+        public ShootingSubPhases() { }
 
-        public ShootingSubPhases(IResult result)
-        {
-            _result = result;
-        }
         public abstract ShootingSubEvents SubEvents { get; } // gets the active subphase
         public abstract void HandleShooting(List<int> parameter); // handles the subphases
         public void Next() { CombatProcessor.Next(SubEvents); }
@@ -21,7 +16,7 @@ namespace WH40K.GamePhaseEvents
 
     public class SelectEnemy : ShootingSubPhases
     {
-        public SelectEnemy(IResult result) : base(result) { }
+        public SelectEnemy() { }
         public override ShootingSubEvents SubEvents => ShootingSubEvents.SelectEnemy;
         public override void HandleShooting(List<int> parameter)
         {
@@ -31,7 +26,7 @@ namespace WH40K.GamePhaseEvents
 
     public class Hit : ShootingSubPhases
     {
-        public Hit(IResult result) : base(result) { }
+        public Hit() { }
 
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Hit;
         public override void HandleShooting(List<int> parameter)
@@ -42,7 +37,7 @@ namespace WH40K.GamePhaseEvents
 
     public class Wound : ShootingSubPhases
     {
-        public Wound(IResult result) : base(result) { }
+        public Wound() { }
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Wound;
         public override void HandleShooting(List<int> parameter)
         {
@@ -52,7 +47,7 @@ namespace WH40K.GamePhaseEvents
 
     public class Save : ShootingSubPhases
     {
-        public Save(IResult result) : base(result) { }
+        public Save() { }
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Save;
         public override void HandleShooting(List<int> parameter)
         {
@@ -61,7 +56,7 @@ namespace WH40K.GamePhaseEvents
     }
     public class Damage : ShootingSubPhases
     {
-        public Damage(IResult result) : base(result) { }
+        public Damage() { }
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Damage;
         public override void HandleShooting(List<int> parameter)
         {

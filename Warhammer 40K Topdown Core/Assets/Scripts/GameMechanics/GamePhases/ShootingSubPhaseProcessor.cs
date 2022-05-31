@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using WH40K.EventChannels;
 
 namespace WH40K.GamePhaseEvents
 {
@@ -16,15 +15,11 @@ namespace WH40K.GamePhaseEvents
         // Variables
         private static Dictionary<ShootingSubEvents, ShootingSubPhases> _shootingSubPhase = new Dictionary<ShootingSubEvents, ShootingSubPhases>();
         public static bool _initialized;
-        private static IResult _result;
 
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
 
-        public ShootingSubPhaseProcessor(IResult result)
-        {
-            _result = result;
-        }
-
+        public ShootingSubPhaseProcessor() { }
+    
         private static void Initialize()
         {
             if (_initialized) return;
@@ -35,7 +30,7 @@ namespace WH40K.GamePhaseEvents
 
             foreach (var subphase in allShootingSubPhases)
             {
-                ShootingSubPhases shootingSubPhase = Activator.CreateInstance(subphase, _result) as ShootingSubPhases;
+                ShootingSubPhases shootingSubPhase = Activator.CreateInstance(subphase) as ShootingSubPhases;
                 _shootingSubPhase.Add(shootingSubPhase.SubEvents, shootingSubPhase);
             }
 

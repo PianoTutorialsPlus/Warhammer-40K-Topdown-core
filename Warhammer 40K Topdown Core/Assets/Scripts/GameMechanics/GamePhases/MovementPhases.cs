@@ -49,13 +49,14 @@ namespace WH40K.GamePhaseEvents
         public override void HandlePhase()
         {
             _phase.HandlePhase();
-            GameStats.ActiveUnit.Activate();
+            if(GameStats.ActiveUnit != null)GameStats.ActiveUnit.Activate();
             _gameTable.onTapDownAction += MoveUnit;
         }
 
         public override bool Next()
         {
-            return GameStats.ActiveUnit.IsDone;
+            if (GameStats.ActiveUnit != null) return GameStats.ActiveUnit.IsDone;
+            return false;
         }
         public override void ClearPhase()
         {

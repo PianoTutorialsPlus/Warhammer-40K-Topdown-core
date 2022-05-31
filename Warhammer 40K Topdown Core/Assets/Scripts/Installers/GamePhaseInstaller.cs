@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K;
-using WH40K.EventChannels;
 using WH40K.GamePhaseEvents;
 using WH40K.InputEvents;
 using WH40K.PlayerEvents;

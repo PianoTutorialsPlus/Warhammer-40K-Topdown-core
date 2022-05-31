@@ -77,7 +77,7 @@ namespace Editor.Infrastructure.Player
             var unit = Substitute.For<IUnit>();
 
             unit.Fraction.Returns(_fraction);
-            unit.UnitSelector.Returns(_unitSelector);
+            //unit.UnitSelector.Returns(_unitSelector);
             // Condition
             unit.IsDone.Returns(_isDone);
             unit.IsActivated.Returns(_isActivated);

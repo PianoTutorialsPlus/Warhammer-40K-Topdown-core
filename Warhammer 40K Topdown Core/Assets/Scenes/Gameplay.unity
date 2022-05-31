@@ -130,29 +130,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2566659385398334323, guid: 253a70c796f031c4ea408ea630dcabe7,
-        type: 3}
-      propertyPath: _diceResult
-      value: 
-      objectReference: {fileID: 11400000, guid: f31b0541c9c601441867066a326a70ae,
-        type: 2}
     - target: {fileID: 2566659385717572252, guid: 253a70c796f031c4ea408ea630dcabe7,
         type: 3}
       propertyPath: m_Name
       value: Initializer
       objectReference: {fileID: 0}
-    - target: {fileID: 2566659385717572253, guid: 253a70c796f031c4ea408ea630dcabe7,
-        type: 3}
-      propertyPath: _player1
-      value: 
-      objectReference: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014,
-        type: 2}
-    - target: {fileID: 2566659385717572253, guid: 253a70c796f031c4ea408ea630dcabe7,
-        type: 3}
-      propertyPath: _player2
-      value: 
-      objectReference: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5,
-        type: 2}
     - target: {fileID: 2566659385717572254, guid: 253a70c796f031c4ea408ea630dcabe7,
         type: 3}
       propertyPath: m_RootOrder
@@ -208,15 +190,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8925389868395586263, guid: 253a70c796f031c4ea408ea630dcabe7, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 253a70c796f031c4ea408ea630dcabe7, type: 3}
---- !u!1 &1391815 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2566659385717572252, guid: 253a70c796f031c4ea408ea630dcabe7,
-    type: 3}
-  m_PrefabInstance: {fileID: 1391814}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &624657558
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -584,13 +559,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c3fc8c87b58e84d9211509f217c5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _settings:
-    _prefab: {fileID: 1391815}
-    _player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
-    _player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
-    BattleroundEventChannel: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
-      type: 2}
-    InputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
 --- !u!114 &1288765946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,7 +571,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: cc13c9e100ae81d4488f037951beb477, type: 2}
   _monoInstallers:
   - {fileID: 1288765945}
   - {fileID: 1288765948}
@@ -660,7 +629,8 @@ MonoBehaviour:
     PhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793, type: 2}
     IndicatorConnectionUIEvent: {fileID: 11400000, guid: fcbe9388afa2a184a9990bb0b499981a,
       type: 2}
-    InputReader: {fileID: 0}
+    GameinfoUIEvent: {fileID: 11400000, guid: 69382d493e2d5214c91e859c03bbb401, type: 2}
+    GameStatsEvent: {fileID: 11400000, guid: 3605cfadf21537e438e036494d5c3289, type: 2}
 --- !u!114 &1288765949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -690,8 +660,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settings:
-    BattleroundEventChannel: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
-      type: 2}
     InputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
     _player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
     _player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}

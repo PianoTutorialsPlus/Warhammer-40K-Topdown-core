@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.Core;
@@ -21,6 +22,7 @@ namespace WH40K.GamePhaseEvents
 
         // Events
         private BattleroundEventChannelSO _setMovementPhaseEvent;
+        private Settings _settings;
 
         // Enums
         private Queue<MovementPhase> movementPhase = new Queue<MovementPhase>();
@@ -30,16 +32,22 @@ namespace WH40K.GamePhaseEvents
         [Inject]
         public void Construct(
             BattleroundEventChannelSO battleroundEventChannel,
+            Settings settings,
             InputReader inputReader)
         {
             _setMovementPhaseEvent = battleroundEventChannel;
+            _settings = settings;
             _inputReader = inputReader;
         }
 
         private void Awake()
         {
             EnqueueMovementPhase();
-            enabled = false;
+            
+        }
+        private void Start()
+        {
+            enabled = _settings.Enabled;
         }
 
         private void EnqueueMovementPhase()
@@ -77,11 +85,16 @@ namespace WH40K.GamePhaseEvents
             MovementPhaseProcessor.ClearPhase(movementPhase.Peek());
             _inputReader.ActivateEvent -= NextPhase;
         }
-
         public void NextPhase()
         {
             movementPhase.Enqueue(movementPhase.Dequeue());
             SetMovementPhase();
+        }
+
+        [Serializable]
+        public class Settings
+        {
+            public bool Enabled;
         }
     }
 }

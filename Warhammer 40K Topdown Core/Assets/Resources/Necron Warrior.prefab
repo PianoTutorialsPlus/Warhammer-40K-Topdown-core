@@ -164,8 +164,8 @@ MonoBehaviour:
   _weaponSO: {fileID: 11400000, guid: 8f6d2e801aef2e642b692633b1aa6774, type: 2}
   _unitSO: {fileID: 11400000, guid: 0aeb3a06a60bc0640b83970366d185ee, type: 2}
   _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
-  unitMovementPhase: {fileID: 0}
-  unitShootingPhase: {fileID: 0}
+  UnitMovementPhase: {fileID: 0}
+  UnitShootingPhase: {fileID: 0}
 --- !u!114 &8590569047915893891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,5 +280,6 @@ MonoBehaviour:
     Rigidbody: {fileID: 4162850282281866536}
     Agent: {fileID: 4266572808521110748}
     Unit: {fileID: 4266572808521110751}
+    Transform: {fileID: 4266572808521110737}
     UnitSO: {fileID: 11400000, guid: 0aeb3a06a60bc0640b83970366d185ee, type: 2}
     WeaponSO: {fileID: 11400000, guid: 4a5aec3aa3d661c4b8fc25a0ab48c5df, type: 2}

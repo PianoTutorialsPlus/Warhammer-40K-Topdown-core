@@ -62,12 +62,12 @@ namespace WH40K.GamePhaseEvents
             gamePhase.ResetPreviousPhase(gamePhaseManager);
         }
 
-        public static void ResetActivePlayerUnits(GamePhase subPhase)
+        public static void SetActivePlayerUnits(GamePhase subPhase)
         {
             Initialize();
 
             var gamePhase = _gamePhases[subPhase];
-            gamePhase.ResetActivePlayerUnits();
+            gamePhase.SetActivePlayerUnits();
         }
 
         public static bool IsEndOfPlayerTurn(GamePhase subPhase)

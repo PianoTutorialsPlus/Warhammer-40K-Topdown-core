@@ -20,13 +20,22 @@ namespace WH40K.Installers
         private void InstallUnitBindings()
         {
             Container.Bind<UnitModel>().AsSingle()
-                .WithArguments(_settings.MeshRenderer, _settings.Rigidbody, _settings.Agent);
+                .WithArguments(
+                    _settings.MeshRenderer, 
+                    _settings.Rigidbody, 
+                    _settings.Transform,
+                    _settings.Agent);
+
+            Container.BindInstance(_settings.UnitSO).AsSingle();
+            Container.BindInstance(_settings.WeaponSO).AsSingle();
 
             Container.BindInterfacesAndSelfTo<MovementRange>().AsSingle()
                 .WithArguments((float)_settings.UnitSO.Movement);
 
             Container.Bind<UnitMovementController>().AsSingle();
             Container.Bind<UnitSelector>().AsSingle();
+            Container.Bind<UnitPointer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UnitStats>().AsSingle();
         }
         private void InstallNavMeshBindings()
         {
@@ -46,6 +55,7 @@ namespace WH40K.Installers
             public Rigidbody Rigidbody;
             public NavMeshAgent Agent;
             public GameObject Unit;
+            public Transform Transform;
 
             public UnitSO UnitSO;
             public WeaponSO WeaponSO;

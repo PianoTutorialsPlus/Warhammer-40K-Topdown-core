@@ -12,7 +12,7 @@ namespace WH40K.GamePhaseEvents
     {
         public abstract GamePhase SubEvents { get; } // gets the active game phase
         //public abstract void ResetPreviousPhase(PhaseManagerBase gamePhaseManager); // clears all dependencies of the game phase
-        public abstract void ResetActivePlayerUnits(); // clears all dependencies of the game phase
+        public abstract void SetActivePlayerUnits(); // clears all dependencies of the game phase
 
         public bool IsEndOfPlayerTurn() { return SubEvents == GamePhase.MovementPhase; }
 
@@ -50,11 +50,11 @@ namespace WH40K.GamePhaseEvents
         public MovementPhaseBase() { }
         public override GamePhase SubEvents => GamePhase.MovementPhase;
 
-        public override void ResetActivePlayerUnits()
+        public override void SetActivePlayerUnits()
         {
             ResetUnitPhases();
 
-            foreach (UnitFacade child in GameStats.ActivePlayer.PlayerUnits)
+            foreach (UnitFacade child in GameStats.EnemyPlayer.PlayerUnits)
             {
                 child.UnitMovementPhase.enabled = true;
 
@@ -69,11 +69,11 @@ namespace WH40K.GamePhaseEvents
         public ShootingPhaseBase() { }
         public override GamePhase SubEvents => GamePhase.ShootingPhase;
 
-        public override void ResetActivePlayerUnits()
+        public override void SetActivePlayerUnits()
         {
             ResetUnitPhases();
 
-            foreach (UnitFacade child in GameStats.EnemyPlayer.PlayerUnits)
+            foreach (UnitFacade child in GameStats.ActivePlayer.PlayerUnits)
             {
                 child.UnitShootingPhase.enabled = true;
 

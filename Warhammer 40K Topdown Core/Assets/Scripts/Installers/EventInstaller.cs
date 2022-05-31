@@ -19,6 +19,9 @@ namespace WH40K.Installers
             Container.BindInstance(_settings.PhaseEvent).AsSingle();
             Container.BindInstance(_settings.IndicatorConnectionUIEvent).AsSingle();
 
+            Container.BindInstance(_settings.GameinfoUIEvent).AsSingle();
+            Container.BindInstance(_settings.GameStatsEvent).AsSingle();
+
             Debug.Log("EventInstaller");
 
             Container.Bind<UIDisplayInfoEvents>().AsSingle()
@@ -40,6 +43,9 @@ namespace WH40K.Installers
             public InfoUIEventChannelSO EnemyInfoUIEvent;
             public BattleroundEventChannelSO PhaseEvent;
             public IndicatorUIEventChannelSO IndicatorConnectionUIEvent;
+
+            public GameinfoUIEventChannelSO GameinfoUIEvent;
+            public GameStatsEventChannelSO GameStatsEvent;
         }
     }
 }

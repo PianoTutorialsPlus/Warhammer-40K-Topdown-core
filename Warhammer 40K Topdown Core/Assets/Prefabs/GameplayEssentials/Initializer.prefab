@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300cd540d20a7dc449216d15065ae58f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shootingSubPhaseManager: {fileID: 2566659385398334323}
 --- !u!1 &2566659385398334321
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,10 +87,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1fb66d2a5eda349bd8213a6476ac16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
-  diceRollingResult: {fileID: 11400000, guid: f31b0541c9c601441867066a326a70ae, type: 2}
-  _shootingPhase: {fileID: 2566659384556170909}
-  _parameter: 
 --- !u!1 &2566659385717572252
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +97,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2566659385717572254}
   - component: {fileID: 2566659385717572253}
-  - component: {fileID: 8925389868395586263}
   m_Layer: 0
   m_Name: Initializer
   m_TagString: Untagged
@@ -138,24 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdd1337ebb146114a8fb691c246a3fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8925389868395586263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2566659385717572252}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0166d8ff8d905b048b2448179e1f5d11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _components:
-  - {fileID: 2566659385717572253}
-  _identifier: 
-  _useSceneContext: 0
-  _context: {fileID: 0}
-  _bindType: 2
 --- !u!1 &8433795159087038326
 GameObject:
   m_ObjectHideFlags: 0

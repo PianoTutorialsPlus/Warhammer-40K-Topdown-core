@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
@@ -6,14 +7,16 @@ namespace WH40K.PlayerEvents
 {
     public class UnitShootingPhase : UnitPhasesBase, IUnitActionPhase
     {
-        private void Awake()
+        private Settings _settings;
+
+        private void Start()
         {
             //_unit = GetComponent<IUnit>();
-            enabled = false;
+            enabled = _settings.Enabled;
         }
-
         private void OnEnable()
         {
+            //_unit.ResetData();
             Debug.Log("enable");
         }
         private void OnDisable()
@@ -22,9 +25,9 @@ namespace WH40K.PlayerEvents
         }
 
         [Inject]
-        public void Construct(IUnit unit)
+        public void Construct(Settings settings)
         {
-            _unit = unit;
+            _settings = settings;
         }
         public void OnPointerEnter(PointerEventData pointerEvent)
         {
@@ -50,6 +53,11 @@ namespace WH40K.PlayerEvents
             {
                 UnitSelector.SelectEnemyUnit();
             }
+        }
+        [Serializable]
+        public class Settings
+        {
+            public bool Enabled;
         }
     }
 }

@@ -9,22 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60a843d81b72a4e4e9d81e5de2f3bc85, type: 3}
-  m_Name: GameSettings
+  m_Script: {fileID: 11500000, guid: 527bc801248a3f246997e4dbd1099994, type: 3}
+  m_Name: GameplaySettingsInstaller
   m_EditorClassIdentifier: 
-  Player:
-    UnitStatsHandler:
-      CanMove: 1
-      Activated: 0
-      CanShoot: 1
-      Done: 0
+  GamePhase:
     MovementPhaseHandler:
       Enabled: 1
     ShootingPhaseHandler:
       Enabled: 0
-  NavMesh:
-    PathCalculatorHandler:
-      Speed: 20
-      Acceleration: 999
-      AngularSpeed: 999
-      IsStopped: 0

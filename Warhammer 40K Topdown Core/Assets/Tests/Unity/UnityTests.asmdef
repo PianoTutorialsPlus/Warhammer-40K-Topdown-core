@@ -8,8 +8,7 @@
         "NavMeshComponentsEditor",
         "EditorTests",
         "Scripts",
-        "Infrastructure",
-        "NavMeshPosition"
+        "Infrastructure"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
