@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using UnityEngine;
 
 namespace Zenject
 {
@@ -13,12 +14,17 @@ namespace Zenject
 
         protected DiContainer Container
         {
-            get { return _container; }
+            get 
+            {
+                Setup();
+                return _container ; 
+            }
         }
 
         [SetUp]
         public virtual void Setup()
         {
+            if (_container != null) return;
             _container = new DiContainer(StaticContext.Container);
         }
 

@@ -14,7 +14,7 @@ namespace WH40K.UI
         public InfoUIEventChannelSO SetInfoEvent;
         public InfoUIEventChannelSO SetEnemyInfoEvent;
         public IndicatorUIEventChannelSO ConnectIndicatorEvent;
-        public GameinfoUIEventChannelSO SetGameinfoEvent;
+        public GameInfoUIEventChannelSO SetGameinfoEvent;
 
         //public PhaseEventChannelSO SetPhaseEvent;
         private UnitFacade unit = default;

@@ -23,10 +23,8 @@ namespace Editor.UI
                 var child = GetUnit();
 
                 ((UIMovementRangeEvents)A.UIMovementRangeEvent
-                    .WithUIEvents(
-                        An.UIEvent
-                            .WithMoveRangeIndicatorEventListener(eventListener)
-                            .Build())).ConnectIndicator(child);
+                    .WithMoveRangeIndicatorEventListener(eventListener))
+                    .ConnectIndicator(child);
 
                 Assert.IsTrue(_state);
             }
@@ -39,8 +37,7 @@ namespace Editor.UI
                 var child = GetUnit(isActivated: true);
                 GetGameStats(Fraction.Necrons);
 
-                ((UIMovementRangeEvents)(A.UIMovementRangeEvent
-                    .WithUIEvents(An.UIEvent.Build())))
+                ((UIMovementRangeEvents)A.UIMovementRangeEvent)
                     .SetIndicatorConnection(child);
 
                 Assert.IsNull(child.OnTapDownAction);
@@ -51,8 +48,7 @@ namespace Editor.UI
                 var child = GetUnit(isActivated: false);
                 GetGameStats(Fraction.Necrons);
 
-                ((UIMovementRangeEvents)(A.UIMovementRangeEvent
-                    .WithUIEvents(An.UIEvent.Build())))
+                ((UIMovementRangeEvents)A.UIMovementRangeEvent)
                     .SetIndicatorConnection(child);
 
                 Assert.IsNotNull(child.OnTapDownAction);
@@ -63,8 +59,7 @@ namespace Editor.UI
                 var child = GetUnit(playerFraction: Fraction.SpaceMarines);
                 GetGameStats(Fraction.Necrons);
 
-                ((UIMovementRangeEvents)(A.UIMovementRangeEvent
-                    .WithUIEvents(An.UIEvent.Build())))
+                ((UIMovementRangeEvents)A.UIMovementRangeEvent)
                     .SetIndicatorConnection(child);
 
                 Assert.IsNull(child.OnTapDownAction);
@@ -75,8 +70,7 @@ namespace Editor.UI
                 var child = GetUnit(isDone: true);
                 GetGameStats(Fraction.Necrons);
 
-                ((UIMovementRangeEvents)(A.UIMovementRangeEvent
-                    .WithUIEvents(An.UIEvent.Build())))
+                ((UIMovementRangeEvents)A.UIMovementRangeEvent)
                     .SetIndicatorConnection(child);
 
                 Assert.IsNull(child.OnTapDownAction);
@@ -89,10 +83,7 @@ namespace Editor.UI
                 GetGameStats(Fraction.Necrons, child);
 
                 ((UIMovementRangeEvents)A.UIMovementRangeEvent
-                   .WithUIEvents(
-                       An.UIEvent
-                           .WithMoveRangeIndicatorEventListener(eventListener)
-                           .Build()))
+                    .WithMoveRangeIndicatorEventListener(eventListener))
                     .SetIndicatorConnection(child);
 
                 child.OnTapDownAction(child);
@@ -107,9 +98,7 @@ namespace Editor.UI
             {
                 var child = GetUnit();
 
-                var uIMoveRangeEvents = (UIMovementRangeEvents)A.UIMovementRangeEvent
-                   .WithUIEvents(
-                       An.UIEvent.Build());
+                var uIMoveRangeEvents = (UIMovementRangeEvents)A.UIMovementRangeEvent;
 
                 child.OnPointerEnterInfo += uIMoveRangeEvents.ConnectIndicator;
                 uIMoveRangeEvents.ResetOnTapDownAction(child);

@@ -1,4 +1,5 @@
 ﻿using Editor.Infrastructure.Player;
+using WH40K.PlayerEvents;
 
 namespace Editor.Infrastructure
 {
@@ -13,5 +14,8 @@ namespace Editor.Infrastructure
         public static UnitMoverBuilder UnitMover => new UnitMoverBuilder();
         public static UnitMovementControllerBuilder UnitMovementController => new UnitMovementControllerBuilder();
         public static UnitSelectorBuilder UnitSelector => new UnitSelectorBuilder();
+        public static UnitPhaseBuilder<T> UnitPhase<T>() where T: UnitPhasesBase => new UnitPhaseBuilder<T>();
+        //public static UnitPhaseBuilder<UnitPhasesBase> UnitPhase => new UnitPhaseBuilder<UnitPhasesBase>();
+        public static UnitPointerBuilder UnitPointer => new UnitPointerBuilder();
     }
 }

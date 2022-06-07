@@ -25,10 +25,7 @@ namespace WH40K.UI
             get => transform.position;
             set => transform.position = value;
         }
-        private void Awake()
-        {
-            //_rangeController = new UIRangeController(this);
-        }
+
         [Inject]
         public void Construct(UIRangeController rangeController)
         {

@@ -14,6 +14,7 @@ namespace Editor.GameMechanics
             _action = null;
             _state = false;
         }
+
         public class TheConnectEventMethod : BattleRoundsEventsTests
         {
             [Test]
@@ -23,10 +24,8 @@ namespace Editor.GameMechanics
                 var child = GetUnit();
 
                 ((BattleRoundEvents)A.BattleRoundEvent
-                    .WithUIEvents(
-                        An.UIEvent
-                            .WithPhaseEventListener(eventListener)
-                            .Build())).ConnectEvent(child);
+                    .WithPhaseEventListener(eventListener))
+                    .ConnectEvent(child);
 
                 Assert.IsTrue(_state);
             }
@@ -39,9 +38,8 @@ namespace Editor.GameMechanics
                 var child = GetUnit(isActivated: true);
                 GetGameStats(Fraction.Necrons);
 
-                ((BattleRoundEvents)(A.BattleRoundEvent
-                    .WithUIEvents(An.UIEvent.Build())
-                    )).SetPhaseEvent(child);
+                ((BattleRoundEvents)A.BattleRoundEvent)
+                    .SetPhaseEvent(child);
 
                 Assert.IsNull(child.OnTapDownAction);
             }
@@ -51,8 +49,7 @@ namespace Editor.GameMechanics
                 var child = GetUnit(isActivated: false);
                 GetGameStats(Fraction.Necrons);
 
-                ((BattleRoundEvents)(A.BattleRoundEvent
-                    .WithUIEvents(An.UIEvent.Build())))
+                ((BattleRoundEvents)A.BattleRoundEvent)
                     .SetPhaseEvent(child);
 
                 Assert.IsNotNull(child.OnTapDownAction);
@@ -63,8 +60,7 @@ namespace Editor.GameMechanics
                 var child = GetUnit(playerFraction: Fraction.SpaceMarines);
                 GetGameStats(Fraction.Necrons);
 
-                ((BattleRoundEvents)(A.BattleRoundEvent
-                    .WithUIEvents(An.UIEvent.Build())))
+                ((BattleRoundEvents)A.BattleRoundEvent)
                     .SetPhaseEvent(child);
 
                 Assert.IsNull(child.OnTapDownAction);
@@ -75,8 +71,7 @@ namespace Editor.GameMechanics
                 var child = GetUnit(isDone: true);
                 GetGameStats(Fraction.Necrons);
 
-                ((BattleRoundEvents)(A.BattleRoundEvent
-                    .WithUIEvents(An.UIEvent.Build())))
+                ((BattleRoundEvents)A.BattleRoundEvent)
                     .SetPhaseEvent(child);
 
                 Assert.IsNull(child.OnTapDownAction);
@@ -89,10 +84,7 @@ namespace Editor.GameMechanics
                 GetGameStats(Fraction.Necrons, child);
 
                 ((BattleRoundEvents)A.BattleRoundEvent
-                   .WithUIEvents(
-                       An.UIEvent
-                           .WithPhaseEventListener(eventListener)
-                           .Build()))
+                   .WithPhaseEventListener(eventListener))
                    .SetPhaseEvent(child);
 
                 child.OnTapDownAction(child);
@@ -107,8 +99,7 @@ namespace Editor.GameMechanics
             {
                 var child = GetUnit();
 
-                var phaseEvents = (BattleRoundEvents)A.BattleRoundEvent
-                   .WithUIEvents(An.UIEvent.Build());
+                var phaseEvents = (BattleRoundEvents)A.BattleRoundEvent;
 
                 child.OnPointerEnterInfo += phaseEvents.ConnectEvent;
                 phaseEvents.ResetOnTapDownAction(child);

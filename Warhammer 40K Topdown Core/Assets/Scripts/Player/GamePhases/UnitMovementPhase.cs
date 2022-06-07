@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using WH40K.NavMesh;
 using Zenject;
@@ -9,7 +10,7 @@ namespace WH40K.PlayerEvents
     public class UnitMovementPhase : UnitPhasesBase, IUnitActionPhase
     {
         private Settings _settings;
-        private PathCalculator _pathCalculator;
+        private IPathCalculator _pathCalculator;
 
         private void Start()
         {
@@ -37,7 +38,7 @@ namespace WH40K.PlayerEvents
         [Inject]
         public void Construct(
             Settings settings,
-            PathCalculator pathCalculator)
+            IPathCalculator pathCalculator)
         {
             _settings = settings;
             _pathCalculator = pathCalculator;

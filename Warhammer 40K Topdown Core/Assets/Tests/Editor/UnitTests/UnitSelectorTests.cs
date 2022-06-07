@@ -7,30 +7,12 @@ namespace Editor.Units
 {
     public class UnitSelectorTests
     {
-        public UnitSelector SetUnitSelector(Fraction fraction)
-        {
-            GetGameStats(fraction);
-            return A.UnitSelector
-                .WithUnit(A.Unit.Build());
-        }
-
-        private void GetGameStats(Fraction fraction)
-        {
-            A.GameStats
-                .WithActivePlayer(A.Player.WithFraction(fraction))
-                .WithEnemyPlayer(A.Player.WithFraction(fraction))
-                .Build();
-        }
-
-        public UnitSelector SetUnitSelector()
+        public UnitSelector SetUnitSelector(Fraction playerFraction = Fraction.Necrons, Fraction enemyFraction = Fraction.None)
         {
             return A.UnitSelector
-                .WithUnit(A.Unit.Build());
-        }
-        public void SetGameStats(Fraction fraction)
-        {
-            A.GameStats
-                .WithActivePlayer(A.Player.WithFraction(fraction)).Build();
+                .WithUnit(A.Unit.Build())
+                .WithPlayerFraction(playerFraction)
+                .WithEnemyFraction(enemyFraction);
         }
 
         public class TheSelectUnitMethod : UnitSelectorTests
@@ -40,10 +22,9 @@ namespace Editor.Units
             {
                 // ARRANGE
                 var fraction = Fraction.SpaceMarines;
-                SetGameStats(fraction);
 
                 // ACT
-                var unitSelector = SetUnitSelector();
+                var unitSelector = SetUnitSelector(fraction);
                 unitSelector.SelectUnit();
 
                 // ASSERT
@@ -54,10 +35,9 @@ namespace Editor.Units
             {
                 // ARRANGE
                 var fraction = Fraction.Necrons;
-                SetGameStats(fraction);
 
                 // ACT
-                var unitSelector = SetUnitSelector();
+                var unitSelector = SetUnitSelector(fraction);
                 unitSelector.SelectUnit();
 
                 // ASSERT
@@ -71,10 +51,9 @@ namespace Editor.Units
             {
                 // ARRANGE
                 var fraction = Fraction.SpaceMarines;
-                SetGameStats(fraction);
 
                 // ACT
-                var unitSelector = SetUnitSelector();
+                var unitSelector = SetUnitSelector(enemyFraction: fraction);
                 unitSelector.SelectEnemyUnit();
 
                 // ASSERT
@@ -85,10 +64,9 @@ namespace Editor.Units
             {
                 // ARRANGE
                 var fraction = Fraction.Necrons;
-                SetGameStats(fraction);
 
                 // ACT
-                var unitSelector = SetUnitSelector();
+                var unitSelector = SetUnitSelector(enemyFraction:fraction);
                 unitSelector.SelectEnemyUnit();
 
                 // ASSERT

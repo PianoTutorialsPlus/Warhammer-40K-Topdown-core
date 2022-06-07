@@ -28,6 +28,8 @@ namespace Editor.UnitTests
                 //ARRANGE
                 var unit = GetUnit();
                 var unitMovementPhase = SetUnitMovementPhase(unit);
+                //var unitMovementPhase = (UnitMovementPhase)A.UnitPhase<T>()
+                //    .WithUnit(unit);
 
                 //ACT
                 unitMovementPhase.OnPointerClick(A.PointerEventData);
@@ -79,6 +81,7 @@ namespace Editor.UnitTests
 
                 //ASSERT
                 unit.Received(2).OnTapDownAction(unit);
+                
             }
             //[Test]
             //public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_UnitSelector_SelectUnit_Is_Invoked()

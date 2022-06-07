@@ -44,7 +44,7 @@ namespace WH40K.Installers
             public BattleroundEventChannelSO PhaseEvent;
             public IndicatorUIEventChannelSO IndicatorConnectionUIEvent;
 
-            public GameinfoUIEventChannelSO GameinfoUIEvent;
+            public GameInfoUIEventChannelSO GameinfoUIEvent;
             public GameStatsEventChannelSO GameStatsEvent;
         }
     }

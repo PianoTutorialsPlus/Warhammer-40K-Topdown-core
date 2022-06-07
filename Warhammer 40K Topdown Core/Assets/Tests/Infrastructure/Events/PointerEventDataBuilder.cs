@@ -19,8 +19,10 @@ namespace Editor.Infrastructure.Events
 
         public override PointerEventData Build()
         {
-            var eventSystem = new GameObject().AddComponent<EventSystem>();
-            var pointerEvent = new PointerEventData(eventSystem);
+            var eventSystem = Container.InstantiateComponentOnNewGameObject<EventSystem>();
+            Container.Bind<PointerEventData>().AsSingle().WithArguments(eventSystem);
+            var pointerEvent = Container.Resolve<PointerEventData>();
+
             pointerEvent.button = _buttonPressed;
             return pointerEvent;
         }

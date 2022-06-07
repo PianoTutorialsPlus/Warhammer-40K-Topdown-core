@@ -14,13 +14,11 @@ namespace Editor.Units.Movement
             public void When_Unit_With_Movement_0_Is_Set_To_Move_1_Then_Then_x_Position_Is_0()
             {
                 var unit = (UnitMovementController)A.UnitMovementController
-                    .WithUnitMover(A.UnitMover
-                        .WithMaxDistance(0)
-                        .WithCurrentPosition(Vector3.zero)
-                        .WithPathCalculator(A.PathCalculator.Build())
-                        .WithMovementRange(A.MovementRange.WithMaxRange(0))
-                        .Build());
-
+                    .WithUnit(A.Unit
+                        .WithCurrentPosition(Vector3.zero).Build())
+                    .WithMovementRange(A.MovementRange.WithMaxRange(0))
+                    .WithPathCalculator(A.PathCalculator.Build());
+                            
                 unit.SetDestination(Vector3.right);
 
                 Assert.AreEqual(0, unit.EndPosition.x);
@@ -33,13 +31,12 @@ namespace Editor.Units.Movement
                 var range = 1;
 
                 var unit = (UnitMovementController)A.UnitMovementController
-                    .WithUnitMover(A.UnitMover
-                        .WithMaxDistance(range)
-                        .WithCurrentPosition(Vector3.zero)
-                        .WithPathCalculator(A.PathCalculator
+                    .WithUnit(A.Unit
+                        .WithCurrentPosition(Vector3.zero).Build())
+                    .WithMovementRange(A.MovementRange.WithMaxRange(range))
+                    .WithPathCalculator(A.PathCalculator
                             .WithEndPosition(position)
-                            .Build())
-                        .Build());
+                            .Build());
 
                 unit.SetDestination(position);
 
@@ -53,13 +50,12 @@ namespace Editor.Units.Movement
                 var range = 1;
 
                 var unit = (UnitMovementController)A.UnitMovementController
-                    .WithUnitMover(A.UnitMover
-                        .WithMaxDistance(range)
-                        .WithCurrentPosition(Vector3.zero)
-                        .WithPathCalculator(A.PathCalculator
+                    .WithUnit(A.Unit
+                        .WithCurrentPosition(Vector3.zero).Build())
+                    .WithMovementRange(A.MovementRange.WithMaxRange(range))
+                    .WithPathCalculator(A.PathCalculator
                             .WithEndPosition(Vector3.right)
-                            .Build())
-                        .Build());
+                            .Build());
 
                 unit.SetDestination(position);
 
@@ -76,16 +72,14 @@ namespace Editor.Units.Movement
                     .Do(x => count++);
 
                 var unit = (UnitMovementController)A.UnitMovementController
-                    .WithUnitMover(A.UnitMover
-                        .WithPathCalculator(pathCalculator)
-                        .Build());
+                    .WithPathCalculator(pathCalculator);                    
 
                 unit.SetDestination(Vector3.right);
 
                 Assert.AreEqual(1, count);
             }
             [Test]
-            public void When_NavMeshAgent_Is__Stopped_Then_Then_PathCalculator_SetDestination_Is_Not_Called()
+            public void When_NavMeshAgent_Is_Stopped_Then_Then_PathCalculator_SetDestination_Is_Not_Called()
             {
                 var count = 0;
                 var pathCalculator = A.PathCalculator.Build();
@@ -96,9 +90,7 @@ namespace Editor.Units.Movement
                     .Do(x => count++);
 
                 var unit = (UnitMovementController)A.UnitMovementController
-                    .WithUnitMover(A.UnitMover
-                        .WithPathCalculator(pathCalculator)
-                        .Build());
+                    .WithPathCalculator(pathCalculator);  
 
                 unit.SetDestination(Vector3.right);
 
@@ -118,10 +110,8 @@ namespace Editor.Units.Movement
                     .Do(x => count++);
 
                 var unit = (UnitMovementController)A.UnitMovementController
-                    .WithUnitMover(A.UnitMover
-                        .WithMovementRange(A.MovementRange.WithMaxRange(0))
-                        .WithPathCalculator(pathCalculator)
-                        .Build());
+                    .WithMovementRange(A.MovementRange.WithMaxRange(0))
+                    .WithPathCalculator(pathCalculator);
 
                 unit.FreezeUnitsWithZeroMoveDistance();
 
@@ -138,10 +128,8 @@ namespace Editor.Units.Movement
                     .Do(x => count++);
 
                 var unit = (UnitMovementController)A.UnitMovementController
-                    .WithUnitMover(A.UnitMover
-                        .WithMovementRange(A.MovementRange.WithMaxRange(1))
-                        .WithPathCalculator(pathCalculator)
-                        .Build());
+                    .WithMovementRange(A.MovementRange.WithMaxRange(1))
+                    .WithPathCalculator(pathCalculator);
 
                 unit.FreezeUnitsWithZeroMoveDistance();
 

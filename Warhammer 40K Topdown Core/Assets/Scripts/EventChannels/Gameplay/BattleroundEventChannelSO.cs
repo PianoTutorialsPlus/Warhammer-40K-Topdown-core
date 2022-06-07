@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using Zenject;
 
 namespace WH40K.EventChannels
 {

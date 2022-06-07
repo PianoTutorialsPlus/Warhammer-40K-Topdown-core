@@ -5,22 +5,23 @@ namespace WH40K.PlayerEvents
 {
     public class UnitMovementController
     {
+        private IUnit _unit;
+        public Vector3 CurrentPosition => _unit.CurrentPosition;
         private MovementRange _movementRange;
-        public float MoveDistance => _movementRange.MoveRange;
-        public float MovedDistance => _movementRange.MovedDistance;
+        public float MoveRange => _movementRange.MoveRange;
+        //public float MovedDistance => _movementRange.MovedDistance;
+        public bool IsMoveDistanceZero => _movementRange.IsMoveRangeZero;
 
         private IPathCalculator _pathCalculator;
         public bool IsAgentStopped => _pathCalculator.AgentIsStopped;
-        public IUnit _unit;
-        public bool IsMoveDistanceZero => _movementRange.IsMoveRangeZero;
-        public Vector3 CurrentPosition => _unit.CurrentPosition;
+
 
         public Vector3 EndPosition { get; private set; }
 
         public UnitMovementController(
             IUnit unit,
             MovementRange movementRange,
-            PathCalculator pathCalculator)
+            IPathCalculator pathCalculator)
         {
             _unit = unit;
             _movementRange = movementRange;
@@ -46,7 +47,7 @@ namespace WH40K.PlayerEvents
             //PathCalculator.SetMoveDistance(MoveDistance);
             //PathCalculator.SetEndPosition(position);
 
-            EndPosition = _pathCalculator.GetEndPosition(position, MoveDistance);
+            EndPosition = _pathCalculator.GetEndPosition(position, MoveRange);
         }
 
         // Can Be Deleted

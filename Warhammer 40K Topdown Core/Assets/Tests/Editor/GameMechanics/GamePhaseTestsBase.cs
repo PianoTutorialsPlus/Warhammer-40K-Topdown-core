@@ -9,12 +9,10 @@ namespace Editor.GameMechanics
     {
         public int counter;
 
-        public IGamePhase GetGamePhase()
+        public IPhase GetIPhase()
         {
             GetGameStats();
-            return A.GamePhase
-                .WithBattleroundEvent(An.IPhaseEvent.Build())
-                .Build();
+            return An.IPhaseEvent.Build();
         }
         public void GetGameStats()
         {
@@ -22,24 +20,24 @@ namespace Editor.GameMechanics
                     .WithActiveUnit(A.Unit.Build())
                     .Build();
         }
-        public void SetHandlePhase(IGamePhase gamePhase)
+        public void SetHandlePhase(IPhase gamePhase)
         {
-            gamePhase.BattleroundEvents
+            gamePhase
                 .When(x => x.HandlePhase())
                 .Do(x => counter++);
         }
-        public void SetClearPhase(IGamePhase gamePhase)
+        public void SetClearPhase(IPhase gamePhase)
         {
-            gamePhase.BattleroundEvents
+            gamePhase
                 .When(x => x.ClearPhase())
                 .Do(x => counter++);
         }
-        public void SetMovementPhaseProcessor(IGamePhase gamePhase)
+        public void SetMovementPhaseProcessor(IPhase gamePhase)
         {
             MovementPhaseProcessor processor = A.MovementPhaseProcessor.WithGamePhase(gamePhase);
             processor.SetPrivate(x => x.Initialized, false);
         }
-        public void SetShootingPhaseProcessor(IGamePhase gamePhase)
+        public void SetShootingPhaseProcessor(IPhase gamePhase)
         {
             ShootingPhaseProcessor processor = A.ShootingPhaseProcessor.WithGamePhase(gamePhase);
             processor.SetPrivate(x => x.Initialized, false);

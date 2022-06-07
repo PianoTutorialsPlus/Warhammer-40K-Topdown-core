@@ -25,8 +25,10 @@ namespace Editor.Infrastructure.Player
 
         public override UIRangeController Build()
         {
-            var rangeController = new UIRangeController(_rangeIndicator);
+            Container.Bind<UIRangeController>().AsSingle().WithArguments(_rangeIndicator);
+            var rangeController = Container.Resolve<UIRangeController>();
             rangeController.SetPosition(_position);
+
             return rangeController;
         }
     }

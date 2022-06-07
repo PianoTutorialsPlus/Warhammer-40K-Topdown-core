@@ -22,10 +22,7 @@ namespace Editor.UI
                 var eventListener = GetInteractionEventListener();
 
                 ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                    .WithUIEvents(
-                        An.UIEvent
-                            .WithInteractionEventListener(eventListener)
-                            .Build()))
+                    .WithInteractionEventListener(eventListener))
                     .DisplayInteractionUI();
 
                 Assert.IsTrue(_state);
@@ -39,8 +36,7 @@ namespace Editor.UI
                 var child = GetUnit();
                 GetGameStats(Fraction.Necrons, child);
 
-                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                    .WithUIEvents(An.UIEvent.Build()))
+                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent)
                     .SetDisplayInteraction(child);
 
                 Assert.IsNotNull(child.OnPointerEnter);
@@ -51,8 +47,7 @@ namespace Editor.UI
                 var child = GetUnit();
                 GetGameStats(Fraction.Necrons);
 
-                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                    .WithUIEvents(An.UIEvent.Build()))
+                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent)
                     .SetDisplayInteraction(child);
 
                 Assert.IsNull(child.OnPointerEnter);
@@ -63,8 +58,7 @@ namespace Editor.UI
                 var child = GetUnit(playerFraction: Fraction.SpaceMarines);
                 GetGameStats(Fraction.Necrons);
 
-                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                    .WithUIEvents(An.UIEvent.Build()))
+                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent)
                     .SetDisplayInteraction(child);
 
                 Assert.IsNull(child.OnPointerEnter);
@@ -75,8 +69,7 @@ namespace Editor.UI
                 var child = GetUnit(isDone: true);
                 GetGameStats(Fraction.Necrons);
 
-                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                    .WithUIEvents(An.UIEvent.Build()))
+                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent)
                     .SetDisplayInteraction(child);
 
                 Assert.IsNull(child.OnPointerEnter);
@@ -87,8 +80,7 @@ namespace Editor.UI
                 var child = GetUnit(isActivated: true);
                 GetGameStats(Fraction.Necrons, child);
 
-                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                    .WithUIEvents(An.UIEvent.Build()))
+                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent)
                     .SetDisplayInteraction(child);
 
                 Assert.IsNull(child.OnPointerEnter);
@@ -101,11 +93,8 @@ namespace Editor.UI
                 GetGameStats(Fraction.Necrons, child);
 
                 ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                   .WithUIEvents(
-                       An.UIEvent
-                           .WithInteractionEventListener(eventListener)
-                           .Build()))
-                   .SetDisplayInteraction(child);
+                    .WithInteractionEventListener(eventListener))
+                    .SetDisplayInteraction(child);
 
                 child.OnPointerEnter();
 
@@ -120,9 +109,8 @@ namespace Editor.UI
                 var child = GetUnit();
                 GetGameStats(Fraction.Necrons);
 
-                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                   .WithUIEvents(An.UIEvent.Build()))
-                   .SetResetInteraction(child);
+                ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent)
+                    .SetResetInteraction(child);
 
                 Assert.IsNotNull(child.OnPointerExit);
             }
@@ -135,10 +123,7 @@ namespace Editor.UI
                 GetGameStats(Fraction.Necrons);
 
                 ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                   .WithUIEvents(
-                       An.UIEvent
-                           .WithInteractionEventListener(eventListener)
-                           .Build()))
+                    .WithInteractionEventListener(eventListener))
                     .SetResetInteraction(child);
 
                 child.OnPointerExit(child);
@@ -154,10 +139,7 @@ namespace Editor.UI
                 GetGameStats(Fraction.Necrons, child);
 
                 ((UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                   .WithUIEvents(
-                       An.UIEvent
-                           .WithInteractionEventListener(eventListener)
-                           .Build()))
+                    .WithInteractionEventListener(eventListener))
                     .SetResetInteraction(child);
 
                 child.OnPointerExit(child);
@@ -173,8 +155,7 @@ namespace Editor.UI
                 var child = GetUnit();
 
                 var uIDisplayInteractionEvents =
-                    (UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                        .WithUIEvents(An.UIEvent.Build());
+                    (UIDisplayInteractionEvents)A.UIDisplayInteractionEvent;
 
                 child.OnPointerEnter += uIDisplayInteractionEvents.DisplayInteractionUI;
                 uIDisplayInteractionEvents.ResetOnPointerEnter(child);
@@ -190,8 +171,7 @@ namespace Editor.UI
                 var child = GetUnit();
 
                 var uIDisplayInteractionEvents =
-                    (UIDisplayInteractionEvents)A.UIDisplayInteractionEvent
-                        .WithUIEvents(An.UIEvent.Build());
+                    (UIDisplayInteractionEvents)A.UIDisplayInteractionEvent;
 
                 uIDisplayInteractionEvents.SetResetInteraction(child);
                 uIDisplayInteractionEvents.ResetOnPointerExit(child);

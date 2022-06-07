@@ -16,7 +16,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_ShootingPhase_State_Is_Selection_Then_BattleRoundEvent_HandlePhase_Is_Raised()
             {
-                var gamePhase = GetGamePhase();
+                var gamePhase = GetIPhase();
                 SetHandlePhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
@@ -26,7 +26,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_ShootingPhase_State_Is_Shoot_Then_BattleRoundEvent_HandlePhase_Is_Not_Raised()
             {
-                var gamePhase = GetGamePhase();
+                var gamePhase = GetIPhase();
                 SetHandlePhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
@@ -36,7 +36,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_ShootingPhase_State_Is_Next_Then_BattleRoundEvent_HandlePhase_Is_Not_Raised()
             {
-                var gamePhase = GetGamePhase();
+                var gamePhase = GetIPhase();
                 SetHandlePhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
@@ -49,7 +49,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_ShootingPhase_State_Is_Selection_Then_BattleRoundEvent_ClearPhase_Is_Raised()
             {
-                var gamePhase = GetGamePhase();
+                var gamePhase = GetIPhase();
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
@@ -59,7 +59,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_ShootingPhase_State_Is_Shoot_Then_BattleRoundEvent_ClearPhase_Is_Raised()
             {
-                var gamePhase = GetGamePhase();
+                var gamePhase = GetIPhase();
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
@@ -69,7 +69,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_ShootingPhase_State_Is_Next_Then_BattleRoundEvent_ClearPhase_Is_Raised()
             {
-                var gamePhase = GetGamePhase();
+                var gamePhase = GetIPhase();
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
@@ -82,7 +82,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_ShootingPhase_State_Is_Selection_Then_Next_Is_False()
             {
-                var gamePhase = GetGamePhase();
+                var gamePhase = GetIPhase();
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
@@ -91,7 +91,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_ShootingPhase_State_Is_Shoot_Then_Next_Is_False()
             {
-                var gamePhase = GetGamePhase();
+                var gamePhase = GetIPhase();
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
@@ -100,7 +100,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_ShootingPhase_State_Is_Next_Then_Next_Is_True()
             {
-                var gamePhase = GetGamePhase();
+                var gamePhase = GetIPhase();
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
@@ -109,7 +109,7 @@ namespace Editor.GameMechanics
             [Test]
             public void When_ShootingPhase_State_Is_Next_Then_ActiveUnit_Is_Null()
             {
-                var gamePhase = GetGamePhase();
+                var gamePhase = GetIPhase();
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
                 ShootingPhaseProcessor.Next(ShootingPhase.Next);

@@ -22,10 +22,14 @@ namespace WH40K.PlayerEvents
 
         private UnitPointer _unitPointer;
         protected UnitSelector UnitSelector;/* => Unit.UnitSelector;*/
-        protected UnityAction<IUnit> onTapDownAction => _unitPointer.OnTapDownAction;
-        protected UnityAction onPointerEnter => _unitPointer.OnPointerEnter;
-        protected UnityAction<IUnit> onPointerEnterInfo => _unitPointer.OnPointerEnterInfo;
-        protected UnityAction<IUnit> onPointerExit => _unitPointer.OnPointerExit;
+        protected UnityAction<IUnit> onTapDownAction => _unit.OnTapDownAction;
+        protected UnityAction onPointerEnter => _unit.OnPointerEnter;
+        protected UnityAction<IUnit> onPointerEnterInfo => _unit.OnPointerEnterInfo;
+        protected UnityAction<IUnit> onPointerExit => _unit.OnPointerExit;
+        //protected UnityAction<IUnit> onTapDownAction => _unitPointer.OnTapDownAction;
+        //protected UnityAction onPointerEnter => _unitPointer.OnPointerEnter;
+        //protected UnityAction<IUnit> onPointerEnterInfo => _unitPointer.OnPointerEnterInfo;
+        //protected UnityAction<IUnit> onPointerExit => _unitPointer.OnPointerExit;
         //public IUnit ActiveUnit { get => GameStats.ActiveUnit; set => GameStats.ActiveUnit = value; }
         public IUnit Unit { get => _unit; protected set => _unit = value; }
     }

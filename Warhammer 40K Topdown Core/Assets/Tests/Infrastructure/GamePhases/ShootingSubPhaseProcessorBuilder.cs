@@ -18,8 +18,9 @@ namespace Editor.Infrastructure.GamePhases
 
         public override ShootingSubPhaseProcessor Build()
         {
-            var shootingSubPhaseProcessor = new ShootingSubPhaseProcessor(/*_result ??= An.IResultEvent.Build()*/);
-            return shootingSubPhaseProcessor;
+            Container.Bind<ShootingSubPhaseProcessor>().AsSingle();
+            //var shootingSubPhaseProcessor = new ShootingSubPhaseProcessor();
+            return Container.Resolve<ShootingSubPhaseProcessor>();
         }
     }
 }

@@ -24,9 +24,12 @@ namespace Editor.UnitTests
         }
         public T SetUnitPhase<T>(IUnit unit) where T : UnitPhasesBase
         {
-            T target = new GameObject().AddComponent<T>();
-            target.SetPrivate(x => x.Unit, unit);
+            //T target = new GameObject().AddComponent<T>();
+            //target.SetPrivate(x => x.Unit, unit);
+            //return target;
+            T target = A.UnitPhase<T>().WithUnit(unit);
             return target;
+
         }
 
         public void UnityActionFiller(IUnit unit)

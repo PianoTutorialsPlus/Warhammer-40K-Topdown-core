@@ -42,9 +42,9 @@ namespace Editor.Infrastructure.Player
 
         public override NavMeshPathPosition Build()
         {
-            var navMeshPosition = new NavMeshPathPosition(_pathCorners, _moveRange);
+            Container.Bind<NavMeshPathPosition>().AsSingle().WithArguments(_pathCorners, _moveRange);
 
-            return navMeshPosition;
+            return Container.Resolve<NavMeshPathPosition>();
         }
     }
 }

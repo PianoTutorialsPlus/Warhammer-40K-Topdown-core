@@ -1,4 +1,5 @@
 ﻿using NSubstitute;
+using UnityEngine;
 using UnityEngine.Events;
 using WH40K.PlayerEvents;
 
@@ -17,6 +18,7 @@ namespace Editor.Infrastructure.Player
         private UnitSelector _unitSelector;
         private int _intValue = 0;
         private int _wounds;
+        private Vector3 _position;
 
         public UnitBuilder()
         {
@@ -30,6 +32,11 @@ namespace Editor.Infrastructure.Player
         public UnitBuilder WithUnitSelector(UnitSelector unitSelector)
         {
             _unitSelector = unitSelector;
+            return this;
+        }
+        public UnitBuilder WithCurrentPosition(Vector3 position)
+        {
+            _position = position;
             return this;
         }
         public UnitBuilder WithIsActivatedState(bool isActivated)
@@ -77,6 +84,7 @@ namespace Editor.Infrastructure.Player
             var unit = Substitute.For<IUnit>();
 
             unit.Fraction.Returns(_fraction);
+            unit.CurrentPosition.Returns(_position);
             //unit.UnitSelector.Returns(_unitSelector);
             // Condition
             unit.IsDone.Returns(_isDone);

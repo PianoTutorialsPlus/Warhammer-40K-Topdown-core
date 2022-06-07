@@ -13,6 +13,5 @@ namespace Editor.Infrastructure
     }
     public static partial class An
     {
-        public static IManageUIEventBuilder UIEvent => new IManageUIEventBuilder();
     }
 }

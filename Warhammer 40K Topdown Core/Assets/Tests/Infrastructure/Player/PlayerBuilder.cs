@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using WH40K.PlayerEvents;
 
 namespace Editor.Infrastructure.Player
@@ -21,6 +22,11 @@ namespace Editor.Infrastructure.Player
             var player = ScriptableObject.CreateInstance<PlayerSO>();
             player.Fraction = _fraction;
             return player;
+        }
+
+        internal PlayerSO WithFraction(object enemyFraction)
+        {
+            throw new NotImplementedException();
         }
     }
 }

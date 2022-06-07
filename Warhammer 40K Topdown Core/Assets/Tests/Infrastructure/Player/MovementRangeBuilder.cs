@@ -32,7 +32,8 @@ namespace Editor.Infrastructure.Player
 
         public override MovementRange Build()
         {
-            var movementRange = new MovementRange(_maxRange);
+            Container.Bind<MovementRange>().AsSingle().WithArguments(_maxRange);
+            var movementRange = Container.Resolve<MovementRange>();
             movementRange.SetStartPosition(_startPosition);
             movementRange.UpdatePosition(_currentPosition != Vector3.zero ? _currentPosition : _startPosition);
 

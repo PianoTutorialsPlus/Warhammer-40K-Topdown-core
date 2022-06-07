@@ -1,6 +1,8 @@
+using Zenject;
+
 namespace Editor.Infrastructure
 {
-    public abstract class TestDataBuilder<T>
+    public abstract class TestDataBuilder<T> : ZenjectUnitTestFixture
     {
         public abstract T Build();
 

@@ -1,10 +1,11 @@
 {
     "name": "Zenject-UnitTests-Editor",
+    "rootNamespace": "",
     "references": [
-        "Zenject",
-        "Zenject-TestFramework",
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "Zenject",
+        "Zenject-TestFramework"
     ],
     "includePlatforms": [
         "Editor"

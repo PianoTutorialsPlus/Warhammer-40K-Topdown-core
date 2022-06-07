@@ -9,8 +9,7 @@ namespace WH40K.GamePhaseEvents
     /// </summary>
     public abstract class MovementPhases
     {
-        private IGamePhase _gamePhase;
-        protected IPhase _phase;/* => _gamePhase.BattleroundEvents;*/
+        protected IPhase _phase;
         protected GameTable _gameTable => GameStats.GameTable.gameTable;
 
         public MovementPhases(IPhase gamePhase)

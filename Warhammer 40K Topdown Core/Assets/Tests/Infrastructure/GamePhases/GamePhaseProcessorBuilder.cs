@@ -5,19 +5,21 @@ namespace Editor.Infrastructure.GamePhases
 {
     public class GamePhaseProcessorBuilder<T> : TestDataBuilder<T> where T : class
     {
-        private IGamePhase _gamePhase;
+        private IPhase _gamePhase;
 
         public GamePhaseProcessorBuilder()
         {
         }
-        public GamePhaseProcessorBuilder<T> WithGamePhase(IGamePhase gamePhase)
+        public GamePhaseProcessorBuilder<T> WithGamePhase(IPhase gamePhase)
         {
             _gamePhase = gamePhase;
             return this;
         }
         public override T Build()
         {
-            return Activator.CreateInstance(typeof(T), _gamePhase ??= A.GamePhase.Build()) as T;
+            Container.Bind<T>().AsSingle()
+                .WithArguments(_gamePhase ??= An.IPhaseEvent.Build());
+            return Container.Resolve<T>();
         }
     }
 }

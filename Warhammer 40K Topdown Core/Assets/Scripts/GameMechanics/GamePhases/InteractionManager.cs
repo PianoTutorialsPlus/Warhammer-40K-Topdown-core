@@ -29,7 +29,7 @@ namespace WH40K.GamePhaseEvents
 
         // Events
         private GameStatsEventChannelSO _setPhaseEvent = default;
-        private GameinfoUIEventChannelSO _toggleGameinfoUI = default;
+        private GameInfoUIEventChannelSO _toggleGameinfoUI = default;
         private BattleroundEventChannelSO _toggleBattleRounds = default;
 
         //Queues
@@ -58,7 +58,7 @@ namespace WH40K.GamePhaseEvents
         public void Construct(
             List<PlayerSO> players,
             BattleroundEventChannelSO battleroundEventChannel,
-            GameinfoUIEventChannelSO gameinfoUIEventChannel,
+            GameInfoUIEventChannelSO gameinfoUIEventChannel,
             GameStatsEventChannelSO gameStatsEventChannel)
         {
             _player1 = players[0];
