@@ -1,7 +1,7 @@
 using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
-using WH40K.PlayerEvents;
+using WH40K.Gameplay.PlayerEvents;
 using static UnityEngine.EventSystems.PointerEventData;
 
 namespace Editor.UnitTests

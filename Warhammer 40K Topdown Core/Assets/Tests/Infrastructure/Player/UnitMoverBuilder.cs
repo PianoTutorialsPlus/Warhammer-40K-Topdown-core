@@ -1,7 +1,7 @@
 ﻿using NSubstitute;
 using UnityEngine;
+using WH40K.Gameplay.PlayerEvents;
 using WH40K.NavMesh;
-using WH40K.PlayerEvents;
 
 namespace Editor.Infrastructure.Player
 {

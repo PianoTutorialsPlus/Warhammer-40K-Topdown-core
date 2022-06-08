@@ -1,5 +1,5 @@
-﻿using WH40K.NavMesh;
-using WH40K.PlayerEvents;
+﻿using WH40K.Gameplay.PlayerEvents;
+using WH40K.NavMesh;
 
 namespace Editor.Infrastructure.Player
 {

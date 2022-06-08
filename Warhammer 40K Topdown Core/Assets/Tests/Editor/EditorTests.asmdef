@@ -4,10 +4,14 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Scripts",
         "Zenject",
         "Zenject-TestFramework",
-        "Infrastructure"
+        "Infrastructure",
+        "WH40K.DiceEvents",
+        "WH40K.Gameplay",
+        "WH40K.NavMesh",
+        "WH40K.Stats",
+        "WH40K.UI"
     ],
     "includePlatforms": [
         "Editor"

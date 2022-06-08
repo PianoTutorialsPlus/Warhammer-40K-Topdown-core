@@ -1,5 +1,5 @@
 ﻿using Editor.Infrastructure.Player;
-using WH40K.PlayerEvents;
+using WH40K.Gameplay.PlayerEvents;
 
 namespace Editor.Infrastructure
 {

@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
+using WH40K.Gameplay.PlayerEvents;
 using WH40K.NavMesh;
-using WH40K.PlayerEvents;
+using WH40K.Stats.Player;
 using Zenject;
 
 namespace WH40K.Installers
@@ -44,6 +45,8 @@ namespace WH40K.Installers
         }
         private void InstallPhaseBindings()
         {
+            Container.BindInstance(_settings.Agent).AsSingle();
+
             Container.Bind<UnitMovementPhase>().FromNewComponentOn(_settings.Unit).AsSingle();
             Container.Bind<UnitShootingPhase>().FromNewComponentOn(_settings.Unit).AsSingle();
         }

@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
-using WH40K.Core;
-using WH40K.GamePhaseEvents;
+using WH40K.Gameplay.Core;
+using WH40K.Gameplay.GamePhaseEvents;
 
 namespace Editor.GameMechanics
 {

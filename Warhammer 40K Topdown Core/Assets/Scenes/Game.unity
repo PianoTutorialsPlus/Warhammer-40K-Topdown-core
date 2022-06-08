@@ -765,6 +765,12 @@ PrefabInstance:
       propertyPath: _components.Array.data[0]
       value: 
       objectReference: {fileID: 471910423}
+    - target: {fileID: 1305423203779708367, guid: c23b96e0d876a1b489cebf841ce6eb56,
+        type: 3}
+      propertyPath: _settings.WeaponSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 4a5aec3aa3d661c4b8fc25a0ab48c5df,
+        type: 2}
     - target: {fileID: 4266572808521110737, guid: c23b96e0d876a1b489cebf841ce6eb56,
         type: 3}
       propertyPath: m_RootOrder
@@ -941,7 +947,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52402a2036fabec4e94a57952f5fded8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unit: {fileID: 0}
 --- !u!1 &769505203
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,6 @@
 using TMPro;
 using UnityEngine;
-using WH40K.Core;
+using WH40K.Gameplay.Core;
 
 namespace WH40K.UI
 {

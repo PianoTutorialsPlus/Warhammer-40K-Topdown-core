@@ -1,23 +1,22 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.AI;
-using WH40K.PlayerEvents;
 
 namespace WH40K.NavMesh
 {
     public class PathCalculator : IPathCalculator
     {
-        private readonly NavMeshAgent m_Agent;
+        private readonly NavMeshAgent _agent;
         private readonly Settings _settings;
         private readonly NavMeshPath _path;
         private NavMeshPathPosition endPosition;
 
         public PathCalculator(
-            UnitModel model,
+            NavMeshAgent agent,
             Settings settings,
             NavMeshPath path)
         {
-            m_Agent = model.Agent;
+            _agent = agent;
             _settings = settings;
             _path = path;
 
@@ -26,20 +25,20 @@ namespace WH40K.NavMesh
 
         private void SetAgentSettings()
         {
-            m_Agent.speed = _settings.Speed;
-            m_Agent.acceleration = _settings.Acceleration;
-            m_Agent.angularSpeed = _settings.AngularSpeed;
-            m_Agent.isStopped = _settings.IsStopped;
+            _agent.speed = _settings.Speed;
+            _agent.acceleration = _settings.Acceleration;
+            _agent.angularSpeed = _settings.AngularSpeed;
+            _agent.isStopped = _settings.IsStopped;
         }
 
         public void SetEndPosition(Vector3 position)
         {
-            m_Agent.CalculatePath(position, _path);
+            _agent.CalculatePath(position, _path);
         }
         public void SetDestination(Vector3 position)
         {
             //position = GetEndPosition(position);
-            m_Agent.SetDestination(position);
+            _agent.SetDestination(position);
         }
 
         public Vector3 GetEndPosition(Vector3 position, float range)
@@ -55,21 +54,21 @@ namespace WH40K.NavMesh
             return endPosition.EndPosition;
         }
 
-        public bool IsPathCalculated => m_Agent.hasPath && !m_Agent.pathPending;
-        public bool AgentIsStopped => m_Agent.isStopped;
+        public bool IsPathCalculated => _agent.hasPath && !_agent.pathPending;
+        public bool AgentIsStopped => _agent.isStopped;
 
         public void ResetPath()
         {
-            m_Agent.ResetPath();
+            _agent.ResetPath();
         }
         public void ResetAgent()
         {
-            m_Agent.isStopped = false;
+            _agent.isStopped = false;
         }
         public void FreezeAgent()
         {
             ResetPath();
-            m_Agent.isStopped = true;
+            _agent.isStopped = true;
         }
 
         public Vector3 GetEndPosition(Vector3 position)

@@ -1,4 +1,4 @@
-using WH40K.GamePhaseEvents;
+using WH40K.Gameplay.GamePhaseEvents;
 using WH40K.UI;
 using Zenject;
 

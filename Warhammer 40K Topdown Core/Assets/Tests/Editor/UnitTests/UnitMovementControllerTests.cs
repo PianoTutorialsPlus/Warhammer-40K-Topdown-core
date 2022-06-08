@@ -2,7 +2,7 @@ using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
 using UnityEngine;
-using WH40K.PlayerEvents;
+using WH40K.Gameplay.PlayerEvents;
 
 namespace Editor.Units.Movement
 {

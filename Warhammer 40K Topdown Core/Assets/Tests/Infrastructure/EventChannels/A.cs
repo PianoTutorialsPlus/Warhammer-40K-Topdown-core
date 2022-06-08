@@ -1,5 +1,6 @@
 ﻿using Infrastructure.EventChannels;
-using WH40K.EventChannels;
+using WH40K.DiceEvents;
+using WH40K.Gameplay.EventChannels;
 
 namespace Editor.Infrastructure
 {

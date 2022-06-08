@@ -1,5 +1,5 @@
 using UnityEngine;
-using WH40K.PlayerEvents;
+using WH40K.Stats.Player;
 
 namespace WH40K.UI
 {

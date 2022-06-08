@@ -1,5 +1,5 @@
-﻿using WH40K.Core;
-using WH40K.PlayerEvents;
+﻿using WH40K.Gameplay.Core;
+using WH40K.Gameplay.PlayerEvents;
 
 namespace Editor.Infrastructure.GameStatss
 {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using WH40K.GamePhaseEvents;
+using WH40K.Gameplay.GamePhaseEvents;
 
 namespace
     WH40K.UI

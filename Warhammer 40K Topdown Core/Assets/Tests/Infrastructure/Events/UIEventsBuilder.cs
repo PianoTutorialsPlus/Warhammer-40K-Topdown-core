@@ -1,4 +1,4 @@
-﻿using WH40K.EventChannels;
+﻿using WH40K.Gameplay.EventChannels;
 
 namespace Editor.Infrastructure.Events
 {

@@ -1,5 +1,5 @@
 ﻿using NSubstitute;
-using WH40K.EventChannels;
+using WH40K.DiceEvents;
 
 namespace Editor.Infrastructure.Combat
 {

@@ -2,7 +2,7 @@ using Editor.Infrastructure;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using WH40K.GameMechanics.Combat;
+using WH40K.Gameplay.Combat;
 
 namespace Editor.CombatTests
 {

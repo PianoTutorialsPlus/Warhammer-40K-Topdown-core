@@ -1,7 +1,8 @@
 ﻿using NSubstitute;
 using UnityEngine;
 using UnityEngine.Events;
-using WH40K.PlayerEvents;
+using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats.Player;
 
 namespace Editor.Infrastructure.Player
 {

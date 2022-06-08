@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using WH40K.PlayerEvents;
+using WH40K.Gameplay.PlayerEvents;
 using Zenject;
 
 namespace WH40K.UI

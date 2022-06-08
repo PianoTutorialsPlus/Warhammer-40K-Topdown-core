@@ -1,8 +1,8 @@
 ﻿using Editor.Infrastructure;
 using System.Collections.Generic;
-using WH40K.EventChannels;
-using WH40K.GamePhaseEvents;
-using WH40K.PlayerEvents;
+using WH40K.DiceEvents;
+using WH40K.Gameplay.GamePhaseEvents;
+using WH40K.Gameplay.PlayerEvents;
 
 namespace Editor.GameMechanics
 {

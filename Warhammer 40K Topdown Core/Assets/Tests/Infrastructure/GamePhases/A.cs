@@ -1,5 +1,5 @@
 ﻿using Editor.Infrastructure.GamePhases;
-using WH40K.GamePhaseEvents;
+using WH40K.Gameplay.GamePhaseEvents;
 
 namespace Editor.Infrastructure
 {

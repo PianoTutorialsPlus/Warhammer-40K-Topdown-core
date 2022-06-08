@@ -1,23 +1,27 @@
 using System;
 using UnityEngine;
-using WH40K.GamePhaseEvents;
+using WH40K.Gameplay.GamePhaseEvents;
 using Zenject;
 
-// Uncomment if you want to add alternative game settings
-//[CreateAssetMenu(menuName = "Game Settings")]
-public class GameplaySettingsInstaller : ScriptableObjectInstaller<GameplaySettingsInstaller>
+namespace WH40K.Installers
 {
-    public GamePhaseSettings GamePhase;
 
-    [Serializable]
-    public class GamePhaseSettings
+    // Uncomment if you want to add alternative game settings
+    //[CreateAssetMenu(menuName = "Game Settings")]
+    public class GameplaySettingsInstaller : ScriptableObjectInstaller<GameplaySettingsInstaller>
     {
-        public MovementPhaseManager.Settings MovementPhaseHandler;
-        public ShootingPhaseManager.Settings ShootingPhaseHandler;
-    }
-    public override void InstallBindings()
-    {
-        Container.BindInstance(GamePhase.MovementPhaseHandler).IfNotBound();
-        Container.BindInstance(GamePhase.ShootingPhaseHandler).IfNotBound();
+        public GamePhaseSettings GamePhase;
+
+        [Serializable]
+        public class GamePhaseSettings
+        {
+            public MovementPhaseManager.Settings MovementPhaseHandler;
+            public ShootingPhaseManager.Settings ShootingPhaseHandler;
+        }
+        public override void InstallBindings()
+        {
+            Container.BindInstance(GamePhase.MovementPhaseHandler).IfNotBound();
+            Container.BindInstance(GamePhase.ShootingPhaseHandler).IfNotBound();
+        }
     }
 }

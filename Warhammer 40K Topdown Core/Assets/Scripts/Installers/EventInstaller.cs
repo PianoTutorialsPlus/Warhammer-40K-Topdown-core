@@ -1,9 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using WH40K.EventChannels;
-using WH40K.Events;
-using WH40K.GamePhaseEvents;
-using WH40K.InputEvents;
+using WH40K.Gameplay.EventChannels;
+using WH40K.Gameplay.Events;
 using Zenject;
 
 namespace WH40K.Installers

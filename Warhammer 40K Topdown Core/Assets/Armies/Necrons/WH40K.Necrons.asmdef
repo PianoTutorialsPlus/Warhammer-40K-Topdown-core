@@ -1,0 +1,17 @@
+{
+    "name": "WH40K.Armies.Necrons",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ab0657fcb8b44974594c8d2d4b917c1c",
+        "GUID:851b6dc58b4b24744ad1def4286c5b5d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

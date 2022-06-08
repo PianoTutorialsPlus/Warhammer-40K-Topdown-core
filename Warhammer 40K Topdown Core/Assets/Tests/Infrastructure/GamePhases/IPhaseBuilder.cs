@@ -1,5 +1,5 @@
 ﻿using NSubstitute;
-using WH40K.Events;
+using WH40K.Gameplay.Events;
 
 namespace Editor.Infrastructure.GamePhases
 {

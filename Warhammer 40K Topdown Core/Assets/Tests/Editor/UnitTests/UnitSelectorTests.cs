@@ -1,7 +1,8 @@
 using Editor.Infrastructure;
 using NUnit.Framework;
-using WH40K.Core;
-using WH40K.PlayerEvents;
+using WH40K.Gameplay.Core;
+using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats.Player;
 
 namespace Editor.Units
 {

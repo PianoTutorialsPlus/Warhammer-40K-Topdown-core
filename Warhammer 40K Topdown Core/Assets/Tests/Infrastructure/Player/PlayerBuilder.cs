@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using WH40K.PlayerEvents;
+using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats.Player;
 
 namespace Editor.Infrastructure.Player
 {

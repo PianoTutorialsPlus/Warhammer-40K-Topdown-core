@@ -1,0 +1,20 @@
+{
+    "name": "WH40K.Gameplay",
+    "rootNamespace": "",
+    "references": [
+        "GUID:851b6dc58b4b24744ad1def4286c5b5d",
+        "GUID:73a09c9090b7a5b44b5b957051a39e47",
+        "GUID:6b6e82f1ded062848adc11712cd38a74",
+        "GUID:0b9af5254cf2d0644838305e87923e92",
+        "GUID:7c71c58b930870942bb2f169492f36a4"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

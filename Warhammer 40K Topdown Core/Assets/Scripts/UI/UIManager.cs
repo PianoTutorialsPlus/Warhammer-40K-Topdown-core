@@ -1,7 +1,8 @@
 using UnityEngine;
-using WH40K.EventChannels;
-using WH40K.GamePhaseEvents;
-using WH40K.PlayerEvents;
+using WH40K.Gameplay.EventChannels;
+using WH40K.Gameplay.GamePhaseEvents;
+using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats.Player;
 
 namespace WH40K.UI
 {
