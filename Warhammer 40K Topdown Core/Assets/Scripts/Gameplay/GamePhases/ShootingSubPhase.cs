@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WH40K.Stats;
 
 /// <summary>
 /// This script executes the calls from the shooting phase manager in the specific state.

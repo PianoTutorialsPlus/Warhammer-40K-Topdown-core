@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
 using WH40K.Gameplay.GamePhaseEvents;
+using WH40K.Stats;
 
 namespace Editor.GameMechanics
 {

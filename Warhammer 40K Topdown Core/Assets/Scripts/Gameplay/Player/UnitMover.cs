@@ -10,30 +10,30 @@ namespace WH40K.Gameplay.PlayerEvents
     {
         private PathCalculator _pathCalculator;
         private UnitMovementController _moveController;
+        private UnitModel _model;
         private MovementRange _movementRange;
 
-        public Vector3 CurrentPosition => transform.position;
-        public bool IsAgentStopped => _pathCalculator.AgentIsStopped;
-        public MovementRange MovementRange => _movementRange;
-        public float Range => MovementRange.MoveRange;
-        public UnitMovementController MoveController => _moveController;
+        private Vector3 _currentPosition => _model.Position;
+        private bool _isAgentStopped => _pathCalculator.AgentIsStopped;
 
         [Inject]
         public void Construct(
             MovementRange movementRange,
             PathCalculator pathCalculator,
-            UnitMovementController moveController)
+            UnitMovementController moveController,
+            UnitModel model)
         {
             _pathCalculator = pathCalculator;
             _movementRange = movementRange;
             _moveController = moveController;
+            _model = model;
         }
 
         public void SetDestination(Vector3 position)
         {
-            if (!IsAgentStopped)
+            if (!_isAgentStopped)
             {
-                MoveController.SetDestination(position);
+                _moveController.SetDestination(position);
                 StartCoroutine(GoToCoroutine());
             }
         }
@@ -41,8 +41,8 @@ namespace WH40K.Gameplay.PlayerEvents
         {
             while (true)
             {
-                MovementRange.UpdatePosition(CurrentPosition);
-                MoveController.FreezeUnitsWithZeroMoveDistance();
+                _movementRange.UpdatePosition(_currentPosition);
+                _moveController.FreezeUnitsWithZeroMoveDistance();
 
                 yield return null;
             }

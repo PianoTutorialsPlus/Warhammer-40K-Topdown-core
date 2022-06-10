@@ -661,8 +661,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _settings:
     InputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
-    _player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
-    _player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
+    Player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
+    Player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
 --- !u!1 &1444388909
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,6 +839,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: TurnSO, Assembly-CSharp
       objectReference: {fileID: 0}
+    - target: {fileID: 4978401673311387251, guid: f14df0e68b1b78c448a87e2efa997aaf,
+        type: 3}
+      propertyPath: _gameStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 35ce459f6171db2468323492abf8bc33,
+        type: 2}
     - target: {fileID: 5914454280742843338, guid: f14df0e68b1b78c448a87e2efa997aaf,
         type: 3}
       propertyPath: m_Name

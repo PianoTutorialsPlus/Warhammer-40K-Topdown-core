@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats.Player;
 using Zenject;
 
 namespace WH40K.UI
@@ -43,7 +43,7 @@ namespace WH40K.UI
             while (true)
             {
                 yield return new WaitForEndOfFrame();
-                _rangeController.ScaleRange(unit.UnitMover.Range);
+                _rangeController.ScaleRange(unit.Range);
             }
         }
     }

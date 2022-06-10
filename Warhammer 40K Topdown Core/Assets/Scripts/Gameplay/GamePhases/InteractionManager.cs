@@ -1,18 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.Gameplay.EventChannels;
-using WH40K.Gameplay.Core;
 using Zenject;
-using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats.Player;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
     // Enum initialization
     public enum InteractionType { None = 0, Activate, ShowStats }
-    public enum GamePhase { MovementPhase, ShootingPhase }
-    public enum MovementPhase { None = 0, Selection, Move, Next }
-    public enum ShootingPhase { None = 0, Selection, Shoot, Next }
-    public enum ShootingSubEvents { None = 0, SelectEnemy, Hit, Wound, Save, Damage }
+
 
 
     /// <summary>
@@ -26,6 +23,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
         // Gameplay
         private PlayerSO _player1;
         private PlayerSO _player2;
+        private GameStatsSO _gameStats;
 
         // Events
         private GameStatsEventChannelSO _setPhaseEvent = default;
@@ -57,12 +55,14 @@ namespace WH40K.Gameplay.GamePhaseEvents
         [Inject]
         public void Construct(
             List<PlayerSO> players,
+            GameStatsSO gameStats,
             BattleroundEventChannelSO battleroundEventChannel,
             GameInfoUIEventChannelSO gameinfoUIEventChannel,
             GameStatsEventChannelSO gameStatsEventChannel)
         {
             _player1 = players[0];
             _player2 = players[1];
+            _gameStats = gameStats;
             _toggleBattleRounds = battleroundEventChannel;
             _toggleGameinfoUI = gameinfoUIEventChannel;
             _setPhaseEvent = gameStatsEventChannel;
@@ -98,7 +98,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
         private void SetNextPhaseToActive()
         {
             _gamePhase.Enqueue(_gamePhase.Dequeue());
-            GameStats.Phase = _gamePhase.Peek();
+            _gameStats.Phase = _gamePhase.Peek();
             GamePhaseProcessor.SetActivePlayerUnits(_gamePhase.Peek());
         }
 
@@ -109,21 +109,21 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
         public void TogglePlayers()
         {
-            if (GameStats.ActivePlayer == _player1)
+            if (_gameStats.ActivePlayer == _player1)
             {
-                GameStats.ActivePlayer = _player2;
-                GameStats.EnemyPlayer = _player1;
+                _gameStats.ActivePlayer = _player2;
+                _gameStats.EnemyPlayer = _player1;
             }
             else
             {
-                GameStats.ActivePlayer = _player1;
-                GameStats.EnemyPlayer = _player2;
+                _gameStats.ActivePlayer = _player1;
+                _gameStats.EnemyPlayer = _player2;
             }
         }
 
         private void SetNextBattleRound()
         {
-            if (GameStats.ActivePlayer == _player1) GameStats.Turn += 1;
+            if (_gameStats.ActivePlayer == _player1) _gameStats.Turn += 1;
         }
 
         private void ToggleBattleRoundsAndUI()

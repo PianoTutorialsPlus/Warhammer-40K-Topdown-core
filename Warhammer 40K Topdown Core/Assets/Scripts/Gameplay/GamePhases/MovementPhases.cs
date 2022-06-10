@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using WH40K.Gameplay.Core;
 using WH40K.Gameplay.Events;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
@@ -9,11 +10,13 @@ namespace WH40K.Gameplay.GamePhaseEvents
     /// </summary>
     public abstract class MovementPhases
     {
+        protected GameStatsSO _gameStats;
         protected IPhase _phase;
-        protected GameTable _gameTable => GameStats.GameTable.gameTable;
+        protected GameTable _gameTable => _gameStats.GameTable.GameTable.GetComponent<GameTable>();
 
-        public MovementPhases(IPhase gamePhase)
+        public MovementPhases(GameStatsSO gameStats, IPhase gamePhase)
         {
+            _gameStats = gameStats;
             _phase = gamePhase;
         }
 
@@ -30,7 +33,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
     public class M_Selection : MovementPhases
     {
-        public M_Selection(IPhase gamePhase) : base(gamePhase) { }
+        public M_Selection(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
 
         public override MovementPhase SubEvents => MovementPhase.Selection;
         public override void HandlePhase()
@@ -41,20 +44,20 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
     public class Move : MovementPhases
     {
-        public Move(IPhase gamePhase) : base(gamePhase) { }
+        public Move(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
 
         public override MovementPhase SubEvents => MovementPhase.Move;
 
         public override void HandlePhase()
         {
             _phase.HandlePhase();
-            if (GameStats.ActiveUnit != null) GameStats.ActiveUnit.Activate();
+            if (_gameStats.ActiveUnit != null) _gameStats.ActiveUnit.Activate();
             _gameTable.onTapDownAction += MoveUnit;
         }
 
         public override bool Next()
         {
-            if (GameStats.ActiveUnit != null) return GameStats.ActiveUnit.IsDone;
+            if (_gameStats.ActiveUnit != null) return _gameStats.ActiveUnit.IsDone;
             return false;
         }
         public override void ClearPhase()
@@ -64,19 +67,19 @@ namespace WH40K.Gameplay.GamePhaseEvents
         }
         public void MoveUnit(Vector3 position)
         {
-            GameStats.ActiveUnit.SetDestination(position);
+            _gameStats.ActiveUnit.SetDestination(position);
         }
     }
 
     public class MNext : MovementPhases
     {
-        public MNext(IPhase gamePhase) : base(gamePhase) { }
+        public MNext(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
         public override MovementPhase SubEvents => MovementPhase.Next;
 
         public override bool Next()
         {
             //gameStats.activeUnit.Freeze();
-            GameStats.ActiveUnit = null;
+            _gameStats.ActiveUnit = null;
             return true;
         }
     }

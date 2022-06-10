@@ -1,4 +1,5 @@
 ﻿using UnityEngine.Events;
+using WH40K.Stats.Player;
 
 namespace WH40K.Gameplay.PlayerEvents
 {

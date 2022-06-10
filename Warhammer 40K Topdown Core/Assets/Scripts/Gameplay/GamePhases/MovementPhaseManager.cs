@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.Gameplay.EventChannels;
-using WH40K.Gameplay.Core;
 using WH40K.InputEvents;
 using Zenject;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
@@ -19,6 +19,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
     {
         // Gameplay
         private InputReader _inputReader;
+        private GameStatsSO _gameStats;
 
         // Events
         private BattleroundEventChannelSO _setMovementPhaseEvent;
@@ -31,10 +32,12 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
         [Inject]
         public void Construct(
+            GameStatsSO gameStats,
             BattleroundEventChannelSO battleroundEventChannel,
             Settings settings,
             InputReader inputReader)
         {
+            _gameStats = gameStats;
             _setMovementPhaseEvent = battleroundEventChannel;
             _settings = settings;
             _inputReader = inputReader;
@@ -76,7 +79,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
             Debug.Log("movementphase: " + movementPhase.Peek());
             MovementPhaseProcessor.HandlePhase(movementPhase.Peek());
 
-            if (GameStats.ActiveUnit != null) _inputReader.ActivateEvent += NextPhase;
+            if (_gameStats.ActiveUnit != null) _inputReader.ActivateEvent += NextPhase;
             if (MovementPhaseProcessor.Next(movementPhase.Peek())) NextPhase();
         }
 

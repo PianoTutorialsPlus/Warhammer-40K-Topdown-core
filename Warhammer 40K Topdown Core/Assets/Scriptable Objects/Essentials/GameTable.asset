@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 137340457b3768d4794ef97b5335d69c, type: 3}
+  m_Script: {fileID: 11500000, guid: 043335fa54b969f409807445705dc27c, type: 3}
   m_Name: GameTable
   m_EditorClassIdentifier: 
-  gameTable: {fileID: 5126645208838961181, guid: 4ba62c71bb10c214eab8a3812e5b96e9,
-    type: 3}
+  GameTable: {fileID: 0}

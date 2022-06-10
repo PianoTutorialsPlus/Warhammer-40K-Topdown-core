@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Events;
 
-namespace WH40K.Gameplay.PlayerEvents
+namespace WH40K.Stats.Player
 {
     public interface IUnitPointer
     {

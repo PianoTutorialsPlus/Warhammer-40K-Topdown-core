@@ -1,17 +1,20 @@
 ﻿using WH40K.Gameplay.EventChannels;
-using WH40K.Gameplay.Core;
 using WH40K.Stats.Player;
-using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.Events
 {
     public class BattleRoundEvents
     {
+        private GameStatsSO _gameStats;
         public BattleroundEventChannelSO _setPhaseEvent;
-        public Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
+        public Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
 
-        public BattleRoundEvents(BattleroundEventChannelSO phaseEvent)
+        public BattleRoundEvents(
+            BattleroundEventChannelSO phaseEvent,
+            GameStatsSO gameStats)
         {
+            _gameStats = gameStats;
             _setPhaseEvent = phaseEvent;
         }
         public void SetPhaseEvent(IUnit child)

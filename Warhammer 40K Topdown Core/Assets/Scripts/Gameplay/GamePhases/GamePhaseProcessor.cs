@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using UnityEngine;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
@@ -16,12 +18,14 @@ namespace WH40K.Gameplay.GamePhaseEvents
         private static Dictionary<GamePhase, PhaseManagerBase> _gamePhaseManagers => _interactionManager.GamePhaseManagers;
 
         private static bool _initialized;
+        private static GameStatsSO _gameStats;
         private static IInteractionManager _interactionManager;
 
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
 
-        public GamePhaseProcessor(IInteractionManager interactionManager)
+        public GamePhaseProcessor(GameStatsSO gameStats, IInteractionManager interactionManager)
         {
+            _gameStats = gameStats;
             _interactionManager = interactionManager;
         }
 
@@ -35,7 +39,8 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
             foreach (var subphase in allPhases)
             {
-                GamePhases gamePhases = Activator.CreateInstance(subphase) as GamePhases;
+                Debug.Log(_gameStats);
+                GamePhases gamePhases = Activator.CreateInstance(subphase, args:_gameStats) as GamePhases;
                 _gamePhases.Add(gamePhases.SubEvents, gamePhases);
             }
 

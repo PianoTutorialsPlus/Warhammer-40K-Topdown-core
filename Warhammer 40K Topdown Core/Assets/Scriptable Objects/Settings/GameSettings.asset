@@ -28,3 +28,7 @@ MonoBehaviour:
       Acceleration: 999
       AngularSpeed: 999
       IsStopped: 0
+  Table:
+    TableHandler:
+      GameTable: {fileID: 3652778697038374406, guid: 4ba62c71bb10c214eab8a3812e5b96e9,
+        type: 3}

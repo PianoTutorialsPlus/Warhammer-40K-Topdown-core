@@ -41,7 +41,6 @@ namespace WH40K.Stats.Player
         public new string name { get => _name; }
         public Fraction Fraction { get => _fraction; protected set => _fraction = value; }
         public int Movement { get => _movement; protected set => _movement = value; }
-
         public int WeaponSkill => _weaponSkill;
         public int Wounds => _wounds;
         public int Attacks => _attack;

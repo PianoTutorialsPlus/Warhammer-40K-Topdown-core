@@ -1,7 +1,7 @@
 using Editor.Infrastructure;
 using NUnit.Framework;
 using System;
-using WH40K.Gameplay.Combat;
+using WH40K.Stats.Combat;
 
 namespace Editor.CombatTests
 {

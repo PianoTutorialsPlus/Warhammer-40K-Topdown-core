@@ -20,6 +20,8 @@ namespace WH40K.Gameplay.PlayerEvents
         private UnitModel _model;
         private UnitStats _unitStats;
         private UnitPointer _unitPointer;
+        private MovementRange _movementRange;
+        private UnitMover _unitMover;
 
         public Fraction Fraction => _unitStats.Fraction;
         public bool IsDone => _unitStats.IsDone;
@@ -29,9 +31,8 @@ namespace WH40K.Gameplay.PlayerEvents
 
         public UnitMovementPhase UnitMovementPhase;
         public UnitShootingPhase UnitShootingPhase;
-        public UnitMover UnitMover { get; protected set; }
+        
 
-        public UnitFacade unit => this;
         public UnityAction<IUnit> OnTapDownAction { get => _unitPointer.OnTapDownAction; set => _unitPointer.OnTapDownAction = value; }
         public UnityAction OnPointerEnter { get => _unitPointer.OnPointerEnter; set => _unitPointer.OnPointerEnter = value; }
         public UnityAction<IUnit> OnPointerEnterInfo { get => _unitPointer.OnPointerEnterInfo; set => _unitPointer.OnPointerEnterInfo = value; }
@@ -49,6 +50,8 @@ namespace WH40K.Gameplay.PlayerEvents
         public int ArmourSave => _unitStats.ArmourSave;
         public int Wounds { get; set; }
 
+        public float Range => _movementRange.MoveRange;
+
         protected void Awake()
         {
             Wounds = 2;//_unitSO.Wounds;
@@ -59,6 +62,7 @@ namespace WH40K.Gameplay.PlayerEvents
             UnitStats unitStats,
             UnitMover unitMover,
             UnitPointer unitPointer,
+            MovementRange movementRange,
             UnitMovementPhase unitMovementPhase,
             UnitShootingPhase unitShootingPhase,
             UnitModel model)
@@ -66,7 +70,8 @@ namespace WH40K.Gameplay.PlayerEvents
             _model = model;
             _unitStats = unitStats;
             _unitPointer = unitPointer;
-            UnitMover = unitMover;
+            _movementRange = movementRange;
+            _unitMover = unitMover;
             UnitMovementPhase = unitMovementPhase;
             UnitShootingPhase = unitShootingPhase;
         }
@@ -74,7 +79,7 @@ namespace WH40K.Gameplay.PlayerEvents
         public void ResetData()
         {
             _unitStats.UnFreeze();
-            UnitMover.MovementRange.ResetRange();
+            _movementRange.ResetRange();
             //Debug.Log("Reset:" + name);
             //////canMove = true;
             //canShoot = true;
@@ -96,7 +101,7 @@ namespace WH40K.Gameplay.PlayerEvents
         }
         public void SetDestination(Vector3 position)
         {
-            UnitMover.SetDestination(position);
+            _unitMover.SetDestination(position);
         }
         public void PrepareShootingPhase()
         {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using WH40K.Gameplay.Combat;
+using WH40K.Stats.Combat;
 
 namespace Editor.Infrastructure.Combat
 {

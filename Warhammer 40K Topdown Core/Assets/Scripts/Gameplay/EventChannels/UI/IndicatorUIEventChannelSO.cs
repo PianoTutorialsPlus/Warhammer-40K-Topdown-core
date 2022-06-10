@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
-using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats.Player;
 
 /// <summary>
 /// This class is used for Events to set the distance Indicator UI.

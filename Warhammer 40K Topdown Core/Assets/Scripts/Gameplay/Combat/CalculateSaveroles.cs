@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.DiceEvents;
-using WH40K.Gameplay.Core;
 using WH40K.Gameplay.GamePhaseEvents;
+using WH40K.Stats;
+using WH40K.Stats.Combat;
 
 namespace WH40K.Gameplay.Combat
 {
     public class CalculateSaveroles : CombatPhases, ICalculation
     {
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Save;
-        private int Saves => GameStats.EnemyUnit.ArmourSave;
-        private int Modifier => GameStats.ActiveUnit.WeaponArmourPen;
+        private int Saves => _gameStats.EnemyUnit.ArmourSave;
+        private int Modifier => _gameStats.ActiveUnit.WeaponArmourPen;
         private int ModifiedSaves => Saves - Modifier;
 
-        public CalculateSaveroles(IResult results) : base(results) { }
+        public CalculateSaveroles(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
 
         public override void Action(List<int> wounds)
         {

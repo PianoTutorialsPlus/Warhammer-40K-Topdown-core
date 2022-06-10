@@ -12,8 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527bc801248a3f246997e4dbd1099994, type: 3}
   m_Name: GameplaySettingsInstaller
   m_EditorClassIdentifier: 
+  GameStats:
+    GameStatsHandler:
+      Turn: 1
+      ActivePlayer: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
+      EnemyPlayer: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
+      GameTable: {fileID: 11400000, guid: ce27887eadea6be40af3669d3ecd1558, type: 2}
+      Phase: 0
   GamePhase:
     MovementPhaseHandler:
       Enabled: 1
     ShootingPhaseHandler:
       Enabled: 0
+  UI:
+    RangeControllerHandler:
+      Scale: 3.5

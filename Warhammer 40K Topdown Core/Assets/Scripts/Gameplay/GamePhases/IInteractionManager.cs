@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {

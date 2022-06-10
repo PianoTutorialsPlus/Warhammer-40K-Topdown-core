@@ -18,7 +18,7 @@ namespace Editor.Infrastructure.Combat
 
         public override CombatProcessor Build()
         {
-            var combatProcessor = new CombatProcessor(_result ??= An.IResultEvent.Build());
+            var combatProcessor = new CombatProcessor(A.GameStats.Build(),_result ??= An.IResultEvent.Build());
             return combatProcessor;
         }
     }

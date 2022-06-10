@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using WH40K.Gameplay.Core;
+using WH40K.Stats;
 using WH40K.Stats.Player;
 
 namespace WH40K.Gameplay.PlayerEvents
@@ -7,13 +7,17 @@ namespace WH40K.Gameplay.PlayerEvents
     public class UnitSelector
     {
         private IUnit _unit;
+        private GameStatsSO _gameStats;
 
-        private Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
-        private Fraction _enemyFraction => GameStats.EnemyPlayer.Fraction;
+        private Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
+        private Fraction _enemyFraction => _gameStats.EnemyPlayer.Fraction;
 
-        public UnitSelector(IUnit unit)
+        public UnitSelector(
+            IUnit unit, 
+            GameStatsSO gameStats)
         {
             _unit = unit;
+            _gameStats = gameStats;
         }
         public void SelectUnit()
         {
@@ -22,7 +26,7 @@ namespace WH40K.Gameplay.PlayerEvents
 
         private void SetActiveUnit(IUnit unit)
         {
-            GameStats.ActiveUnit = unit;
+            _gameStats.ActiveUnit = unit;
         }
         public void SelectEnemyUnit()
         {
@@ -30,7 +34,7 @@ namespace WH40K.Gameplay.PlayerEvents
         }
         private void SetEnemyUnit(IUnit unit)
         {
-            GameStats.EnemyUnit = unit;
+            _gameStats.EnemyUnit = unit;
         }
         public IUnit GetUnit(Fraction enemyFraction = Fraction.None)
         {

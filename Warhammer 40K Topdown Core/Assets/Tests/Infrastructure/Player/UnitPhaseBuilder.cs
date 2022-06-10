@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using WH40K.Gameplay.PlayerEvents;
 using WH40K.NavMesh;
+using WH40K.Stats.Player;
 
 namespace Editor.Infrastructure
 {

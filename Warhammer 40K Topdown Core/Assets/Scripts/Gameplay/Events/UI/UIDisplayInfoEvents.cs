@@ -1,20 +1,23 @@
 ﻿using WH40K.Gameplay.EventChannels;
-using WH40K.Gameplay.Core;
 using WH40K.Stats.Player;
-using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.Events
 {
     public class UIDisplayInfoEvents
     {
-        private Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
+        private Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
+
+        private GameStatsSO _gameStats;
         private InfoUIEventChannelSO _toggleInfoUI;
         private InfoUIEventChannelSO _toggleEnemyInfoUI;
 
         public UIDisplayInfoEvents(
+            GameStatsSO gameStats,
             InfoUIEventChannelSO infoUIEvent,
             InfoUIEventChannelSO enemyInfoUIEvent)
         {
+            _gameStats = gameStats;
             _toggleInfoUI = infoUIEvent;
             _toggleEnemyInfoUI = enemyInfoUIEvent;
         }

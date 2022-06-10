@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {

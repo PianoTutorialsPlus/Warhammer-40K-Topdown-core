@@ -18,7 +18,7 @@ namespace WH40K.UI
         public GameInfoUIEventChannelSO SetGameinfoEvent;
 
         //public PhaseEventChannelSO SetPhaseEvent;
-        private UnitFacade unit = default;
+        //private UnitFacade unit = default;
 
 
         private void OnEnable()
@@ -31,19 +31,12 @@ namespace WH40K.UI
             if (SetGameinfoEvent != null) SetGameinfoEvent.OnEventRaised += SetGameinfoPanel;
 
         }
-        // Start is called before the first frame update
-        private void Start()
-        {
-
-        }
 
         [SerializeField] UIInteractionManager interactionPanel;
         [SerializeField] UIInfoManager infoPanel;
         [SerializeField] UIInfoManager enemyInfoPanel;
         [SerializeField] UIRangeIndicator distanceIndicator;
         [SerializeField] UIGameInfoManager gameinfoPanel;
-
-
 
         public void SetInteractionPanel(bool isOpenEvent, InteractionType interactionType)
         {

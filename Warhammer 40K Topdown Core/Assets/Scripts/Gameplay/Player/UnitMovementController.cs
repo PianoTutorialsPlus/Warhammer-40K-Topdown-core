@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using WH40K.NavMesh;
+using WH40K.Stats.Player;
 
 namespace WH40K.Gameplay.PlayerEvents
 {

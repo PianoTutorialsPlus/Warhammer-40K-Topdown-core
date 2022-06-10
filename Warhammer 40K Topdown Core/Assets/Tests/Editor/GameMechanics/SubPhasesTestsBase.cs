@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using WH40K.DiceEvents;
 using WH40K.Gameplay.GamePhaseEvents;
-using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats.Player;
 
 namespace Editor.GameMechanics
 {

@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.Gameplay.EventChannels;
-using WH40K.Gameplay.Core;
 using WH40K.InputEvents;
 using Zenject;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
@@ -22,6 +22,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
         // Gameplay
         private InputReader _inputReader;
         private ShootingSubPhaseManager _shootingSubPhaseManager;
+        private GameStatsSO _gameStats;
         private Settings _settings;
 
         //Events
@@ -44,10 +45,12 @@ namespace WH40K.Gameplay.GamePhaseEvents
         [Inject]
         public void Construct(
             Settings settings,
+            GameStatsSO gameStats,
             BattleroundEventChannelSO battleroundEventChannel,
             ShootingSubPhaseManager shootingSubPhaseManager,
             InputReader inputReader)
         {
+            _gameStats = gameStats;
             _settings = settings;
             _setShootingPhaseEvent = battleroundEventChannel;
             _shootingSubPhaseManager = shootingSubPhaseManager;
@@ -79,7 +82,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
             ClearPhase();
             ShootingPhaseProcessor.HandlePhase(shootingPhase.Peek());
             //Debug.Log("ShootingPhaseManager");
-            if (GameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
+            if (_gameStats.ActiveUnit != null) InputReader.ActivateEvent += NextPhase;
             if (shootingPhase.Peek() == ShootingPhase.Shoot) _shootingSubPhaseManager.enabled = true;
             if (ShootingPhaseProcessor.Next(shootingPhase.Peek())) NextPhase();
         }

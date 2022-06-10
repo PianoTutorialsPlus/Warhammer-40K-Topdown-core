@@ -1,5 +1,6 @@
-﻿using WH40K.Gameplay.Core;
+﻿using UnityEngine;
 using WH40K.Gameplay.Events;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
@@ -8,11 +9,13 @@ namespace WH40K.Gameplay.GamePhaseEvents
     /// </summary>
     public abstract class ShootingPhases
     {
-        private IGamePhase _gamePhase;
+        protected GameStatsSO _gameStats;
         protected IPhase _phase;/* => _gamePhase.BattleroundEvents;*/
 
-        public ShootingPhases(IPhase gamePhase)
+        public ShootingPhases(GameStatsSO gameStats, IPhase gamePhase)
         {
+            Debug.Log(gameStats);
+            _gameStats = gameStats;
             _phase = gamePhase;
         }
 
@@ -27,7 +30,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
     public class S_Selection : ShootingPhases
     {
-        public S_Selection(IPhase gamePhase) : base(gamePhase) { }
+        public S_Selection(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
         public override ShootingPhase SubEvents => ShootingPhase.Selection;
         public override void HandlePhase()
         {
@@ -38,19 +41,19 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
     public class S_Shoot : ShootingPhases
     {
-        public S_Shoot(IPhase gamePhase) : base(gamePhase) { }
+        public S_Shoot(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
         public override ShootingPhase SubEvents => ShootingPhase.Shoot;
         public override void HandlePhase() { }
     }
 
     public class S_Next : ShootingPhases
     {
-        public S_Next(IPhase gamePhase) : base(gamePhase) { }
+        public S_Next(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
         public override ShootingPhase SubEvents => ShootingPhase.Next;
         public override bool Next()
         {
-            GameStats.ActiveUnit.Freeze();
-            GameStats.ActiveUnit = null;
+            _gameStats.ActiveUnit.Freeze();
+            _gameStats.ActiveUnit = null;
             return true;
         }
     }

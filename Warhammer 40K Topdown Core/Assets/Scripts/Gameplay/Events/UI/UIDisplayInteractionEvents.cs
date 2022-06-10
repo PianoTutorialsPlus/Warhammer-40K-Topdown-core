@@ -1,20 +1,24 @@
 ﻿using WH40K.Gameplay.EventChannels;
-using WH40K.Gameplay.Core;
 using WH40K.Stats.Player;
 using WH40K.Gameplay.GamePhaseEvents;
-using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.Events
 {
     public class UIDisplayInteractionEvents
     {
-        private Fraction _playerFraction => GameStats.ActivePlayer.Fraction;
-        private IStats _activeUnit => GameStats.ActiveUnit;
+        private Fraction _playerFraction => _gameStats.ActivePlayer.Fraction;
+        private IStats _activeUnit => _gameStats.ActiveUnit;
         public bool IsUnitActive(IStats child) => child == _activeUnit;
+
+        private GameStatsSO _gameStats;
         private InteractionUIEventChannelSO _toggleInteractionUI;
 
-        public UIDisplayInteractionEvents(InteractionUIEventChannelSO interactionUIEvent)
+        public UIDisplayInteractionEvents(
+            GameStatsSO gameStats,
+            InteractionUIEventChannelSO interactionUIEvent)
         {
+            _gameStats = gameStats;
             _toggleInteractionUI = interactionUIEvent;
         }
 

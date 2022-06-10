@@ -5,13 +5,16 @@ namespace WH40K.UI
 {
     public class UIRangeController
     {
-        private float _scale = 3.5f;
+        private float _scale;
         private IUIRangeIndicator _rangeIndicator;
         private float _baseSize => _rangeIndicator.BaseSize;
 
-        public UIRangeController(IUIRangeIndicator rangeIndicator)
+        public UIRangeController(
+            IUIRangeIndicator rangeIndicator,
+            Settings settings)
         {
             _rangeIndicator = rangeIndicator;
+            _scale = settings.Scale;
         }
         public void SetPosition(Vector3 position)
         {
@@ -25,6 +28,12 @@ namespace WH40K.UI
             Vector3 actionArea = new Vector3(actionRadiusXZ, 1, actionRadiusXZ);
 
             _rangeIndicator.LocalScale = actionArea;
+        }
+
+        [Serializable]
+        public class Settings
+        {
+            public float Scale;
         }
     }
 }

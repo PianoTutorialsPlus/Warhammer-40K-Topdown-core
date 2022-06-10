@@ -1,8 +1,6 @@
 ﻿namespace WH40K.Stats.Player
 {
-    public interface IStats : IWeaponStats, IUnitStats, IUnitCondition
+    public interface IStats : IWeaponStats, IUnitStats, IUnitCondition, IUnitProperties
     {
-
-
     }
 }

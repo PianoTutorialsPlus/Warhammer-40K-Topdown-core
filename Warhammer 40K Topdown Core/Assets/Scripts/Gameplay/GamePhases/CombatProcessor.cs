@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using WH40K.DiceEvents;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
@@ -12,13 +13,15 @@ namespace WH40K.Gameplay.GamePhaseEvents
         // Variables
         private static Dictionary<ShootingSubEvents, CombatPhases> _combatPhase = new Dictionary<ShootingSubEvents, CombatPhases>();
         public static bool _initialized;
+        private static GameStatsSO _gameStats;
         private static IResult _result;
 
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
 
-        public CombatProcessor(IResult result)
+        public CombatProcessor(GameStatsSO gameStats, IResult result)
         {
             Debug.Log("Do I get Here");
+            _gameStats = gameStats;
             _result = result;
         }
 
@@ -32,7 +35,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
             foreach (var subphase in allCombatSubPhases)
             {
-                CombatPhases combatPhase = Activator.CreateInstance(subphase, _result) as CombatPhases;
+                CombatPhases combatPhase = Activator.CreateInstance(subphase, _result, _gameStats) as CombatPhases;
                 _combatPhase.Add(combatPhase.SubEvents, combatPhase);
             }
 

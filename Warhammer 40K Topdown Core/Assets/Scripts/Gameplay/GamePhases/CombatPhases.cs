@@ -1,18 +1,23 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using WH40K.DiceEvents;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
     public abstract class CombatPhases
     {
+        protected readonly GameStatsSO _gameStats;
         protected readonly IResult _results;
         public abstract ShootingSubEvents SubEvents { get; } // gets the active subphase
         protected RollTheDiceEventChannelSO _diceSubResult => _results.DiceSubResult;
         protected RollTheDiceEventChannelSO _diceAction => _results.DiceAction;
         protected RollTheDiceEventChannelSO _diceResult => _results.DiceResult;
-        protected CombatPhases(IResult results)
+        protected CombatPhases(
+            IResult results, 
+            GameStatsSO gameStats)
         {
+            _gameStats = gameStats;
             _results = results;
         }
         protected void OnEnable()

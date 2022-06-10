@@ -4,7 +4,7 @@ using Zenject;
 namespace WH40K.Stats.Player
 {
     public enum Fraction { None = 0, SpaceMarines, Necrons }
-    public class UnitStats : IInitializable
+    public partial class UnitStats : IInitializable
     {
         private Settings _settings;
         private WeaponSO _weaponSO;
@@ -60,7 +60,6 @@ namespace WH40K.Stats.Player
             _done = false;
             _activated = false;
         }
-
         [Serializable]
         public class Settings
         {

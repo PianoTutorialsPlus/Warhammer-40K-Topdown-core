@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.DiceEvents;
-using WH40K.Gameplay.Core;
 using WH40K.Gameplay.GamePhaseEvents;
+using WH40K.Stats;
+using WH40K.Stats.Combat;
 
 namespace WH40K.Gameplay.Combat
 {
@@ -10,9 +11,9 @@ namespace WH40K.Gameplay.Combat
     {
         public override ShootingSubEvents SubEvents => ShootingSubEvents.Damage;
 
-        private int Damage => GameStats.ActiveUnit.WeaponDamage;
+        private int Damage => _gameStats.ActiveUnit.WeaponDamage;
 
-        public DealDamage(IResult results) : base(results) { }
+        public DealDamage(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
 
         public override void Action(List<int> notSaved)
         {
@@ -20,7 +21,7 @@ namespace WH40K.Gameplay.Combat
             OnEnable();
             var wounds = new Wounds(notSaved);
             var damage = wounds.TakeDamage(Damage);
-            GameStats.EnemyUnit.TakeDamage(damage);
+            _gameStats.EnemyUnit.TakeDamage(damage);
 
             Result();
         }

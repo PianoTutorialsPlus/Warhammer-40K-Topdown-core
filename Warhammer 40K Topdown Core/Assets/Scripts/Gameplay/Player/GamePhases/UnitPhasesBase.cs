@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using WH40K.Stats.Player;
 using Zenject;
 
 namespace WH40K.Gameplay.PlayerEvents

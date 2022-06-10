@@ -5,6 +5,8 @@ using WH40K.Gameplay;
 using WH40K.Gameplay.GamePhaseEvents;
 using WH40K.Gameplay.PlayerEvents;
 using WH40K.InputEvents;
+using WH40K.Stats;
+using WH40K.Stats.Player;
 using Zenject;
 
 public class GamePhaseInstaller : MonoInstaller
@@ -13,7 +15,7 @@ public class GamePhaseInstaller : MonoInstaller
     Settings _settings = null;
     public override void InstallBindings()
     {
-        Container.BindInstance(new List<PlayerSO> { _settings._player1, _settings._player2 });
+        Container.BindInstance(new List<PlayerSO> { _settings.Player1, _settings.Player2 });
         Container.BindInstance(_settings.InputReader).AsSingle();
 
         Container.BindInterfacesTo<Initializer>().FromComponentInHierarchy().AsSingle();
@@ -26,7 +28,7 @@ public class GamePhaseInstaller : MonoInstaller
     {
         public InputReader InputReader;
 
-        public PlayerSO _player1;
-        public PlayerSO _player2;
+        public PlayerSO Player1;
+        public PlayerSO Player2;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using WH40K.Gameplay.Events;
+using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
@@ -16,11 +17,13 @@ namespace WH40K.Gameplay.GamePhaseEvents
         // Variables
         private static Dictionary<MovementPhase, MovementPhases> _movementPhases = new Dictionary<MovementPhase, MovementPhases>();
         private static bool _initialized;
+        private static GameStatsSO _gameStats;
         private static IPhase _gamePhase;
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
 
-        public MovementPhaseProcessor(IPhase gamePhase)
+        public MovementPhaseProcessor(GameStatsSO gameStats, IPhase gamePhase)
         {
+            _gameStats = gameStats;
             _gamePhase = gamePhase;
         }
 
@@ -34,7 +37,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
             foreach (var subphase in allShootingPhases)
             {
-                MovementPhases movementPhases = Activator.CreateInstance(subphase, _gamePhase) as MovementPhases;
+                MovementPhases movementPhases = Activator.CreateInstance(subphase, _gameStats, _gamePhase) as MovementPhases;
                 _movementPhases.Add(movementPhases.SubEvents, movementPhases);
             }
 

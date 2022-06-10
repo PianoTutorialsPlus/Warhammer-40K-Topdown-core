@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using WH40K.DiceEvents;
 using WH40K.InputEvents;
+using WH40K.Stats;
 using Zenject;
 
 namespace WH40K.Gameplay.GamePhaseEvents
