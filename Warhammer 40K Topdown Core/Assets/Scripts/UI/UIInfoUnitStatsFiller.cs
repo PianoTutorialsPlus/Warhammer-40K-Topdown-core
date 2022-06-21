@@ -13,7 +13,7 @@ namespace WH40K.UI
 
         public void FillInfoPanel(IStats unit)
         {
-            infoUnitName.text = unit.WeaponName;
+            infoUnitName.text = unit.Name;
             infoUnitStats.text = unit.Movement.ToString();
             infoWeaponName.text = unit.WeaponName;
             infoWeaponStats.text = unit.WeaponRange.ToString();

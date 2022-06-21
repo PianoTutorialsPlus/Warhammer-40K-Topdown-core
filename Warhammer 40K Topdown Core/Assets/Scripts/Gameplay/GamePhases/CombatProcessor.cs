@@ -16,7 +16,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
         private static GameStatsSO _gameStats;
         private static IResult _result;
 
-        public bool Initialized { get => _initialized; protected set => _initialized = value; }
+        public static bool Initialized { get => _initialized; set => _initialized = value; }
 
         public CombatProcessor(GameStatsSO gameStats, IResult result)
         {
@@ -25,7 +25,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
             _result = result;
         }
 
-        private static void Initialize()
+        public static void Initialize()
         {
             if (_initialized) return;
             _combatPhase.Clear();
@@ -35,6 +35,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
             foreach (var subphase in allCombatSubPhases)
             {
+                Debug.Log("CombatProcessor");
                 CombatPhases combatPhase = Activator.CreateInstance(subphase, _result, _gameStats) as CombatPhases;
                 _combatPhase.Add(combatPhase.SubEvents, combatPhase);
             }

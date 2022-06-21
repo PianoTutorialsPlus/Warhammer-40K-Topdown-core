@@ -16,6 +16,10 @@ namespace WH40K.Gameplay.Combat
 
         public CalculateHits(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
 
+        public CalculateHits()
+        {
+        }
+
         public override void Action(List<int> action)
         {
             OnEnable();

@@ -2,13 +2,14 @@
 using UnityEngine;
 using WH40K.DiceEvents;
 using WH40K.Stats;
+using Zenject;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
     public abstract class CombatPhases
     {
-        protected readonly GameStatsSO _gameStats;
-        protected readonly IResult _results;
+        protected GameStatsSO _gameStats;
+        protected IResult _results;
         public abstract ShootingSubEvents SubEvents { get; } // gets the active subphase
         protected RollTheDiceEventChannelSO _diceSubResult => _results.DiceSubResult;
         protected RollTheDiceEventChannelSO _diceAction => _results.DiceAction;
@@ -20,6 +21,11 @@ namespace WH40K.Gameplay.GamePhaseEvents
             _gameStats = gameStats;
             _results = results;
         }
+
+        protected CombatPhases()
+        {
+        }
+
         protected void OnEnable()
         {
             Debug.Log("Enabled in " + SubEvents);

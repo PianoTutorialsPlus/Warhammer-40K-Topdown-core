@@ -25,11 +25,13 @@ namespace WH40K.Gameplay.GamePhaseEvents
         }
         [Inject]
         public void Construct(
-            RollTheDiceEventChannelSO diceResult,
+            [Inject (Id = "Result")] RollTheDiceEventChannelSO diceResult,
             ShootingPhaseManager shootingPhaseManager,
             InputReader inputReader)
         {
             _diceResult = diceResult;
+            Debug.Log("ShootingSubphaseManager");
+            Debug.Log(diceResult);
             _shootingPhase = shootingPhaseManager;
             _inputReader = inputReader;
         }

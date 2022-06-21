@@ -8,7 +8,7 @@ using Zenject;
 
 namespace WH40K.Installers
 {
-    public class UnitInstaller : MonoInstaller
+    public class UnitInstaller : MonoInstaller<UnitInstaller>
     {
         [SerializeField]
         Settings _settings = null;
@@ -20,6 +20,7 @@ namespace WH40K.Installers
         }
         private void InstallUnitBindings()
         {
+            Debug.Log("UnitInstaller");
             Container.Bind<UnitModel>().AsSingle()
                 .WithArguments(
                     _settings.MeshRenderer, 

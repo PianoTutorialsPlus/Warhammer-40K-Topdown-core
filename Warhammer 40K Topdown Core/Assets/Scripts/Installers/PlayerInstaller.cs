@@ -27,6 +27,4 @@ public class PlayerInstaller : MonoInstaller
     {
         public PlayerSO Player;
     }
-
-
 }

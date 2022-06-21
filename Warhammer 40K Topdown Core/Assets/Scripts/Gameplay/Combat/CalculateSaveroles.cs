@@ -16,6 +16,10 @@ namespace WH40K.Gameplay.Combat
 
         public CalculateSaveroles(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
 
+        public CalculateSaveroles()
+        {
+        }
+
         public override void Action(List<int> wounds)
         {
             if (wounds == null || wounds.Count == 0) return;

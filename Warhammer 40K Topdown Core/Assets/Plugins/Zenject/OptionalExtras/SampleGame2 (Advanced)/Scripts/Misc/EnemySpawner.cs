@@ -21,7 +21,7 @@ namespace Zenject.SpaceFighter
             LevelBoundary levelBoundary,
             SignalBus signalBus,
             EnemyFacade.Factory enemyFactory)
-        {
+        { 
             _enemyFactory = enemyFactory;
             _signalBus = signalBus;
             _levelBoundary = levelBoundary;

@@ -1,6 +1,7 @@
 ﻿using WH40K.Gameplay.EventChannels;
 using WH40K.Stats.Player;
 using WH40K.Stats;
+using Zenject;
 
 namespace WH40K.Gameplay.Events
 {
@@ -14,8 +15,8 @@ namespace WH40K.Gameplay.Events
 
         public UIDisplayInfoEvents(
             GameStatsSO gameStats,
-            InfoUIEventChannelSO infoUIEvent,
-            InfoUIEventChannelSO enemyInfoUIEvent)
+            [Inject(Id = "Player")] InfoUIEventChannelSO infoUIEvent,
+            [Inject(Id = "Enemy")] InfoUIEventChannelSO enemyInfoUIEvent)
         {
             _gameStats = gameStats;
             _toggleInfoUI = infoUIEvent;

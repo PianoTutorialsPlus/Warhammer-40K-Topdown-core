@@ -27,7 +27,11 @@ namespace WH40K.Gameplay.PlayerEvents
         public bool IsDone => _unitStats.IsDone;
         public bool IsActivated => _unitStats.IsActivated;
         public Transform Transform => _model.Transform;
-        public Vector3 CurrentPosition => _model.Position;
+        public Vector3 CurrentPosition
+        {
+            get => _model.Position;
+            set => _model.Position = value;
+        }
 
         public UnitMovementPhase UnitMovementPhase;
         public UnitShootingPhase UnitShootingPhase;
@@ -44,6 +48,7 @@ namespace WH40K.Gameplay.PlayerEvents
         public int WeaponArmourPen => _unitStats.WeaponArmourPen;
         public int WeaponDamage => _unitStats.WeaponDamage;
         public string WeaponName => _unitStats.WeaponName;
+        public string Name => _unitStats.Name;
         public int Movement => _unitStats.Movement;
         public int BallisticSkill => _unitStats.BallisticSkill;
         public int Toughness => _unitStats.Toughness;
@@ -129,6 +134,11 @@ namespace WH40K.Gameplay.PlayerEvents
         public void Destroy()
         {
             Destroy(gameObject);
+        }
+
+
+        public class Factory : PlaceholderFactory<Fraction,UnitFacade>
+        {
         }
     }
 }

@@ -8,5 +8,6 @@
         int Toughness { get; }
         int ArmourSave { get; }
         int Wounds { get; }
+        string Name { get; }
     }
 }

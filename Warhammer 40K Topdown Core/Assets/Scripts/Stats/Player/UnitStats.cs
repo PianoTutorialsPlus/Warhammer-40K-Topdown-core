@@ -37,6 +37,7 @@ namespace WH40K.Stats.Player
         public int WeaponDamage => _weaponSO.WeaponDamage;
         public string WeaponName => _weaponSO.WeaponName;
 
+        public string Name => _unitSO.name;
         public int Movement => _unitSO.Movement;
         public int Wounds => _unitSO.Wounds;
         public int BallisticSkill => _unitSO.BallisticSkill;

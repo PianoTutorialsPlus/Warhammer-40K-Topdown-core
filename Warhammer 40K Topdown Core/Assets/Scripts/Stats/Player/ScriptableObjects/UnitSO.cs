@@ -38,7 +38,7 @@ namespace WH40K.Stats.Player
         [SerializeField] private int _armourSave = default;
 
 
-        public new string name { get => _name; }
+        public new string Name { get => _name; }
         public Fraction Fraction { get => _fraction; protected set => _fraction = value; }
         public int Movement { get => _movement; protected set => _movement = value; }
         public int WeaponSkill => _weaponSkill;

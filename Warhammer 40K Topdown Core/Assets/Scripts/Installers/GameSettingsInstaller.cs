@@ -11,8 +11,10 @@ namespace WH40K.Installers
     //[CreateAssetMenu(menuName = "Game Settings")]
     class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller>
     {
+        public UnitSpawner.Settings UnitSpawner;
         public PlayerSettings Player;
         public NavMeshSettings NavMesh;
+        public FactorySettings Factory;
 
         [Serializable]
         public class PlayerSettings
@@ -26,15 +28,36 @@ namespace WH40K.Installers
         {
             public PathCalculator.Settings PathCalculatorHandler;
         }
+        [Serializable]
+        public class FactorySettings
+        {
+            public UnitFactory.Settings UnitFactoryHandler;
+        }
 
         public override void InstallBindings()
         {
+            Clear();
+
+            Container.Bind<PlayerSO>().FromInstance(UnitSpawner.Player1);
+            Container.Bind<PlayerSO>().FromInstance(UnitSpawner.Player2);
+
+            Container.BindInstance(UnitSpawner).IfNotBound();
+
+            Container.BindInstance(Factory.UnitFactoryHandler).IfNotBound();
+
             Container.BindInstance(Player.UnitStatsHandler).IfNotBound();
             Container.BindInstance(Player.MovementPhaseHandler).IfNotBound();
             Container.BindInstance(Player.ShootingPhaseHandler).IfNotBound();
 
             Container.BindInstance(NavMesh.PathCalculatorHandler).IfNotBound();
         }
+
+        private void Clear()
+        {
+            UnitSpawner.Player1.PlayerUnits.Clear();
+            UnitSpawner.Player2.PlayerUnits.Clear();
+        }
+
 
     }
 }

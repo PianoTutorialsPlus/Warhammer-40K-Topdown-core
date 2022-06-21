@@ -16,6 +16,7 @@ namespace WH40K.NavMesh
             Settings settings,
             NavMeshPath path)
         {
+            Debug.Log("PathCalulator " + agent);
             _agent = agent;
             _settings = settings;
             _path = path;
@@ -25,6 +26,7 @@ namespace WH40K.NavMesh
 
         private void SetAgentSettings()
         {
+            _agent.Warp(Vector3.zero);
             _agent.speed = _settings.Speed;
             _agent.acceleration = _settings.Acceleration;
             _agent.angularSpeed = _settings.AngularSpeed;

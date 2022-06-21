@@ -20,11 +20,13 @@ namespace WH40K.Installers
             Container.BindInstance(_settings.GameinfoUIEvent).AsSingle();
             Container.BindInstance(_settings.GameStatsEvent).AsSingle();
 
+            Container.Bind<InfoUIEventChannelSO>().WithId("Player").FromInstance(_settings.InfoUIEvent);
+            Container.Bind<InfoUIEventChannelSO>().WithId("Enemy").FromInstance(_settings.EnemyInfoUIEvent);
+
+
             Debug.Log("EventInstaller");
 
-            Container.Bind<UIDisplayInfoEvents>().AsSingle()
-                .WithArguments(_settings.InfoUIEvent, _settings.EnemyInfoUIEvent);
-            
+            Container.Bind<UIDisplayInfoEvents>().AsSingle();
             Container.Bind<UIDisplayInteractionEvents>().AsSingle();
             Container.Bind<UIMovementRangeEvents>().AsSingle();
             Container.Bind<BattleRoundEvents>().AsSingle();

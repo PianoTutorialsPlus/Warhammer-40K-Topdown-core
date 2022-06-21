@@ -17,6 +17,10 @@ namespace WH40K.Gameplay.Combat
 
         public CalculateWounds(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
 
+        public CalculateWounds()
+        {
+        }
+
         public override void Action(List<int> hits)
         {
             if (hits == null || hits.Count == 0) return;

@@ -205,15 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00b534d1f8c04544d8207423fa031952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 1
-  activated: 0
-  canShoot: 1
-  done: 0
   weaponRange: 0
-  SetMovementPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
-    type: 2}
-  _weaponSO: {fileID: 11400000, guid: 4a5aec3aa3d661c4b8fc25a0ab48c5df, type: 2}
-  _unitSO: {fileID: 11400000, guid: fa1d5cbd72c003643a43243307e9c2af, type: 2}
   _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
   UnitMovementPhase: {fileID: 0}
   UnitShootingPhase: {fileID: 0}

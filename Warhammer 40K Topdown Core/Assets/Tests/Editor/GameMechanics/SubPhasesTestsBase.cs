@@ -73,8 +73,8 @@ namespace Editor.GameMechanics
         }
         public void SetCombatProcessor(IResult result)
         {
-            CombatProcessor processor = A.CombatProcessor.WithIResult(result);
-            processor.SetPrivate(x => x.Initialized, false);
+            //CombatProcessor processor = A.CombatProcessor.WithIResult(result);
+            //processor.SetPrivate(x => x.Initialized, false);
         }
     }
 }

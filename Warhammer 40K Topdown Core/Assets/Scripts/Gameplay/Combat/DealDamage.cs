@@ -15,6 +15,10 @@ namespace WH40K.Gameplay.Combat
 
         public DealDamage(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
 
+        public DealDamage()
+        {
+        }
+
         public override void Action(List<int> notSaved)
         {
             if (notSaved == null || notSaved.Count == 0) return;
