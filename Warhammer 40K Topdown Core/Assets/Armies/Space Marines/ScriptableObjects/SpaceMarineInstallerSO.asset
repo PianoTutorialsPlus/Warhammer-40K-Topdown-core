@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74c2bdac54bebe840bc811cc2d60321f, type: 3}
+  m_Name: SpaceMarineInstallerSO
+  m_EditorClassIdentifier: 
+  Factory:
+    UnitSpawnerHandler:
+      Player: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
+      Prefab1: {fileID: 4266572808521110751, guid: c23b96e0d876a1b489cebf841ce6eb56,
+        type: 3}
+      Fraction: 1

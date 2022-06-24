@@ -10,11 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60a843d81b72a4e4e9d81e5de2f3bc85, type: 3}
-  m_Name: GameSettings
+  m_Name: SpaceMarinesSettings
   m_EditorClassIdentifier: 
-  UnitSpawner:
-    Player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
-    Player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
   Player:
     UnitStatsHandler:
       CanMove: 1
@@ -32,8 +29,8 @@ MonoBehaviour:
       AngularSpeed: 999
       IsStopped: 0
   Factory:
-    UnitFactoryHandler:
-      spaceMarinePrefab: {fileID: 4266572808521110751, guid: c23b96e0d876a1b489cebf841ce6eb56,
+    UnitSpawnerHandler:
+      Player: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
+      Prefab1: {fileID: 4266572808521110751, guid: c23b96e0d876a1b489cebf841ce6eb56,
         type: 3}
-      necronWarriorPrefab: {fileID: 4266572808521110751, guid: ec8177448963f604aa4621ce4fc4e57a,
-        type: 3}
+      Fraction: 1

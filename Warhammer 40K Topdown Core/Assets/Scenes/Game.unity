@@ -496,6 +496,35 @@ PrefabInstance:
       propertyPath: m_Name
       value: EditorInitializer
       objectReference: {fileID: 0}
+    - target: {fileID: 8776143810756141056, guid: ec2f49c6ad96cba428dd7b8e7497b375,
+        type: 3}
+      propertyPath: scenesToLoad.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8776143810756141056, guid: ec2f49c6ad96cba428dd7b8e7497b375,
+        type: 3}
+      propertyPath: scenesToLoad.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 80bebb7690d22b745b8ca2cafac6878f,
+        type: 2}
+    - target: {fileID: 8776143810756141056, guid: ec2f49c6ad96cba428dd7b8e7497b375,
+        type: 3}
+      propertyPath: scenesToLoad.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 43e6f585353b7244fb84afb7f3c079ae,
+        type: 2}
+    - target: {fileID: 8776143810756141056, guid: ec2f49c6ad96cba428dd7b8e7497b375,
+        type: 3}
+      propertyPath: scenesToLoad.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: d6ad75047bdaefb4da72fa7d9af772d4,
+        type: 2}
+    - target: {fileID: 8776143810756141056, guid: ec2f49c6ad96cba428dd7b8e7497b375,
+        type: 3}
+      propertyPath: scenesToLoad.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: d6ad75047bdaefb4da72fa7d9af772d4,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec2f49c6ad96cba428dd7b8e7497b375, type: 3}
 --- !u!1 &405736970
@@ -1313,8 +1342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers:
-  - {fileID: 11400000, guid: bb491cf2220191e4090d57fe15164954, type: 2}
+  _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 1778398987}
   _installerPrefabs: []
@@ -1362,11 +1390,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _settings:
     GameTable: {fileID: 11400000, guid: ce27887eadea6be40af3669d3ecd1558, type: 2}
-    prefabs:
-      spaceMarinePrefab: {fileID: 4266572808521110751, guid: c23b96e0d876a1b489cebf841ce6eb56,
-        type: 3}
-      necronWarriorPrefab: {fileID: 4266572808521110751, guid: ec8177448963f604aa4621ce4fc4e57a,
-        type: 3}
+    Player1: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
+    Player2: {fileID: 11400000, guid: 2c0706302e51a344bb2f38f6ecfb19a5, type: 2}
   Table:
     TableHandler:
       GameTable: {fileID: 2091209768}

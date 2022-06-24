@@ -154,15 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 532231d56fb73ae4eac20b0289639339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canMove: 0
-  activated: 0
-  canShoot: 1
-  done: 0
   weaponRange: 0
-  SetMovementPhaseEvent: {fileID: 11400000, guid: e5f664637e8b6d647ae8c818894b5793,
-    type: 2}
-  _weaponSO: {fileID: 11400000, guid: 8f6d2e801aef2e642b692633b1aa6774, type: 2}
-  _unitSO: {fileID: 11400000, guid: 0aeb3a06a60bc0640b83970366d185ee, type: 2}
   _inputReader: {fileID: 11400000, guid: 7deac1680af86cb448df8765d058729a, type: 2}
   UnitMovementPhase: {fileID: 0}
   UnitShootingPhase: {fileID: 0}
@@ -190,7 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: 14a375edc2adf274baf3f627288faf8e, type: 2}
   _monoInstallers:
   - {fileID: 6258980208684287321}
   _installerPrefabs: []

@@ -21,20 +21,32 @@ namespace WH40K.Installers
         }
         public override void InstallBindings()
         {
+            Clear();
+
+            Container.Bind<PlayerSO>().FromInstance(_settings.Player1);
+            Container.Bind<PlayerSO>().FromInstance(_settings.Player2);
+
             Container.BindInstance(_settings.GameTable).AsSingle();
             Container.BindInstance(Table.TableHandler).IfNotBound();
             Container.QueueForInject(_settings.GameTable);
 
-            Container.BindInterfacesAndSelfTo<UnitSpawner>().AsSingle();
+            //Container.BindInterfacesAndSelfTo<UnitSpawner>().AsSingle();
 
-            Container.BindFactory<Fraction, UnitFacade, UnitFacade.Factory>().FromFactory<UnitFactory>();
-
-
+            //Container.BindFactory<GameObject, UnitFacade, UnitFacade.Factory>().FromFactory<PrefabFactory<UnitFacade>>();
         }
+
+        private void Clear()
+        {
+            _settings.Player1.PlayerUnits.Clear();
+            _settings.Player2.PlayerUnits.Clear();
+        }
+
         [Serializable]
         public class Settings
         {
             public GameTableSO GameTable;
+            public PlayerSO Player1;
+            public PlayerSO Player2;
         }
 
         //class UnitFacadePool : MonoPoolableMemoryPool<IMemoryPool, UnitFacade>

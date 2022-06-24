@@ -8,8 +8,8 @@ namespace WH40K.Gameplay.PlayerEvents
 {
     public class UnitSpawner : IInitializable
     {
-        private readonly Settings _settings;
-        private readonly UnitFacade.Factory _unitFactory;
+        protected readonly Settings _settings;
+        protected readonly UnitFacade.Factory _unitFactory;
 
         public UnitSpawner(
             Settings settings,
@@ -19,30 +19,24 @@ namespace WH40K.Gameplay.PlayerEvents
             _unitFactory = factory;
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
-            SpawnPlayerUnit();
-            SpawnEnemyUnit();
+            SpawnUnit(_settings.Prefab1);
         }
-
-        private void SpawnPlayerUnit()
+        public virtual void SpawnUnit(GameObject prefab)
         {
-            var enemyFacade = _unitFactory.Create(Fraction.Necrons);
+            var enemyFacade = CreatePrefab(prefab);
             enemyFacade.CurrentPosition = ChooseRandomStartPosition(5);
-            _settings.Player1.PlayerUnits.Add(enemyFacade.gameObject);
-            _settings.Player1.Fraction = Fraction.Necrons;
+            _settings.Player.PlayerUnits.Add(enemyFacade.gameObject);
+            _settings.Player.Fraction = _settings.Fraction;
         }
 
-        void SpawnEnemyUnit()
+        protected UnitFacade CreatePrefab(GameObject prefab)
         {
-            var enemyFacade = _unitFactory.Create(Fraction.SpaceMarines);
-            enemyFacade.CurrentPosition = ChooseRandomStartPosition(-5);
-            _settings.Player2.PlayerUnits.Add(enemyFacade.gameObject);
-            _settings.Player2.Fraction = Fraction.SpaceMarines;
-           
+            return _unitFactory.Create(prefab);
         }
 
-        private Vector3 ChooseRandomStartPosition(int range)
+        protected Vector3 ChooseRandomStartPosition(int range)
         {
             var x_Pos = Random.Range(0, range);
             var z_Pos = Random.Range(0, range);
@@ -54,8 +48,9 @@ namespace WH40K.Gameplay.PlayerEvents
         [Serializable]
         public class Settings
         {
-            public PlayerSO Player1;
-            public PlayerSO Player2;
+            public PlayerSO Player;
+            public GameObject Prefab1;
+            public Fraction Fraction;
         }
     }
 }

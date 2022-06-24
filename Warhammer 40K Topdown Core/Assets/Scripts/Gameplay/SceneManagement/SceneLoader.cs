@@ -16,6 +16,10 @@ namespace WH40K.Gameplay.Core
         [Header("Gameplay Scene")]
         [SerializeField] private GameSceneSO _gameplayScene = default;
 
+        [Header("Necrons AddOn Scene")]
+        [SerializeField] private GameSceneSO _necronsScene = default;
+        [Header("Space Marines AddOn Scene")]
+        [SerializeField] private GameSceneSO _spaceMarinesScene = default;
         //Extensions for LoadEvents and Broadcast system
 
         private List<AsyncOperation> _scenesToLoadAsynchOperations = new List<AsyncOperation>();
@@ -56,6 +60,8 @@ namespace WH40K.Gameplay.Core
             //When loading a location, we want to keep the persistent managers and gameplay scenes loaded
             _persistentScenes.Add(_persistentManagerScene);
             _persistentScenes.Add(_gameplayScene);
+            _persistentScenes.Add(_necronsScene);
+            _persistentScenes.Add(_spaceMarinesScene);
             AddScenesToUnload(_persistentScenes);
             //LoadScenes(locationToLoad, showLoadingScreen);
 

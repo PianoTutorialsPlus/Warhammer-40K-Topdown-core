@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a843d81b72a4e4e9d81e5de2f3bc85, type: 3}
+  m_Name: NecronsSettings
+  m_EditorClassIdentifier: 
+  Player:
+    UnitStatsHandler:
+      CanMove: 1
+      Activated: 0
+      CanShoot: 1
+      Done: 0
+    MovementPhaseHandler:
+      Enabled: 1
+    ShootingPhaseHandler:
+      Enabled: 0
+  NavMesh:
+    PathCalculatorHandler:
+      Speed: 20
+      Acceleration: 999
+      AngularSpeed: 999
+      IsStopped: 0
+  Factory:
+    UnitSpawnerHandler:
+      Player: {fileID: 11400000, guid: 25c43c115c5a36941b68ff4ac0fcc014, type: 2}
+      Prefab1: {fileID: 4266572808521110751, guid: ec8177448963f604aa4621ce4fc4e57a,
+        type: 3}
+      Fraction: 2

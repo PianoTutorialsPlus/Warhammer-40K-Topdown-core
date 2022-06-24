@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PersistentManagers.unity
     guid: 7c4b9b3be4f3c0c4d8a4cac0924d1632
+  - enabled: 1
+    path: Assets/Armies/Space Marines/Scene/SpaceMarinesScene.unity
+    guid: ded73396b6544f2488136fa6dd17cbf6
+  - enabled: 1
+    path: Assets/Armies/Necrons/Scene/NecronsScene.unity
+    guid: 81aa65535a55aa840ac06ac08b90e11b
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 96802f97e33b7c847b79036f15119e02,
       type: 2}

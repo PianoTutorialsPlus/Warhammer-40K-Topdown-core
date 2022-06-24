@@ -236,6 +236,24 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 1189197894720932982, guid: affbfb40e70cec54ba34568cf88650a1,
+        type: 3}
+      propertyPath: _necronsScene
+      value: 
+      objectReference: {fileID: 11400000, guid: 80bebb7690d22b745b8ca2cafac6878f,
+        type: 2}
+    - target: {fileID: 1189197894720932982, guid: affbfb40e70cec54ba34568cf88650a1,
+        type: 3}
+      propertyPath: _gameplayScene
+      value: 
+      objectReference: {fileID: 11400000, guid: d6ad75047bdaefb4da72fa7d9af772d4,
+        type: 2}
+    - target: {fileID: 1189197894720932982, guid: affbfb40e70cec54ba34568cf88650a1,
+        type: 3}
+      propertyPath: _spaceMarinesScene
+      value: 
+      objectReference: {fileID: 11400000, guid: 43e6f585353b7244fb84afb7f3c079ae,
+        type: 2}
     - target: {fileID: 5544811250777997803, guid: affbfb40e70cec54ba34568cf88650a1,
         type: 3}
       propertyPath: m_RootOrder

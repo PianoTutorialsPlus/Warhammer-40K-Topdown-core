@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b23d2f0a08127d41a211230d986b824, type: 3}
-  m_Name: Gameplay
+  m_Name: SpaceMarinesAddOn
   m_EditorClassIdentifier: 
-  sceneAsset: {fileID: 102900000, guid: 8340233b125fc304dafebde5fd4705e2, type: 3}
-  scenePath: Assets/Scenes/Gameplay.unity
-  shortDiscription: Gameplay elements including UI and inventory managers
+  sceneAsset: {fileID: 102900000, guid: ded73396b6544f2488136fa6dd17cbf6, type: 3}
+  scenePath: Assets/Armies/Space Marines/Scene/SpaceMarinesScene.unity
+  shortDiscription: 
   music: {fileID: 0}

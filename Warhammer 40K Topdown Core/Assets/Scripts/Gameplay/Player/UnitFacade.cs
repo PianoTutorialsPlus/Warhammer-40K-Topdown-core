@@ -137,7 +137,7 @@ namespace WH40K.Gameplay.PlayerEvents
         }
 
 
-        public class Factory : PlaceholderFactory<Fraction,UnitFacade>
+        public class Factory : PlaceholderFactory<GameObject,UnitFacade>
         {
         }
     }
