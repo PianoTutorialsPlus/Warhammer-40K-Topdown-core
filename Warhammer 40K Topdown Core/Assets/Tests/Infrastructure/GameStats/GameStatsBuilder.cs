@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using WH40K.Stats;
 using WH40K.Stats.Player;
 
@@ -44,13 +45,23 @@ namespace Editor.Infrastructure.GameStatss
 
         public override GameStatsSO Build()
         {
-            var gameStats = ScriptableObject.CreateInstance<GameStatsSO>();
-            gameStats.ActivePlayer = _activePlayer ??= A.Player;
-            gameStats.EnemyPlayer = _enemyPlayer ??= A.Player;
-            gameStats.ActiveUnit = _activeUnit;
-            gameStats.EnemyUnit = _enemyUnit;
-            gameStats.GameTable = _gameTable ??= A.GameTable;
-            return gameStats;
+            BindSettings();
+            Container.Bind<GameStatsSO>().AsSingle();
+            
+            return Container.Resolve<GameStatsSO>();
+        }
+
+        private void BindSettings()
+        {
+            Container.Bind<GameStatsSO.Settings>().AsSingle();
+            var gameStatsSettings = Container.Resolve<GameStatsSO.Settings>();
+
+            gameStatsSettings.Turn = 1;
+            gameStatsSettings.ActivePlayer = _activePlayer ??= A.Player;
+            gameStatsSettings.EnemyPlayer = _enemyPlayer ??= A.Player;
+            gameStatsSettings.ActiveUnit = _activeUnit;
+            gameStatsSettings.EnemyUnit = _enemyUnit;
+            gameStatsSettings.GameTable = _gameTable ??= A.GameTable;
         }
     }
 }

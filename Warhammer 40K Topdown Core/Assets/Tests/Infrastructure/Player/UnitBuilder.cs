@@ -1,7 +1,6 @@
 ﻿using NSubstitute;
 using UnityEngine;
 using UnityEngine.Events;
-using WH40K.Gameplay.PlayerEvents;
 using WH40K.Stats.Player;
 
 namespace Editor.Infrastructure.Player
@@ -16,7 +15,6 @@ namespace Editor.Infrastructure.Player
         private UnityAction<IUnit> _onPointerExit;
         private UnityAction _onPointerEnter;
         private UnityAction<IUnit> _onTapDownAction;
-        private UnitSelector _unitSelector;
         private int _intValue = 0;
         private int _wounds;
         private Vector3 _position;
@@ -28,11 +26,6 @@ namespace Editor.Infrastructure.Player
         public UnitBuilder WithFraction(Fraction fraction)
         {
             _fraction = fraction;
-            return this;
-        }
-        public UnitBuilder WithUnitSelector(UnitSelector unitSelector)
-        {
-            _unitSelector = unitSelector;
             return this;
         }
         public UnitBuilder WithCurrentPosition(Vector3 position)
@@ -86,7 +79,6 @@ namespace Editor.Infrastructure.Player
 
             unit.Fraction.Returns(_fraction);
             unit.CurrentPosition.Returns(_position);
-            //unit.UnitSelector.Returns(_unitSelector);
             // Condition
             unit.IsDone.Returns(_isDone);
             unit.IsActivated.Returns(_isActivated);

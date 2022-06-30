@@ -31,9 +31,9 @@ namespace Editor.Infrastructure.Combat
         public override IResult Build()
         {
             var result = Substitute.For<IResult>();
-            result.DiceAction.Returns(_diceAction ??= A.RollTheDiceEventChannel);
-            result.DiceSubResult.Returns(_diceSubResult ??= A.RollTheDiceEventChannel);
-            result.DiceResult.Returns(_diceResult ??= A.RollTheDiceEventChannel);
+            result.DiceAction.Returns(_diceAction ??= A.EventChannel<RollTheDiceEventChannelSO>());
+            result.DiceSubResult.Returns(_diceSubResult ??= A.EventChannel<RollTheDiceEventChannelSO>());
+            result.DiceResult.Returns(_diceResult ??= A.EventChannel<RollTheDiceEventChannelSO>());
             return result;
         }
     }

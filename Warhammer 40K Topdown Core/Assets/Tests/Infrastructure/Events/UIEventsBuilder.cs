@@ -1,4 +1,5 @@
 ﻿using WH40K.Gameplay.EventChannels;
+using WH40K.Stats;
 
 namespace Editor.Infrastructure.Events
 {
@@ -9,6 +10,7 @@ namespace Editor.Infrastructure.Events
         private InfoUIEventChannelSO _playerEventListener;
         private InfoUIEventChannelSO _enemyEventListener;
         private IndicatorUIEventChannelSO _indicatorEventListener;
+        private GameStatsSO _gameStats;
 
         public UIEventsBuilder()
         {
@@ -20,7 +22,7 @@ namespace Editor.Infrastructure.Events
         }
         public UIEventsBuilder<T> WithEnemyEventListener(InfoUIEventChannelSO eventListener)
         {
-            _playerEventListener = eventListener;
+            _enemyEventListener = eventListener;
             return this;
         }
         public UIEventsBuilder<T> WithMoveRangeIndicatorEventListener(IndicatorUIEventChannelSO eventListener)
@@ -39,13 +41,19 @@ namespace Editor.Infrastructure.Events
             _interactionEventListener = eventListener;
             return this;
         }
+        public UIEventsBuilder<T> WithGameStats(GameStatsSO gameStats)
+        {
+            _gameStats = gameStats;
+            return this;
+        }
         public override T Build()
         {
-            Container.BindInstance(_interactionEventListener ??= A.InteractionUIEventChannel);
-            Container.BindInstance(_battleRoundEventListener ??= A.BattleRoundEventChannel);
-            Container.BindInstance(_playerEventListener ??= A.InfoUIEventChannel);
-            //Container.BindInstance(_enemyEventListener ??= A.InfoUIEventChannel);
-            Container.BindInstance(_indicatorEventListener ??= A.IndicatorUIEventChannel);
+            Container.BindInstance(_interactionEventListener ??= A.EventChannel<InteractionUIEventChannelSO>());
+            Container.BindInstance(_battleRoundEventListener ??= A.EventChannel<BattleroundEventChannelSO>());
+            Container.BindInstance(_playerEventListener ??= A.EventChannel<InfoUIEventChannelSO>()).WithId("Player");
+            Container.BindInstance(_enemyEventListener ??= A.EventChannel<InfoUIEventChannelSO>()).WithId("Enemy");
+            Container.BindInstance(_indicatorEventListener ??= A.EventChannel<IndicatorUIEventChannelSO>());
+            Container.BindInstance(_gameStats ??= A.GameStats.Build());
 
             Container.Bind<T>().AsSingle();
             return Container.Resolve<T>();

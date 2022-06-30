@@ -4,6 +4,7 @@ using WH40K.DiceEvents;
 using WH40K.Gameplay.GamePhaseEvents;
 using WH40K.Stats;
 using WH40K.Stats.Combat;
+using Zenject;
 
 namespace WH40K.Gameplay.Combat
 {
@@ -15,7 +16,7 @@ namespace WH40K.Gameplay.Combat
         private int Strength => _gameStats.ActiveUnit.WeaponStrength;
         private int Toughness => _gameStats.EnemyUnit.Toughness;
 
-        public CalculateWounds(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
+        public CalculateWounds(IResult results, GameStatsSO gameStats) : base(results, gameStats) { _woundTable = new WoundTable(); }
 
         public CalculateWounds()
         {

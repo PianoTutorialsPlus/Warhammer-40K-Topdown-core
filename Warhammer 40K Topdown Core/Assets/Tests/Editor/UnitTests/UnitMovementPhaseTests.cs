@@ -1,3 +1,4 @@
+using Editor.Base;
 using Editor.Infrastructure;
 using NSubstitute;
 using NUnit.Framework;
@@ -9,9 +10,9 @@ namespace Editor.UnitTests
 {
     public class UnitMovementPhaseTests : UnitPhasesTestsBase
     {
-        public UnitMovementPhase SetUnitMovementPhase(IUnit unit)
+        public UnitMovementPhase SetUnitMovementPhase(IUnit unit, UnitSelector unitSelector = null)
         {
-            return SetUnitPhase<UnitMovementPhase>(unit);
+            return SetUnitPhase<UnitMovementPhase>(unit,unitSelector);
         }
 
         [SetUp]
@@ -29,11 +30,9 @@ namespace Editor.UnitTests
                 //ARRANGE
                 var unit = GetUnit();
                 var unitMovementPhase = SetUnitMovementPhase(unit);
-                //var unitMovementPhase = (UnitMovementPhase)A.UnitPhase<T>()
-                //    .WithUnit(unit);
 
                 //ACT
-                unitMovementPhase.OnPointerClick(A.PointerEventData);
+                unitMovementPhase.OnPointerClick(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(1).OnTapDownAction(unit);
@@ -43,12 +42,12 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 _action = UnityActionFiller;
-                var unit = GetUnit();
+                var unit = GetUnit(pointer: _action);
                 var unitMovementPhase = SetUnitMovementPhase(unit);
 
                 //ACT
                 unitMovementPhase.OnPointerClick(
-                    A.PointerEventData.WithButtonPressed(InputButton.Right));
+                    GetPointerEvent(button: InputButton.Right));
 
                 //ASSERT
                 unit.Received(1).OnTapDownAction(unit);
@@ -72,34 +71,37 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 _action = UnityActionFiller;
-                var unit = GetUnit();
+                var unit = GetUnit(pointer: _action);
 
                 var unitMovementPhase = SetUnitMovementPhase(unit);
 
                 //ACT
                 unitMovementPhase.OnPointerClick(
-                    A.PointerEventData.WithButtonPressed(InputButton.Left));
+                    GetPointerEvent(button: InputButton.Left));
 
                 //ASSERT
                 unit.Received(2).OnTapDownAction(unit);
                 
             }
-            //[Test]
-            //public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_UnitSelector_SelectUnit_Is_Invoked()
-            //{
-            //    //ARRANGE
-            //    _action = UnityActionFiller;
-            //    IUnit unit = GetUnit();
+            [Test]
+            public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_UnitSelector_SelectUnit_Is_Invoked()
+            {
+                //ARRANGE
+                _action = UnityActionFiller;
+                var unit = GetUnit(pointer: _action);
+                var gameStats = GetGameStats();
 
-            //    var unitMovementPhase = SetUnitMovementPhase(unit);
+                // ACT
+                var unitSelector = GetUnitSelector(gameStats: gameStats);
+                var unitMovementPhase = SetUnitMovementPhase(unit, unitSelector);
 
-            //    //ACT
-            //    unitMovementPhase.OnPointerClick(
-            //        A.PointerEventData.WithButtonPressed(InputButton.Left));
+                //ACT
+                unitMovementPhase.OnPointerClick(
+                    GetPointerEvent(button: InputButton.Left));
 
-            //    //ASSERT
-            //    unit.Received(1).UnitSelector.SelectUnit();
-            //}
+                //ASSERT
+                Assert.IsNotNull(gameStats.ActiveUnit);
+            }
         }
         public class TheOnPointerEnterMethod : UnitMovementPhaseTests
         {
@@ -111,7 +113,7 @@ namespace Editor.UnitTests
                 var unitMovementPhase = SetUnitMovementPhase(unit);
 
                 //ACT
-                unitMovementPhase.OnPointerEnter(A.PointerEventData);
+                unitMovementPhase.OnPointerEnter(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(1).OnPointerEnter();
@@ -124,7 +126,7 @@ namespace Editor.UnitTests
                 var unitMovementPhase = SetUnitMovementPhase(unit);
 
                 //ACT
-                unitMovementPhase.OnPointerEnter(A.PointerEventData);
+                unitMovementPhase.OnPointerEnter(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(1).OnPointerEnterInfo(unit);
@@ -134,11 +136,11 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 _pointerAction = UnityActionFiller;
-                var unit = GetUnit();
+                var unit = GetUnit(pointerWithArgument: _pointerAction);
                 var unitMovementPhase = SetUnitMovementPhase(unit);
 
                 //ACT
-                unitMovementPhase.OnPointerEnter(A.PointerEventData);
+                unitMovementPhase.OnPointerEnter(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(2).OnPointerEnter();
@@ -148,13 +150,13 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 _action = UnityActionFiller;
-                var unit = GetUnit();
+                var unit = GetUnit(pointer: _action);
 
 
                 var unitMovementPhase = SetUnitMovementPhase(unit);
 
                 //ACT
-                unitMovementPhase.OnPointerEnter(A.PointerEventData);
+                unitMovementPhase.OnPointerEnter(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(2).OnPointerEnterInfo(unit);
@@ -170,7 +172,7 @@ namespace Editor.UnitTests
                 var unitMovementPhase = SetUnitMovementPhase(unit);
 
                 //ACT
-                unitMovementPhase.OnPointerExit(A.PointerEventData);
+                unitMovementPhase.OnPointerExit(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(1).OnPointerExit(unit);
@@ -180,158 +182,15 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 _action = UnityActionFiller;
-                var unit = GetUnit();
+                var unit = GetUnit(pointer: _action);
                 var unitMovementPhase = SetUnitMovementPhase(unit);
 
                 //ACT
-                unitMovementPhase.OnPointerExit(A.PointerEventData);
+                unitMovementPhase.OnPointerExit(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(2).OnPointerExit(unit);
             }
         }
-        //public class TheOnPointerEnterUnityAction : UnitMovementPhaseTestsExtensions
-        //{
-        //    [Test]
-        //    public void When_OnPointerEnter_Is_Set_Then_Validation_Text_Is_Returned()
-        //    {
-        //        ARRANGE
-        //        Target.onPointerEnter += UnityActionFiller;
-
-        //        ACT
-        //        Target.onPointerEnter();
-
-        //        ASSERT
-        //        Assert.AreEqual("Test passed", validationText);
-        //    }
-        //}
-        //public class TheOnPointerEnterInfoUnityAction : UnitMovementPhaseTestsExtensions
-        //{
-        //    [Test]
-        //    public void When_OnPointerEnterInfo_Is_Set_With_A_Unit_Then_Unit_Is_Returned()
-        //    {
-        //        ARRANGE
-        //        Target.onPointerEnterInfo += UnityActionFillerWithArgument;
-
-        //        ACT
-        //        Target.onPointerEnterInfo(Target);
-
-        //        ASSERT
-        //        Assert.AreEqual(Target, targetUnit);
-        //    }
-        //}
-        //public class TheOnPointerExitUnityAction : UnitMovementPhaseTestsExtensions
-        //{
-        //    [Test]
-        //    public void When_OnPointerExit_Is_Set_With_A_Unit_Then_Unit_Is_Returned()
-        //    {
-        //        ARRANGE
-        //        Target.onPointerExit += UnityActionFillerWithArgument;
-
-        //        ACT
-        //        Target.onPointerExit(Target);
-
-        //        ASSERT
-        //        Assert.AreEqual(Target, targetUnit);
-        //    }
-        //}
-
-        //public class TheSelectUnitMethod : UnitMovementPhaseTests
-        //{
-        //    [Test]
-        //    public void When_Unit_With_Fraction_Necrons_Is_Compared_To_Necrons_Then_Unit_With_Fraction_Necrons_Is_Returned()
-        //    {
-        //        ARRANGE
-        //       var fraction = Fraction.Necrons;
-
-        //        ACT
-        //        SetUnitSelector(fraction);
-        //        Target.SelectUnit();
-
-        //        ASSERT
-        //        Assert.AreEqual(Fraction.Necrons, TargetFraction);
-        //    }
-
-        //    [Test]
-        //    public void When_Unit_With_Fraction_Space_Marines_Is_Compared_To_Necrons_Then_ActiveUnit_Is_Null()
-        //    {
-        //        ARRANGE
-        //       var fraction = Fraction.SpaceMarines;
-
-        //        ACT
-        //        SetUnitSelector(fraction);
-        //        Target.SelectUnit();
-
-        //        ASSERT
-        //        Assert.IsNull(ActiveUnit);
-        //    }
-
-        //}
-        //public class TheSetIsSelectedMethod : UnitMovementPhaseTests
-        //{
-        //    [Test]
-        //    public void When_Unit_With_Fraction_Necrons_Is_Compared_To_Necrons_Then_Unit_Is_Selected()
-        //    {
-        //        ARRANGE
-        //       var fraction = Fraction.Necrons;
-
-        //        ACT
-        //        SetUnitSelector(fraction);
-        //        Target.SetIsSelected();
-
-        //        ASSERT
-        //        Assert.IsTrue(Target.IsSelected);
-        //    }
-
-        //    [Test]
-        //    public void When_Unit_With_Fraction_Necrons_Is_Compared_To_Space_Marines_Then_Unit_Is_Not_Selected()
-        //    {
-        //        ARRANGE
-        //       var fraction = Fraction.SpaceMarines;
-
-        //        ACT
-        //        SetUnitSelector(fraction);
-        //        Target.SetIsSelected();
-
-        //        ASSERT
-        //        Assert.IsFalse(Target.IsSelected);
-        //    }
-        //}
-        //public class TheSetUnitAsEnemyClass : UnitMovementPhaseTests
-        //{
-        //    [SetUp]
-        //    public void AddToEveryTest()
-        //    {
-        //        GameStats.enemyPlayer = ScriptableObject.CreateInstance<PlayerSO>();
-        //    }
-
-        //    [Test]
-        //    public void When_Enemy_Unit_With_Fraction_Necrons_Is_Compared_To_Necrons_Then_Necrons_Is_Returned()
-        //    {
-        //        ARRANGE
-        //       var fraction = Fraction.Necrons;
-
-        //        ACT
-        //        SetUnitSelector(fraction);
-        //        Target.SetUnitAsEnemy();
-
-        //        ASSERT
-        //        Assert.AreEqual(Fraction.Necrons, EnemyFraction);
-        //    }
-
-        //    [Test]
-        //    public void When_Enemy_Unit_With_Fraction_Space_Marines_Is_Compared_To_Necrons_Then_Enemy_Unit_Is_Null()
-        //    {
-        //        ARRANGE
-        //       var fraction = Fraction.SpaceMarines;
-
-        //        ACT
-        //        SetUnitSelector(fraction);
-        //        Target.SetUnitAsEnemy();
-
-        //        ASSERT
-        //        Assert.IsNull(EnemyUnit);
-        //    }
-        //}
     }
 }

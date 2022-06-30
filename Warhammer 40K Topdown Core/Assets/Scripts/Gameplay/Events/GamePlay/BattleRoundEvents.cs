@@ -1,6 +1,7 @@
 ﻿using WH40K.Gameplay.EventChannels;
 using WH40K.Stats.Player;
 using WH40K.Stats;
+using UnityEngine;
 
 namespace WH40K.Gameplay.Events
 {
@@ -24,6 +25,7 @@ namespace WH40K.Gameplay.Events
         }
         private bool ConnectPhaseEvent(IUnit child)
         {
+            Debug.Log(_gameStats.ActivePlayer);
             return _playerFraction == child.Fraction &&
                 !child.IsDone && !child.IsActivated;
         }

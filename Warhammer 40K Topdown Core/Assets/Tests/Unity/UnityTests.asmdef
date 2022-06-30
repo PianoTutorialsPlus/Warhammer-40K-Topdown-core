@@ -7,8 +7,11 @@
         "NavMeshComponents",
         "NavMeshComponentsEditor",
         "EditorTests",
-        "Scripts",
-        "Infrastructure"
+        "Infrastructure",
+        "WH40K.Gameplay",
+        "WH40K.NavMesh",
+        "WH40K.Stats",
+        "WH40K.Armies.Necrons"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

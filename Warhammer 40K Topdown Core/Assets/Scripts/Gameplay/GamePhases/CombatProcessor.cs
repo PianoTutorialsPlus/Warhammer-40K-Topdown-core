@@ -16,7 +16,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
         private static GameStatsSO _gameStats;
         private static IResult _result;
 
-        public static bool Initialized { get => _initialized; set => _initialized = value; }
+        public bool Initialized { get => _initialized; set => _initialized = value; }
 
         public CombatProcessor(GameStatsSO gameStats, IResult result)
         {

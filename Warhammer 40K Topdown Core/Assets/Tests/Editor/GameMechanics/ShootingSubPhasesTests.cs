@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Editor.Base;
+using NUnit.Framework;
 using System.Collections.Generic;
 using WH40K.Gameplay.GamePhaseEvents;
 using WH40K.Stats;
@@ -7,11 +8,16 @@ namespace Editor.GameMechanics
 {
     public class ShootingSubPhasesTests : SubPhasesTestsBase
     {
+        public void HandleShooting(ShootingSubEvents phase, List<int> list)
+        {
+            ShootingSubPhaseProcessor.HandleShooting(phase, list);
+        }
+
         [SetUp]
         public void BeforeEveryTest()
         {
             _result = null;
-            _action = null;
+            _actionResult = null;
         }
 
         public class TheHandleShootingMethod : ShootingSubPhasesTests
@@ -20,11 +26,11 @@ namespace Editor.GameMechanics
             public void When_ShootingSubPhase_State_Is_SelectEnemy_Then_DiceResult_Event_Is_Raised_With_State_SelectEnemy()
             {
                 var diceResult = GetResultDiceEventChannel();
-                var unit = GetUnit(1);
-                var result = GetIResult(unit, diceResult: diceResult);
+                var unit = GetUnit(value: 1);
+                var result = GetIResult(diceResult: diceResult);
 
-                SetShootingSubPhaseProcessor(result);
-                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.SelectEnemy, new List<int>());
+                SetShootingSubPhaseProcessor(result, unit);
+                HandleShooting(ShootingSubEvents.SelectEnemy, new List<int>());
 
                 Assert.AreEqual(1, _result.Count);
             }
@@ -33,47 +39,47 @@ namespace Editor.GameMechanics
             public void When_ShootingSubPhase_State_Is_Hit_Then_DiceAction_Event_Is_Raised_With_State_Hit()
             {
                 var diceAction = GetActionDiceEventChannel();
-                var unit = GetUnit(1);
-                var result = GetIResult(unit, diceAction);
+                var unit = GetUnit(value: 1);
+                var result = GetIResult(diceAction);
 
-                SetShootingSubPhaseProcessor(result);
-                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Hit, new List<int>() { 1 });
+                SetShootingSubPhaseProcessor(result, unit);
+                HandleShooting(ShootingSubEvents.Hit, new List<int>() { 1 });
 
-                Assert.AreEqual(1, _action.Count);
+                Assert.AreEqual(1, _actionResult.Count);
             }
             [Test]
             public void When_ShootingSubPhase_State_Is_Wound_Then_DiceAction_Event_Is_Raised_With_State_Wound()
             {
                 var diceAction = GetActionDiceEventChannel();
-                var unit = GetUnit(1);
-                var result = GetIResult(unit, diceAction);
+                var unit = GetUnit(value: 1);
+                var result = GetIResult(diceAction);
 
-                SetShootingSubPhaseProcessor(result);
-                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Wound, new List<int>() { 1 });
+                SetShootingSubPhaseProcessor(result, unit);
+                HandleShooting(ShootingSubEvents.Wound, new List<int>() { 1 });
 
-                Assert.AreEqual(1, _action.Count);
+                Assert.AreEqual(1, _actionResult.Count);
             }
             [Test]
             public void When_ShootingSubPhase_State_Is_Save_Then_DiceAction_Event_Is_Raised_With_State_Save()
             {
                 var diceAction = GetActionDiceEventChannel();
-                var unit = GetUnit(1);
-                var result = GetIResult(unit, diceAction);
+                var unit = GetUnit(value: 1);
+                var result = GetIResult(diceAction);
 
-                SetShootingSubPhaseProcessor(result);
-                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Save, new List<int>() { 1 });
+                SetShootingSubPhaseProcessor(result, unit);
+                HandleShooting(ShootingSubEvents.Save, new List<int>() { 1 });
 
-                Assert.AreEqual(1, _action.Count);
+                Assert.AreEqual(1, _actionResult.Count);
             }
             [Test]
             public void When_ShootingSubPhase_State_Is_Damage_Then_DiceResult_Event_Is_Raised()
             {
                 var diceResult = GetResultDiceEventChannel();
-                var unit = GetUnit(1, 2);
-                var result = GetIResult(unit, diceResult: diceResult);
+                var unit = GetUnit(value: 1,wounds: 2);
+                var result = GetIResult(diceResult: diceResult);
 
-                SetShootingSubPhaseProcessor(result);
-                ShootingSubPhaseProcessor.HandleShooting(ShootingSubEvents.Damage, new List<int>() { 4 });
+                SetShootingSubPhaseProcessor(result, unit);
+                HandleShooting(ShootingSubEvents.Damage, new List<int>() { 4 });
 
                 Assert.IsNull(_result);
             }

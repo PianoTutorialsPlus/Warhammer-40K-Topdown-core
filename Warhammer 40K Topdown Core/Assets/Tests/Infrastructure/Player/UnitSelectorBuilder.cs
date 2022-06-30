@@ -1,4 +1,5 @@
 ﻿using WH40K.Gameplay.PlayerEvents;
+using WH40K.Stats;
 using WH40K.Stats.Player;
 
 namespace Editor.Infrastructure.Player
@@ -8,6 +9,7 @@ namespace Editor.Infrastructure.Player
         private IUnit _unit;
         private Fraction _playerFraction;
         private Fraction _enemyFraction;
+        private GameStatsSO _gameStats;
 
         public UnitSelectorBuilder()
         {
@@ -28,12 +30,18 @@ namespace Editor.Infrastructure.Player
             _enemyFraction = enemyFraction;
             return this;
         }
+        public UnitSelectorBuilder WithGameStats(GameStatsSO gameStats)
+        {
+            _gameStats = gameStats;
+            return this;
+        }
         public override UnitSelector Build()
         {
-            A.GameStats
+            var gameStats = A.GameStats
                 .WithActivePlayer(A.Player.WithFraction(_playerFraction))
                 .WithEnemyPlayer(A.Player.WithFraction(_enemyFraction)).Build();
             
+            Container.BindInstance(_gameStats ??= gameStats);
             Container.BindInstance(_unit ??= A.Unit.Build());
             Container.Bind<UnitSelector>().AsSingle();
 

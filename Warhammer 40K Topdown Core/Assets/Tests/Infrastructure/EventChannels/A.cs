@@ -1,16 +1,10 @@
 ﻿using Infrastructure.EventChannels;
-using WH40K.DiceEvents;
-using WH40K.Gameplay.EventChannels;
+using UnityEngine;
 
 namespace Editor.Infrastructure
 {
     public static partial class A
     {
-        public static EventChannelBuilder<InfoUIEventChannelSO> InfoUIEventChannel => new EventChannelBuilder<InfoUIEventChannelSO>();
-        public static EventChannelBuilder<InteractionUIEventChannelSO> InteractionUIEventChannel => new EventChannelBuilder<InteractionUIEventChannelSO>();
-        public static EventChannelBuilder<RollTheDiceEventChannelSO> RollTheDiceEventChannel => new EventChannelBuilder<RollTheDiceEventChannelSO>();
-        public static EventChannelBuilder<IndicatorUIEventChannelSO> IndicatorUIEventChannel => new EventChannelBuilder<IndicatorUIEventChannelSO>();
-        public static EventChannelBuilder<BattleroundEventChannelSO> BattleRoundEventChannel => new EventChannelBuilder<BattleroundEventChannelSO>();
-
+        public static EventChannelBuilder<T> EventChannel<T>() where T : ScriptableObject => new EventChannelBuilder<T>();
     }
 }

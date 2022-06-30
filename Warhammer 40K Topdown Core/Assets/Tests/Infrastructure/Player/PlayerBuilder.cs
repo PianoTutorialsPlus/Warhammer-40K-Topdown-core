@@ -20,14 +20,17 @@ namespace Editor.Infrastructure.Player
 
         public override PlayerSO Build()
         {
-            var player = ScriptableObject.CreateInstance<PlayerSO>();
-            player.Fraction = _fraction;
-            return player;
+            BindSettings();
+            Container.Bind<PlayerSO>().AsSingle();
+            
+            return Container.Resolve<PlayerSO>(); ;
         }
 
-        internal PlayerSO WithFraction(object enemyFraction)
+        private void BindSettings()
         {
-            throw new NotImplementedException();
+            Container.Bind<PlayerSO.Settings>().AsSingle();
+            var playerSettings = Container.Resolve<PlayerSO.Settings>();
+            playerSettings.Fraction = _fraction;
         }
     }
 }

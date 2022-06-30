@@ -1,131 +1,133 @@
-//using NUnit.Framework;
-//using System.Collections;
-//using UnityEngine;
-//using UnityEngine.AI;
-//using UnityEngine.TestTools;
-//using WH40K.Core;
-//using WH40K.NavMesh;
-//using WH40K.PlayerEvents;
+using NUnit.Framework;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.TestTools;
+using WH40K.Armies.Necrons;
+using WH40K.Gameplay.Core;
+using WH40K.Gameplay.PlayerEvents;
+using WH40K.NavMesh;
+using WH40K.Stats.Player;
 
-//namespace Unity
-//{
-//    public class UnitMoverTests
-//    {
-//        public class TheUnitMoverMethod
-//        {
-//            private const float Delta = 0.2f;
-//            private const float Seconds = 0.8f;
-//            private Vector3 position;
-//            //protected UnitMover Target;
-//            protected IPathCalculator PathCalculator;
-//            protected IStats unit;
-//            private bool initialize;
-//            private NecronWarrior dut;
-//            protected float TargetMoveDistance => Target.Range;
-//            public UnitMover Target { get; private set; }
+namespace Unity
+{
+    public class UnitMoverTests
+    {
+        public class TheUnitMoverMethod
+        {
+            private const float Delta = 0.2f;
+            private const float Seconds = 0.8f;
+            private Vector3 position;
+            //protected UnitMover Target;
+            protected IPathCalculator PathCalculator;
+            protected IStats unit;
+            private bool initialize;
+            private NecronWarrior dut;
+            protected float TargetMoveDistance => dut.Range;
+            public UnitMover Target { get; private set; }
 
-//            private GameTable table;
+            private GameTable table;
 
-//            //protected float TargetDistance => Target.DistanceToMove;
-//            //protected float TargetMoveDistance => Target.MoveDistance;
+            //protected float TargetDistance => Target.DistanceToMove;
+            //protected float TargetMoveDistance => Target.MoveDistance;
 
-//            [SetUp]
-//            public void BeforeEveryTest()
-//            {
-//                if (!initialize)
-//                {
-//                    table = GameObject.Instantiate(Resources.Load("Table", (typeof(GameTable)))) as GameTable;
-//                    NavigationBaker builder = new GameObject().AddComponent<NavigationBaker>();
-//                    table.Surface = table.GetComponent<NavMeshSurface>();
+            [SetUp]
+            public void BeforeEveryTest()
+            {
+                if (!initialize)
+                {
+                    table = GameObject.Instantiate(Resources.Load("Table", (typeof(GameTable)))) as GameTable;
+                    NavigationBaker builder = new GameObject().AddComponent<NavigationBaker>();
+                    table.Surface = table.GetComponent<NavMeshSurface>();
 
-//                    builder.surfaces = new NavMeshSurface[1] { table.Surface };
-//                    builder.BuildNavMesh();
-//                    builder.name = "Builder";
+                    builder.surfaces = new NavMeshSurface[1] { table.Surface };
+                    builder.BuildNavMesh();
+                    builder.name = "Builder";
 
-//                    initialize = true;
-//                }
-//                dut = GameObject.Instantiate(Resources.Load("Necron Warrior", (typeof(NecronWarrior)))) as NecronWarrior;
-//                Target = (UnitMover)dut.UnitMover;
+                    initialize = true;
+                }
+                dut = GameObject.Instantiate(Resources.Load("Necron Warrior", (typeof(NecronWarrior)))) as NecronWarrior;
+                //Target = (NecronWarrior)dut.UnitMover;
 
-//            }
-//            [UnityTest]
-//            public IEnumerator When_Unit_With_Movement_5_Is_Moving_1_Then_MoveDistance_Is_4()
-//            {
-//                //ARRANGE
-//                position = new Vector3(1, 0, 0);
+            }
+            [UnityTest]
+            public IEnumerator When_Unit_With_Movement_5_Is_Moving_1_Then_MoveDistance_Is_4()
+            {
+                //ARRANGE
+                position = new Vector3(1, 0, 0);
 
-//                // ACT
-//                dut.SetDestination(position);
+                // ACT
+                dut.SetDestination(position);
 
-//                // ASSERT
-//                yield return new WaitForSeconds(Seconds);
-//                Assert.AreEqual(4, TargetMoveDistance, Delta);
-//            }
+                // ASSERT
+                yield return new WaitForSeconds(Seconds);
+                Assert.AreEqual(4, TargetMoveDistance, Delta);
+            }
 
-//            [UnityTest]
-//            public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_MoveDistance_Is_0()
-//            {
-//                //ARRANGE
-//                position = new Vector3(6, 0, 0);
+            [UnityTest]
+            public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_MoveDistance_Is_0()
+            {
+                //ARRANGE
+                position = new Vector3(6, 0, 0);
 
-//                // ACT
-//                Target.SetDestination(position);
+                // ACT
+                Target.SetDestination(position);
 
-//                // ASSERT
-//                yield return new WaitForSeconds(Seconds);
-//                Assert.AreEqual(0, TargetMoveDistance, Delta);
+                // ASSERT
+                yield return new WaitForSeconds(Seconds);
+                Assert.AreEqual(0, TargetMoveDistance, Delta);
 
-//            }
+            }
 
-//            [UnityTest]
-//            public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_X_Position_Is_5()
-//            {
-//                //ARRANGE
-//                position = new Vector3(6, 0, 0);
+            [UnityTest]
+            public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_X_Position_Is_5()
+            {
+                //ARRANGE
+                position = new Vector3(6, 0, 0);
 
-//                // ACT
-//                Target.SetDestination(position);
+                // ACT
+                Target.SetDestination(position);
 
-//                // ASSERT
-//                yield return new WaitForSeconds(Seconds);
-//                Assert.AreEqual(5, dut.transform.position.x, Delta);
+                // ASSERT
+                yield return new WaitForSeconds(Seconds);
+                Assert.AreEqual(5, dut.transform.position.x, Delta);
 
-//            }
+            }
 
-//            [UnityTest]
-//            public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_UnitIsDone_Is_True()
-//            {
-//                // ARRANGE
-//                position = new Vector3(6, 0, 0);
+            [UnityTest]
+            public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_UnitIsDone_Is_True()
+            {
+                // ARRANGE
+                position = new Vector3(6, 0, 0);
 
-//                // ACT
-//                Target.SetDestination(position);
+                // ACT
+                Target.SetDestination(position);
 
-//                // ASSERT
-//                yield return new WaitForSeconds(Seconds);
-//                Assert.IsTrue(Target.Unit.IsDone);
-//            }
-//            [UnityTest]
-//            public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_AgentIsStopped_Is_True()
-//            {
-//                // ARRANGE
-//                position = new Vector3(6, 0, 0);
+                // ASSERT
+                yield return new WaitForSeconds(Seconds);
+                Assert.IsTrue(dut.IsDone);
+            }
+            [UnityTest]
+            //public IEnumerator When_Unit_With_Movement_5_Is_Moving_6_Then_AgentIsStopped_Is_True()
+            //{
+            //    // ARRANGE
+            //    position = new Vector3(6, 0, 0);
 
-//                // ACT
-//                Target.SetDestination(position);
+            //    // ACT
+            //    Target.SetDestination(position);
 
-//                // ASSERT
-//                yield return new WaitForSeconds(Seconds);
-//                Assert.IsTrue(Target.IsAgentStopped);
-//            }
+            //    // ASSERT
+            //    yield return new WaitForSeconds(Seconds);
+            //    Assert.IsTrue(dut.IsAgentStopped);
+            //}
 
 
 
-//            [TearDown]
-//            public void AfterTests()
-//            {
-//                dut.Destroy();
-//            }
-//        }
-//    }
-//}
+            [TearDown]
+            public void AfterTests()
+            {
+                dut.Destroy();
+            }
+        }
+    }
+}

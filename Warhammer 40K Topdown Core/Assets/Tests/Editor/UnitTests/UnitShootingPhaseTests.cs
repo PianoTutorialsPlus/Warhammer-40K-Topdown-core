@@ -1,4 +1,4 @@
-﻿using Editor.Infrastructure;
+﻿using Editor.Base;
 using NSubstitute;
 using NUnit.Framework;
 using WH40K.Gameplay.PlayerEvents;
@@ -9,9 +9,9 @@ namespace Editor.UnitTests
 {
     public class UnitShootingPhaseTests : UnitPhasesTestsBase
     {
-        public UnitShootingPhase SetUnitShootingPhase(IUnit unit)
+        public UnitShootingPhase SetUnitShootingPhase(IUnit unit,UnitSelector unitSelector = null)
         {
-            return SetUnitPhase<UnitShootingPhase>(unit);
+            return SetUnitPhase<UnitShootingPhase>(unit,unitSelector);
         }
 
         [SetUp]
@@ -31,7 +31,7 @@ namespace Editor.UnitTests
                 var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
-                unitShootingPhase.OnPointerClick(A.PointerEventData);
+                unitShootingPhase.OnPointerClick(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(1).OnTapDownAction(unit);
@@ -41,12 +41,12 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 _action = UnityActionFiller;
-                var unit = GetUnit();
+                var unit = GetUnit(pointer: _action);
                 var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerClick(
-                    A.PointerEventData.WithButtonPressed(InputButton.Right));
+                    GetPointerEvent(button: InputButton.Right));
 
                 //ASSERT
                 unit.Received(1).OnTapDownAction(unit);
@@ -60,7 +60,7 @@ namespace Editor.UnitTests
 
                 //ACT
                 unitShootingPhase.OnPointerClick(
-                    A.PointerEventData.WithButtonPressed(InputButton.Middle));
+                    GetPointerEvent(button: InputButton.Middle));
 
                 //ASSERT
                 unit.Received(1).OnTapDownAction(unit);
@@ -70,49 +70,55 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 _action = UnityActionFiller;
-                var unit = GetUnit();
+                var unit = GetUnit(pointer: _action);
 
                 var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
                 unitShootingPhase.OnPointerClick(
-                    A.PointerEventData.WithButtonPressed(InputButton.Left));
+                    GetPointerEvent(button: InputButton.Left));
 
                 //ASSERT
                 unit.Received(2).OnTapDownAction(unit);
             }
-            //[Test]
-            //public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_UnitSelector_SelectUnit_Is_Invoked()
-            //{
-            //    //ARRANGE
-            //    _action = UnityActionFiller;
-            //    IUnit unit = GetUnit();
+            [Test]
+            public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Left_Then_UnitSelector_SelectUnit_Is_Invoked()
+            {
+                //ARRANGE
+                _action = UnityActionFiller;
+                var unit = GetUnit(pointer: _action);
+                var gameStats = GetGameStats();
 
-            //    var unitShootingPhase = SetUnitShootingPhase(unit);
+                // ACT
+                var unitSelector = GetUnitSelector(gameStats: gameStats);
+                var unitShootingPhase = SetUnitShootingPhase(unit,unitSelector);
 
-            //    //ACT
-            //    unitShootingPhase.OnPointerClick(
-            //        A.PointerEventData.WithButtonPressed(InputButton.Left));
+                //ACT
+                unitShootingPhase.OnPointerClick(
+                    GetPointerEvent(button: InputButton.Left));
 
-            //    //ASSERT
-            //    unit.Received(1).UnitSelector.SelectUnit();
-            //}
-            //[Test]
-            //public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Right_Then_UnitSelector_SelectEnemyUnit_Is_Invoked()
-            //{
-            //    //ARRANGE
-            //    _action = UnityActionFiller;
-            //    IUnit unit = GetUnit();
+                //ASSERT
+                Assert.IsNotNull(gameStats.ActiveUnit);
+            }
+            [Test]
+            public void When_onTapDownAction_Action_Has_Value_And_Button_Pressed_Is_Right_Then_UnitSelector_SelectEnemyUnit_Is_Invoked()
+            {
+                //ARRANGE
+                _action = UnityActionFiller;
+                var unit = GetUnit(pointer: _action);
+                var gameStats = GetGameStats();
 
-            //    var unitShootingPhase = SetUnitShootingPhase(unit);
+                // ACT
+                var unitSelector = GetUnitSelector(gameStats: gameStats);
+                var unitShootingPhase = SetUnitShootingPhase(unit, unitSelector);
 
-            //    //ACT
-            //    unitShootingPhase.OnPointerClick(
-            //        A.PointerEventData.WithButtonPressed(InputButton.Right));
+                //ACT
+                unitShootingPhase.OnPointerClick(
+                    GetPointerEvent(button: InputButton.Right));
 
-            //    //ASSERT
-            //    unit.Received(1).UnitSelector.SelectEnemyUnit();
-            //}
+                //ASSERT
+                Assert.IsNotNull(gameStats.EnemyUnit);
+            }
         }
         public class TheOnPointerEnterMethod : UnitShootingPhaseTests
         {
@@ -124,7 +130,7 @@ namespace Editor.UnitTests
                 var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
-                unitShootingPhase.OnPointerEnter(A.PointerEventData);
+                unitShootingPhase.OnPointerEnter(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(1).OnPointerEnter();
@@ -137,7 +143,7 @@ namespace Editor.UnitTests
                 var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
-                unitShootingPhase.OnPointerEnter(A.PointerEventData);
+                unitShootingPhase.OnPointerEnter(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(1).OnPointerEnterInfo(unit);
@@ -147,11 +153,11 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 _pointerAction = UnityActionFiller;
-                var unit = GetUnit();
+                var unit = GetUnit(pointerWithArgument: _pointerAction);
                 var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
-                unitShootingPhase.OnPointerEnter(A.PointerEventData);
+                unitShootingPhase.OnPointerEnter(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(2).OnPointerEnter();
@@ -161,13 +167,13 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 _action = UnityActionFiller;
-                var unit = GetUnit();
+                var unit = GetUnit(pointer: _action);
 
 
                 var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
-                unitShootingPhase.OnPointerEnter(A.PointerEventData);
+                unitShootingPhase.OnPointerEnter(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(2).OnPointerEnterInfo(unit);
@@ -183,7 +189,7 @@ namespace Editor.UnitTests
                 var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
-                unitShootingPhase.OnPointerExit(A.PointerEventData);
+                unitShootingPhase.OnPointerExit(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(1).OnPointerExit(unit);
@@ -193,11 +199,11 @@ namespace Editor.UnitTests
             {
                 //ARRANGE
                 _action = UnityActionFiller;
-                var unit = GetUnit();
+                var unit = GetUnit(pointer: _action);
                 var unitShootingPhase = SetUnitShootingPhase(unit);
 
                 //ACT
-                unitShootingPhase.OnPointerExit(A.PointerEventData);
+                unitShootingPhase.OnPointerExit(GetPointerEvent());
 
                 //ASSERT
                 unit.Received(2).OnPointerExit(unit);

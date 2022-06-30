@@ -11,25 +11,15 @@ namespace Editor.Infrastructure.Combat
 
         public CombatResultsBuilder() { }
 
-        public CombatResultsBuilder WithToHit(int toHit)
+        public CombatResultsBuilder WithEqualizer(int equalizer)
         {
-            _equalizer = toHit;
-            return this;
-        }
-        public CombatResultsBuilder WithToWound(int toWound)
-        {
-            _equalizer = toWound;
-            return this;
-        }
-        public CombatResultsBuilder WithToSave(int toSave)
-        {
-            _equalizer = toSave;
+            _equalizer = equalizer;
             return this;
         }
 
         public CombatResultsBuilder WithResult(int result)
         {
-            _result.Add(result);
+            if (result != 0) _result.Add(result);
             return this;
         }
 

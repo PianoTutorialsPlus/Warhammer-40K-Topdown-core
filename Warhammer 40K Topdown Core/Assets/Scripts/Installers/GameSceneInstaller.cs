@@ -30,9 +30,6 @@ namespace WH40K.Installers
             Container.BindInstance(Table.TableHandler).IfNotBound();
             Container.QueueForInject(_settings.GameTable);
 
-            //Container.BindInterfacesAndSelfTo<UnitSpawner>().AsSingle();
-
-            //Container.BindFactory<GameObject, UnitFacade, UnitFacade.Factory>().FromFactory<PrefabFactory<UnitFacade>>();
         }
 
         private void Clear()

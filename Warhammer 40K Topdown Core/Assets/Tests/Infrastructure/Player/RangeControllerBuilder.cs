@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using WH40K.UI;
 
 namespace Editor.Infrastructure.Player
@@ -25,11 +26,19 @@ namespace Editor.Infrastructure.Player
 
         public override UIRangeController Build()
         {
+            BindSettings();
             Container.Bind<UIRangeController>().AsSingle().WithArguments(_rangeIndicator);
             var rangeController = Container.Resolve<UIRangeController>();
             rangeController.SetPosition(_position);
 
             return rangeController;
+        }
+
+        private void BindSettings()
+        {
+            Container.Bind<UIRangeController.Settings>().AsSingle();
+            var controllerSettings = Container.Resolve<UIRangeController.Settings>();
+            controllerSettings.Scale = 3.5f;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Editor.Base;
+using NUnit.Framework;
 using WH40K.Gameplay.GamePhaseEvents;
 using WH40K.Stats;
 
@@ -6,6 +7,19 @@ namespace Editor.GameMechanics
 {
     public class ShootingPhasesTests : GamePhaseTestsBase
     {
+        public void HandlePhase(ShootingPhase phase)
+        {
+            ShootingPhaseProcessor.HandlePhase(phase);
+        }
+        public void ClearPhase(ShootingPhase phase)
+        {
+            ShootingPhaseProcessor.ClearPhase(phase);
+        }
+        public bool Next(ShootingPhase phase)
+        {
+            return ShootingPhaseProcessor.Next(phase);
+        }
+
         [SetUp]
         public void BeforeEveryTest()
         {
@@ -20,7 +34,8 @@ namespace Editor.GameMechanics
                 SetHandlePhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
-                ShootingPhaseProcessor.HandlePhase(ShootingPhase.Selection);
+                HandlePhase(ShootingPhase.Selection);
+
                 Assert.AreEqual(1, counter);
             }
             [Test]
@@ -30,7 +45,8 @@ namespace Editor.GameMechanics
                 SetHandlePhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
-                ShootingPhaseProcessor.HandlePhase(ShootingPhase.Shoot);
+                HandlePhase(ShootingPhase.Shoot);
+
                 Assert.AreEqual(0, counter);
             }
             [Test]
@@ -40,7 +56,8 @@ namespace Editor.GameMechanics
                 SetHandlePhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
-                ShootingPhaseProcessor.HandlePhase(ShootingPhase.Next);
+                HandlePhase(ShootingPhase.Next);
+
                 Assert.AreEqual(0, counter);
             }
         }
@@ -53,7 +70,8 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
-                ShootingPhaseProcessor.ClearPhase(ShootingPhase.Selection);
+                ClearPhase(ShootingPhase.Selection);
+
                 Assert.AreEqual(1, counter);
             }
             [Test]
@@ -63,7 +81,8 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
-                ShootingPhaseProcessor.ClearPhase(ShootingPhase.Shoot);
+                ClearPhase(ShootingPhase.Shoot);
+
                 Assert.AreEqual(1, counter);
             }
             [Test]
@@ -73,7 +92,8 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
-                ShootingPhaseProcessor.ClearPhase(ShootingPhase.Next);
+                ClearPhase(ShootingPhase.Next);
+
                 Assert.AreEqual(1, counter);
             }
         }
@@ -86,7 +106,7 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
-                Assert.IsFalse(ShootingPhaseProcessor.Next(ShootingPhase.Selection));
+                Assert.IsFalse(Next(ShootingPhase.Selection));
             }
             [Test]
             public void When_ShootingPhase_State_Is_Shoot_Then_Next_Is_False()
@@ -95,27 +115,31 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetShootingPhaseProcessor(gamePhase);
 
-                Assert.IsFalse(ShootingPhaseProcessor.Next(ShootingPhase.Shoot));
+                Assert.IsFalse(Next(ShootingPhase.Shoot));
             }
             [Test]
             public void When_ShootingPhase_State_Is_Next_Then_Next_Is_True()
             {
                 var gamePhase = GetIPhase();
+                var gameStats = GetGameStats();
                 SetClearPhase(gamePhase);
-                SetShootingPhaseProcessor(gamePhase);
+                SetShootingPhaseProcessor(gamePhase,gameStats);
 
-                Assert.IsTrue(ShootingPhaseProcessor.Next(ShootingPhase.Next));
+                Assert.IsTrue(Next(ShootingPhase.Next));
             }
-            //[Test]
-            //public void When_ShootingPhase_State_Is_Next_Then_ActiveUnit_Is_Null()
-            //{
-            //    var gamePhase = GetIPhase();
-            //    SetClearPhase(gamePhase);
-            //    SetShootingPhaseProcessor(gamePhase);
-            //    ShootingPhaseProcessor.Next(ShootingPhase.Next);
+            [Test]
+            public void When_ShootingPhase_State_Is_Next_Then_ActiveUnit_Is_Null()
+            {
+                var gamePhase = GetIPhase();
+                var gameStats = GetGameStats();
 
-            //    Assert.IsNull(GameStatsSO.ActiveUnit);
-            //}
+                SetClearPhase(gamePhase);
+                SetShootingPhaseProcessor(gamePhase,gameStats);
+
+                Next(ShootingPhase.Next);
+
+                Assert.IsNull(gameStats.ActiveUnit);
+            }
         }
     }
 }

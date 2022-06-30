@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using Editor.Base;
+using NSubstitute;
 using NUnit.Framework;
 using WH40K.Gameplay.GamePhaseEvents;
 using WH40K.Stats;
@@ -7,6 +8,19 @@ namespace Editor.GameMechanics
 {
     public class MovementPhasesTests : GamePhaseTestsBase
     {
+        public void HandlePhase(MovementPhase phase)
+        {
+            MovementPhaseProcessor.HandlePhase(phase);
+        }
+        public void ClearPhase(MovementPhase phase)
+        {
+            MovementPhaseProcessor.ClearPhase(phase);
+        }
+        public bool Next(MovementPhase phase)
+        {
+            return MovementPhaseProcessor.Next(phase);
+        }
+
         [SetUp]
         public void BeforeEveryTest()
         {
@@ -22,7 +36,8 @@ namespace Editor.GameMechanics
                 SetHandlePhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
-                MovementPhaseProcessor.HandlePhase(MovementPhase.Selection);
+                HandlePhase(MovementPhase.Selection);
+
                 Assert.AreEqual(1, counter);
             }
             [Test]
@@ -32,7 +47,8 @@ namespace Editor.GameMechanics
                 SetHandlePhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
-                MovementPhaseProcessor.HandlePhase(MovementPhase.Move);
+                HandlePhase(MovementPhase.Move);
+
                 Assert.AreEqual(1, counter);
             }
             [Test]
@@ -42,7 +58,8 @@ namespace Editor.GameMechanics
                 SetHandlePhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
-                MovementPhaseProcessor.HandlePhase(MovementPhase.Next);
+                HandlePhase(MovementPhase.Next);
+
                 Assert.AreEqual(0, counter);
             }
         }
@@ -55,7 +72,8 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
-                MovementPhaseProcessor.ClearPhase(MovementPhase.Selection);
+                ClearPhase(MovementPhase.Selection);
+
                 Assert.AreEqual(1, counter);
             }
             [Test]
@@ -65,7 +83,8 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
-                MovementPhaseProcessor.ClearPhase(MovementPhase.Move);
+                ClearPhase(MovementPhase.Move);
+
                 Assert.AreEqual(1, counter);
             }
             [Test]
@@ -75,7 +94,8 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
-                MovementPhaseProcessor.ClearPhase(MovementPhase.Next);
+                ClearPhase(MovementPhase.Next);
+
                 Assert.AreEqual(1, counter);
             }
         }
@@ -88,7 +108,7 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
-                Assert.IsFalse(MovementPhaseProcessor.Next(MovementPhase.Selection));
+                Assert.IsFalse(Next(MovementPhase.Selection));
             }
             [Test]
             public void When_MovementPhase_State_Is_Move_Then_Next_Is_False()
@@ -97,17 +117,18 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
-                Assert.IsFalse(MovementPhaseProcessor.Next(MovementPhase.Move));
+                Assert.IsFalse(Next(MovementPhase.Move));
             }
             [Test]
             public void When_MovementPhase_State_Is_Move_And_Unit_Is_Done_Then_Next_Is_True()
             {
                 var gamePhase = GetIPhase();
-                //GameStatsSO.ActiveUnit.IsDone.Returns(true);
-                SetClearPhase(gamePhase);
-                SetMovementPhaseProcessor(gamePhase);
+                var gameStats = GetGameStats(unit: GetUnit(isDone: true));
 
-                Assert.IsTrue(MovementPhaseProcessor.Next(MovementPhase.Move));
+                SetClearPhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase, gameStats);
+
+                Assert.IsTrue(Next(MovementPhase.Move));
             }
             [Test]
             public void When_MovementPhase_State_Is_Next_Then_Next_Is_True()
@@ -116,18 +137,20 @@ namespace Editor.GameMechanics
                 SetClearPhase(gamePhase);
                 SetMovementPhaseProcessor(gamePhase);
 
-                Assert.IsTrue(MovementPhaseProcessor.Next(MovementPhase.Next));
+                Assert.IsTrue(Next(MovementPhase.Next));
             }
-            //[Test]
-            //public void When_MovementPhase_State_Is_Next_Then_ActiveUnit_Is_Null()
-            //{
-            //    var gamePhase = GetIPhase();
-            //    SetClearPhase(gamePhase);
-            //    SetMovementPhaseProcessor(gamePhase);
-            //    MovementPhaseProcessor.Next(MovementPhase.Next);
+            [Test]
+            public void When_MovementPhase_State_Is_Next_Then_ActiveUnit_Is_Null()
+            {
+                var gamePhase = GetIPhase();
+                var gameStats = GetGameStats();
+                SetClearPhase(gamePhase);
+                SetMovementPhaseProcessor(gamePhase, gameStats);
 
-            //    Assert.IsNull(GameStatsSO.ActiveUnit);
-            //}
+                Next(MovementPhase.Next);
+
+                Assert.IsNull(gameStats.ActiveUnit);
+            }
         }
     }
 }

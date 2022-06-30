@@ -1,19 +1,20 @@
 ﻿using Editor.Infrastructure;
 using System.Collections.Generic;
+using UnityEngine;
 using WH40K.DiceEvents;
 using WH40K.Gameplay.GamePhaseEvents;
 using WH40K.Stats.Player;
 
-namespace Editor.GameMechanics
+namespace Editor.Base
 {
-    public class SubPhasesTestsBase
+    public class SubPhasesTestsBase : CoreElementsBase
     {
-        public List<int> _action;
+        public List<int> _actionResult;
         public List<int> _result;
 
         public void ActionFiller(List<int> hitResult)
         {
-            _action = hitResult;
+            _actionResult = hitResult;
         }
         public void ResultFiller(List<int> hitResult)
         {
@@ -22,34 +23,35 @@ namespace Editor.GameMechanics
         public void FillerDummy(List<int> hitResult)
         {
         }
+        public T GetEventChannel<T>() where T : ScriptableObject
+        {
+            T eventListener = A.EventChannel<T>();
+            return eventListener;
+        }
+
         public RollTheDiceEventChannelSO GetActionDiceEventChannel()
         {
-            RollTheDiceEventChannelSO eventChannel = A.RollTheDiceEventChannel;
+            var eventChannel = GetEventChannel<RollTheDiceEventChannelSO>();
             eventChannel.OnEventRaised += ActionFiller;
             return eventChannel;
         }
         public RollTheDiceEventChannelSO GetResultDiceEventChannel()
         {
-            RollTheDiceEventChannelSO eventChannel = A.RollTheDiceEventChannel;
+            var eventChannel = GetEventChannel<RollTheDiceEventChannelSO>();
             eventChannel.OnEventRaised += ResultFiller;
             return eventChannel;
         }
         public RollTheDiceEventChannelSO GetDiceSubEventChannel()
         {
-            RollTheDiceEventChannelSO eventChannel = A.RollTheDiceEventChannel;
+            var eventChannel = GetEventChannel<RollTheDiceEventChannelSO>();
             eventChannel.OnEventRaised += FillerDummy;
             return eventChannel;
         }
-        public IUnit GetUnit(int value, int wounds = 0)
+        public IResult GetIResult(
+            RollTheDiceEventChannelSO diceAction = null,
+            RollTheDiceEventChannelSO diceResult = null,
+            RollTheDiceEventChannelSO subResult = null)
         {
-            return A.Unit
-                .WithInteger(value)
-                .WithWounds(wounds)
-                .Build();
-        }
-        public IResult GetIResult(IUnit unit, RollTheDiceEventChannelSO diceAction = null, RollTheDiceEventChannelSO diceResult = null, RollTheDiceEventChannelSO subResult = null)
-        {
-            GetGameStats(unit);
             return An.IResultEvent
                         .WithDiceActionEventChannel(diceAction)
                         .WithDiceResultEventChannel(diceResult)
@@ -57,24 +59,19 @@ namespace Editor.GameMechanics
                         .Build();
         }
 
-        private void GetGameStats(IUnit unit)
-        {
-            A.GameStats
-                .WithActiveUnit(unit)
-                .WithEnemyUnit(unit)
-                .Build();
-        }
-
-        public void SetShootingSubPhaseProcessor(IResult result)
+        public void SetShootingSubPhaseProcessor(IResult result, IUnit unit)
         {
             ShootingSubPhaseProcessor processor = A.ShootingSubPhaseProcessor.WithIResult(result);
             processor.SetPrivate(x => x.Initialized, false);
-            SetCombatProcessor(result);
+            SetCombatProcessor(result, unit);
         }
-        public void SetCombatProcessor(IResult result)
+        public void SetCombatProcessor(IResult result, IUnit unit)
         {
-            //CombatProcessor processor = A.CombatProcessor.WithIResult(result);
-            //processor.SetPrivate(x => x.Initialized, false);
+            var gameStats = GetGameStats(unit: unit);
+            CombatProcessor processor = A.CombatProcessor
+                .WithGameStats(gameStats)
+                .WithIResult(result);
+            processor.SetPrivate(x => x.Initialized, false);
         }
     }
 }

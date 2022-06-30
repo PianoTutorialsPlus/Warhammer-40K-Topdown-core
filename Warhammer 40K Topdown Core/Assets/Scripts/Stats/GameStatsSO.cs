@@ -11,9 +11,10 @@ namespace WH40K.Stats
         public void Construct(Settings settings)
         {
             _settings = settings;
+            Enable();
 
         }
-        public void OnEnable()
+        public void Enable()
         {
             Turn = _settings.Turn;
             ActivePlayer = _settings.ActivePlayer;

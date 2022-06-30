@@ -2,23 +2,18 @@
 using NSubstitute;
 using WH40K.Gameplay.Events;
 using WH40K.Gameplay.GamePhaseEvents;
+using WH40K.Stats;
 
-namespace Editor.GameMechanics
+namespace Editor.Base
 {
-    public class GamePhaseTestsBase
+    public class GamePhaseTestsBase : CoreElementsBase
     {
         public int counter;
 
         public IPhase GetIPhase()
         {
-            GetGameStats();
+
             return An.IPhaseEvent.Build();
-        }
-        public void GetGameStats()
-        {
-            A.GameStats
-                    .WithActiveUnit(A.Unit.Build())
-                    .Build();
         }
         public void SetHandlePhase(IPhase gamePhase)
         {
@@ -32,14 +27,18 @@ namespace Editor.GameMechanics
                 .When(x => x.ClearPhase())
                 .Do(x => counter++);
         }
-        public void SetMovementPhaseProcessor(IPhase gamePhase)
+        public void SetMovementPhaseProcessor(IPhase gamePhase, GameStatsSO gameStats = null)
         {
-            MovementPhaseProcessor processor = A.MovementPhaseProcessor.WithGamePhase(gamePhase);
+            MovementPhaseProcessor processor = A.MovementPhaseProcessor
+                .WithGameStats(gameStats)
+                .WithGamePhase(gamePhase);
             processor.SetPrivate(x => x.Initialized, false);
         }
-        public void SetShootingPhaseProcessor(IPhase gamePhase)
+        public void SetShootingPhaseProcessor(IPhase gamePhase, GameStatsSO gameStats = null)
         {
-            ShootingPhaseProcessor processor = A.ShootingPhaseProcessor.WithGamePhase(gamePhase);
+            ShootingPhaseProcessor processor = A.ShootingPhaseProcessor
+                .WithGameStats(gameStats)
+                .WithGamePhase(gamePhase);
             processor.SetPrivate(x => x.Initialized, false);
         }
     }
