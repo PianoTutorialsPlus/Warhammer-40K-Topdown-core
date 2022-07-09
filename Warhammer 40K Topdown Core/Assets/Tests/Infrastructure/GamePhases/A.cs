@@ -8,6 +8,7 @@ namespace Editor.Infrastructure
         public static GamePhaseProcessorBuilder<MovementPhaseProcessor> MovementPhaseProcessor => new GamePhaseProcessorBuilder<MovementPhaseProcessor>();
         public static GamePhaseProcessorBuilder<ShootingPhaseProcessor> ShootingPhaseProcessor => new GamePhaseProcessorBuilder<ShootingPhaseProcessor>();
         public static ShootingSubPhaseProcessorBuilder ShootingSubPhaseProcessor => new ShootingSubPhaseProcessorBuilder();
+        public static GamePhaseFactoryBuilder GamePhaseFactory => new GamePhaseFactoryBuilder();
     }
     public static partial class An
     {

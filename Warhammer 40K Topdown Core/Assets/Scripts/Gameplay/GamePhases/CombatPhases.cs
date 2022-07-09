@@ -6,20 +6,19 @@ using Zenject;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
-    public abstract class CombatPhases
+    public abstract class CombatPhases : PhasesBase
     {
-        protected GameStatsSO _gameStats;
-        protected IResult _results;
-        public abstract ShootingSubEvents SubEvents { get; } // gets the active subphase
-        protected RollTheDiceEventChannelSO _diceSubResult => _results.DiceSubResult;
-        protected RollTheDiceEventChannelSO _diceAction => _results.DiceAction;
-        protected RollTheDiceEventChannelSO _diceResult => _results.DiceResult;
+        [Inject] protected GameStatsSO _gameStats;
+        //[Inject] protected IResult _results;
+        [Inject (Id = "Sub Result")] protected RollTheDiceEventChannelSO _diceSubResult/* => _results.DiceSubResult*/;
+        [Inject(Id = "Action")] protected RollTheDiceEventChannelSO _diceAction/* => _results.DiceAction*/;
+        [Inject(Id = "Result")] protected RollTheDiceEventChannelSO _diceResult/* => _results.DiceResult*/;
         protected CombatPhases(
-            IResult results, 
+            //IResult results, 
             GameStatsSO gameStats)
         {
-            _gameStats = gameStats;
-            _results = results;
+            //_gameStats = gameStats;
+            //_results = results;
         }
 
         protected CombatPhases()

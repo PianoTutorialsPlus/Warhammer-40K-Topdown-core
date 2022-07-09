@@ -28,9 +28,8 @@ namespace Editor.CombatTests
             {
                 var diceResult = GetResultDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceResult: diceResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, unit: unit);
                 Action(ShootingSubEvents.SelectEnemy);
 
                 Assert.AreEqual(1, _result.Count);
@@ -40,9 +39,8 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Hit, new List<int>());
 
                 Assert.AreEqual(1, _actionResult.Count);
@@ -52,9 +50,8 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Wound);
 
                 Assert.IsNull(_actionResult);
@@ -64,9 +61,8 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Wound, new List<int>());
 
                 Assert.IsNull(_actionResult);
@@ -76,9 +72,8 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Wound, new List<int>() { 2 });
 
                 Assert.AreEqual(1, _actionResult.Count);
@@ -88,9 +83,8 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Save);
 
                 Assert.IsNull(_actionResult);
@@ -100,9 +94,8 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Save, new List<int>());
 
                 Assert.IsNull(_actionResult);
@@ -112,9 +105,8 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Save, new List<int>() { 2 });
 
                 Assert.AreEqual(1, _actionResult.Count);
@@ -124,9 +116,8 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Damage);
 
                 Assert.IsNull(_actionResult);
@@ -136,9 +127,8 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Damage, new List<int>());
 
                 Assert.IsNull(_actionResult);
@@ -148,9 +138,8 @@ namespace Editor.CombatTests
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1, wounds: 2);
-                var result = GetIResult(diceAction);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Damage, new List<int>());
 
                 Assert.AreEqual(2, unit.Wounds);
@@ -161,12 +150,11 @@ namespace Editor.CombatTests
                 var count = 0;
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1,wounds: 2);
-                var result = GetIResult(diceAction);
 
                 unit.When(x => x.TakeDamage(1))
                     .Do(x => count = 1);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
                 Action(ShootingSubEvents.Damage, new List<int>() { 1 });
 
                 Assert.AreEqual(1, count);
@@ -179,9 +167,8 @@ namespace Editor.CombatTests
             {
                 var diceResult = GetResultDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceResult: diceResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, unit: unit);
                 Action(ShootingSubEvents.SelectEnemy);
 
                 Assert.AreEqual(1, _result.Count);
@@ -192,9 +179,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Hit);
 
                 diceSubResult.RaiseEvent(null);
@@ -207,9 +193,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Hit);
 
                 diceSubResult.RaiseEvent(new List<int>());
@@ -222,9 +207,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Hit);
 
                 diceSubResult.RaiseEvent(new List<int>() { 2 });
@@ -237,9 +221,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Wound);
 
                 diceSubResult.RaiseEvent(null);
@@ -252,9 +235,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Wound);
 
                 diceSubResult.RaiseEvent(new List<int>());
@@ -267,9 +249,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Wound, new List<int>() { 2 });
 
                 diceSubResult.RaiseEvent(new List<int>() { 4 });
@@ -282,9 +263,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Wound, new List<int>() { 2 });
 
                 diceSubResult.RaiseEvent(new List<int>() { 3 });
@@ -297,9 +277,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Save);
 
                 diceSubResult.RaiseEvent(null);
@@ -312,9 +291,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Save);
 
                 diceSubResult.RaiseEvent(new List<int>());
@@ -327,9 +305,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Save, new List<int>() { 2 });
 
                 diceSubResult.RaiseEvent(new List<int>() { 1 });
@@ -342,9 +319,8 @@ namespace Editor.CombatTests
                 var diceResult = GetResultDiceEventChannel();
                 var diceSubResult = GetDiceSubEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult, subResult: diceSubResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, subResult: diceSubResult, unit: unit);
                 Action(ShootingSubEvents.Save, new List<int>() { 2 });
 
                 diceSubResult.RaiseEvent(new List<int>() { 3 });
@@ -356,9 +332,8 @@ namespace Editor.CombatTests
             {
                 var diceResult = GetResultDiceEventChannel();
                 var unit = GetUnit(value: 2);
-                var result = GetIResult(diceResult: diceResult);
 
-                SetCombatProcessor(result, unit);
+                SetCombatProcessor(diceResult: diceResult, unit: unit);
                 Action(ShootingSubEvents.Damage, new List<int>() { 2 });
 
                 Assert.IsNull(_result);

@@ -1,25 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using WH40K.Gameplay.Events;
 using WH40K.Stats;
+using Zenject;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
     /// <summary>
     /// This script executes the calls from the shooting phase manager in the specific state.
     /// </summary>
-    public abstract class ShootingPhases
+    public abstract class ShootingPhases : PhasesBase
     {
-        protected GameStatsSO _gameStats;
-        protected IPhase _phase;/* => _gamePhase.BattleroundEvents;*/
+        [Inject] protected GameStatsSO _gameStats;
+        [Inject] protected IPhase _phase;/* => _gamePhase.BattleroundEvents;*/
 
-        public ShootingPhases(GameStatsSO gameStats, IPhase gamePhase)
-        {
-            Debug.Log(gameStats);
-            _gameStats = gameStats;
-            _phase = gamePhase;
-        }
+        protected ShootingPhases() { }
 
-        public abstract ShootingPhase SubEvents { get; } // gets the active subphase
         public virtual void HandlePhase() { } // handles the selection subphase
         public virtual bool Next() { return false; } // disables the current unit for this game phase
         public virtual void ClearPhase()
@@ -30,8 +26,8 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
     public class S_Selection : ShootingPhases
     {
-        public S_Selection(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
-        public override ShootingPhase SubEvents => ShootingPhase.Selection;
+        public S_Selection() { }
+        public override Enum SubEvents => ShootingPhase.Selection;
         public override void HandlePhase()
         {
             _phase.HandlePhase();
@@ -41,15 +37,15 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
     public class S_Shoot : ShootingPhases
     {
-        public S_Shoot(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
-        public override ShootingPhase SubEvents => ShootingPhase.Shoot;
+        public S_Shoot() { }
+        public override Enum SubEvents => ShootingPhase.Shoot;
         public override void HandlePhase() { }
     }
 
     public class S_Next : ShootingPhases
     {
-        public S_Next(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
-        public override ShootingPhase SubEvents => ShootingPhase.Next;
+        public S_Next() { }
+        public override Enum SubEvents => ShootingPhase.Next;
         public override bool Next()
         {
             _gameStats.ActiveUnit.Freeze();

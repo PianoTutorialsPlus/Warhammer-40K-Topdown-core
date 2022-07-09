@@ -14,26 +14,30 @@ namespace WH40K.Gameplay.GamePhaseEvents
     public class ShootingSubPhaseProcessor
     {
         // Variables
-        private static Dictionary<ShootingSubEvents, ShootingSubPhases> _shootingSubPhase = new Dictionary<ShootingSubEvents, ShootingSubPhases>();
+        private static Dictionary<Enum, ShootingSubPhases> _shootingSubPhase = new Dictionary<Enum, ShootingSubPhases>();
         public static bool _initialized;
+        private static GamePhaseFactory _factory;
 
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
 
-        public ShootingSubPhaseProcessor() { }
+        public ShootingSubPhaseProcessor(GamePhaseFactory factory) 
+        {
+            _factory = factory;
+        }
 
         private static void Initialize()
         {
             if (_initialized) return;
-            _shootingSubPhase.Clear();
+            _shootingSubPhase = _factory.Create(_shootingSubPhase);
 
-            var allShootingSubPhases = Assembly.GetAssembly(typeof(ShootingSubPhases)).GetTypes()
-                .Where(t => typeof(ShootingSubPhases).IsAssignableFrom(t) && t.IsAbstract == false);
+            //var allShootingSubPhases = Assembly.GetAssembly(typeof(ShootingSubPhases)).GetTypes()
+            //    .Where(t => typeof(ShootingSubPhases).IsAssignableFrom(t) && t.IsAbstract == false);
 
-            foreach (var subphase in allShootingSubPhases)
-            {
-                ShootingSubPhases shootingSubPhase = Activator.CreateInstance(subphase) as ShootingSubPhases;
-                _shootingSubPhase.Add(shootingSubPhase.SubEvents, shootingSubPhase);
-            }
+            //foreach (var subphase in allShootingSubPhases)
+            //{
+            //    ShootingSubPhases shootingSubPhase = Activator.CreateInstance(subphase) as ShootingSubPhases;
+            //    _shootingSubPhase.Add(shootingSubPhase.SubEvents, shootingSubPhase);
+            //}
 
             _initialized = true;
         }
@@ -51,7 +55,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
             var shootingSubPhase = _shootingSubPhase[subPhase];
             shootingSubPhase.Next();
         }
-        internal static IEnumerable<ShootingSubEvents> GetAbilityByName()
+        internal static IEnumerable<Enum> GetAbilityByName()
         {
             Initialize();
 

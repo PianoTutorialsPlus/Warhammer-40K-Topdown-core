@@ -1,26 +1,24 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using WH40K.Gameplay.Core;
 using WH40K.Gameplay.Events;
 using WH40K.Stats;
+using Zenject;
 
 namespace WH40K.Gameplay.GamePhaseEvents
 {
     /// <summary>
     /// This script executes the calls from the movement phase manager in the specific state.
     /// </summary>
-    public abstract class MovementPhases
+    public abstract class MovementPhases : PhasesBase
     {
-        protected GameStatsSO _gameStats;
-        protected IPhase _phase;
+        [Inject] protected GameStatsSO _gameStats;
+        [Inject] protected IPhase _phase;
         protected GameTable _gameTable => _gameStats.GameTable.GameTable.GetComponent<GameTable>();
 
-        public MovementPhases(GameStatsSO gameStats, IPhase gamePhase)
-        {
-            _gameStats = gameStats;
-            _phase = gamePhase;
-        }
+        protected MovementPhases() { }
 
-        public abstract MovementPhase SubEvents { get; } // gets the active subphase
         public virtual void HandlePhase() { } // handles the selection subphase
         public virtual bool Next() { return false; } // disables the current unit for this game phase
 
@@ -33,20 +31,21 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
     public class M_Selection : MovementPhases
     {
-        public M_Selection(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
+        public M_Selection() { }
 
-        public override MovementPhase SubEvents => MovementPhase.Selection;
+        public override Enum SubEvents => MovementPhase.Selection;
         public override void HandlePhase()
         {
+            Debug.Log("MPhase : " + _gameStats);
             _phase.HandlePhase();
         }
     }
 
     public class Move : MovementPhases
     {
-        public Move(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
+        public Move() { }
 
-        public override MovementPhase SubEvents => MovementPhase.Move;
+        public override Enum SubEvents => MovementPhase.Move;
 
         public override void HandlePhase()
         {
@@ -73,8 +72,10 @@ namespace WH40K.Gameplay.GamePhaseEvents
 
     public class MNext : MovementPhases
     {
-        public MNext(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
-        public override MovementPhase SubEvents => MovementPhase.Next;
+        public MNext() { }
+
+        //public MNext(GameStatsSO gameStats, IPhase gamePhase) : base(gameStats, gamePhase) { }
+        public override Enum SubEvents => MovementPhase.Next;
 
         public override bool Next()
         {

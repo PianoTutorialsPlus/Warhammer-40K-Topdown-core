@@ -6,6 +6,7 @@ namespace Editor.Infrastructure.GamePhases
     public class ShootingSubPhaseProcessorBuilder : TestDataBuilder<ShootingSubPhaseProcessor>
     {
         private IResult _result;
+        private GamePhaseFactory _factory;
 
         public ShootingSubPhaseProcessorBuilder()
         {
@@ -15,10 +16,17 @@ namespace Editor.Infrastructure.GamePhases
             _result = result;
             return this;
         }
+        public ShootingSubPhaseProcessorBuilder WithGamePhaseFactory(GamePhaseFactory factory)
+        {
+            _factory = factory;
+            return this;
+        }
 
         public override ShootingSubPhaseProcessor Build()
         {
             Container.Bind<ShootingSubPhaseProcessor>().AsSingle();
+            Container.BindInstance(_factory ??= A.GamePhaseFactory);
+
             return Container.Resolve<ShootingSubPhaseProcessor>();
         }
     }

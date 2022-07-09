@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using WH40K.Stats;
 
 /// <summary>
@@ -6,22 +7,21 @@ using WH40K.Stats;
 /// </summary>
 namespace WH40K.Gameplay.GamePhaseEvents
 {
-    public abstract class ShootingSubPhases
+    public abstract class ShootingSubPhases : PhasesBase
     {
         public ShootingSubPhases() { }
 
-        public abstract ShootingSubEvents SubEvents { get; } // gets the active subphase
         public abstract void HandleShooting(List<int> parameter); // handles the subphases
-        public void Next() { CombatProcessor.Next(SubEvents); }
+        public void Next() { CombatProcessor.Next((ShootingSubEvents)SubEvents); }
     }
 
     public class SelectEnemy : ShootingSubPhases
     {
         public SelectEnemy() { }
-        public override ShootingSubEvents SubEvents => ShootingSubEvents.SelectEnemy;
+        public override Enum SubEvents => ShootingSubEvents.SelectEnemy;
         public override void HandleShooting(List<int> parameter)
         {
-            CombatProcessor.Action(SubEvents, parameter);
+            CombatProcessor.Action((ShootingSubEvents)SubEvents, parameter);
         }
     }
 
@@ -29,39 +29,39 @@ namespace WH40K.Gameplay.GamePhaseEvents
     {
         public Hit() { }
 
-        public override ShootingSubEvents SubEvents => ShootingSubEvents.Hit;
+        public override Enum SubEvents => ShootingSubEvents.Hit;
         public override void HandleShooting(List<int> parameter)
         {
-            CombatProcessor.Action(SubEvents, parameter);
+            CombatProcessor.Action((ShootingSubEvents)SubEvents, parameter);
         }
     }
 
     public class Wound : ShootingSubPhases
     {
         public Wound() { }
-        public override ShootingSubEvents SubEvents => ShootingSubEvents.Wound;
+        public override Enum SubEvents => ShootingSubEvents.Wound;
         public override void HandleShooting(List<int> parameter)
         {
-            CombatProcessor.Action(SubEvents, parameter);
+            CombatProcessor.Action((ShootingSubEvents)SubEvents, parameter);
         }
     }
 
     public class Save : ShootingSubPhases
     {
         public Save() { }
-        public override ShootingSubEvents SubEvents => ShootingSubEvents.Save;
+        public override Enum SubEvents => ShootingSubEvents.Save;
         public override void HandleShooting(List<int> parameter)
         {
-            CombatProcessor.Action(SubEvents, parameter);
+            CombatProcessor.Action((ShootingSubEvents)SubEvents, parameter);
         }
     }
     public class Damage : ShootingSubPhases
     {
         public Damage() { }
-        public override ShootingSubEvents SubEvents => ShootingSubEvents.Damage;
+        public override Enum SubEvents => ShootingSubEvents.Damage;
         public override void HandleShooting(List<int> parameter)
         {
-            CombatProcessor.Action(SubEvents, parameter);
+            CombatProcessor.Action((ShootingSubEvents)SubEvents, parameter);
         }
     }
 }

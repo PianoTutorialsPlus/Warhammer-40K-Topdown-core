@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.DiceEvents;
@@ -10,16 +11,17 @@ namespace WH40K.Gameplay.Combat
 {
     public class CalculateWounds : CombatPhases, ICalculation
     {
-        public override ShootingSubEvents SubEvents => ShootingSubEvents.Wound;
+        public override Enum SubEvents => ShootingSubEvents.Wound;
         private WoundTable _woundTable;
 
         private int Strength => _gameStats.ActiveUnit.WeaponStrength;
         private int Toughness => _gameStats.EnemyUnit.Toughness;
 
-        public CalculateWounds(IResult results, GameStatsSO gameStats) : base(results, gameStats) { _woundTable = new WoundTable(); }
+        //public CalculateWounds(IResult results, GameStatsSO gameStats) : base(results, gameStats) { _woundTable = new WoundTable(); }
 
         public CalculateWounds()
         {
+            _woundTable = new WoundTable();
         }
 
         public override void Action(List<int> hits)

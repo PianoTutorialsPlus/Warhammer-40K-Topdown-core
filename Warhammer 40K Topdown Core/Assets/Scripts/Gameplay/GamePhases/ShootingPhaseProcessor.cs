@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using WH40K.Gameplay.Events;
 using WH40K.Stats;
 
 namespace WH40K.Gameplay.GamePhaseEvents
@@ -14,32 +11,21 @@ namespace WH40K.Gameplay.GamePhaseEvents
     public class ShootingPhaseProcessor
     {
         // Variables
-        private static Dictionary<ShootingPhase, ShootingPhases> _shootingPhases = new Dictionary<ShootingPhase, ShootingPhases>();
+        private static Dictionary<Enum, ShootingPhases> _shootingPhases = new Dictionary<Enum, ShootingPhases>();
         public static bool _initialized;
-        private static GameStatsSO _gameStats;
-        private static IPhase _gamePhase;
+        private static GamePhaseFactory _factory;
 
         public bool Initialized { get => _initialized; protected set => _initialized = value; }
 
-        public ShootingPhaseProcessor(GameStatsSO gameStats, IPhase gamePhase)
+        public ShootingPhaseProcessor(GamePhaseFactory factory)
         {
-            _gameStats = gameStats;
-            _gamePhase = gamePhase;
+            _factory = factory;
         }
 
         private static void Initialize()
         {
             if (_initialized) return;
-            _shootingPhases.Clear();
-
-            var allShootingPhases = Assembly.GetAssembly(typeof(ShootingPhases)).GetTypes()
-                .Where(t => typeof(ShootingPhases).IsAssignableFrom(t) && t.IsAbstract == false);
-
-            foreach (var subphase in allShootingPhases)
-            {
-                ShootingPhases shootingPhases = Activator.CreateInstance(subphase, _gameStats, _gamePhase) as ShootingPhases;
-                _shootingPhases.Add(shootingPhases.SubEvents, shootingPhases);
-            }
+            _shootingPhases = _factory.Create(_shootingPhases);
 
             _initialized = true;
         }
@@ -64,7 +50,7 @@ namespace WH40K.Gameplay.GamePhaseEvents
             var shootingPhase = _shootingPhases[subPhase];
             shootingPhase.ClearPhase();
         }
-        internal static IEnumerable<ShootingPhase> GetAbilityByName()
+        internal static IEnumerable<Enum> GetAbilityByName()
         {
             Initialize();
 

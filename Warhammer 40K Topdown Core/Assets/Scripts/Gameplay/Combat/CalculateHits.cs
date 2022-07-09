@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.DiceEvents;
@@ -9,15 +10,16 @@ namespace WH40K.Gameplay.Combat
 {
     public class CalculateHits : CombatPhases, ICalculation
     {
-        public override ShootingSubEvents SubEvents => ShootingSubEvents.Hit;
+        public override Enum SubEvents => ShootingSubEvents.Hit;
 
         private int ToHit => _gameStats.ActiveUnit.BallisticSkill;
         private int MaxShots => _gameStats.ActiveUnit.WeaponShots;
 
-        public CalculateHits(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
+        //public CalculateHits(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
 
         public CalculateHits()
         {
+
         }
 
         public override void Action(List<int> action)

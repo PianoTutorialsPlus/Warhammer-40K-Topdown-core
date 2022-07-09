@@ -14,18 +14,18 @@ namespace WH40K.Installers
         public override void InstallBindings()
         {
             Debug.Log("DiceInstaller");
-            Container.Bind<IResult>().To<Settings>().AsSingle().NonLazy();
-            Container.QueueForInject(_settings);
+            //Container.Bind<IResult>().To<Settings>().AsSingle().NonLazy();
+            //Container.QueueForInject(_settings);
 
-            //Container.Bind<RollTheDiceEventChannelSO>().WithId("Action").FromInstance(_settings.DiceAction);
+            Container.Bind<RollTheDiceEventChannelSO>().WithId("Action").FromInstance(_settings.DiceAction);
             Container.Bind<RollTheDiceEventChannelSO>().WithId("Result").FromInstance(_settings.DiceResult);
-            //Container.Bind<RollTheDiceEventChannelSO>().WithId("Sub Result").FromInstance(_settings.DiceSubResult);
+            Container.Bind<RollTheDiceEventChannelSO>().WithId("Sub Result").FromInstance(_settings.DiceSubResult);
             //Container.Bind<RollTheDiceEventChannelSO>().WithId("Test").FromInstance(_settings.DiceResult).AsSingle().Lazy();
 
             //Container.BindInstance(_settings.DiceSubResult).WithId("Sub Result").AsSingle();
             //Container.BindInstance(_settings.DiceResult).WithId("Result").AsSingle();
 
-            Container.Bind<CombatProcessor>().AsSingle().WithArguments(_settings).NonLazy();
+            Container.Bind<CombatProcessor>().AsSingle()/*.WithArguments(_settings)*/.NonLazy();
             //Container.BindInstance(_settings.DiceResult);
         }
 

@@ -22,6 +22,9 @@ namespace WH40K.Installers
             Container.Bind<ShootingSubPhaseProcessor>().AsSingle().NonLazy();
 
             Container.Bind<UIRangeController>().AsSingle();
+            //Container.BindFactory<Type, MovementPhases, MovementPhases.Factory>().FromFactory<GamePhaseFactory>().NonLazy();
+            Container.BindInterfacesAndSelfTo<GamePhaseFactory>().AsSingle();
+            //Container.Bind<MovementPhases>().To(x => x.AllNonAbstractClasses()).AsTransient();
         }
     }
 }

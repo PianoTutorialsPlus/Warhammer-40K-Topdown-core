@@ -27,9 +27,10 @@ namespace Editor.GameMechanics
             {
                 var diceResult = GetResultDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceResult: diceResult);
 
-                SetShootingSubPhaseProcessor(result, unit);
+                SetShootingSubPhaseProcessor();
+                SetCombatProcessor(diceResult: diceResult, unit: unit);
+
                 HandleShooting(ShootingSubEvents.SelectEnemy, new List<int>());
 
                 Assert.AreEqual(1, _result.Count);
@@ -40,9 +41,10 @@ namespace Editor.GameMechanics
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetShootingSubPhaseProcessor(result, unit);
+                SetShootingSubPhaseProcessor();
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
+
                 HandleShooting(ShootingSubEvents.Hit, new List<int>() { 1 });
 
                 Assert.AreEqual(1, _actionResult.Count);
@@ -52,9 +54,10 @@ namespace Editor.GameMechanics
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetShootingSubPhaseProcessor(result, unit);
+                SetShootingSubPhaseProcessor();
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
+
                 HandleShooting(ShootingSubEvents.Wound, new List<int>() { 1 });
 
                 Assert.AreEqual(1, _actionResult.Count);
@@ -64,9 +67,10 @@ namespace Editor.GameMechanics
             {
                 var diceAction = GetActionDiceEventChannel();
                 var unit = GetUnit(value: 1);
-                var result = GetIResult(diceAction);
 
-                SetShootingSubPhaseProcessor(result, unit);
+                SetShootingSubPhaseProcessor();
+                SetCombatProcessor(diceAction: diceAction, unit: unit);
+
                 HandleShooting(ShootingSubEvents.Save, new List<int>() { 1 });
 
                 Assert.AreEqual(1, _actionResult.Count);
@@ -76,9 +80,10 @@ namespace Editor.GameMechanics
             {
                 var diceResult = GetResultDiceEventChannel();
                 var unit = GetUnit(value: 1,wounds: 2);
-                var result = GetIResult(diceResult: diceResult);
 
-                SetShootingSubPhaseProcessor(result, unit);
+                SetShootingSubPhaseProcessor();
+                SetCombatProcessor(diceResult: diceResult, unit: unit);
+
                 HandleShooting(ShootingSubEvents.Damage, new List<int>() { 4 });
 
                 Assert.IsNull(_result);

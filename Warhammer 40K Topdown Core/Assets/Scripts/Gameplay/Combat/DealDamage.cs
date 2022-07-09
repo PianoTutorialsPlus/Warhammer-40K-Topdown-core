@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using WH40K.DiceEvents;
@@ -9,11 +10,11 @@ namespace WH40K.Gameplay.Combat
 {
     public class DealDamage : CombatPhases, ICalculation
     {
-        public override ShootingSubEvents SubEvents => ShootingSubEvents.Damage;
+        public override Enum SubEvents => ShootingSubEvents.Damage;
 
         private int Damage => _gameStats.ActiveUnit.WeaponDamage;
 
-        public DealDamage(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
+        //public DealDamage(IResult results, GameStatsSO gameStats) : base(results, gameStats) { }
 
         public DealDamage()
         {

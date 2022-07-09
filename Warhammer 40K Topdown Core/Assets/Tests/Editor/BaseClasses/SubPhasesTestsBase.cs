@@ -47,30 +47,25 @@ namespace Editor.Base
             eventChannel.OnEventRaised += FillerDummy;
             return eventChannel;
         }
-        public IResult GetIResult(
+
+        public void SetShootingSubPhaseProcessor()
+        {
+            ShootingSubPhaseProcessor processor = A.ShootingSubPhaseProcessor;
+            processor.SetPrivate(x => x.Initialized, false);
+        }
+        public void SetCombatProcessor(
             RollTheDiceEventChannelSO diceAction = null,
             RollTheDiceEventChannelSO diceResult = null,
-            RollTheDiceEventChannelSO subResult = null)
-        {
-            return An.IResultEvent
-                        .WithDiceActionEventChannel(diceAction)
-                        .WithDiceResultEventChannel(diceResult)
-                        .WithDiceSubResultEventChannel(subResult)
-                        .Build();
-        }
-
-        public void SetShootingSubPhaseProcessor(IResult result, IUnit unit)
-        {
-            ShootingSubPhaseProcessor processor = A.ShootingSubPhaseProcessor.WithIResult(result);
-            processor.SetPrivate(x => x.Initialized, false);
-            SetCombatProcessor(result, unit);
-        }
-        public void SetCombatProcessor(IResult result, IUnit unit)
+            RollTheDiceEventChannelSO subResult = null, 
+            IUnit unit = null)
         {
             var gameStats = GetGameStats(unit: unit);
             CombatProcessor processor = A.CombatProcessor
                 .WithGameStats(gameStats)
-                .WithIResult(result);
+                .WithDiceActionEventChannel(diceAction)
+                .WithDiceResultEventChannel(diceResult)
+                .WithDiceSubResultEventChannel(subResult);
+
             processor.SetPrivate(x => x.Initialized, false);
         }
     }
